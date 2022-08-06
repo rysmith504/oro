@@ -12,7 +12,6 @@ app.get("/", function (req, res, next) {
         res.send("index.html");
     }
     catch (error) {
-        next(error);
     }
 });
 var PORT = 5000;
