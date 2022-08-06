@@ -4,9 +4,10 @@
   "description": "",
   "main": "README.md",
   "scripts": {
-    "build:dev": "tsc --watch --preserveWatchOutput",
+    "type": "tsc --watch --preserveWatchOutput",
+    "build": "webpack -w",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon dist/index.js & webpack -w"
+    "start": "nodemon dist/index.js"
   },
   "repository": {
     "type": "git",
