@@ -11,7 +11,6 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\README.md",
       "sourceMaps": true, // look for source maps
       "restart": true, // restart when loosing connection due to re-compile
       // look for source-maps based on our bundle result
