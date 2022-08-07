@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
+const { PrismaClient } = require('@prisma/client')
 
+const prisma = new PrismaClient()
 const app = express();
 
 app.use(express.static(path.join(__dirname, "../public")));
