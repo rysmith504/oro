@@ -10,7 +10,32 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
+// Tags Model
+model Tags {
+  id Int @id @default(autoincrement())
+  name String @unique
+  poi Points[]
+}
+
 //MODELS
+
+// POI Model 
+model Points {
+  id Int @id @default(autoincrement())
+  photo String
+  title String @unique
+  description String
+  address String
+  date DateTime
+  totalBudget Int
+  currentFunds Int
+  tags Tags[]
+  tagsId Int
+  trips PoiTrips[]
+  votes PoiVotes[]
+  users PoiUsers[]
+}
+
 model Trips {
   id Int @id @default(autoincrement())
   photo String
@@ -23,9 +48,8 @@ model Trips {
   currentFunds Int
   owner Users @relation(fields: [ownerId], references: [id])
   ownerId Int
-  attendees Users @relation(fields: [attendeesId], references: [id])
-  attendeesId Int
-  poi Points
+  attendees TripsUsers[]
+  poi PoiTrips[]
   status String
 }
 
@@ -33,65 +57,71 @@ model Users {
   id Int @id @default(autoincrement())
   googleId Int @unique
   fullName String
-  picture String ?
+  picture String?
   email String @unique
-  trips Trips[]
+  trips TripsUsers[]
+  votes PoiVotes[]
+  poi PoiUsers[]
+  Sendee FriendsJoin[] @relation("sendee")
+  Friends FriendsJoin[] @relation("friends")
+  ownedTrips Trips[] 
 }
 
-// Tags Model
-model Tags {
-  id Int @id @default(autoincrement())
-  name String @unique
-}
-
-// POI Model 
-model Points {
-  id Int @id @default(autoincrement())
-  photo String
-  title String @unique
-  description String
-  address String
-  date DateTime
-  totalBudget Int
-  currentFunds Int
-  tags Tags @relation(fields: [tagsId], references: [id])
-  tagsId Int
-}
-
-// JOIN TABLES ------------------
-// POI TRIPS
+// RELATION TABLES ------------------
+// ✔️POI TRIPS
 model PoiTrips {
-  id Int @id @default(autoincrement())
-  trips Trips[]
-  poi Points[]
+  trips Trips @relation(fields: [tripsId], references: [id])
+  tripsId Int
+  poi Points @relation(fields: [poiId], references: [id])
+  poiId Int
+
+  @@id([tripsId, poiId])
 }
 
-// POI Votes Join
+// ✔️POI Votes Join
 model PoiVotes {
-  id Int @id @default(autoincrement())
-  users Users[]
-  poi Points
+  users Users @relation(fields: [usersId], references: [id])
+  usersId Int 
+  poi Points @relation(fields: [poiId], references: [id])
+  poiId Int
   votes Int 
-}
-// POI Users Join
-model PoiUsers {
-  id Int @id @default(autoincrement())
-  users Users[]
-  poi Points[]
+
+  @@id([poiId, usersId])
 }
 
-// Users Trips Join
+// ✔️ POI Users Join
+model PoiUsers {
+  users Users @relation(fields: [usersId], references: [id])
+  usersId Int
+  poi Points @relation(fields: [poiId], references: [id])
+  poiId Int
+
+  @@id([usersId, poiId])
+}
+
+// ✔️Users Trips Join
 model TripsUsers {
-  id Int @id @default(autoincrement())
-  users Users[]
-  trips Trips[]
+  users Users @relation(fields: [usersId], references: [id])
+  usersId Int
+  trips Trips @relation(fields: [tripsId], references: [id])
+  tripsId Int
   contributions Int
+
+  @@id([usersId, tripsId])
 }
 
 // Friends Join Table
-model Friends {
-  id Int @id @default(autoincrement())
-  userId Users
-  friendId Users[]
+model FriendsJoin {
+  sendee Users @relation("sendee", fields: [usersId], references: [id])
+  usersId Int
+  friends Users @relation("friends", fields: [friendId], references: [id])
+  friendId Int
   status String
+
+  @@id([usersId, friendId])
 }
+
+
+//NOTES:
+//https://www.prisma.io/docs/concepts/components/prisma-schema/relations/many-to-many-relations
+//
