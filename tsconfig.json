@@ -24,5 +24,6 @@
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true
   },
-  "include": ["./server"]
+  "include": ["./server"],
+  "exclude": ["node_modules", "./client"] 
 }
