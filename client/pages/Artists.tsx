@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { ArtistContext } from '../index'; // imports context
 
-const Artists: React.FC = () => {
-
+const Artists = () => {
+  const aristContext = useContext(ArtistContext);
   return (
-    <div>Hello ARtists</div>
+    <div>
+      <div>Hello ARtists</div>
+      {aristContext}
+    </div>
   );
 };
 
-module.exports = Artists;
+export default Artists;

@@ -7,4 +7,4 @@ const SongFinder: React.FC = () => {
   );
 };
 
-module.exports = SongFinder;
+export default SongFinder;

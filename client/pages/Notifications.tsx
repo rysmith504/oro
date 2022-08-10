@@ -7,4 +7,4 @@ const Notifications: React.FC = () => {
   );
 };
 
-module.exports = Notifications;
+export default Notifications;

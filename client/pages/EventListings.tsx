@@ -7,4 +7,4 @@ const EventListings: React.FC = () => {
   );
 };
 
-module.exports = EventListings;
+export default EventListings;

@@ -7,4 +7,4 @@ const TravelPlanner: React.FC = () => {
   );
 };
 
-module.exports = TravelPlanner;
+export default TravelPlanner;

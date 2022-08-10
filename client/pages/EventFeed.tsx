@@ -7,4 +7,4 @@ const EventFeed: React.FC = () => {
   );
 };
 
-module.exports = EventFeed;
+export default EventFeed;
