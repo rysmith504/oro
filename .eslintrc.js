@@ -60,7 +60,7 @@ module.exports = {
     'space-infix-ops': 1,
     // Minuta
     'comma-style': [2, 'last'],
-    'prefer-arrow-functions/prefer-arrow-functions': ['warn'],
+    // 'prefer-arrow-functions/prefer-arrow-functions': ['warn'],
     'no-console': [2, { allow: ['info', 'warn'] }],
     quotes: [1, 'single']
   },
