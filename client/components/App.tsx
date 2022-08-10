@@ -5,8 +5,7 @@ import Notifications from '../pages/Notifications';
 import EventListings from '../pages/EventListings';
 import SongFinder from '../pages/SongFinder';
 import Artists from '../pages/Artists';
-// import axios from 'axios';
-
+import Menu from '../components/Menu';
 
 const App: React.FC = () => { // update React.FC, .FC deprecated?
 
@@ -21,6 +20,7 @@ const App: React.FC = () => { // update React.FC, .FC deprecated?
           <Link to='/songFinder'>Song Finder</Link>
           <Link to='/artists'>Artists</Link>
         </nav>
+        <Menu />
       </header>
       <Routes>
         <Route path='/profile' element={<Profile />}/>
