@@ -10,8 +10,7 @@ artistsRouter.get('/', function (req, res) {
     console.log('get artists-----', req.query);
     var artistName = req.query.artistName;
     console.log(artistName);
-    axios_1.default
-        .get("https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=SptQUng7VWQQ0BVM0uspyhpoyHGkNSq4&keyword=".concat(artistName))
+    axios_1.default.get("https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=SptQUng7VWQQ0BVM0uspyhpoyHGkNSq4&keyword=".concat(artistName))
         .then(function (artistData) {
         console.log(artistData);
         res.status(200).send(artistData.data._embedded);
