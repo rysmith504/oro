@@ -19,7 +19,7 @@
     "strictFunctionTypes": true,
     "strictBindCallApply": true, 
     "strictPropertyInitialization": true,
-    "noUnusedLocals": true,
+    // "noUnusedLocals": true,
     "noUnusedParameters": true, 
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true
