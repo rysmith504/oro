@@ -3,7 +3,7 @@ import App from './components/App';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { UserContextProvider } from './context/UserContext';
-import { ArtistContextProvider, ArtistContext } from './context/ArtistContext';
+import { ArtistContextProvider } from './context/ArtistContext';
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
@@ -13,7 +13,7 @@ const root = createRoot(rootElement);
 
 root.render(
   <UserContextProvider>
-    <ArtistContextProvider value={ArtistContext}>
+    <ArtistContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path='*' element={<App />} />
