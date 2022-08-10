@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MicRecorder from 'mic-recorder-to-mp3';
+import axios from 'axios';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128});
 const SongFinder: React.FC = () => {
@@ -43,6 +44,21 @@ const SongFinder: React.FC = () => {
   };
 
 
+  // const sendAudioFile = (file) => {
+  //   console.log(blobURL);
+  //   const formData = new FormData();
+  //   formData.append('audio-file', file);
+
+  //   return axios.post('/song', {
+  //     formData: formData
+  //   })
+  //     .then((data) => console.log(data))
+  //     .catch((error) => console.error(error));
+  // };
+
+
+
+
 
   return (
     <div>
@@ -50,6 +66,7 @@ const SongFinder: React.FC = () => {
       <button onClick={start} disabled={isRecording}>RECORD</button>
       <button onClick={stop} disabled={!isRecording}>STOP</button>
       <audio src={blobURL} controls="controls"/>
+      <button onClick={() => sendAudioFile(blobURL)}>SEND TO API</button>
     </div>
   );
 };
