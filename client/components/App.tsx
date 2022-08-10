@@ -19,7 +19,7 @@ const App: React.FC = () => { // update React.FC, .FC deprecated?
           <Link to='/notifications'>Notifications</Link>
           <Link to='/eventListings'>Find Events</Link>
           <Link to='/songFinder'>Song Finder</Link>
-          <Link to='/artists'>Logout</Link>
+          <Link to='/artists'>Artists</Link>
         </nav>
       </header>
       <Routes>

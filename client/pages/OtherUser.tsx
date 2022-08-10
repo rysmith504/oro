@@ -7,4 +7,4 @@ const OtherUser: React.FC = () => {
   );
 };
 
-module.exports = OtherUser;
+export default OtherUser;

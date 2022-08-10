@@ -7,4 +7,4 @@ const EventDetails: React.FC = () => {
   );
 };
 
-module.exports = EventDetails;
+export default EventDetails;
