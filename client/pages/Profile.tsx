@@ -7,4 +7,4 @@ const Profile: React.FC = () => {
   );
 };
 
-module.exports = Profile;
+export default Profile;

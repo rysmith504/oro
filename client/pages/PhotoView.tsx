@@ -7,4 +7,4 @@ const PhotoView: React.FC = () => {
   );
 };
 
-module.exports = PhotoView;
+export default PhotoView;

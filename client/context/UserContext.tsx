@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { createContext, useState } from 'react';
+// import axios from 'axios';
+import React, { useState } from 'react';
 
-const UserContext = React.createContext();
+const UserContext = React.createContext({});
 
-function UserContextProvider({ children }) {
+const UserContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState([]);
 
   const appProps = {
@@ -13,5 +13,5 @@ function UserContextProvider({ children }) {
   return (
     <UserContext.Provider value={appProps}>{children}</UserContext.Provider>
   );
-}
+};
 export { UserContextProvider, UserContext };
