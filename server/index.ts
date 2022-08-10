@@ -1,17 +1,13 @@
 import path from 'path';
 import express from 'express';
-import axios from 'axios';
 
-import eventListingsRouter from './routes/eventListingsRouter';
-import artistsRouter from './routes/artists';
+import router from './routes/index';
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-//ROUTERS------------------------------
-app.use('/events', eventListingsRouter);
-app.use('/artists', artistsRouter);
+router(app);
 
 app.get('/*', (req, res) => {
   console.log('catchall');
@@ -21,7 +17,6 @@ app.get('/*', (req, res) => {
     }
   });
 });
-
 
 const PORT = 5000;
 
