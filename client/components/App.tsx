@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Outlet, Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import Profile from '../pages/Profile';
 import Notifications from '../pages/Notifications';
 import EventListings from '../pages/EventListings';
@@ -23,11 +23,11 @@ const App: React.FC = () => { // update React.FC, .FC deprecated?
         </nav>
       </header>
       <Routes>
-        <Route path='profile' element={<Profile />}/>
-        <Route path='notifications' element={<Notifications/>}/>
-        <Route path='eventListings' element={<EventListings/>}/>
-        <Route path='songFinder' element={<SongFinder/>}/>
-        <Route path='artists' element={<Artists/>}/>
+        <Route path='/profile' element={<Profile />}/>
+        <Route path='/notifications' element={<Notifications/>}/>
+        <Route path='/eventListings' element={<EventListings/>}/>
+        <Route path='/songFinder' element={<SongFinder/>}/>
+        <Route path='/artists' element={<Artists/>}/>
       </Routes>
     </div>
   );
