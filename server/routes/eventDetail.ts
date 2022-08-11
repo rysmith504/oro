@@ -8,8 +8,7 @@ eventDetailsRouter.get('/', (req, res) => {
     .get(
       `https://app.ticketmaster.com/discovery/v2/events.json?size=1&apikey=${process.env.TICKETMASTER_API_KEY}&id=${id}`
     )
-    .then((results) => {
-      const { data } = results;
+    .then(({ data }) => {
       res.status(200).send(data);
     })
     .catch((error) => console.error(error));
