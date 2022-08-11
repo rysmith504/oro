@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const eventListingsRouter = Router();
 
-console.log('hello');
+// console.log('hello');
 
 eventListingsRouter.get('/list', (req, res) => {
   // console.log(req.query)
@@ -16,7 +16,7 @@ eventListingsRouter.get('/list', (req, res) => {
   // .replace(/\s{1,}/g, "+")
   // .toLowerCase();
   const { keyword } = req.query;
-  console.log('KEYWROD',keyword);
+  // console.log('KEYWROD',keyword);
   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=10&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
     .then((responseObj) => {
       const dates = responseObj.data._embedded.events.filter((event) => {
@@ -24,10 +24,10 @@ eventListingsRouter.get('/list', (req, res) => {
       }).map(event => {
         return ([event.id, event.dates.start])
       })
-      console.log('DATES12' , dates);
-      console.log('RESPONSE OBJ GET', responseObj.data._embedded)
+      // console.log('DATES12' , dates);
+      // console.log('RESPONSE OBJ GET', responseObj.data._embedded)
       res.send({
-        
+
       })
       res.sendStatus(200);
     })

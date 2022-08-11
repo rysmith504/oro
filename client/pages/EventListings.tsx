@@ -12,7 +12,7 @@ const EventListings: React.FC = () => {
   // .toLowerCase();
 
   //EVENT LISTING URL
-  // https://www.ticketmaster.com/event/${event id number here}
+  // https://www.ticketmaster.com/event/${eventIdHere}
 
   const [ keyword, setKeyword ] = useState(`jane's addiction`);
   // console.log(keyword)
