@@ -7,7 +7,6 @@ var axios_1 = __importDefault(require("axios"));
 var express_1 = require("express");
 require('dotenv').config();
 var eventListingsRouter = (0, express_1.Router)();
-console.log('hello');
 eventListingsRouter.get('/list', function (req, res) {
     console.log(req.query);
     // const punctuationless = req.query.keyword
