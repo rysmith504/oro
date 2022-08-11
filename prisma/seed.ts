@@ -12,7 +12,8 @@ const generateSeed = async () => {
       fbId: 'https://www.facebook.com/bethany.ann.jones',
       instaId: 'https://www.instagram.com/plucky.puck/',
     },
-    ]
+    ],
+    skipDuplicates: true,
   });
 
   await prisma.artistFollowing.createMany({
@@ -72,7 +73,8 @@ const generateSeed = async () => {
       homepage: 'http://muse.mu/',
       image: 'https://s1.ticketm.net/dam/a/6e4/ee7b835f-6caf-48e7-9958-d766e0f656e4_1749681_RETINA_PORTRAIT_3_2.jpg'
     }
-    ]
+    ],
+    skipDuplicates: true,
   });
 
   await prisma.userEvents.createMany({
@@ -96,7 +98,8 @@ const generateSeed = async () => {
       userId: 1,
       eventAPIid: 'rZ7HnEZ1A3aOaA',
     },
-    ]
+    ],
+    skipDuplicates: true,
   });
 };
 

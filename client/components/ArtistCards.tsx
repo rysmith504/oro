@@ -1,23 +1,9 @@
 import React, { useNavigate } from 'react';
 import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import QuizIcon from '@mui/icons-material/Quiz';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LanguageIcon from '@mui/icons-material/Language';
-import {Box, Grid, Paper } from '../styles/material';
+import {
+  Box,	Grid,	Paper,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon,
+} from '../styles/material';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -56,7 +42,7 @@ const ArtistInfoCard = ({artistProps: { favArtist }}) => {
     wiki,
     youtube,
   } = favArtist;
-  
+
   const [expanded, setExpanded] = React.useState(false);
   // console.log(artist);
   const handleExpandClick = () => {
