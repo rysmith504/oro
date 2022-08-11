@@ -4,14 +4,19 @@ import axios from 'axios';
 
 import eventListingsRouter from './routes/eventListingsRouter';
 import artistsRouter from './routes/artists';
+import songFinderRouter from './routes/songFinder';
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
+
 
 //ROUTERS------------------------------
 app.use('/events', eventListingsRouter);
 app.use('/artists', artistsRouter);
+app.use('/songs', songFinderRouter);
 
 app.get('/*', (req, res) => {
   console.log('catchall');
