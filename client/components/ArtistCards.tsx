@@ -59,7 +59,7 @@ export default function ArtistInfoCard(props) {
     youtube,
   } = artist.favArtist;
   const [expanded, setExpanded] = React.useState(false);
-  console.log(artist);
+  // console.log(artist);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

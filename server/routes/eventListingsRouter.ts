@@ -7,8 +7,6 @@ require('dotenv').config();
 
 const eventListingsRouter = Router();
 
-console.log('hello');
-
 eventListingsRouter.get('/list', (req, res) => {
   console.log(req.query)
   // const punctuationless = req.query.keyword
