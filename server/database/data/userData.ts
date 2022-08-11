@@ -1,6 +1,6 @@
 import prisma from '../db';
 
-const createMany = await prisma.Users.createMany({
+const createMany = await prisma.users.createMany({
   data: [{
     fullName: 'Bethany Jones',
     email: 'betpetjones@gmail.com',

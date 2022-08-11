@@ -50,7 +50,6 @@ model ArtistFollowing {
   wiki String
   homepage String
   image String
-  events String
 }
 
 // Notifications Model

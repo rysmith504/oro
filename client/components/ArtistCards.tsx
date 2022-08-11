@@ -43,9 +43,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function ArtistInfoCard(props) {
-
-  const artist = props.artistProps;
+const ArtistInfoCard = ({artistProps: { favArtist }}) => {
   const {
     artistName,
     bio,
@@ -57,7 +55,8 @@ export default function ArtistInfoCard(props) {
     twitter,
     wiki,
     youtube,
-  } = artist.favArtist;
+  } = favArtist;
+  
   const [expanded, setExpanded] = React.useState(false);
   // console.log(artist);
   const handleExpandClick = () => {
@@ -147,4 +146,6 @@ export default function ArtistInfoCard(props) {
       </Collapse>
     </Card>
   );
-}
+};
+
+export default ArtistInfoCard;

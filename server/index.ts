@@ -6,6 +6,8 @@ import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
 
+import prisma from './database/db';
+
 const app = express();
 
 app.use(express.json());

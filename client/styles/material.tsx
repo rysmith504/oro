@@ -1,31 +1,29 @@
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import box from '@mui/material/Box';
+import drawer from '@mui/material/Drawer';
+import button from '@mui/material/Button';
+import list from '@mui/material/List';
+import divider from '@mui/material/Divider';
+import listitem from '@mui/material/ListItem';
+import listitembutton from '@mui/material/ListItemButton';
+import listitemicon from '@mui/material/ListItemIcon';
+import listitemtext from '@mui/material/ListItemText';
+import inboxicon from '@mui/icons-material/MoveToInbox';
+import mailicon from '@mui/icons-material/Mail';
+import container from '@mui/material/Container';
+import grid from '@mui/material/Grid';
+import paper from '@mui/material/Paper';
 
-module.exports = {
-  Box, 
-  Drawer, 
-  Button, 
-  List, 
-  Divider, 
-  ListItem, 
-  ListItemButton, 
-  ListItemIcon, 
-  ListItemText, 
-  InboxIcon, 
-  MailIcon, 
-  Container,
-  Grid,
-  Paper
-};
+export	const	Box	=	box;
+export	const	Drawer	=	drawer;
+export	const	Button	=	button;
+export	const	List	=	list;
+export	const	Divider	=	divider;
+export	const	ListItem	=	listitem;
+export	const	ListItemButton	=	listitembutton;
+export	const	ListItemIcon	=	listitemicon;
+export	const	ListItemText	=	listitemtext;
+export	const	InboxIcon	=	inboxicon;
+export	const	MailIcon	=	mailicon;
+export	const	Container	=	container;
+export	const	Grid	=	grid;
+export	const	Paper	=	paper;
