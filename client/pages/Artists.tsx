@@ -18,15 +18,15 @@ const Artists = () => {
       }
     })
       .then((artistData) => {
-        console.log('artistEvents', artistData.data[0]);
+        // console.log('artistEvents', artistData.data[0]);
         const artist = artistData.data[0];
         setArtistData((state) => {
           return { ...state, favArtist: artist };
         });
       })
       .catch((err) => {
-        console.log('artistEvents');
-        console.error(err);
+        // console.log('artistEvents');
+        // console.error(err);
       });
   };
 

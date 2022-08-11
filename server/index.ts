@@ -20,7 +20,6 @@ app.use('/songs', songFinderRouter);
 app.use('/eventDetails', eventDetailsRouter);
 
 app.get('/*', (req, res) => {
-  console.log('catchall');
   res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {
     if (err) {
       res.status(500).send(err);
