@@ -8,6 +8,8 @@ const SongFinder: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [blobURL, setBlobURL] = useState('');
   const [isBlocked, setIsBlocked] = useState(false);
+  const [blob, setBlob] = useState();
+  const [previewSource, setPreviewSource] = useState();
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({audio: true}, 
@@ -19,6 +21,16 @@ const SongFinder: React.FC = () => {
         // console.log("Permission Denied");
         setIsBlocked(false);
       });
+
+
+    if (previewSource && isRecording === false) {
+      axios.post('/songs', {
+        data: previewSource,
+      })
+        .then((data) => console.log('SUCCESS', data))
+        .catch((err) => console.error(err));
+    }
+
   });
 
   const start = () => {
@@ -36,45 +48,50 @@ const SongFinder: React.FC = () => {
   const stop = () => {
     Mp3Recorder.stop().getMp3()
       .then(([buffer, blob]) => {
-        const blobURL = URL.createObjectURL(blob);
+        // console.log(blob);
+        // const newBlob = new Blob([buffer], {type: 'audio/mp3'});
+        // const url = URL.createObjectURL(newBlob);
+        // console.log(url);
+        // const blobURL = URL.createObjectURL(blob);
 
-        const wavfromblob = new File([blob], 'incomingaudioclip.wav');
-        // console.log(wavfromblob);
-        setBlobURL(blobURL);
+        // const wavfromblob = new File([blob], 'incomingaudioclip.wav');
+        // console.log('WAV FILE', wavfromblob);
+        // setBlob(blob);
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = async () => {
+          setPreviewSource(reader.result);
+
+
+          // console.log(previewSource);
+        };
+        // setBlobURL(blobURL);
         setIsRecording(false);
-        sendAudioFile(wavfromblob)
+
+        
       })
       .catch((e) => console.log(e));
   };
 
 
-  const sendAudioFile = (file) => {
-    // console.log(blobURL);
-    const formData = new FormData();
-    formData.append('audio-file', file);
 
-    const config = { responseType: 'blob' };
-    axios.get(blobURL, config).then(response => {
-      let audioFile = new File([response.data], 'audiofile');    
-      // console.log(audioFile);
-      return axios.post('/songs', {
-        'blob': audioFile,
-      },
-      {
-        headers: {'Content-Type': audioFile.type}
-      })
-        .then((data) => console.log(data))
-        .catch((error) => console.error(error));   
-    });
-    // return axios.get('/songs', {
-    //   params: {
-    //     formData: formData
+  const sendAudioFile = () => {
+    // const form = new FormData();
+    // form.append("file", file, 'incomingAudio');
+    // console.log('FORM', form);
+    setBlobURL('dlkfadsfkla');
 
-    //   }
-    // })
-    //   .then((data) => console.log(data))
-    //   .catch((error) => console.error(error));
   };
+
+  // const fileData = () => {
+  //   console.log('BLOB', blob);
+
+  //   if (blob) {
+
+  //       console.log(previewSource);
+  //     };
+  //   }
+  // };
 
 
 
@@ -85,8 +102,8 @@ const SongFinder: React.FC = () => {
       <div>Hello SongFinder</div>
       <button onClick={start} disabled={isRecording}>RECORD</button>
       <button onClick={stop} disabled={!isRecording}>STOP</button>
-      <audio src={blobURL} controls="controls"/>
-      {/* <button onClick={() => sendAudioFile(blobURL)}>SEND TO API</button> */}
+      <audio src={previewSource} controls="controls"/>
+      <button onClick={() => sendAudioFile()}>SEND TO API</button>
     </div>
   );
 };
