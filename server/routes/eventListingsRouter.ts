@@ -8,19 +8,9 @@ require('dotenv').config();
 const eventListingsRouter = Router();
 
 eventListingsRouter.get('/list', (req, res) => {
-  // console.log(req.query)
-  // const punctuationless = req.query.keyword
-  // .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, " ")
-  // .replace(/\s{1,}/g, "+")
-  // .toLowerCase();
   const { keyword } = req.query;
-  // console.log('KEYWROD',keyword);
   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=10&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
   .then((responseObj) => {
-      // console.log(responseObj.data._embedded.events.filter((event) => {
-      //   return event._embedded;
-      // }))
-      console.log('RESPONSE OBJ GET', inspect(responseObj.data._embedded.events[9]._embedded, {depth: null}))
       let venueInfo;
       const events = responseObj.data._embedded.events.filter((event: any) => {
         return event._embedded
@@ -54,15 +44,11 @@ eventListingsRouter.get('/list', (req, res) => {
             return venueInfo;
           })
 
-        console.log('EVENT LINE 31', event, count)
-        // console.log('NAME', event._embedded.venues[count].name)
           newDataObj.venueInfo = venueInfo;
           newDataObj.artistInfo = artistInfo
-    console.log('NEWDATAOBJ', inspect(newDataObj, {depth: null}));
 
     return newDataObj
       })
-      console.log('DATES12' , events);
       res.send({
         events
       })
