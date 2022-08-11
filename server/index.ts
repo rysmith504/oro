@@ -2,7 +2,7 @@ import path from 'path';
 import express from 'express';
 
 import eventListingsRouter from './routes/eventListingsRouter';
-import artistsRouter from './routes/artists';
+import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
 
@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 //ROUTERS------------------------------
 app.use('/events', eventListingsRouter);
-app.use('/artists', artistsRouter);
+app.use('/faveArtists', artistsRouter);
 app.use('/songs', songFinderRouter);
 app.use('/eventDetails', eventDetailsRouter);
 
