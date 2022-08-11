@@ -1,33 +1,45 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { Link, Outlet, Routes, Route, useNavigate } from 'react-router-dom';
-import { ArtistContext } from '../context/ArtistContext'; // imports context
-import AccordionCard from '../components/Accordian';
+import ArtistInfoCard from '../components/ArtistCards';
+import axios from 'axios';
 
 const Artists = () => {
-  const {artist, setArtist} = useContext(ArtistContext);
-  
-  const updateArtist = () => {
-    setArtist({
-      id: 1044650045,
-      userId: 348934234234758923745,
-      artistName: 'Mariah',
-    });
+  const [artists, setArtistData] = useState(
+    {
+      artist: '',
+      favArtist: '',
+    }
+  );
+
+  const getFaveArtists = (name) => {
+    name = name | 'Adele';
+    axios.get('/favArtists', {
+      params: {
+        artistName: name
+      }
+    })
+      .then((artistData) => {
+        console.log('artistEvents', artistData.data[0]);
+        const artist = artistData.data[0];
+        setArtistData((state) => {
+          return { ...state, favArtist: artist };
+        });
+      })
+      .catch((err) => {
+        console.log('artistEvents');
+        console.error(err);
+      });
   };
+
   useEffect(() => {
-    updateArtist();
+    getFaveArtists('Beyonce');
   }, []);
-  
+
   return (
     <div>
       <div>Hello ARtists</div>
-      <AccordionCard />
+      <ArtistInfoCard artistProps={artists}/>
     </div>
   );
 };
 
 export default Artists;
-// const navigate = useNavigate();
-// {artist.artistName}
-// <button onClick={() => {
-//   navigate('/');
-// }}>Go home</button>
