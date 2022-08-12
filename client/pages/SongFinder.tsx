@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
+import { Accordion, AccordionSummary, AccordionDetails} from '@mui/material'
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128});
 const SongFinder: React.FC = () => {
@@ -24,7 +25,7 @@ const SongFinder: React.FC = () => {
 
 
 
-  });
+  }, []);
   useEffect(() => {
 
     axios.post('/songs', {
@@ -71,7 +72,14 @@ const SongFinder: React.FC = () => {
   return (
     <div>
       <div>Hello SongFinder</div>
-      <div>{song}</div>
+      <Accordion>
+        <AccordionSummary> Song Name
+          <AccordionDetails>
+            <div>{song}</div>
+          </AccordionDetails>
+        </AccordionSummary>
+      </Accordion>
+
       <button onClick={start} disabled={isRecording}>RECORD</button>
       <button onClick={stop} disabled={!isRecording}>STOP</button>
       <audio src={previewSource} controls="controls"/>
