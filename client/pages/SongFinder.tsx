@@ -22,7 +22,7 @@ const SongFinder: React.FC = () => {
       });
 
 
-    if (!song) {
+    if (!song.length) {
       axios.post('/songs', {
         data: previewSource,
       })
@@ -41,6 +41,7 @@ const SongFinder: React.FC = () => {
     } else {
       Mp3Recorder.start()
         .then(() => {
+
           setIsRecording(true);
         })
         .catch((e) => console.error(e));
@@ -54,8 +55,10 @@ const SongFinder: React.FC = () => {
         reader.readAsDataURL(blob);
         reader.onloadend = async () => {
           setPreviewSource(reader.result);
+
         };
         setIsRecording(false);
+        setSong('');
       })
       .catch((e) => console.log(e));
   };
