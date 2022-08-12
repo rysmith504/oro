@@ -8,7 +8,7 @@ import EventCards from './EventCards';
 
 export default function AccordionCard(props) {
   const {artist, favArtist, getFaveArtists} = props.artistProps;
-  console.log(artist);
+  // console.log(artist);
   const {artistName} = artist;
   const [expanded, setExpanded] = React.useState<string | false>(false);
 

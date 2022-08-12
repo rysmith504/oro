@@ -31,6 +31,13 @@ import quizIcon from '@mui/icons-material/Quiz';
 import instagramIcon from '@mui/icons-material/Instagram';
 import languageIcon from '@mui/icons-material/Language';
 
+export const Item = styled(paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'left',
+  color: theme.palette.text.secondary,
+}));
 
 export	const	Box	=	box;
 export	const	Drawer	=	drawer;

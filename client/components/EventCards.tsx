@@ -17,14 +17,14 @@ const Img = styled('img')({
 
 const EventCards = () => {
   const getArtist = () => {
-    console.log('get Artist');
+    // console.log('get Artist');
     axios.get('/artists', {
       params: {
         artistName: 'Adele'
       }
     })
       .then((artistData) => {
-        console.log(artistData.data.attractions);
+        // console.log(artistData.data.attractions);
       })
       .catch((err) => {
         console.error(err);

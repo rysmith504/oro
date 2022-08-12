@@ -2,17 +2,9 @@ import React, { useNavigate } from 'react';
 import { styled } from '@mui/material/styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import {
-  Box,	Grid,	Paper,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon,
+  Box,	Grid,	Paper,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, Item
 } from '../styles/material';
 
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'left',
-  color: theme.palette.text.secondary,
-}));
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -29,7 +21,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const ArtistInfoCard = ({artistProps: { favArtist }}) => {
+const ArtistInfoCard = ({artistProps}) => {
+  // console.log(artistProps);
   const {
     artistName,
     bio,
@@ -41,7 +34,7 @@ const ArtistInfoCard = ({artistProps: { favArtist }}) => {
     twitter,
     wiki,
     youtube,
-  } = favArtist;
+  } = artistProps;
 
   const [expanded, setExpanded] = React.useState(false);
   // console.log(artist);
@@ -61,10 +54,8 @@ const ArtistInfoCard = ({artistProps: { favArtist }}) => {
         alt={artistName}
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
+        <Typography noWrap variant="body2" color="text.secondary">
+          {bio}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

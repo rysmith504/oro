@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 //ROUTERS------------------------------
 app.use('/events', eventListingsRouter);
-app.use('/faveArtists', artistsRouter);
+app.use('/favArtists', artistsRouter);
 app.use('/songs', songFinderRouter);
 app.use('/eventDetails', eventDetailsRouter);
 
