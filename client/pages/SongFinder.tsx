@@ -33,9 +33,15 @@ const SongFinder: React.FC = () => {
       })
         .then((results) => {
           setSong(results.data.title);
+<<<<<<< HEAD
           console.log('SUCCESS', results);
         })
         .catch((err) => console.error(err));
+=======
+          console.log('SUCCESS', results)
+        })
+        .catch((err) => console.error(err))
+>>>>>>> 2dfa2758071606a1087d369cebc213d49385d89b
     }
   }, [song, previewSource]);
 
