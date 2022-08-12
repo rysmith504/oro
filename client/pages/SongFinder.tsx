@@ -10,7 +10,7 @@ const SongFinder: React.FC = () => {
   const [isBlocked, setIsBlocked] = useState(false);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({audio: true}, 
+    navigator.mediaDevices.getUserMedia({audio: true},
       () => {
         // console.log('Permission Granted');
         setIsBlocked(true);
@@ -23,7 +23,7 @@ const SongFinder: React.FC = () => {
 
   const start = () => {
     if (isBlocked) {
-      console.log('Permission Denied');
+      // console.log('Permission Denied');
     } else {
       Mp3Recorder.start()
         .then(() => {
@@ -55,7 +55,7 @@ const SongFinder: React.FC = () => {
 
     const config = { responseType: 'blob' };
     axios.get(blobURL, config).then(response => {
-      let audioFile = new File([response.data], 'audiofile');    
+      let audioFile = new File([response.data], 'audiofile');
       // console.log(audioFile);
       return axios.post('/songs', {
         'blob': audioFile,
@@ -64,7 +64,7 @@ const SongFinder: React.FC = () => {
         headers: {'Content-Type': audioFile.type}
       })
         .then((data) => console.log(data))
-        .catch((error) => console.error(error));   
+        .catch((error) => console.error(error));
     });
     // return axios.get('/songs', {
     //   params: {
