@@ -1,11 +1,11 @@
-import React, { useNavigate } from 'react';
+import React, { useNavigate, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import {
-  Box,	Grid,	Paper,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, Item
+  Box,	Grid,	Paper,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, Item, MusicOffIcon
 } from '../styles/material';
 import EventCards from './EventCards';
-
+import axios from 'axios';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -23,6 +23,13 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const ArtistInfoCard = ({artistProps}) => {
   // console.log(artistProps);
+  const [events, setEvents] = useState(
+    {
+      name: 'No events found',
+      image: '/images/patrick-perkins-pay-artists.jpg',
+      description: 'There are currently no events found for this artist.'
+    }
+  );
   const {
     artistName,
     bio,
@@ -37,19 +44,29 @@ const ArtistInfoCard = ({artistProps}) => {
   } = artistProps;
 
   const socials = {
-    youtube: [youtube, <YouTubeIcon/>],
-    twitter: [twitter, <TwitterIcon/>],
-    facebook: [facebook, <FacebookIcon/>],
-    instagram: [instagram, <InstagramIcon/>],
-    homepage: [homepage, <LanguageIcon/>],
-    itunes: [itunes, <MusicNoteIcon/>],
-    wiki: [wiki, <QuizIcon/>],
+    youtube: [youtube, <YouTubeIcon key={youtube}/>],
+    twitter: [twitter, <TwitterIcon key={twitter}/>],
+    facebook: [facebook, <FacebookIcon key={facebook}/>],
+    instagram: [instagram, <InstagramIcon key={instagram}/>],
+    homepage: [homepage, <LanguageIcon key={homepage}/>],
+    itunes: [itunes, <MusicNoteIcon key={itunes}/>],
+    wiki: [wiki, <QuizIcon key={wiki}/>],
   };
   const [expanded, setExpanded] = React.useState(false);
   // console.log(artist);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const getArtistEvents = (artist) => {
+    axios.get('/events/list', { params: { keyword: artist } })
+      .then((responseObj) => {
+        console.log(responseObj);
+        setEvents(responseObj.data.events);
+      })
+      .catch(err => console.error(err));
+  };
+
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -73,7 +90,10 @@ const ArtistInfoCard = ({artistProps}) => {
         </IconButton>
         <ExpandMore
           expand={expanded}
-          onClick={handleExpandClick}
+          onClick={()=>{
+            handleExpandClick();
+            getArtistEvents(artistName);
+          }}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -103,7 +123,7 @@ const ArtistInfoCard = ({artistProps}) => {
             </Box>
           </Typography>
           <Typography paragraph>Events:</Typography>
-          <EventCards />
+          <EventCards events={events}/>
         </CardContent>
       </Collapse>
     </Card>

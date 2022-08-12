@@ -30,6 +30,9 @@ import facebookIcon from '@mui/icons-material/Facebook';
 import quizIcon from '@mui/icons-material/Quiz';
 import instagramIcon from '@mui/icons-material/Instagram';
 import languageIcon from '@mui/icons-material/Language';
+import musicOffIcon from '@mui/icons-material/MusicOff';
+import buttonBase from '@mui/material/ButtonBase';
+import pushPinIcon from '@mui/icons-material/PushPin';
 
 export const Item = styled(paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
@@ -69,3 +72,6 @@ export	const	FacebookIcon	=	facebookIcon;
 export	const	QuizIcon	=	quizIcon;
 export	const	InstagramIcon	=	instagramIcon;
 export	const	LanguageIcon	=	languageIcon;
+export const MusicOffIcon = musicOffIcon;
+export const ButtonBase = buttonBase;
+export const PushPinIcon = pushPinIcon;

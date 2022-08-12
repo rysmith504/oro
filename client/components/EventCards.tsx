@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
-import PushPinIcon from '@mui/icons-material/PushPin';
 import axios from 'axios';
+
+import { Grid,	Paper,	Typography, MusicOffIcon, ButtonBase, PushPinIcon
+} from '../styles/material';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -15,25 +13,12 @@ const Img = styled('img')({
 });
 
 
-const EventCards = () => {
-  const getArtist = () => {
-    console.log('get Artist');
-    axios.get('/artists', {
-      params: {
-        artistName: 'Adele'
-      }
-    })
-      .then((artistData) => {
-        console.log(artistData.data.attractions);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+const EventCards = (props) => {
+  const { events } = props;
+  const { name, image, description } = events;
 
-  useEffect(() => {
-    getArtist();
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   return (
     <Paper
@@ -49,14 +34,19 @@ const EventCards = () => {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="alt tag" src="/images/concert.jpg" />
+            <Img alt="alt tag" src={image} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
+              {
+                name === 'No events found'
+                  ? <Typography variant="h6"><MusicOffIcon/>{name}</Typography>
+                  : <Typography variant="h6">{name}</Typography>
+              }
               <Typography variant="body2" gutterBottom>
-                Event description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {description}
               </Typography>
             </Grid>
           </Grid>
