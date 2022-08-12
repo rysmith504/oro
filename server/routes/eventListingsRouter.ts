@@ -1,5 +1,3 @@
-import path from 'path'
-import expres from 'express'
 import axios from 'axios'
 import { Router } from 'express'
 import { inspect } from 'node:util'
@@ -9,15 +7,17 @@ const eventListingsRouter = Router();
 
 eventListingsRouter.get('/list', (req, res) => {
   const { keyword } = req.query;
-  axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=10&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
+  axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=5&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
   .then((responseObj) => {
       let venueInfo;
+      console.log('INSPECT', inspect(responseObj.data, {depth: null}))
       const events = responseObj.data._embedded.events.filter((event: any) => {
         return event._embedded
       }).map((event) => {
         let newDataObj: any = {
           eventDate: event.dates.start.dateTime,
           eventId: event.id,
+          eventName: event.name
         };
         const artistInfo = event._embedded.attractions.map(attraction => {
           const artistInfo = {
