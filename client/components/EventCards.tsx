@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
-
+import moment from 'moment';
 import { Grid,	Paper,	Typography, MusicOffIcon, ButtonBase, PushPinIcon
 } from '../styles/material';
 
@@ -13,9 +13,19 @@ const Img = styled('img')({
 });
 
 
-const EventCards = (props) => {
-  const { events } = props;
-  const { name, image, description } = events;
+const EventCards = ({events}) => {
+
+  let date = events.dates.start.dateTime;
+  date = moment(date).add(1, 'day').format('MMMM Do YYYY')}
+  const image = events.images[0].url;
+
+  console.log(events);
+
+  const {
+    name,
+    url,
+    info,
+  } = events;
 
   // useEffect(() => {
   // }, []);
@@ -46,7 +56,14 @@ const EventCards = (props) => {
                   : <Typography variant="h6">{name}</Typography>
               }
               <Typography variant="body2" gutterBottom>
-                {description}
+                {date}
+                {info}
+                {url}
+                {/* {venues.map((venue) => {
+                  return (
+                    <p key={venue.id}>{venue.name} {venue.address} {venue.city.name}, {venue.state.name}</p>
+                  );
+                })} */}
               </Typography>
             </Grid>
           </Grid>

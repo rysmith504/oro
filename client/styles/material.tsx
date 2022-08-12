@@ -33,6 +33,9 @@ import languageIcon from '@mui/icons-material/Language';
 import musicOffIcon from '@mui/icons-material/MusicOff';
 import buttonBase from '@mui/material/ButtonBase';
 import pushPinIcon from '@mui/icons-material/PushPin';
+import localActivityIcon from '@mui/icons-material/LocalActivity';
+import calendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import infoIcon from '@mui/icons-material/Info';
 
 export const Item = styled(paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',

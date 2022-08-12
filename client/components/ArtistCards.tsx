@@ -26,11 +26,12 @@ const ArtistInfoCard = ({artistProps}) => {
   // console.log(artistProps);
   const [expanded, setExpanded] = React.useState(false);
   const [events, setEvents] = useState(
-    {
+    [{
       name: 'No events found',
       image: '/images/patrick-perkins-pay-artists.jpg',
-      description: 'There are currently no events found for this artist.'
-    }
+      description: 'There are currently no events found for this artist.',
+      id: 1001,
+    }]
   );
   const {
     artistName,
@@ -74,14 +75,6 @@ const ArtistInfoCard = ({artistProps}) => {
 
     console.log(events);
   };
-
-  // const {
-  //   name,
-  //   dates.start.dateTime,
-  //   url,
-  //   images[0].url,
-  //   venues
-  // } = events;
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -137,8 +130,18 @@ const ArtistInfoCard = ({artistProps}) => {
               </Grid>
             </Box>
           </Typography>
-          <Typography paragraph>Events:</Typography>
-          <EventCards events={events}/>
+          <Grid>
+            {
+              events.length > 1
+                ? <CardContent id={artistName}>
+                  <Typography paragraph>Events:</Typography>
+                  { events.map((eventObj) => {
+                    return <EventCards events={eventObj} key={eventObj.id}/>;
+                  })}
+                </CardContent>
+                : <Typography paragraph>No Events Found</Typography>
+            }
+          </Grid>
         </CardContent>
       </Collapse>
     </Card>
