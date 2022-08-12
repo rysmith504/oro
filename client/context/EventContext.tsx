@@ -1,19 +1,26 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { EventDetailsType } from '../types';
-
-const EventContext = React.createContext({});
+interface EventContextState {
+  eventDetails: EventDetailsType | undefined;
+  setEventDetails: React.Dispatch<
+    React.SetStateAction<EventDetailsType | undefined>
+  >;
+  getEventDetails: (id: string) => EventDetailsType | undefined;
+}
+const EventContext = React.createContext({} as EventContextState);
 
 const EventContextProvider = ({ children }) => {
   const [eventDetails, setEventDetails] = useState<EventDetailsType>();
 
-  const getEventDetails = (id: string): EventDetailsType => {
+  const getEventDetails = (id: string) => {
     axios
       .get('/eventDetails', { params: { id } })
       .then(({ data }) => {
-        setEventDetails(response.data.hits);
+        setEventDetails(data);
       })
       .catch((err) => console.error(err));
+    return eventDetails;
   };
 
   const appProps = {

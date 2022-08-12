@@ -27,17 +27,17 @@ root.render(
     <Grid container>
       <Grid item xs={8} md={12}>
         <Item>
-          <EventContextProvider>
+          {/* <EventContextProvider>
             <UserContextProvider>
-              <ArtistContextProvider>
-                <BrowserRouter>
-                  <Routes>
-                    <Route path='*' element={<App />} />
-                  </Routes>
-                </BrowserRouter>
-              </ArtistContextProvider>
+              <ArtistContextProvider> */}
+          <BrowserRouter>
+            <Routes>
+              <Route path='*' element={<App />} />
+            </Routes>
+          </BrowserRouter>
+          {/* </ArtistContextProvider>
             </UserContextProvider>
-          </EventContextProvider>
+          </EventContextProvider> */}
         </Item>
       </Grid>
     </Grid>
