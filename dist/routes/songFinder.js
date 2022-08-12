@@ -66,7 +66,7 @@ songFinderRouter.post('/', function (req, res) { return __awaiter(void 0, void 0
                             'return': 'apple_music,spotify',
                         })
                             .then(function (data) {
-                            console.log(data.data.result);
+                            // console.log(data.data.result);
                             res.status(200).send(data.data.result);
                         })
                             .catch(function (err) { return res.sendStatus(500); });

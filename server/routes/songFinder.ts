@@ -25,14 +25,14 @@ songFinderRouter.post('/', async (req, res) => {
       .then((uploadResponse) => {
         // console.log(uploadResponse);
         axios.post('https://api.audd.io/', {
-      
+
           'api_token': process.env.AUDD_TOKEN,
           'url': uploadResponse.secure_url,
           'return': 'apple_music,spotify',
-          
+
         })
           .then((data) => {
-            console.log(data.data.result)
+            // console.log(data.data.result);
             res.status(200).send(data.data.result);
           })
           .catch((err) => res.sendStatus(500));
