@@ -22,7 +22,12 @@ const SongFinder: React.FC = () => {
       });
 
 
+
+
+  });
+  useEffect(() => {
     if (!song.length) {
+
       axios.post('/songs', {
         data: previewSource,
       })
@@ -30,10 +35,9 @@ const SongFinder: React.FC = () => {
           setSong(results.data.title);
           console.log('SUCCESS', results)
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
     }
-
-  });
+  }, [song, previewSource]);
 
   const start = () => {
     if (isBlocked) {
