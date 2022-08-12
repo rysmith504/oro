@@ -4,7 +4,7 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import {
   Box,	Grid,	Paper,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, Item
 } from '../styles/material';
-
+import EventCards from './EventCards';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -36,6 +36,15 @@ const ArtistInfoCard = ({artistProps}) => {
     youtube,
   } = artistProps;
 
+  const socials = {
+    youtube: [youtube, <YouTubeIcon/>],
+    twitter: [twitter, <TwitterIcon/>],
+    facebook: [facebook, <FacebookIcon/>],
+    instagram: [instagram, <InstagramIcon/>],
+    homepage: [homepage, <LanguageIcon/>],
+    itunes: [itunes, <MusicNoteIcon/>],
+    wiki: [wiki, <QuizIcon/>],
+  };
   const [expanded, setExpanded] = React.useState(false);
   // console.log(artist);
   const handleExpandClick = () => {
@@ -81,44 +90,20 @@ const ArtistInfoCard = ({artistProps}) => {
           <Typography paragraph>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
-                <Grid item>
-                  <Item>
-                    <a href={youtube}><YouTubeIcon/></a>
-                  </Item>
-                </Grid>
-                <Grid item>
-                  <Item>
-                    <a href={twitter}><TwitterIcon/></a>
-                  </Item>
-                </Grid>
-                <Grid item>
-                  <Item>
-                    <a href={facebook}><FacebookIcon/></a>
-                  </Item>
-                </Grid>
-                <Grid item>
-                  <Item>
-                    <a href={instagram}><InstagramIcon/></a>
-                  </Item>
-                </Grid>
-                <Grid item>
-                  <Item>
-                    <a href={homepage}><LanguageIcon/></a>
-                  </Item>
-                </Grid>
-                <Grid item>
-                  <Item>
-                    <a href={itunes}><MusicNoteIcon/></a>
-                  </Item>
-                </Grid>
-                <Grid item>
-                  <Item>
-                    <a href={wiki}><QuizIcon/></a>
-                  </Item>
-                </Grid>
+                {Object.keys(socials).map((social) => {
+                  return (
+                    <Grid item key={social}>
+                      <Item>
+                        <a href={socials[social][0]}>{socials[social][1]}</a>
+                      </Item>
+                    </Grid>
+                  );
+                })}
               </Grid>
             </Box>
           </Typography>
+          <Typography paragraph>Events:</Typography>
+          <EventCards />
         </CardContent>
       </Collapse>
     </Card>
