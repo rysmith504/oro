@@ -8,6 +8,7 @@ const SongFinder: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
   const [previewSource, setPreviewSource] = useState();
+  const [song, setSong] = useState('');
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({audio: true}, 
@@ -21,11 +22,14 @@ const SongFinder: React.FC = () => {
       });
 
 
-    if (previewSource && isRecording === false) {
+    if (!song) {
       axios.post('/songs', {
         data: previewSource,
       })
-        .then((data) => console.log('SUCCESS', data))
+        .then((results) => {
+          setSong(results.data.title);
+          console.log('SUCCESS', results)
+        })
         .catch((err) => console.error(err));
     }
 
@@ -64,6 +68,7 @@ const SongFinder: React.FC = () => {
   return (
     <div>
       <div>Hello SongFinder</div>
+      <div>{song}</div>
       <button onClick={start} disabled={isRecording}>RECORD</button>
       <button onClick={stop} disabled={!isRecording}>STOP</button>
       <audio src={previewSource} controls="controls"/>
