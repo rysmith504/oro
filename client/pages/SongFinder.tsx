@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
-import { Accordion, AccordionSummary, AccordionDetails} from '@mui/material'
+import { Accordion, AccordionSummary, AccordionDetails, Grid, Fab} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Person, MusicNote, LibraryMusic, Lyrics }from '@mui/icons-material';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128});
 const SongFinder: React.FC = () => {
@@ -10,6 +12,8 @@ const SongFinder: React.FC = () => {
   const [isBlocked, setIsBlocked] = useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [song, setSong] = useState('');
+  const [artist, setArtist] = useState('');
+  const [albumTitle, setAlbumTitle] = useState('');
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({audio: true},
@@ -26,6 +30,7 @@ const SongFinder: React.FC = () => {
 
 
   }, []);
+
   useEffect(() => {
 
     axios.post('/songs', {
@@ -33,6 +38,8 @@ const SongFinder: React.FC = () => {
     })
       .then((results) => {
         setSong(results.data.title);
+        setArtist(results.data.artist);
+        setAlbumTitle(results.data.apple_music.albumName);
         console.log('SUCCESS', results);
       })
       .catch((err) => console.error(err));
@@ -72,17 +79,51 @@ const SongFinder: React.FC = () => {
   return (
     <div>
       <div>Hello SongFinder</div>
-      <Accordion>
-        <AccordionSummary> Song Name
-          <AccordionDetails>
-            <div>{song}</div>
-          </AccordionDetails>
-        </AccordionSummary>
-      </Accordion>
+      
+      <div>
+        <Grid container>
+          <Grid item xs = {4}></Grid>
+          <Grid item xs ={4}>
+            <Accordion expanded={true} >
+              <AccordionSummary>{<MusicNote></MusicNote>} Song Name
+              </AccordionSummary>
+              <AccordionDetails>
+                {song}
+              </AccordionDetails>
+            </Accordion>
 
-      <button onClick={start} disabled={isRecording}>RECORD</button>
-      <button onClick={stop} disabled={!isRecording}>STOP</button>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<Person></Person>} Artist 
+              </AccordionSummary>
+              <AccordionDetails>
+                {artist}
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<Lyrics></Lyrics>} Lyrics
+              </AccordionSummary>
+              <AccordionDetails>
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<LibraryMusic></LibraryMusic>} Album 
+              </AccordionSummary>
+              <AccordionDetails>
+                {albumTitle}
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+          <Grid item xs = {4}></Grid>
+        </Grid>
+      </div>
+
       <audio src={previewSource} controls="controls"/>
+
+      <div>
+        <Fab onMouseDown={start} onMouseUp={stop}>Record</Fab>
+      </div>
     </div>
   );
 };
