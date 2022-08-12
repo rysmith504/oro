@@ -1,7 +1,7 @@
 import path from 'path'
 import expres from 'express'
 import axios from 'axios'
-import { Router } from 'express' 
+import { Router } from 'express'
 import { inspect } from 'node:util'
 require('dotenv').config();
 
@@ -14,7 +14,7 @@ eventListingsRouter.get('/list', (req, res) => {
       let venueInfo;
       const events = responseObj.data._embedded.events.filter((event: any) => {
         return event._embedded
-      }).map((event, count) => {
+      }).map((event) => {
         let newDataObj: any = {
           eventDate: event.dates.start.dateTime,
           eventId: event.id,
@@ -27,7 +27,7 @@ eventListingsRouter.get('/list', (req, res) => {
           }
           return artistInfo;
           })
-        
+
           const venueInfo = event._embedded.venues.map(venue => {
             const venueInfo = {
               venueId: venue.id,
@@ -35,8 +35,8 @@ eventListingsRouter.get('/list', (req, res) => {
               address: venue.address,
               city: venue.city.name,
               state: venue.state.name,
-              country: venue.country.name,
               stateCode: venue.stateCode,
+              country: venue.country.name,
               postalCode: venue.postalCode,
               location: venue.location,
               venueImages: venue.images
