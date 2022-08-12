@@ -34,23 +34,3 @@ const Artists = () => {
 };
 
 export default Artists;
-
-// const getFaveArtists = (name) => {
-//   name = name | 'Adele';
-//   axios.get('/favArtists', {
-//     params: {
-//       artistName: name
-//     }
-//   })
-//     .then((artistData) => {
-//       console.log('artistEvents', artistData.data[0]);
-//       const artist = artistData.data;
-//       setArtistData((state) => {
-//         return { ...state, favArtist: artist };
-//       });
-//     })
-//     .catch((err) => {
-//       // console.log('artistEvents');
-//       // console.error(err);
-//     });
-// };

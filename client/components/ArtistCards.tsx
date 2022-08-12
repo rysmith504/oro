@@ -6,6 +6,7 @@ import {
 } from '../styles/material';
 import EventCards from './EventCards';
 import axios from 'axios';
+import { Portal } from 'react-portal';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -23,6 +24,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const ArtistInfoCard = ({artistProps}) => {
   // console.log(artistProps);
+  const [expanded, setExpanded] = React.useState(false);
   const [events, setEvents] = useState(
     {
       name: 'No events found',
@@ -52,21 +54,34 @@ const ArtistInfoCard = ({artistProps}) => {
     itunes: [itunes, <MusicNoteIcon key={itunes}/>],
     wiki: [wiki, <QuizIcon key={wiki}/>],
   };
-  const [expanded, setExpanded] = React.useState(false);
   // console.log(artist);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const getArtistEvents = (artist) => {
-    axios.get('/events/list', { params: { keyword: artist } })
+    const noSpecialChars: string = artist
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    axios.get('/favArtists/events', { params: { keyword: noSpecialChars } })
       .then((responseObj) => {
-        console.log(responseObj);
+        console.log(responseObj.data.events);
         setEvents(responseObj.data.events);
       })
+      .then(() => {
+        console.log(events);
+      })
       .catch(err => console.error(err));
+
+    console.log(events);
   };
 
+  // const {
+  //   name,
+  //   dates.start.dateTime,
+  //   url,
+  //   images[0].url,
+  //   venues
+  // } = events;
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -101,7 +116,7 @@ const ArtistInfoCard = ({artistProps}) => {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+        <CardContent id={artistName}>
           <Typography paragraph>Bio:</Typography>
           <Typography paragraph>
             {bio}
