@@ -11,7 +11,7 @@ const SongFinder: React.FC = () => {
   const [song, setSong] = useState('');
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({audio: true}, 
+    navigator.mediaDevices.getUserMedia({audio: true},
       () => {
         // console.log('Permission Granted');
         setIsBlocked(true);
@@ -41,7 +41,7 @@ const SongFinder: React.FC = () => {
 
   const start = () => {
     if (isBlocked) {
-      console.log('Permission Denied');
+      // console.log('Permission Denied');
     } else {
       Mp3Recorder.start()
         .then(() => {
@@ -66,9 +66,6 @@ const SongFinder: React.FC = () => {
       })
       .catch((e) => console.log(e));
   };
-
-
-
 
 
 

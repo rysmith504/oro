@@ -2,9 +2,11 @@ import path from 'path';
 import express from 'express';
 
 import eventListingsRouter from './routes/eventListingsRouter';
-import artistsRouter from './routes/artists';
+import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
+
+import prisma from './database/db';
 
 const app = express();
 
@@ -16,12 +18,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 //ROUTERS------------------------------
 app.use('/events', eventListingsRouter);
-app.use('/artists', artistsRouter);
+app.use('/favArtists', artistsRouter);
 app.use('/songs', songFinderRouter);
 app.use('/eventDetails', eventDetailsRouter);
 
 app.get('/*', (req, res) => {
-  console.log('catchall');
   res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {
     if (err) {
       res.status(500).send(err);
