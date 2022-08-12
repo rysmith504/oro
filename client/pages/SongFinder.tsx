@@ -26,24 +26,17 @@ const SongFinder: React.FC = () => {
 
   });
   useEffect(() => {
-    if (!song.length) {
 
-      axios.post('/songs', {
-        data: previewSource,
+    axios.post('/songs', {
+      data: previewSource,
+    })
+      .then((results) => {
+        setSong(results.data.title);
+        console.log('SUCCESS', results);
       })
-        .then((results) => {
-          setSong(results.data.title);
-<<<<<<< HEAD
-          console.log('SUCCESS', results);
-        })
-        .catch((err) => console.error(err));
-=======
-          console.log('SUCCESS', results)
-        })
-        .catch((err) => console.error(err))
->>>>>>> 2dfa2758071606a1087d369cebc213d49385d89b
-    }
-  }, [song, previewSource]);
+      .catch((err) => console.error(err));
+
+  }, [previewSource]);
 
   const start = () => {
     if (isBlocked) {
