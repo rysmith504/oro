@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import axios from 'axios';
-import EventCardDetails from '../components/EventCardDetails'
+import EventCardDetails from '../components/EventCardDetails';
 
 
 const Img = styled('img')({
@@ -31,19 +31,20 @@ const EventCards = ({setEvents, events, keyword}) => {
       }}
     >
       <Grid container spacing={2}>
-      <div>
-        {
-          events.map((event) => (
-            <EventCardDetails
-              events={events}
-              setEvents={setEvents}
-              keyword={keyword}
-              event={event}
-            
-            />
-          ))
-        }
-      </div>
+        <div>
+          {
+            events.map((event) => (
+              <EventCardDetails
+                events={events}
+                setEvents={setEvents}
+                keyword={keyword}
+                event={event}
+                key={keyword}
+
+              />
+            ))
+          }
+        </div>
 
       </Grid>
     </Paper>

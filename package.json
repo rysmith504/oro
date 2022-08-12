@@ -1,5 +1,5 @@
 {
-  "name": "oro",
+  "name": "vibes",
   "version": "1.0.0",
   "description": "",
   "main": "README.md",
@@ -35,6 +35,8 @@
     "@prisma/client": "^4.1.1",
     "@typescript-eslint/parser": "^5.32.0",
     "axios": "^0.27.2",
+    "cloudinary": "^1.30.1",
+    "cloudinary-react": "^1.8.1",
     "css-loader": "^6.7.1",
     "dotenv": "^16.0.1",
     "eslint-config-airbnb-base": "^15.0.0",

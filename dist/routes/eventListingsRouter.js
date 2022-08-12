@@ -14,7 +14,7 @@ eventListingsRouter.get('/list', function (req, res) {
         var venueInfo;
         var events = responseObj.data._embedded.events.filter(function (event) {
             return event._embedded;
-        }).map(function (event, count) {
+        }).map(function (event) {
             var newDataObj = {
                 eventDate: event.dates.start.dateTime,
                 eventId: event.id,
@@ -34,8 +34,8 @@ eventListingsRouter.get('/list', function (req, res) {
                     address: venue.address,
                     city: venue.city.name,
                     state: venue.state.name,
-                    country: venue.country.name,
                     stateCode: venue.stateCode,
+                    country: venue.country.name,
                     postalCode: venue.postalCode,
                     location: venue.location,
                     venueImages: venue.images
