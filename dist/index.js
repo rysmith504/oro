@@ -10,6 +10,7 @@ var artistsRouter_1 = __importDefault(require("./routes/artistsRouter"));
 var songFinder_1 = __importDefault(require("./routes/songFinder"));
 var eventDetail_1 = __importDefault(require("./routes/eventDetail"));
 var app = (0, express_1.default)();
+app.use(express_1.default.json({ limit: '50mb' }));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static(path_1.default.join(__dirname, '../public')));
