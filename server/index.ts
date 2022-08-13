@@ -5,11 +5,10 @@ import eventListingsRouter from './routes/eventListingsRouter';
 import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
-
+import authRouter from './routes/auth';
 import prisma from './database/db';
 
 const app = express();
-
 app.use(express.json({limit: '50mb'}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,6 +19,7 @@ app.use('/events', eventListingsRouter);
 app.use('/favArtists', artistsRouter);
 app.use('/songs', songFinderRouter);
 app.use('/eventDetails', eventDetailsRouter);
+app.use('/auth', authRouter);
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {
