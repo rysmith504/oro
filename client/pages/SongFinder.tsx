@@ -3,7 +3,29 @@ import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
 import { Accordion, AccordionSummary, AccordionDetails, Button, Grid, Fab} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Star, Person, MusicNote, LibraryMusic, Lyrics } from '@mui/icons-material';
+import { Star, Person, MusicNote, LibraryMusic, Lyrics, RemoveCircleOutline} from '@mui/icons-material';
+window.oncontextmenu = function (event: any) {
+  // eslint-disable-next-line no-console
+  console.log(event); // prints [object PointerEvent]
+
+  const pointerEvent = event as PointerEvent;
+  // eslint-disable-next-line no-console
+  console.log(`window.oncontextmenu: ${pointerEvent.pointerType}`);
+
+  if (pointerEvent.pointerType === 'touch') {
+    // context menu was triggerd by long press
+    return false;
+  }
+
+  // just to show that pointerEvent.pointerType has another value 'mouse' aka right click
+  if (pointerEvent.pointerType === 'mouse') {
+    // context menu was triggered by right click
+    return true;
+  }
+
+  // returning true will show a context menu for other cases
+  return true;
+};
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128});
 const SongFinder: React.FC = () => {
@@ -13,8 +35,10 @@ const SongFinder: React.FC = () => {
   const [previewSource, setPreviewSource] = useState();
   const [song, setSong] = useState('');
   const [artist, setArtist] = useState('');
+  const [artistImage, setArtistImage] = useState('');
   const [albumTitle, setAlbumTitle] = useState('');
   const [albumImage, setAlbumImage] = useState('');
+  const [favorited, setFavorited] = useState(false);
   // const [deleteToken, setDeleteToken] = useState('');
 
   useEffect(() => {
@@ -34,11 +58,29 @@ const SongFinder: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    axios.get('/favArtists/artist', {
+      params: {
+        artistName: artist,
+      }
+    })
+      .then((results) => {
+        console.log(results.data);
+        if (results.data.length) {
+          setFavorited(true);
+        } else {
+          setFavorited(false);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [artist]);
+
+  useEffect(() => {
 
     axios.post('/songs', {
       data: previewSource,
     })
       .then((results) => {
+        console.log(results);
         setSong(results.data.title);
         setArtist(results.data.apple_music.artistName);
         setAlbumTitle(results.data.apple_music.albumName);
@@ -50,7 +92,7 @@ const SongFinder: React.FC = () => {
         //     delete_token: results.data.delete_token;
         //   }
         // })
-        console.log('SUCCESS', results);
+        // console.log('SUCCESS', results);
       })
       .catch((err) => console.error(err));
 
@@ -86,9 +128,42 @@ const SongFinder: React.FC = () => {
     axios.post('/favArtists', {
       artistName: artist
     })
-      .then((data) => console.log('success', data))
+      .then((data) => {
+        setFavorited(true);
+        console.log('success', data)
+      })
       .catch((err) => console.error(err));
   };
+
+  const removeFavorites = () => {
+    axios.delete('/favArtists', {
+      data: {
+        artistName: artist
+      }
+    })
+      .then(() => {
+        console.log('removed')
+        setFavorited(false);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const favoriteButton = () => {
+    if (artist && favorited === true) {
+      return (
+        <div>
+          <Button variant='contained' size='small' onClick={removeFavorites}>{<RemoveCircleOutline></RemoveCircleOutline>} remove from favorites</Button>
+        </div>
+      );
+    } else if (artist && favorited === false) {
+      return (
+        <div>
+          <Button variant='contained' size='small' onClick={addToFavorites}>{<Star></Star>} add to favorites</Button>
+        </div>
+      );
+    }
+  };
+
 
 
 
@@ -98,8 +173,8 @@ const SongFinder: React.FC = () => {
       
       <div>
         <Grid container>
-          <Grid item xs = {4}></Grid>
-          <Grid item xs ={4}>
+          <Grid item xs = {0} md = {4}></Grid>
+          <Grid item xs ={12} md = {4}>
             <Accordion expanded={true} >
               <AccordionSummary>{<MusicNote></MusicNote>} Song Name
               </AccordionSummary>
@@ -112,9 +187,14 @@ const SongFinder: React.FC = () => {
               <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<Person></Person>} Artist
               </AccordionSummary>
               <AccordionDetails>
-                {artist}
                 <div>
-                  {artist && <Button variant='contained' size='small' onClick={addToFavorites}>{<Star></Star>} add to favorites</Button>}
+                  <div>
+                    {artist}
+                  </div>
+
+                  <div>
+                    {favoriteButton()}  
+                  </div>
                 </div>
               </AccordionDetails>
             </Accordion>
@@ -130,12 +210,14 @@ const SongFinder: React.FC = () => {
               <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<LibraryMusic></LibraryMusic>} Album 
               </AccordionSummary>
               <AccordionDetails>
-                {albumTitle}
+                <div>
+                  {albumTitle}
+                </div>
                 <img height='100px' width='auto' src={albumImage}/>
               </AccordionDetails>
             </Accordion>
           </Grid>
-          <Grid item xs = {4}></Grid>
+          {/* <Grid item xs = {4}></Grid> */}
         </Grid>
       </div>
 
