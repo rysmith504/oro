@@ -43,7 +43,7 @@ artistsRouter.get('/', (req, res) => {
       }
     })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         res.status(200).send(data)
       })
       .catch((err) => res.sendStatus(500));
@@ -104,6 +104,19 @@ artistsRouter.get('/', (req, res) => {
         res.status(500);
         res.end();
       });
+  });
+
+  artistsRouter.delete('/', (req, res) => {
+    const {artistName} = req.body;
+    console.log(artistName);
+    prisma.artistFollowing.deleteMany({
+      where: {
+        userId: 1,
+        artistName,
+      }
+    })
+      .then(() => res.sendStatus(200))
+      .catch(() => res.sendStatus(500));
   });
 
   // axios.get(`https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=SptQUng7VWQQ0BVM0uspyhpoyHGkNSq4&keyword=${artistName}`)

@@ -3,7 +3,7 @@ import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
 import { Accordion, AccordionSummary, AccordionDetails, Button, Grid, Fab} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Star, Person, MusicNote, LibraryMusic, Lyrics } from '@mui/icons-material';
+import { Star, Person, MusicNote, LibraryMusic, Lyrics, RemoveCircleOutline} from '@mui/icons-material';
 window.oncontextmenu = function (event: any) {
   // eslint-disable-next-line no-console
   console.log(event); // prints [object PointerEvent]
@@ -35,6 +35,7 @@ const SongFinder: React.FC = () => {
   const [previewSource, setPreviewSource] = useState();
   const [song, setSong] = useState('');
   const [artist, setArtist] = useState('');
+  const [artistImage, setArtistImage] = useState('');
   const [albumTitle, setAlbumTitle] = useState('');
   const [albumImage, setAlbumImage] = useState('');
   const [favorited, setFavorited] = useState(false);
@@ -79,6 +80,7 @@ const SongFinder: React.FC = () => {
       data: previewSource,
     })
       .then((results) => {
+        console.log(results);
         setSong(results.data.title);
         setArtist(results.data.apple_music.artistName);
         setAlbumTitle(results.data.apple_music.albumName);
@@ -133,11 +135,24 @@ const SongFinder: React.FC = () => {
       .catch((err) => console.error(err));
   };
 
+  const removeFavorites = () => {
+    axios.delete('/favArtists', {
+      data: {
+        artistName: artist
+      }
+    })
+      .then(() => {
+        console.log('removed')
+        setFavorited(false);
+      })
+      .catch((err) => console.error(err));
+  };
+
   const favoriteButton = () => {
     if (artist && favorited === true) {
       return (
         <div>
-          <Button variant='contained' size='small' onClick={addToFavorites}>{<Star></Star>} remove from favorites</Button>
+          <Button variant='contained' size='small' onClick={removeFavorites}>{<RemoveCircleOutline></RemoveCircleOutline>} remove from favorites</Button>
         </div>
       );
     } else if (artist && favorited === false) {
