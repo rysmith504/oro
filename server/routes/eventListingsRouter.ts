@@ -10,11 +10,10 @@ eventListingsRouter.get('/list', (req, res) => {
   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=5&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
     .then((responseObj) => {
       let venueInfo;
-      console.log('INSPECT', inspect(responseObj.data, {depth: null}));
-      const events = responseObj.data._embedded.events.filter((event: any) => {
-        return event._embedded;
+      const events = responseObj.data._embedded.events.filter((event) => {
+        return event._embedded
       }).map((event) => {
-        const newDataObj: any = {
+        let newDataObj = {
           eventDate: event.dates.start.dateTime,
           eventId: event.id,
           eventName: event.name
@@ -28,24 +27,28 @@ eventListingsRouter.get('/list', (req, res) => {
           return artistInfo;
         });
 
-        const venueInfo = event._embedded.venues.map(venue => {
-          const venueInfo = {
-            venueId: venue.id,
-            venueName: venue.name,
-            address: venue.address,
-            city: venue.city.name,
-            state: venue.state.name,
-            stateCode: venue.stateCode,
-            country: venue.country.name,
-            postalCode: venue.postalCode,
-            location: venue.location,
-            venueImages: venue.images
-          };
-          return venueInfo;
-        });
+          const venueInfo = event._embedded.venues.map(venue => {
+            const venueInfo = {
+              venueId: venue.id,
+              venueName: venue.name,
+              address: venue.address,
+              city: venue.city.name,
+              state: null,
+              stateCode: venue.stateCode,
+              country: venue.country.name,
+              postalCode: venue.postalCode,
+              location: venue.location,
+              venueImages: venue.images
+            }
+            if(venue.state){
+              venueInfo.state = venue.state.name;
+            }
+            return venueInfo;
+          })
 
         newDataObj.venueInfo = venueInfo;
         newDataObj.artistInfo = artistInfo;
+
 
         return newDataObj;
       });

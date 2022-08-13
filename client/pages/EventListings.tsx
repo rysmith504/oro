@@ -21,12 +21,12 @@ const EventListings: React.FC = () => {
   const [events, setEvents] = useState(eventDummy);
   
   const getEvents = () => {
-    const punctuationless: string = keyword
-    .replace(/[']/g, '')
-    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, " ")
-    .replace(/\s{1,}/g, "+")
-    .toLowerCase();
-    axios.get('/events/list', { params: { keyword: punctuationless } })
+    // const punctuationless: string = keyword
+    // .replace(/[']/g, '')
+    // .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, " ")
+    // .replace(/\s{1,}/g, "+")
+    // .toLowerCase();
+    axios.get('/events/list', { params: { keyword: keyword } })
     .then((responseObj) => {
       console.log('GETEVENTS RESPONSEOBJ', responseObj)
       setEvents(responseObj.data.events);

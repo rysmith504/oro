@@ -36,7 +36,7 @@ import pushPinIcon from '@mui/icons-material/PushPin';
 import localActivityIcon from '@mui/icons-material/LocalActivity';
 import calendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import infoIcon from '@mui/icons-material/Info';
-
+import descriptionIcon from '@mui/icons-material/Description';
 export const Item = styled(paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
   ...theme.typography.body2,
@@ -82,3 +82,4 @@ export const PushPinIcon = pushPinIcon;
 export const LocalActivityIcon = localActivityIcon;
 export const CalendarMonthIcon = calendarMonthIcon;
 export const InfoIcon = infoIcon;
+export const DescriptionIcon = descriptionIcon;
