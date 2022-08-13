@@ -6,7 +6,7 @@ import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
 import authRouter from './routes/auth';
-import userEventsRouter from './routes/userEvents';
+import profileRouter from './routes/profile';
 import prisma from './database/db';
 
 const app = express();
@@ -21,7 +21,7 @@ app.use('/favArtists', artistsRouter);
 app.use('/songs', songFinderRouter);
 app.use('/eventDetails', eventDetailsRouter);
 app.use('/auth', authRouter);
-app.use('/userEvents', userEventsRouter);
+app.use('/profile', profileRouter);
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {
