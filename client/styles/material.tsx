@@ -78,3 +78,7 @@ export	const	LanguageIcon	=	languageIcon;
 export const MusicOffIcon = musicOffIcon;
 export const ButtonBase = buttonBase;
 export const PushPinIcon = pushPinIcon;
+
+export const LocalActivityIcon = localActivityIcon;
+export const CalendarMonthIcon = calendarMonthIcon;
+export const InfoIcon = infoIcon;

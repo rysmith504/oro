@@ -77,7 +77,7 @@ const ArtistInfoCard = ({artistProps}) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardHeader
         title={artistName}
       />
@@ -130,18 +130,20 @@ const ArtistInfoCard = ({artistProps}) => {
               </Grid>
             </Box>
           </Typography>
-          <Grid>
-            {
-              events.length > 1
-                ? <CardContent id={artistName}>
-                  <Typography paragraph>Events:</Typography>
-                  { events.map((eventObj) => {
-                    return <EventCards events={eventObj} key={eventObj.id}/>;
-                  })}
-                </CardContent>
-                : <Typography paragraph>No Events Found</Typography>
-            }
-          </Grid>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              {
+                events.length > 1
+                  ? <Grid item id={artistName}>
+                    <Typography paragraph>Events:</Typography>
+                    { events.map((eventObj) => {
+                      return <EventCards events={eventObj} key={eventObj.id}/>;
+                    })}
+                  </Grid>
+                  : <Typography paragraph>No Upcoming Events</Typography>
+              }
+            </Grid>
+          </Box>
         </CardContent>
       </Collapse>
     </Card>

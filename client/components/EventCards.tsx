@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import moment from 'moment';
-import { Grid,	Paper,	Typography, MusicOffIcon, ButtonBase, PushPinIcon
+import { Grid,	Paper,	Typography, MusicOffIcon, ButtonBase, PushPinIcon, LocalActivityIcon, CalendarMonthIcon, InfoIcon
 } from '../styles/material';
 
 const Img = styled('img')({
@@ -16,7 +16,7 @@ const Img = styled('img')({
 const EventCards = ({events}) => {
 
   let date = events.dates.start.dateTime;
-  date = moment(date).add(1, 'day').format('MMMM Do YYYY')}
+  date = moment(date).add(1, 'day').format('MMMM Do YYYY');
   const image = events.images[0].url;
 
   console.log(events);
@@ -43,32 +43,27 @@ const EventCards = ({events}) => {
     >
       <Grid container spacing={2}>
         <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="alt tag" src={image} />
+          <ButtonBase>
+            <PushPinIcon/>
           </ButtonBase>
         </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              {
-                name === 'No events found'
-                  ? <Typography variant="h6"><MusicOffIcon/>{name}</Typography>
-                  : <Typography variant="h6">{name}</Typography>
-              }
-              <Typography variant="body2" gutterBottom>
-                {date}
-                {info}
-                {url}
-                {/* {venues.map((venue) => {
-                  return (
-                    <p key={venue.id}>{venue.name} {venue.address} {venue.city.name}, {venue.state.name}</p>
-                  );
-                })} */}
-              </Typography>
+        <Grid item xs={12} container>
+          <Grid item container direction="column" spacing={2}>
+            <Grid item>
+              <Img alt="alt tag" src={image} />
             </Grid>
-          </Grid>
-          <Grid item>
-            <PushPinIcon/>
+            <Grid item>
+              <Typography variant="h6">{name}</Typography>
+            </Grid>
+            <Grid item>
+              <CalendarMonthIcon/>{date}
+            </Grid>
+            <Grid item>
+              <InfoIcon/>{info}
+            </Grid>
+            <Grid item>
+              <LocalActivityIcon/>{url}
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
