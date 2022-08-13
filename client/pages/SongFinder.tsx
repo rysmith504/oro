@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
-import { Accordion, AccordionSummary, AccordionDetails, Grid, Fab} from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Button, Grid, Fab} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Person, MusicNote, LibraryMusic, Lyrics }from '@mui/icons-material';
+import { Star, Person, MusicNote, LibraryMusic, Lyrics } from '@mui/icons-material';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128});
 const SongFinder: React.FC = () => {
@@ -15,6 +15,7 @@ const SongFinder: React.FC = () => {
   const [artist, setArtist] = useState('');
   const [albumTitle, setAlbumTitle] = useState('');
   const [albumImage, setAlbumImage] = useState('');
+  // const [deleteToken, setDeleteToken] = useState('');
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({audio: true},
@@ -39,10 +40,16 @@ const SongFinder: React.FC = () => {
     })
       .then((results) => {
         setSong(results.data.title);
-        setArtist(results.data.artist);
+        setArtist(results.data.apple_music.artistName);
         setAlbumTitle(results.data.apple_music.albumName);
         setAlbumImage(results.data.spotify.album.images[0].url);
         // console.log(results.data.spotify.album.images);
+        // console.log(results.data);
+        // axios.delete('/songs', {
+        //   data: {
+        //     delete_token: results.data.delete_token;
+        //   }
+        // })
         console.log('SUCCESS', results);
       })
       .catch((err) => console.error(err));
@@ -107,7 +114,7 @@ const SongFinder: React.FC = () => {
               <AccordionDetails>
                 {artist}
                 <div>
-                  <button onClick={addToFavorites}>add to favorites</button>
+                  {artist && <Button variant='contained' size='small' onClick={addToFavorites}>{<Star></Star>} add to favorites</Button>}
                 </div>
               </AccordionDetails>
             </Accordion>
