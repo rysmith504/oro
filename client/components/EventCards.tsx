@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
-import PushPinIcon from '@mui/icons-material/PushPin';
 import axios from 'axios';
+import moment from 'moment';
+import { Grid,	Paper,	Typography, MusicOffIcon, ButtonBase, PushPinIcon, LocalActivityIcon, CalendarMonthIcon, InfoIcon
+} from '../styles/material';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -15,25 +13,22 @@ const Img = styled('img')({
 });
 
 
-const EventCards = () => {
-  const getArtist = () => {
-    console.log('get Artist');
-    axios.get('/artists', {
-      params: {
-        artistName: 'Adele'
-      }
-    })
-      .then((artistData) => {
-        console.log(artistData.data.attractions);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+const EventCards = ({events}) => {
 
-  useEffect(() => {
-    getArtist();
-  }, []);
+  let date = events.dates.start.dateTime;
+  date = moment(date).add(1, 'day').format('MMMM Do YYYY');
+  const image = events.images[0].url;
+
+  console.log(events);
+
+  const {
+    name,
+    url,
+    info,
+  } = events;
+
+  // useEffect(() => {
+  // }, []);
 
   return (
     <Paper
@@ -48,20 +43,27 @@ const EventCards = () => {
     >
       <Grid container spacing={2}>
         <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="alt tag" src="/images/concert.jpg" />
+          <ButtonBase>
+            <PushPinIcon/>
           </ButtonBase>
         </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography variant="body2" gutterBottom>
-                Event description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </Typography>
+        <Grid item xs={12} container>
+          <Grid item container direction="column" spacing={2}>
+            <Grid item>
+              <Img alt="alt tag" src={image} />
             </Grid>
-          </Grid>
-          <Grid item>
-            <PushPinIcon/>
+            <Grid item>
+              <Typography variant="h6">{name}</Typography>
+            </Grid>
+            <Grid item>
+              <CalendarMonthIcon/>{date}
+            </Grid>
+            <Grid item>
+              <InfoIcon/>{info}
+            </Grid>
+            <Grid item>
+              <LocalActivityIcon/>{url}
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
