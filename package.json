@@ -10,7 +10,7 @@
     "type": "tsc --watch --preserveWatchOutput",
     "build": "webpack -w",
     "test": "jest",
-    "start": "nodemon dist/index.js",
+    "start": "node dist/index.js",
     "lint": "eslint --ext .tsx"
   },
   "prisma": {
