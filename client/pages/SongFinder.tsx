@@ -62,7 +62,7 @@ const SongFinder: React.FC = () => {
       }
     })
       .then((results) => {
-        console.log(results.data)
+        // console.log(results.data)
         setLyrics(results.data);
       })
       .catch((err) => console.error(err));
@@ -128,9 +128,10 @@ const SongFinder: React.FC = () => {
 
         };
         // setSong('');
-        // setArtist('');
-        // setAlbumTitle('');
-        // setAlbumImage('');
+        setArtist('');
+        setAlbumTitle('');
+        setAlbumImage('');
+        setLyrics([]);
       })
       .catch((e) => console.log(e));
   };

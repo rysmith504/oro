@@ -25,7 +25,7 @@ songFinderRouter.get('/', (req, res) => {
 
   axios.get(`https://api.lyrics.ovh/v1/${artistName}/${song}`)
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.status(200).send(data.data.lyrics.split('\n'));
     })
     .catch((err) => {
