@@ -9,7 +9,6 @@ const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 profileRouter.get('/events', (req, res) => {
   prisma.userEvents.findMany({ where: { userId: 1 }})
     .then((userEvents) => {
-      // console.log(userEvents);
       const eventId = userEvents[0]?.eventAPIid;
 
       axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&id=${eventId}`)
@@ -24,7 +23,6 @@ profileRouter.get('/events', (req, res) => {
       // for(let i = 0; i < userEvents.length; i++) {
       //   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&id=${userEvents[i].eventAPIid}`)
       //     .then(event => {
-      //       // console.log(event.data._embedded.events[0]);
       //       eventsArr.push(event.data._embedded.events[0]);
       //     })
       //     .catch(err => {
@@ -32,7 +30,6 @@ profileRouter.get('/events', (req, res) => {
       //     })
       // }
 
-      // console.log(eventsArr);
     })
     .catch((err) => {
       res.send(500);
