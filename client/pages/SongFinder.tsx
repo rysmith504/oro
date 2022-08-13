@@ -240,10 +240,8 @@ const SongFinder: React.FC = () => {
         </Grid>
       </div>
 
-      {/* <audio src={previewSource} controls="controls"/> */}
-
-      <div>
-        <Fab onMouseDown={start} onMouseUp={stop}>Record</Fab>
+      <div style={{marginTop: '10px'}}>
+        <Fab variant='circular' onMouseDown={start} onMouseUp={stop}><MusicNote></MusicNote></Fab>
       </div>
     </div>
   );
