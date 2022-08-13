@@ -1,6 +1,6 @@
-import axios from 'axios'
-import { Router } from 'express'
-import { inspect } from 'node:util'
+import axios from 'axios';
+import { Router } from 'express';
+import { inspect } from 'node:util';
 require('dotenv').config();
 
 const eventListingsRouter = Router();
@@ -8,7 +8,7 @@ const eventListingsRouter = Router();
 eventListingsRouter.get('/list', (req, res) => {
   const { keyword } = req.query;
   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=5&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
-  .then((responseObj) => {
+    .then((responseObj) => {
       let venueInfo;
       const events = responseObj.data._embedded.events.filter((event) => {
         return event._embedded
@@ -23,9 +23,9 @@ eventListingsRouter.get('/list', (req, res) => {
             artistName: attraction.name,
             artistId: attraction.id,
             artistImages: attraction.images
-          }
+          };
           return artistInfo;
-          })
+        });
 
           const venueInfo = event._embedded.venues.map(venue => {
             const venueInfo = {
@@ -46,19 +46,19 @@ eventListingsRouter.get('/list', (req, res) => {
             return venueInfo;
           })
 
-          newDataObj.venueInfo = venueInfo;
-          newDataObj.artistInfo = artistInfo
+        newDataObj.venueInfo = venueInfo;
+        newDataObj.artistInfo = artistInfo;
 
-    return newDataObj
-    
-    })
+
+        return newDataObj;
+      });
       res.send({
         events
-      })
+      });
       res.status(200);
     })
     .catch(err => console.error(err));
-})
+});
 
 
 export default eventListingsRouter;
