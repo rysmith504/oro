@@ -20,7 +20,6 @@ const EventCardDetails = ({events, event}) => {
   useEffect(() => {
     console.log('EVENTs', events, 'EVENT', event)
   }, []);
-  
 
   return (
     <div>
@@ -38,7 +37,7 @@ const EventCardDetails = ({events, event}) => {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="alt tag" src="/images/concert.jpg" />
+            <Img alt="alt tag" src={event.artistInfo[0].artistImages[Math.floor(Math.random()*(event.artistInfo[0].artistImages.length))].url} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
