@@ -64,8 +64,9 @@ const Profile: React.FC = () => {
           </AccordionSummary>
           <AccordionDetails>
             <List>
+              <ListItem>Venue: {userEvents.venue}</ListItem>
               <ListItem>
-                Location: 
+                Location: {userEvents.address}, {userEvents.city}, {userEvents.state}, {userEvents.postalCode}
               </ListItem>
             </List>
           </AccordionDetails>
