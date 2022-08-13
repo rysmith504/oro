@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import moment from 'moment';
-import { Grid,	Paper,	Typography, MusicOffIcon, ButtonBase, PushPinIcon, LocalActivityIcon, CalendarMonthIcon, InfoIcon
+import { Grid,	Paper,	Typography, ButtonBase, LocalActivityIcon, CalendarMonthIcon, InfoIcon, DescriptionIcon
 } from '../styles/material';
 
 const Img = styled('img')({
@@ -14,13 +15,11 @@ const Img = styled('img')({
 
 
 const EventCards = ({events}) => {
-
+  const navigate = useNavigate();
   let date = events.dates.start.dateTime;
   date = moment(date).add(1, 'day').format('MMMM Do YYYY');
   const image = events.images[0].url;
-
-  console.log(events);
-
+  const id = events.id;
   const {
     name,
     url,
@@ -29,6 +28,11 @@ const EventCards = ({events}) => {
 
   // useEffect(() => {
   // }, []);
+
+  const getDetails = (id) => {
+    console.log('navigate', id);
+    navigate(`/eventDetails/${id}`);
+  };
 
   return (
     <Paper
@@ -43,8 +47,8 @@ const EventCards = ({events}) => {
     >
       <Grid container spacing={2}>
         <Grid item>
-          <ButtonBase>
-            <PushPinIcon/>
+          <ButtonBase onClick={()=>{ getDetails(id); }}>
+            <InfoIcon/> More details
           </ButtonBase>
         </Grid>
         <Grid item xs={12} container>
@@ -58,9 +62,15 @@ const EventCards = ({events}) => {
             <Grid item>
               <CalendarMonthIcon/>{date}
             </Grid>
-            <Grid item>
-              <InfoIcon/>{info}
-            </Grid>
+            { info
+              ?
+              <Grid item>
+                <DescriptionIcon/>{info}
+              </Grid>
+              : <Grid item>
+                <DescriptionIcon/> No event details
+              </Grid>
+            }
             <Grid item>
               <LocalActivityIcon/>{url}
             </Grid>
