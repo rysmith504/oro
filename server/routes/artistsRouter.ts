@@ -35,6 +35,20 @@ artistsRouter.get('/', (req, res) => {
       res.end();
     });
 
+  artistsRouter.get('/artist', (req, res) => {
+    prisma.artistFollowing.findMany({
+      where: {
+        artistName: req.query.artistName,
+        userId: 1
+      }
+    })
+      .then((data) => {
+        console.log(data);
+        res.status(200).send(data)
+      })
+      .catch((err) => res.sendStatus(500));
+  });
+
 
   artistsRouter.post('/', (req, res) => {
     const {artistName} = req.body;
@@ -67,7 +81,7 @@ artistsRouter.get('/', (req, res) => {
             obj.wiki = attractionData.data._embedded.attractions[0].externalLinks.wiki[0].url;
             obj.homepage = attractionData.data._embedded.attractions[0].externalLinks.homepage[0].url;
             obj.image = attractionData.data._embedded.attractions[0].images[0].url;
-            // console.info(obj);
+            console.info(obj);
 
             await prisma.artistFollowing.create({
               data: obj
