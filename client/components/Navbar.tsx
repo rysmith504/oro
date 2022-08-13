@@ -1,69 +1,139 @@
-import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-  CssBaseline,
-  Typography,
-  makeStyles,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
-import DrawerComponent from './Drawer';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import { Link, Routes, Route } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 
-const useStyles = makeStyles((theme) => ({
-  navlinks: {
-    marginLeft: theme.spacing(5),
-    display: 'flex',
-  },
-  logo: {
-    flexGrow: '1',
-    cursor: 'pointer',
-  },
-  link: {
-    textDecoration: 'none',
-    color: 'white',
-    fontSize: '20px',
-    marginLeft: theme.spacing(20),
-    '&:hover': {
-      color: 'yellow',
-      borderBottom: '1px solid white',
-    },
-  },
-}));
+const pages = [
+  <HomeIcon/><Link to='/home' style={{ textDecoration: 'none' }}>Home</Link>,
+  <Link to='/eventListings' style={{ textDecoration: 'none' }}>Find Events</Link>,
+  <Link to='/songFinder' style={{ textDecoration: 'none' }}>Song Finder</Link>,
+  <Link to='/artists' style={{ textDecoration: 'none' }}>Artists</Link>,
+  <Link to='/details' style={{ textDecoration: 'none' }}>details</Link>,
+  <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>,
+  <Link to='/profile' style={{ textDecoration: 'none' }}>My Account</Link>,
+];
+const settings = [
+  'Profile',
+  'Account',
+  <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>, 'Logout'];
 
 const Navbar = () => {
-  const classes = useStyles();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   return (
     <AppBar position="static">
-      <CssBaseline />
-      <Toolbar>
-        <Typography variant="h4" className={classes.logo}>
-          Navbar
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
 
-        </Typography>
-        {isMobile ? (
-          <DrawerComponent />
-        ) : (
-          <div className={classes.navlinks}>
-            <Link to="/" className={classes.link}>
-              Home
-            </Link>
-            <Link to="/about" className={classes.link}>
-              About
-            </Link>
-            <Link to="/contact" className={classes.link}>
-              Contact
-            </Link>
-            <Link to="/faq" className={classes.link}>
-              FAQ
-            </Link>
-          </div>
-        )}
-      </Toolbar>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <img src="images/VSLOGO.png" height="75"/>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 };
