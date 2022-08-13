@@ -1,15 +1,23 @@
 // import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const UserContext = React.createContext({});
 
 const UserContextProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState([]);
+  const [ userEvents, setUserEvents ] = useState([]);
+
+  // const getUserEvents = () => {
+  //   axios.get('/userEvents')
+  //     .then()
+  // }
 
   const appProps = {
-    userInfo,
-    setUserInfo,
+    userEvents,
+    setUserEvents,
   };
+
+
   return (
     <UserContext.Provider value={appProps}>{children}</UserContext.Provider>
   );
