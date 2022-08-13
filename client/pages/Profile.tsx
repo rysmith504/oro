@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
 import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem } from '../styles/material';
@@ -40,7 +40,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const Profile: React.FC = () => {
-  const { userEvents, setUserEvents, getUserEvents } = useContext(UserContext);
+  const { userEvents, getUserEvents } = useContext(UserContext);
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = (panel) => (event, newExpanded) => {
