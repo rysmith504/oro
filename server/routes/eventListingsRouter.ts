@@ -11,9 +11,9 @@ eventListingsRouter.get('/list', (req, res) => {
     .then((responseObj) => {
       let venueInfo;
       const events = responseObj.data._embedded.events.filter((event) => {
-        return event._embedded
+        return event._embedded;
       }).map((event) => {
-        let newDataObj = {
+        const newDataObj = {
           eventDate: event.dates.start.dateTime,
           eventId: event.id,
           eventName: event.name
@@ -27,24 +27,24 @@ eventListingsRouter.get('/list', (req, res) => {
           return artistInfo;
         });
 
-          const venueInfo = event._embedded.venues.map(venue => {
-            const venueInfo = {
-              venueId: venue.id,
-              venueName: venue.name,
-              address: venue.address,
-              city: venue.city.name,
-              state: null,
-              stateCode: venue.stateCode,
-              country: venue.country.name,
-              postalCode: venue.postalCode,
-              location: venue.location,
-              venueImages: venue.images
-            }
-            if(venue.state){
-              venueInfo.state = venue.state.name;
-            }
-            return venueInfo;
-          })
+        const venueInfo = event._embedded.venues.map(venue => {
+          const venueInfo = {
+            venueId: venue.id,
+            venueName: venue.name,
+            address: venue.address,
+            city: venue.city.name,
+            state: null,
+            stateCode: venue.stateCode,
+            country: venue.country.name,
+            postalCode: venue.postalCode,
+            location: venue.location,
+            venueImages: venue.images
+          };
+          if (venue.state) {
+            venueInfo.state = venue.state.name;
+          }
+          return venueInfo;
+        });
 
         newDataObj.venueInfo = venueInfo;
         newDataObj.artistInfo = artistInfo;
