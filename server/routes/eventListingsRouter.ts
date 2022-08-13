@@ -10,11 +10,10 @@ eventListingsRouter.get('/list', (req, res) => {
   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=5&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
   .then((responseObj) => {
       let venueInfo;
-      console.log('INSPECT', inspect(responseObj.data, {depth: null}))
-      const events = responseObj.data._embedded.events.filter((event: any) => {
+      const events = responseObj.data._embedded.events.filter((event) => {
         return event._embedded
       }).map((event) => {
-        let newDataObj: any = {
+        let newDataObj = {
           eventDate: event.dates.start.dateTime,
           eventId: event.id,
           eventName: event.name
@@ -34,12 +33,15 @@ eventListingsRouter.get('/list', (req, res) => {
               venueName: venue.name,
               address: venue.address,
               city: venue.city.name,
-              state: venue.state.name,
+              state: null,
               stateCode: venue.stateCode,
               country: venue.country.name,
               postalCode: venue.postalCode,
               location: venue.location,
               venueImages: venue.images
+            }
+            if(venue.state){
+              venueInfo.state = venue.state.name;
             }
             return venueInfo;
           })
@@ -48,7 +50,8 @@ eventListingsRouter.get('/list', (req, res) => {
           newDataObj.artistInfo = artistInfo
 
     return newDataObj
-      })
+    
+    })
       res.send({
         events
       })
