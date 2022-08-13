@@ -141,7 +141,10 @@ const SongFinder: React.FC = () => {
         artistName: artist
       }
     })
-      .then(() => console.log('removed'))
+      .then(() => {
+        console.log('removed')
+        setFavorited(false);
+      })
       .catch((err) => console.error(err));
   };
 
