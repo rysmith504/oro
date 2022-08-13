@@ -51,9 +51,7 @@ const Profile: React.FC = () => {
     getUserEvents();
   }, []);
 
-  const dates = userEvents.dates;
-  // const start = dates.start;
-  // console.log(start);
+  console.log(userEvents);
 
   return (
     <div>
@@ -61,7 +59,8 @@ const Profile: React.FC = () => {
       <div>
         <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography>{userEvents.name} 2022-09-16</Typography>
+            <Typography>{userEvents.eventName}</Typography>
+            <Typography>{userEvents.eventDate}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <List>

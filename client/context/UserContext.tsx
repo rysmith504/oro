@@ -9,8 +9,13 @@ const UserContextProvider = ({ children }) => {
 
   const getUserEvents = () => {
     axios.get('/profile/events')
-      .then(event => {
-        setUserEvents(event.data);
+      .then(events => {
+        const {data} = events;
+        const eventInfo = {
+          eventName: data.name,
+          eventDate: data.dates.start.localDate
+        }
+        setUserEvents(eventInfo);
       })
       .catch(err => {
         console.error(err);
