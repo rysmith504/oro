@@ -12,9 +12,22 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link, Routes, Route } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 
-const pages = ['My Account', 'Find Events', 'Song Finder', 'Artists', 'Details', 'Login'];
-const settings = ['Profile', 'Account', 'Notifications', 'Logout'];
+const pages = [
+  <HomeIcon/><Link to='/home' style={{ textDecoration: 'none' }}>Home</Link>,
+  <Link to='/eventListings' style={{ textDecoration: 'none' }}>Find Events</Link>,
+  <Link to='/songFinder' style={{ textDecoration: 'none' }}>Song Finder</Link>,
+  <Link to='/artists' style={{ textDecoration: 'none' }}>Artists</Link>,
+  <Link to='/details' style={{ textDecoration: 'none' }}>details</Link>,
+  <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>,
+  <Link to='/profile' style={{ textDecoration: 'none' }}>My Account</Link>,
+];
+const settings = [
+  'Profile',
+  'Account',
+  <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>, 'Logout'];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -77,7 +90,6 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <img src="images/VSLOGO.png" height="75"/>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
