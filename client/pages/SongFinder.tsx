@@ -35,10 +35,11 @@ const SongFinder: React.FC = () => {
   const [previewSource, setPreviewSource] = useState();
   const [song, setSong] = useState('');
   const [artist, setArtist] = useState('');
-  const [artistImage, setArtistImage] = useState('');
+  // const [artistImage, setArtistImage] = useState('');
   const [albumTitle, setAlbumTitle] = useState('');
   const [albumImage, setAlbumImage] = useState('');
   const [favorited, setFavorited] = useState(false);
+  const [lyrics, setLyrics] = useState([]);
   // const [deleteToken, setDeleteToken] = useState('');
 
   useEffect(() => {
@@ -51,11 +52,21 @@ const SongFinder: React.FC = () => {
         // console.log("Permission Denied");
         setIsBlocked(false);
       });
-
-
-
-
   }, []);
+
+  useEffect(() => {
+    axios.get('/songs', {
+      params: {
+        artistName: artist,
+        song,
+      }
+    })
+      .then((results) => {
+        console.log(results.data)
+        setLyrics(results.data);
+      })
+      .catch((err) => console.error(err));
+  }, [artist, song]);
 
   useEffect(() => {
     axios.get('/favArtists/artist', {
@@ -64,7 +75,7 @@ const SongFinder: React.FC = () => {
       }
     })
       .then((results) => {
-        console.log(results.data);
+        // console.log(results.data);
         if (results.data.length) {
           setFavorited(true);
         } else {
@@ -80,7 +91,7 @@ const SongFinder: React.FC = () => {
       data: previewSource,
     })
       .then((results) => {
-        console.log(results);
+        // console.log(results);
         setSong(results.data.title);
         setArtist(results.data.apple_music.artistName);
         setAlbumTitle(results.data.apple_music.albumName);
@@ -116,10 +127,10 @@ const SongFinder: React.FC = () => {
           setPreviewSource(reader.result);
 
         };
-        setSong('');
-        setArtist('');
-        setAlbumTitle('');
-        setAlbumImage('');
+        // setSong('');
+        // setArtist('');
+        // setAlbumTitle('');
+        // setAlbumImage('');
       })
       .catch((e) => console.log(e));
   };
@@ -130,7 +141,7 @@ const SongFinder: React.FC = () => {
     })
       .then((data) => {
         setFavorited(true);
-        console.log('success', data)
+        // console.log('success', data)
       })
       .catch((err) => console.error(err));
   };
@@ -142,7 +153,7 @@ const SongFinder: React.FC = () => {
       }
     })
       .then(() => {
-        console.log('removed')
+        // console.log('removed')
         setFavorited(false);
       })
       .catch((err) => console.error(err));
@@ -203,6 +214,13 @@ const SongFinder: React.FC = () => {
               <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<Lyrics></Lyrics>} Lyrics
               </AccordionSummary>
               <AccordionDetails>
+                {lyrics.map((line, index) => {
+                  return (
+                    <div key={index}>
+                      {line} {'\n'}
+                    </div>
+                  );
+                })}
               </AccordionDetails>
             </Accordion>
 

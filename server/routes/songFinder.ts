@@ -15,8 +15,23 @@ cloudinary.config({
 
 
 
+
+
 const songFinderRouter = Router();
 // const audioId = '';
+
+songFinderRouter.get('/', (req, res) => {
+  const {artistName, song} = req.query;
+
+  axios.get(`https://api.lyrics.ovh/v1/${artistName}/${song}`)
+    .then((data) => {
+      console.log(data);
+      res.status(200).send(data.data.lyrics.split('\n'));
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+    });
+});
 
 songFinderRouter.post('/', async (req, res) => {
   try {
