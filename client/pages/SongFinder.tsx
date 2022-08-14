@@ -88,26 +88,28 @@ const SongFinder: React.FC = () => {
   }, [artist]);
 
   useEffect(() => {
-
-    axios.post('/songs', {
-      data: previewSource,
-    })
-      .then((results) => {
-        // console.log(results);
-        setSong(results.data.title);
-        setArtist(results.data.apple_music.artistName);
-        setAlbumTitle(results.data.apple_music.albumName);
-        setAlbumImage(results.data.spotify.album.images[0].url);
-        // console.log(results.data.spotify.album.images);
-        // console.log(results.data);
-        // axios.delete('/songs', {
-        //   data: {
-        //     delete_token: results.data.delete_token;
-        //   }
-        // })
-        // console.log('SUCCESS', results);
+    if (previewSource) {
+      axios.post('/songs', {
+        data: previewSource,
       })
-      .catch((err) => console.error(err));
+        .then((results) => {
+          // console.log(results);
+          setSong(results.data.title);
+          setArtist(results.data.apple_music.artistName);
+          setAlbumTitle(results.data.apple_music.albumName);
+          setAlbumImage(results.data.spotify.album.images[0].url);
+          // console.log(results.data.spotify.album.images);
+          // console.log(results.data);
+          // axios.delete('/songs', {
+          //   data: {
+          //     delete_token: results.data.delete_token;
+          //   }
+          // })
+          // console.log('SUCCESS', results);
+        })
+        .catch((err) => console.error(err));
+
+    }
 
   }, [previewSource]);
 
@@ -202,11 +204,11 @@ const SongFinder: React.FC = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <div>
-                  <div>
+                  <div id='artistName'>
                     {artist}
                   </div>
 
-                  <div>
+                  <div id='favoriteButton'>
                     {favoriteButton()}  
                   </div>
                 </div>
@@ -217,13 +219,15 @@ const SongFinder: React.FC = () => {
               <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<Lyrics></Lyrics>} Lyrics
               </AccordionSummary>
               <AccordionDetails>
-                {lyrics.map((line, index) => {
-                  return (
-                    <div key={index}>
-                      {line} {'\n'}
-                    </div>
-                  );
-                })}
+                <div>
+                  {lyrics.map((line, index) => {
+                    return (
+                      <div key={index + 1}>
+                        {line + '\n'}
+                      </div>
+                    );
+                  })}
+                </div>
               </AccordionDetails>
             </Accordion>
 
