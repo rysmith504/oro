@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Star, Person, MusicNote, LibraryMusic, Lyrics, RemoveCircleOutline} from '@mui/icons-material';
 window.oncontextmenu = function (event: any) {
   // eslint-disable-next-line no-console
-  console.log(event); // prints [object PointerEvent]
+  // console.log(event); // prints [object PointerEvent]
 
   const pointerEvent = event as PointerEvent;
   // eslint-disable-next-line no-console
@@ -205,7 +205,7 @@ const SongFinder: React.FC = () => {
   return (
     <div>
       <div>Hello SongFinder</div>
-      
+
       <div>
         <Grid container>
           <Grid item xs = {0} md = {4}></Grid>
@@ -228,7 +228,7 @@ const SongFinder: React.FC = () => {
                   </div>
 
                   <div id='favoriteButton'>
-                    {favoriteButton()}  
+                    {favoriteButton()}
                   </div>
                 </div>
               </AccordionDetails>
@@ -239,13 +239,13 @@ const SongFinder: React.FC = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <div id='lyrics'>
-                  {getLyrics()} 
+                  {getLyrics()}
                 </div>
               </AccordionDetails>
             </Accordion>
 
             <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<LibraryMusic></LibraryMusic>} Album 
+              <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<LibraryMusic></LibraryMusic>} Album
               </AccordionSummary>
               <AccordionDetails>
                 <div>

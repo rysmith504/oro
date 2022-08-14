@@ -18,7 +18,9 @@ artistsRouter.get('/events', (req, res) => {
       //   }
       // });
       // console.log(events);
-      res.status(200).send(responseObj.data._embedded);
+      if (responseObj.data._embedded) {
+        res.status(200).send(responseObj.data._embedded);
+      }
     })
     .catch(err => console.error(err));
 });
@@ -112,7 +114,7 @@ artistsRouter.get('/', (req, res) => {
 
   artistsRouter.delete('/', (req, res) => {
     const {artistName} = req.body;
-    console.log(artistName);
+    // console.log(artistName);
     prisma.artistFollowing.deleteMany({
       where: {
         userId: 1,

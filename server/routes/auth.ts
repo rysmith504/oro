@@ -22,7 +22,7 @@ const isLoggedIn = (req: { user: any; }, res: { sendStatus: (arg0: number) => an
 
 authRouter.get('/auth/success', (req, res) => {
   if (req.user) {
-    console.log(req.user);
+    // console.log(req.user);
     res.status(200).json({
       user: req.user,
       message: 'success',
@@ -35,7 +35,7 @@ authRouter.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }),
   (req, res) => {
-    console.log(req);
+    // console.log(req);
   }
 );
 
@@ -44,7 +44,7 @@ authRouter.get(
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect secrets.
-    console.log(req);
+    // console.log(req);
     res.redirect('/');
   },
 );
