@@ -16,7 +16,6 @@ import { Link, Routes, Route } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 
 const pages = [
-  <HomeIcon/><Link to='/home' style={{ textDecoration: 'none' }}>Home</Link>,
   <Link to='/eventListings' style={{ textDecoration: 'none' }}>Find Events</Link>,
   <Link to='/songFinder' style={{ textDecoration: 'none' }}>Song Finder</Link>,
   <Link to='/artists' style={{ textDecoration: 'none' }}>Artists</Link>,

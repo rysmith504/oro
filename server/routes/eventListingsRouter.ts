@@ -53,7 +53,7 @@ eventListingsRouter.get('/list', (req, res) => {
 
         return newDataObj;
       });
-      res.status(200).send({events})
+      res.status(200).send({events});
     })
     .catch(err => console.error(err));
 });
@@ -66,11 +66,11 @@ eventListingsRouter.post('/list/pins', (req, res) => {
   }).then((data) => {
     res.send(data).status(201);
   })
-  .catch(err => {
-    console.error('BACKEND POST REQ ERR', err);
-    res.sendStatus(500);
-  })
-})
+    .catch(err => {
+      console.error('BACKEND POST REQ ERR', err);
+      res.sendStatus(500);
+    });
+});
 
 eventListingsRouter.get('/list/pins', (req, res) => {
   prisma.userEvents.findMany()
@@ -78,28 +78,28 @@ eventListingsRouter.get('/list/pins', (req, res) => {
       res.send(eventData).status(200);
     })
     .catch(err => {
-      console.error(err)
-      res.status(500).end()
-    })
+      console.error(err);
+      res.status(500).end();
+    });
 
-eventListingsRouter.delete('/list/pins', (req, res) => {
-  const { eventAPIid } = req.body
-  prisma.userEvents.deleteMany({
-    where: {
-      eventAPIid:{
-        contains: eventAPIid
+  eventListingsRouter.delete('/list/pins', (req, res) => {
+    const { eventAPIid } = req.body;
+    prisma.userEvents.deleteMany({
+      where: {
+        eventAPIid: {
+          contains: eventAPIid
+        }
       }
-    }
-  })
-  .then(results => {
-    res.sendStatus(200);
-  })
-  .catch(err => {
-    res.sendStatus(500);
-  })
-})
+    })
+      .then(results => {
+        res.sendStatus(200);
+      })
+      .catch(err => {
+        res.sendStatus(500);
+      });
+  });
 
-})
+});
 
 
 export default eventListingsRouter;

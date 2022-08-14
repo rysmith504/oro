@@ -30,8 +30,8 @@ const EventCards = ({events}) => {
   // }, []);
 
   const getDetails = (id) => {
-    console.log('navigate', id);
-    navigate(`/eventDetails/${id}`);
+    // console.log('navigate', id);
+    navigate(`/details/?id=${id}`);
   };
 
   return (
