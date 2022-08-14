@@ -55,17 +55,19 @@ const SongFinder: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('/songs', {
-      params: {
-        artistName: artist,
-        song,
-      }
-    })
-      .then((results) => {
-        // console.log(results.data)
-        setLyrics(results.data);
+    if (song && artist) {
+      axios.get('/songs', {
+        params: {
+          artistName: artist,
+          song,
+        }
       })
-      .catch((err) => console.error(err));
+        .then((results) => {
+          // console.log(results.data)
+          setLyrics(results.data);
+        })
+        .catch((err) => console.error(err));
+    }
   }, [artist, song]);
 
   useEffect(() => {
