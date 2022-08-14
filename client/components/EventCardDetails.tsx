@@ -49,7 +49,6 @@ const EventCardDetails = ({events, event}) => {
       eventAPIid: event.eventId
     })
     .then(response => {
-      console.log('POST SUCCESS', response);
     })
     .then(getPins)
     .catch(err => console.error('POST ERROR', err));
@@ -58,7 +57,6 @@ const EventCardDetails = ({events, event}) => {
   const deleteEvent = () => {
     axios.delete('/events/list/pins', { data: { eventAPIid: event.eventId } })
     .then(() => {
-      console.log('DELETE SUCCESS')
       getPins();
     })
     .catch(err => console.error('axios delete error', err))
@@ -117,7 +115,7 @@ const EventCardDetails = ({events, event}) => {
             </Grid>
           </Grid>
           <Grid item>
-            <PushPinIcon id={event.eventId} color={pins.includes(event.eventId) ? 'primary' : 'action'} onClick={(e) => {
+            <PushPinIcon id={event.eventId} color={pins.includes(event.eventId) ? 'secondary' : 'action'} onClick={(e) => {
               handleClick(e);
               }}
             />
