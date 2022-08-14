@@ -10,7 +10,7 @@ window.oncontextmenu = function (event: any) {
 
   const pointerEvent = event as PointerEvent;
   // eslint-disable-next-line no-console
-  console.log(`window.oncontextmenu: ${pointerEvent.pointerType}`);
+  // console.log(`window.oncontextmenu: ${pointerEvent.pointerType}`);
 
   if (pointerEvent.pointerType === 'touch') {
     // context menu was triggerd by long press
@@ -63,7 +63,7 @@ const SongFinder: React.FC = () => {
         }
       })
         .then((results) => {
-          console.log(results.data)
+          // console.log(results.data)
           setLyrics(results.data);
         })
         .catch((err) => console.error(err));
@@ -71,20 +71,24 @@ const SongFinder: React.FC = () => {
   }, [artist, song]);
 
   useEffect(() => {
-    axios.get('/favArtists/artist', {
-      params: {
-        artistName: artist,
-      }
-    })
-      .then((results) => {
-        // console.log(results.data);
-        if (results.data.length) {
-          setFavorited(true);
-        } else {
-          setFavorited(false);
+    if (artist) {
+      axios.get('/favArtists/artist', {
+        params: {
+          artistName: artist,
         }
       })
-      .catch((err) => console.error(err));
+        .then((results) => {
+          // console.log(results.data);
+          // console.log(results.data);
+          if (results.data.length) {
+            setFavorited(true);
+          } else {
+            setFavorited(false);
+          }
+        })
+        .catch((err) => console.error(err));
+
+    }
   }, [artist]);
 
   useEffect(() => {
@@ -141,7 +145,7 @@ const SongFinder: React.FC = () => {
   };
 
   const getLyrics = () => {
-    if (lyrics) {
+    if (lyrics && Array.isArray(lyrics)) {
       return lyrics.map((line, index) => {
         return (
           <div key={index + 1}>
@@ -155,6 +159,7 @@ const SongFinder: React.FC = () => {
   };
 
   const addToFavorites = () => {
+    // console.log(artist);
     axios.post('/favArtists', {
       artistName: artist
     })
