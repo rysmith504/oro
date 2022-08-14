@@ -44,7 +44,7 @@ artistsRouter.get('/', (req, res) => {
     })
       .then((data) => {
         // console.log(data);
-        res.status(200).send(data)
+        res.status(200).send(data);
       })
       .catch((err) => res.sendStatus(500));
   });
@@ -119,16 +119,6 @@ artistsRouter.get('/', (req, res) => {
       .catch(() => res.sendStatus(500));
   });
 
-  // axios.get(`https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=SptQUng7VWQQ0BVM0uspyhpoyHGkNSq4&keyword=${artistName}`)
-  //   .then((artistData) => {
-  //     console.info(artistData);
-  //     res.status(200).send(artistData.data._embedded);
-  //   })
-  //   .catch((err) => {
-  //     console.error(err);
-  //     res.status(500);
-  //     res.end();
-  //   });
 });
 
 export default artistsRouter;
