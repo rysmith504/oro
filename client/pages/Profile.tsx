@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
-import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem } from '../styles/material';
+import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button } from '../styles/material';
 
 const Accordion = styled((props) => (
   <MuiAccordion children={''} disableGutters elevation={0} square {...props} />
@@ -51,7 +51,6 @@ const Profile: React.FC = () => {
     getUserEvents();
   }, []);
 
-
   return (
     <div>
       <div>Hello Profile</div>
@@ -67,6 +66,9 @@ const Profile: React.FC = () => {
               <ListItem>
                 Location: {userEvents.address}, {userEvents.city}, {userEvents.state}, {userEvents.postalCode}
               </ListItem>
+              <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
+              <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
+              <Button onClick={() => {location.href = userEvents.link}}>Purchase Tickets</Button>
             </List>
           </AccordionDetails>
         </Accordion>
