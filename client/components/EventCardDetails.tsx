@@ -51,7 +51,7 @@ const EventCardDetails = ({events, event}) => {
     axios.post('/events/list/pins', {
       userId: 1,
       eventAPIid: event.eventId
-    }, {proxy:{protocol: 'https'}})
+    })
     .then(response => {
       console.log('POST SUCCESS', response);
     })
