@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 const UserContext = React.createContext({});
 
@@ -10,6 +11,9 @@ const UserContextProvider = ({ children }) => {
     axios.get('/profile/events')
       .then(events => {
         const { data } = events;
+        const startDate = data.sales.public.startDateTime;
+        const endDate = data.sales.public.endDateTime;
+
         const eventInfo = {
           eventName: data.name,
           eventDate: data.dates.start.localDate,
@@ -19,8 +23,8 @@ const UserContextProvider = ({ children }) => {
           state: data._embedded.venues[0].state.name,
           address: data._embedded.venues[0].address.line1,
           link: data.url,
-          saleStart: data.sales.public.startDateTime,
-          saleEnd: data.sales.public.endDateTime
+          saleStart: moment(startDate).format('LLLL'),
+          saleEnd: moment(endDate).format('LLLL')
         }
         setUserEvents(eventInfo);
       })
