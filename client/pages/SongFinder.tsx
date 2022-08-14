@@ -220,7 +220,7 @@ const SongFinder: React.FC = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <div>
-                  {lyrics.map((line, index) => {
+                  {lyrics.length && lyrics.map((line, index) => {
                     return (
                       <div key={index + 1}>
                         {line + '\n'}
