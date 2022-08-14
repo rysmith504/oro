@@ -46,7 +46,7 @@ const EventCardDetails = ({ events, event }) => {
       .catch((err) => console.error('GET PINS', err));
   };
 
-  const [pins, setPins] = useState(['foo', 'bar']);;
+  const [pins, setPins] = useState(['foo', 'bar']);
 
   const postEvent = () => {
     axios
@@ -54,12 +54,12 @@ const EventCardDetails = ({ events, event }) => {
         userId: 1,
         eventAPIid: event.eventId,
       })
-        .then((response) => {
-          // console.log('POST SUCCESS', response);
-        })
-        .then(getPins)
-        .catch((err) => console.error('POST ERROR', err));
-  };;
+      .then((response) => {
+        // console.log('POST SUCCESS', response);
+      })
+      .then(getPins)
+      .catch((err) => console.error('POST ERROR', err));
+  };
 
   const deleteEvent = () => {
     axios
@@ -72,15 +72,15 @@ const EventCardDetails = ({ events, event }) => {
   };
 
   const handleClick = (e) => {
-      if (pins.includes(event.eventId)) {
-        return deleteEvent();
-      } else if (pins == ['foo', 'bar'])  {
+    if (pins.includes(event.eventId)) {
+      return deleteEvent();
+    } else if (pins == ['foo', 'bar']) {
       setPins(event.eventId);
       return postEvent();
-    } else if (!pins.includes(event.eventId))  {
+    } else if (!pins.includes(event.eventId)) {
       return postEvent();
     }
-  };;
+  };
 
   const navigate = useNavigate();
   let date = event.eventDate;
@@ -92,33 +92,21 @@ const EventCardDetails = ({ events, event }) => {
   const id = events.id;
   const { name, url, info } = events;
 
-  const getDetails = () => {
-    // console.log('navigate', event.eventId);
-    navigate(`/details/?id=${event.eventId}`);
-=======
-  const image =
-    event.artistInfo[0].artistImages[
-      Math.floor(Math.random() * event.artistInfo[0].artistImages.length)
-    ].url;
-  const id = events.id;
-  const { name, url, info } = events;
-
-  const getDetails = () => {
-    console.log('navigate', event.eventId);
-    navigate(`/eventDetails/${event.eventId}`);
+  const getDetails = (id) => {
+    navigate(`/eventDetails/?id=${id}`);
   };
 
   return (
     <div>
-        <Paper
-            sx={{
-              p: 2,
-              margin: 'auto',
-              maxWidth: 500,
-              flexGrow: 1,
-              backgroundColor: (theme) =>
-                theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-          }}
+      <Paper
+        sx={{
+          p: 2,
+          margin: 'auto',
+          maxWidth: 500,
+          flexGrow: 1,
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        }}
       >
         <Grid container spacing={4}>
           <Grid item>

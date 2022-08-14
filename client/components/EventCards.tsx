@@ -29,15 +29,11 @@ const EventCards = ({ events }) => {
   const image = events.images[0].url;
   const id = events.id;
   const { name, url, info } = events;
-  const { setEventId, getEventDetails } = useContext(EventContext);
   // useEffect(() => {
   // }, []);
 
   const getDetails = (id) => {
-    console.log('navigate', id);
-    setEventId(id);
-    getEventDetails(id);
-    navigate(`/eventDetails/${id}`);
+    navigate(`/eventDetails/?id=${id}`);
   };
 
   return (
