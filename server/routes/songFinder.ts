@@ -26,7 +26,11 @@ songFinderRouter.get('/', (req, res) => {
 
   axios.get(`https://api.lyrics.ovh/v1/${artistName}/${song}`)
     .then((data) => {
-      res.status(200).send(data.data.lyrics.split('\n'));
+      if (data.data.lyrics.length) {
+        res.status(200).send(data.data.lyrics.split('\n'));
+      } else {
+        res.sendStatus(500);
+      }
     })
     .catch((err) => {
       res.sendStatus(500);
@@ -42,7 +46,7 @@ songFinderRouter.post('/', async (req, res) => {
       .then((uploadResponse) => {
         publicId = uploadResponse.public_id;
         // audioId = uploadResponse.asset_id;
-        console.log(uploadResponse);
+        // console.log(uploadResponse);
         axios.post('https://api.audd.io/', {
 
           'api_token': process.env.AUDD_TOKEN,
