@@ -14,12 +14,66 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
+// const useStyles = makeStyles((theme: Theme) =>
+//     createStyles({
+//             selected: {
+//                 background: 'blue',
+//             },
+//             default:{
+//                 background: 'default',
+//             }
+//         }
+//     ),
+// );
 
 const EventCardDetails = ({events, event}) => {
-
+  
   useEffect(() => {
-    console.log('EVENTs', events, 'EVENT', event)
+    getPins();
   }, []);
+  // const classes = useStyles();
+
+  const getPins = () => {
+    axios.get('/events/list/pins')
+      .then(responseObj => {
+        setPins(responseObj.data.map(event => event.eventAPIid));
+      })
+      .catch(err => console.error('GET PINS', err))
+  }
+
+  const [ pins, setPins ] = useState(['foo', 'bar'])
+
+  const postEvent = () => {
+    axios.post('/events/list/pins', {
+      userId: 1,
+      eventAPIid: event.eventId
+    })
+    .then(response => {
+      console.log('POST SUCCESS', response);
+    })
+    .then(getPins)
+    .catch(err => console.error('POST ERROR', err));
+  }
+
+  const deleteEvent = () => {
+    axios.delete('/events/list/pins', { data: { eventAPIid: event.eventId } })
+    .then(() => {
+      console.log('DELETE SUCCESS')
+      getPins();
+    })
+    .catch(err => console.error('axios delete error', err))
+  }
+
+  const handleClick = (e) => {
+  if (pins.includes(event.eventId)) {
+    return deleteEvent();
+  } else if (pins == ['foo', 'bar']){
+      setPins(event.eventId);
+      return postEvent();
+    } else if (!pins.includes(event.eventId)){
+      return postEvent();
+    }
+  }
 
   return (
     <div>
@@ -34,7 +88,7 @@ const EventCardDetails = ({events, event}) => {
       }}
       >
 
-      <Grid container spacing={2}>
+      <Grid container spacing={4}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
             <Img alt="alt tag" src={event.artistInfo[0].artistImages[Math.floor(Math.random()*(event.artistInfo[0].artistImages.length))].url} />
@@ -63,7 +117,10 @@ const EventCardDetails = ({events, event}) => {
             </Grid>
           </Grid>
           <Grid item>
-            <PushPinIcon/>
+            <PushPinIcon id={event.eventId} color={pins.includes(event.eventId) ? 'action' : 'error'} onClick={(e) => {
+              handleClick(e);
+              }}
+            />
           </Grid>
         </Grid>
       </Grid>
