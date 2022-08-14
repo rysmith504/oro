@@ -63,7 +63,7 @@ const SongFinder: React.FC = () => {
         }
       })
         .then((results) => {
-          // console.log(results.data)
+          console.log(results.data)
           setLyrics(results.data);
         })
         .catch((err) => console.error(err));
@@ -138,6 +138,20 @@ const SongFinder: React.FC = () => {
         setLyrics([]);
       })
       .catch((e) => console.log(e));
+  };
+
+  const getLyrics = () => {
+    if (lyrics) {
+      return lyrics.map((line, index) => {
+        return (
+          <div key={index + 1}>
+            {line + '\n'}
+          </div>
+        );
+      });
+    } else {
+      return null;
+    }
   };
 
   const addToFavorites = () => {
@@ -219,14 +233,8 @@ const SongFinder: React.FC = () => {
               <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<Lyrics></Lyrics>} Lyrics
               </AccordionSummary>
               <AccordionDetails>
-                <div>
-                  {lyrics.length && lyrics.map((line, index) => {
-                    return (
-                      <div key={index + 1}>
-                        {line + '\n'}
-                      </div>
-                    );
-                  })}
+                <div id='lyrics'>
+                  {getLyrics()} 
                 </div>
               </AccordionDetails>
             </Accordion>
