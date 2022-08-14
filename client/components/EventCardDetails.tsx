@@ -31,7 +31,7 @@ const Img = styled('img')({
 // );
 
 const EventCardDetails = ({events, event}) => {
-  
+
   useEffect(() => {
     getPins();
   }, []);
@@ -51,7 +51,7 @@ const EventCardDetails = ({events, event}) => {
     axios.post('/events/list/pins', {
       userId: 1,
       eventAPIid: event.eventId
-    })
+    }, {proxy:{protocol: 'https'}})
     .then(response => {
       console.log('POST SUCCESS', response);
     })
@@ -92,7 +92,7 @@ const EventCardDetails = ({events, event}) => {
 
   const getDetails = () => {
     console.log('navigate', event.eventId);
-    navigate(`/eventDetails/${event.eventId}`);
+    navigate(`/eventDetails/?id=${event.eventId}`);
   };
 
   return (
