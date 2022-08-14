@@ -64,7 +64,6 @@ eventListingsRouter.post('/list/pins', (req, res) => {
   prisma.userEvents.create({
     data: pinObj
   }).then((data) => {
-    console.log(data);
     res.send(data).status(201);
   })
   .catch(err => {
@@ -84,7 +83,6 @@ eventListingsRouter.get('/list/pins', (req, res) => {
     })
 
 eventListingsRouter.delete('/list/pins', (req, res) => {
-  console.log('DELETE', req.body)
   const { eventAPIid } = req.body
   prisma.userEvents.deleteMany({
     where: {
@@ -94,11 +92,9 @@ eventListingsRouter.delete('/list/pins', (req, res) => {
     }
   })
   .then(results => {
-    console.log('DELETED PRISMA LINE 95', results);
     res.sendStatus(200);
   })
   .catch(err => {
-    console.error('BACKEND DELETE ERROR', err);
     res.sendStatus(500);
   })
 })

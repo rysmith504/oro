@@ -29,19 +29,13 @@ const Img = styled('img')({
 const EventCardDetails = ({events, event}) => {
   
   useEffect(() => {
-    // console.log('EVENTs', events, 'EVENT', event);
     getPins();
   }, []);
-  useEffect(() => {
-    // console.log('EVENTs', events, 'EVENT', event);
-    console.log('PINS useeffect', pins);
-  });
   // const classes = useStyles();
 
   const getPins = () => {
     axios.get('/events/list/pins')
       .then(responseObj => {
-        console.log('GETPINS DATA', responseObj.data)
         setPins(responseObj.data.map(event => event.eventAPIid));
       })
       .catch(err => console.error('GET PINS', err))
@@ -71,8 +65,6 @@ const EventCardDetails = ({events, event}) => {
   }
 
   const handleClick = (e) => {
-    console.log('PIN EVENT', e)
-    console.log('INCLUDES', pins.includes(event.eventId))
   if (pins.includes(event.eventId)) {
     return deleteEvent();
   } else if (pins == ['foo', 'bar']){
