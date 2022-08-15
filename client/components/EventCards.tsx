@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import axios from 'axios';
 import moment from 'moment';
 import {
   Grid,
@@ -26,6 +25,10 @@ const EventCards = ({ events }) => {
   let date = events.dates.start.dateTime;
   date = moment(date).add(1, 'day').format('MMMM Do YYYY');
   const image = events.images[0].url;
+  // console.log(image);
+  // if (!image.length) {
+  //   image = 'https://source.unsplash.com/random/?music-festival';
+  // }
   const id = events.id;
   const { name, url, info } = events;
 
@@ -33,7 +36,6 @@ const EventCards = ({ events }) => {
   // }, []);
 
   const getDetails = (id) => {
-    console.log('navigate', id);
     navigate(`/details/?id=${id}`);
   };
 

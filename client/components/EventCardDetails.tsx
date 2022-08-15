@@ -74,7 +74,7 @@ const EventCardDetails = ({events, event}) => {
 
   const getDetails = () => {
     console.log('navigate', event.eventId);
-    navigate(`/eventDetails/?id=${event.eventId}`);
+    navigate(`/details/?id=${event.eventId}`);
   };
 
   return (
