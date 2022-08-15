@@ -93,7 +93,7 @@ const EventCardDetails = ({ events, event }) => {
   const { name, url, info } = events;
 
   const getDetails = (id) => {
-    navigate(`/eventDetails/?id=${id}`);
+    navigate(`/details/?id=${id}`);
   };
 
   return (

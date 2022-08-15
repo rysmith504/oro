@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
@@ -13,7 +13,6 @@ import {
   InfoIcon,
   DescriptionIcon,
 } from '../styles/material';
-import { EventContext } from '../context/EventContext';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -29,11 +28,13 @@ const EventCards = ({ events }) => {
   const image = events.images[0].url;
   const id = events.id;
   const { name, url, info } = events;
+
   // useEffect(() => {
   // }, []);
 
   const getDetails = (id) => {
-    navigate(`/eventDetails/?id=${id}`);
+    console.log('navigate', id);
+    navigate(`/details/?id=${id}`);
   };
 
   return (
