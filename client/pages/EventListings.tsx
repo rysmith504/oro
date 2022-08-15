@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import EventCards from '../components/EventCards';
+import EventCardDetails from '../components/EventCardDetails';
+
+import eventDummy from '../../server/database/data/eventDummy';
 const EventListings: React.FC = () => {
+
   // const [events, setEvents] = useState([]);
 
   // BELOW FUNCTION TO BE USED TO REMOVE PUNCTUATION FROM SEARCH QUERY
@@ -14,36 +17,52 @@ const EventListings: React.FC = () => {
   // EVENT LISTING URL
   // https://www.ticketmaster.com/event/${eventIdHere}
 
-  // const [ keyword, setKeyword ] = useState(`jane's addiction`);
-  // console.log(keyword)
-  const [keyword, setKeyword] = useState('jane\'s addiction');
-  const [events, setEvents] = useState([]);
+  const [ keyword, setKeyword ] = useState('jane\'s addiction');
+  const [events, setEvents] = useState(eventDummy);
 
   const getEvents = () => {
-    const punctuationless: string = keyword
-      .replace(/[']/g, '')
-      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' ')
-      .replace(/\s{1,}/g, '+')
-      .toLowerCase();
-    axios
-      .get('/events/list', { params: { keyword: punctuationless } })
+    // const punctuationless: string = keyword
+    // .replace(/[']/g, '')
+    // .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, " ")
+    // .replace(/\s{1,}/g, "+")
+    // .toLowerCase();
+    axios.get('/events/list', { params: { keyword: keyword } })
       .then((responseObj) => {
-        //   // console.log(responseObj);;
+        console.log('GETEVENTS RESPONSEOBJ', responseObj);
         setEvents(responseObj.data.events);
       })
-      .catch((err) => console.error(err));
+      .catch(err => console.error(err));
   };
   useEffect(() => {
     getEvents();
-    // console.log('EVENTS', events);
+    console.log(keyword);
+    console.log('EVENTS', events);
   }, []);
+
+  const enterClick = (e) => {
+    if (e.keyCode === 13) {
+      getEvents();
+    }
+  };
+
+  const handleChange = (e) => {
+    setKeyword(e.target.value);
+  };
 
   return (
     <div>
       <div>Hello EventListings</div>
-      <input placeholder='enter keywords here (e.g. artist, event, venue, city, state, date...'></input>
+      <input placeholder='enter keywords here (e.g. artist, event, venue, city, state, date...' type='text' id='' onChange={ handleChange } value={keyword} onKeyDown={enterClick}></input>
       <div>
-        <EventCards events={events} setEvents={setEvents} keyword={keyword} />
+        {
+          events.map(event => (
+            <EventCardDetails
+              events={ events }
+              event={event}
+              key={event.eventId}
+            />
+          ))
+        }
       </div>
     </div>
   );
