@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { alpha, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import EventCardDetails from '../components/EventCardDetails';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import eventDummy from '../../server/database/data/eventDummy';
 
@@ -65,20 +64,10 @@ const EventListings: React.FC = () => {
 
   return (
     <div>
+      <br/>
       <div>
-      <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-      >
-      <CssTextField InputLabelProps={fontColor} inputProps={fontColor} label="search events" color="secondary" id="custom-css-outlined-input" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick}  />
-    </Box>
-      </div>
-  
-      {/* <div><input placeholder='enter keywords here (e.g. artist, event, venue, city, state, date...' type='text' id='' onChange={ handleChange } value={keyword} onKeyDown={enterClick}></input></div> */}
+        <CssTextField InputLabelProps={fontColor} inputProps={fontColor} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} />
+      </div><br/>
       <div>
         {
           events.map(event => (
