@@ -67,12 +67,8 @@ const EventListings: React.FC = () => {
     <div>
       <br/>
       <div>
-
-      {/* <CssTextField InputLabelProps={fontColor} inputProps={fontColor} label="search events" color="secondary" id="custom-css-outlined-input" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick}  /> */}
-      <CssTextField InputLabelProps={fontColor} inputProps={fontColor} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} />
+        <CssTextField InputLabelProps={fontColor} inputProps={fontColor} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} />
       </div><br/>
-  
-      {/* <div><input placeholder='enter keywords here (e.g. artist, event, venue, city, state, date...' type='text' id='' onChange={ handleChange } value={keyword} onKeyDown={enterClick}></input></div> */}
       <div>
         {
           events.map(event => (

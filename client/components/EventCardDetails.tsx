@@ -56,7 +56,7 @@ const EventCardDetails = ({events, event}) => {
       .catch(err => console.error('axios delete error', err));
   };
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     if (pins.includes(event.eventId)) {
       return deleteEvent();
     } else if (pins == ['foo', 'bar']) {
@@ -92,7 +92,9 @@ const EventCardDetails = ({events, event}) => {
 
         <Grid container spacing={4} alignItems='center'>
           <Grid item>
-            <ButtonBase sx={{ width: 128, height: 128 } } onClick={()=> getDetails()}>
+            <ButtonBase
+              sx={ { width: 128, height: 128 } }
+              onClick={()=> getDetails()}>
               <InfoIcon/>
               <Img alt="alt tag" src={image} />
             </ButtonBase>
@@ -101,16 +103,18 @@ const EventCardDetails = ({events, event}) => {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography variant="body2" gutterBottom>
+                  {event.eventName}
                   {event.artistInfo.map(artist => (
                     <div>
                       {artist.artistName}
                     </div>
                   ))}
-                  {event.eventName}<br/>
-                  {date}<br/>
+                  {date}
+                  <br/>
                   {event.venueInfo.map(venue => (
                     <div>
-                      {Object.values(venue.address)}<br/>
+                      {Object.values(venue.address)}
+                      <br/>
                       {venue.city}, {venue.state} {venue.postalCode}
                     </div>
                   ))
@@ -119,9 +123,10 @@ const EventCardDetails = ({events, event}) => {
               </Grid>
             </Grid>
             <Grid item>
-              <PushPinIcon id={event.eventId} color={pins.includes(event.eventId) ? 'secondary' : 'action'} onClick={(e) => {
-                handleClick(e);
-              }}
+              <PushPinIcon 
+                id={event.eventId} 
+                color={pins.includes(event.eventId) ? 'secondary' : 'action'} 
+                onClick={ handleClick }
               />
             </Grid>
           </Grid>
