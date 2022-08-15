@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { alpha, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import EventCardDetails from '../components/EventCardDetails';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import eventDummy from '../../server/database/data/eventDummy';
 

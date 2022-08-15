@@ -123,9 +123,9 @@ const EventCardDetails = ({events, event}) => {
               </Grid>
             </Grid>
             <Grid item>
-              <PushPinIcon 
-                id={event.eventId} 
-                color={pins.includes(event.eventId) ? 'secondary' : 'action'} 
+              <PushPinIcon
+                id={event.eventId}
+                color={pins.includes(event.eventId) ? 'secondary' : 'action'}
                 onClick={ handleClick }
               />
             </Grid>
