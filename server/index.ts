@@ -7,6 +7,7 @@ import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
 import authRouter from './routes/auth';
 import profileRouter from './routes/profile';
+import commentsRouter from './routes/comments';
 import prisma from './database/db';
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/songs', songFinderRouter);
 app.use('/eventDetails', eventDetailsRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
+app.use('/comments', commentsRouter);
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {

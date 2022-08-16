@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Comments from '../components/Comments';
-import { Accordion, AccordionSummary, AccordionDetails, Button, Grid, Fab} from '@mui/material';
+import { Grid, ImageList, ImageListItem} from '@mui/material';
 
 const EventFeed: React.FC = () => {
   let dummyData = [
@@ -27,20 +27,25 @@ const EventFeed: React.FC = () => {
   return (
     <div>
       <div>Hello EventFeed</div>
-      {dummyData.map((photo, i) => {
-        return (
-          <div key={i}>
-            {photo.userId}
-            <span>
+      <div>
+        {/* <ImageList cols={1} sx={{width: 300, height: 600}}> */}
+        {dummyData.map((photo, i) => {
+          return (
+            <div key={i}>
+              <div style={{textAlign: 'left'}}>
+                {photo.userId}
+              </div>
+              {/* <ImageListItem> */}
               <img width='200px' height='auto' src={photo.photoUrl}/>
-            </span>
-            <div>
-              <Comments/>
+              {/* </ImageListItem> */}
+              <div>
+                <Comments eventId={photo.eventApiID} />
+              </div>
             </div>
-
-          </div>
-        );
-      })}
+          );
+        })}
+        {/* </ImageList> */}
+      </div>
 
     </div>
   );

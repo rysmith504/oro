@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Comments: React.FC = () => {
+import { Paper, Grid} from '@mui/material';
+
+const Comments: React.FC = (props) => {
 
   const [commentsOpen, setCommentsOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const showComments = () => {
     if (commentsOpen) {
@@ -14,12 +18,29 @@ const Comments: React.FC = () => {
     }
   };
 
+  const handleComment = (e) => {
+    // console.log(e.target.value);
+    setMessage(e.target.value);
+  };
+
+  const handleSend = () => {
+    axios.post('/comments', {
+      comment: message,
+    })
+      .then((data) => {
+        // console.log(data);
+        setMessage('');
+      })
+      .catch((err) => console.error(err));
+  };
+
   const commentsFeed = () => {
     // console.log('comments');
     if (commentsOpen) {
       return (
         <div>
-          comments HERE
+          <input onChange={(e) => handleComment(e)} value={message}></input>
+          <button type='submit' onClick={handleSend}> Send </button>
         </div>
       );
     } else {
