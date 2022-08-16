@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Comments from '../components/Comments';
-import { Grid, ImageList, ImageListItem} from '@mui/material';
+import { Grid, ImageList, ImageListItem, OutlinedInput, Fab} from '@mui/material';
 
 const EventFeed: React.FC = () => {
+
+  const [previewSource, setPreviewSource] = useState();
+  const [photo, setPhoto] = useState(null);
   let dummyData = [
     {
       userId: 1,
@@ -23,6 +27,42 @@ const EventFeed: React.FC = () => {
       createdAt: '2022-08-13'
     },
   ];
+
+  const handleFileChange = (e) => {
+    // console.log("photo changed");
+    setPhoto(e.target.files[0]);
+  };
+
+  const handleFileUpload = async () => {
+    if (photo) {
+      const formData = new FormData();
+      formData.append("myFile", photo, photo.name);
+
+      console.log(photo, photo.name);
+      console.log('uploaded');
+      // await axios
+      //   .post('/api/gallery', {
+      //     data: previewSource,
+      //   })
+      //   .then(() => {})
+      //   .catch((err) => console.error(err));
+      setPhoto(null);
+    }
+  };
+
+
+  useEffect(() => {
+    if (photo) {
+      const reader = new FileReader();
+      reader.readAsDataURL(photo);
+
+      reader.onloadend = () => {
+        setPreviewSource(reader.result);
+      };
+    }
+  }, [photo]);
+
+
 
   return (
     <div>
@@ -47,6 +87,10 @@ const EventFeed: React.FC = () => {
         {/* </ImageList> */}
       </div>
 
+      <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
+      <Fab variant='extended' size='small' onClick={handleFileUpload}>
+              Upload
+      </Fab>
     </div>
   );
 };
