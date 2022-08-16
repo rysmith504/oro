@@ -33,10 +33,21 @@ const UserContextProvider = ({ children }) => {
       })
   }
 
+  const logoutUser = () => {
+    axios.get('/logout')
+      .then(() => {
+        console.log('logged out');
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
   const appProps = {
     userEvents,
     setUserEvents,
     getUserEvents,
+    logoutUser,
   };
 
 

@@ -42,13 +42,14 @@ passport.use(new GoogleStrategy(
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
   },
-  (async (req, accessToken, refreshToken, profile, cb ) => {
+  (async (req: any, accessToken: any, refreshToken: any, profile: { id: any; emails: { value: any; }[]; displayName: any; photos: { value: any; }[]; }, cb: (arg0: undefined, arg1: undefined) => any ) => {
     // console.log('profile here----', profile);
     const user = await prisma.users.create(
       { data: {
         googleId: profile.id,
         email: profile.emails[0].value,
         fullName: profile.displayName,
+        profileURL: profile.photos[0].value,
       }});
 
     (function passUser (err, user) {
@@ -91,34 +92,31 @@ app.get('/auth/success', (req, res) => {
   }
 });
 
+app.get('/hidden', isLoggedIn, (req, res) => {
+  res.send(req.user);
+});
+
 app.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }),
   (req, res) => {
-    // console.log('auth get', req, res);
   }
 );
+
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/',
-    successRedirect: '/',
-  }),
-  (req, res) => {
-    // Successful authentication, redirect secrets.
-    // console.log('auth redirect', req, res);
-    res.redirect('/');
-    res.end();
-  },
+  passport.authenticate('google', { 
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+  })
 );
 
-
 app.get('/logout', (req, res) => {
+  console.log(req);
   req.logout(() => {
     res.redirect('/');
   });
 });
-
-
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {

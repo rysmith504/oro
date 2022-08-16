@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link, Routes, Route } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+import { UserContext } from '../context/UserContext';
 
 const pages = [
   <Link to='/eventListings' style={{ textDecoration: 'none' }}>Find Events</Link>,
@@ -32,6 +34,7 @@ const settings = [
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const { logoutUser } = useContext(UserContext);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -47,6 +50,10 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = () => {
+    logoutUser();
+  }
 
   return (
     <AppBar position="static">
@@ -88,6 +95,9 @@ const Navbar = () => {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem onClick={handleLogout}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <img src="images/VSLOGO.png" height="75"/>
