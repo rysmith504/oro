@@ -5,6 +5,7 @@ import eventListingsRouter from './routes/eventListingsRouter';
 import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
+import eventFeedRouter from './routes/eventFeed';
 // import app from './routes/auth';
 import profileRouter from './routes/profile';
 import commentsRouter from './routes/comments';
@@ -28,6 +29,7 @@ app.use('/eventDetails', eventDetailsRouter);
 // app.use('/auth', app);
 app.use('/profile', profileRouter);
 app.use('/comments', commentsRouter);
+app.use('/eventFeed', eventFeedRouter);
 
 // AUTH-----------------
 require('dotenv').config();

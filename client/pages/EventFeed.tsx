@@ -7,39 +7,40 @@ const EventFeed: React.FC = () => {
 
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
-  let dummyData = [
-    {
-      userId: 1,
-      photoUrl: 'https://cdn.britannica.com/92/100692-050-5B69B59B/Mallard.jpg',
-      eventApiID: 'test',
-      createdAt: '2022-08-15'
-    },
-    {
-      userId: 2,
-      photoUrl: 'https://www.thespruce.com/thmb/t13CIs9CH0HfuggdQ-DU9zk_QHo=/3780x2126/smart/filters:no_upscale()/do-ducks-have-teeth-4153828-hero-9614a7e9f4a049b48e8a35a9296c562c.jpg',
-      eventApiID: 'test',
-      createdAt: '2022-08-14'
-    },
-    {
-      userId: 1,
-      photoUrl: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/how-to-keep-ducks-call-ducks-1615457181.jpg',
-      eventApiID: 'test',
-      createdAt: '2022-08-13'
-    },
-  ];
+  const [feedPhotos, setFeedPhotos] = useState([]);
+
+  useEffect(() => {
+    updateFeed();
+  }, []);
+
+  const updateFeed = () => {
+    axios.get('/eventFeed')
+      .then((responseObj) => {
+        console.log(responseObj);
+        setFeedPhotos(responseObj.data);
+      })
+      .catch((err) => console.error(err));
+  };
+
 
   const handleFileChange = (e) => {
     // console.log("photo changed");
     setPhoto(e.target.files[0]);
   };
 
-  const handleFileUpload = async () => {
+  const handleFileUpload = () => {
     if (photo) {
       const formData = new FormData();
       formData.append("myFile", photo, photo.name);
 
       console.log(photo, photo.name);
       console.log('uploaded');
+      axios.post('/eventFeed', {
+        data: previewSource
+      })
+        .then(() => updateFeed())
+        .catch((err) => console.error(err));
+
       // await axios
       //   .post('/api/gallery', {
       //     data: previewSource,
@@ -69,7 +70,7 @@ const EventFeed: React.FC = () => {
       <div>Hello EventFeed</div>
       <div>
         {/* <ImageList cols={1} sx={{width: 300, height: 600}}> */}
-        {dummyData.map((photo, i) => {
+        {feedPhotos.map((photo, i) => {
           return (
             <div key={i}>
               <div style={{textAlign: 'left'}}>
@@ -79,7 +80,7 @@ const EventFeed: React.FC = () => {
               <img width='200px' height='auto' src={photo.photoUrl}/>
               {/* </ImageListItem> */}
               <div>
-                <Comments eventId={photo.eventApiID} />
+                <Comments eventId={photo.eventAPIid} />
               </div>
             </div>
           );
