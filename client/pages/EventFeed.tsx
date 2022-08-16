@@ -5,7 +5,7 @@ import { Accordion, AccordionSummary, AccordionDetails, Button, Grid, Fab} from 
 const EventFeed: React.FC = () => {
   let dummyData = [
     {
-      userId: 1,
+      userId: 4,
       photoUrl: 'https://cdn.britannica.com/92/100692-050-5B69B59B/Mallard.jpg',
       eventApiID: 'test',
       createdAt: '2022-08-15'

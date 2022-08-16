@@ -43,6 +43,10 @@ const UserContextProvider = ({ children }) => {
       })
   }
 
+  const getOtherUser = () => {
+    axios.get('/profile/')
+  }
+
   const appProps = {
     userEvents,
     setUserEvents,
