@@ -36,10 +36,5 @@ profileRouter.get('/:id', (req, res) => {
   // })
 })
 
-profileRouter.get('/users', (req, res) => {
-  prisma.users.findMany({
-    
-  })
-})
 
 export default profileRouter;

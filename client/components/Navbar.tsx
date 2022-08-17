@@ -26,15 +26,23 @@ const pages = [
   <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>,
   <Link to='/profile' style={{ textDecoration: 'none' }}>My Account</Link>,
 ];
-const settings = [
-  'Profile',
-  'Account',
-  <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>, 'Logout'];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const { logoutUser } = useContext(UserContext);
+
+  
+  const handleLogout = () => {
+    logoutUser();
+  }
+
+  const settings = [
+    'Profile',
+    'Account',
+    <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>,
+    <Button onClick={handleLogout}>Logout</Button>
+    ];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -50,10 +58,6 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const handleLogout = () => {
-    logoutUser();
-  }
 
   return (
     <AppBar position="static">
@@ -95,9 +99,6 @@ const Navbar = () => {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
-              <MenuItem onClick={handleLogout}>
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
             </Menu>
           </Box>
           <img src="images/VSLOGO.png" height="75"/>

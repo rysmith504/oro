@@ -119,9 +119,11 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/profile',
     failureRedirect: '/login',
-  })
+  }), (req, res) => {
+    console.log(req);
+  }
+
 );
 
 app.get('/logout', (req, res) => {
