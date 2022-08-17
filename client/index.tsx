@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { Box, Grid, Container } from './styles/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import {GlobalTheme} from '../client/styles/themeStyles';
-
+import { ThemeContextProvider } from './context/ThemeContext';
 
 const rootElement = document.getElementById('root');
 
@@ -15,21 +15,19 @@ if (!rootElement) {
 const root = createRoot(rootElement);
 
 root.render(
-  // <ThemeProvider theme={themeDark}>
-  <>
+  <ThemeContextProvider>
     <CssBaseline /><Box>
       <Grid container>
         <Grid item xs={12} md={12}>
           <BrowserRouter>
             <Routes>
-              <Route path='*' element={<>
-                <GlobalTheme />
+              <Route path='*' element={
                 <App />
-              </>} />
+              } />
             </Routes>
           </BrowserRouter>
         </Grid>
       </Grid>
-    </Box></>
-  // </ThemeProvider>
+    </Box>
+  </ThemeContextProvider>
 );

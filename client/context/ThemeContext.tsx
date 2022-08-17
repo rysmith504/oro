@@ -1,38 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 // import {darkMode, lightMode, GlobalTheme} from '../styles/themeStyles';
-import {ThemeProvider} from 'styled-components';
-export const ThemeContext = React.createContext({});
-
-const lightMode = {
-  colorBackground: '#FFFFFF',
-  colorText: '#1A2027',
-};
+import styled, { ThemeProvider } from 'styled-components';
 
 const darkMode = {
-  colorBackground: '#1A2027',
-  colorText: '#FFFFFF',
+  backgroundColor: '#1A2027',
+  marginRight: 'auto',
+  fontFamily: 'Roboto',
+  textAlign: 'center',
+  padding: '10px',
+  color: 'white',
 };
 
-export const ThemeContextProvider = ({ children }) => {
+const lightMode = {
+  backgroundColor: '#FFF',
+  marginRight: 'auto',
+  fontFamily: 'Roboto',
+  textAlign: 'center',
+  padding: '10px',
+  color: '#1A2027',
+};
 
-  const [mode, setMode] = useState(darkMode);
+const Styled = styled.div``;
+
+const ThemeContext = React.createContext({});
+
+const ThemeContextProvider = ({ children }) => {
+
+  const [mode, setMode] = useState('dark');
 
   // function to toggle the theme
 
   const toggleMode = () => {
-    // mode === 'dark' ? setMode(dark) : setMode(light);
+    mode === 'dark' ? setMode('dark') : setMode('light');
     console.log('toggle mode');
   };
 
+  const themeProps = {
+    mode,
+    toggleMode,
+    setMode,
+  };
 
   return (
-    <ThemeContext.Provider
-      value={toggleMode}>
-      <ThemeProvider theme={mode}>
-        { children }
-      </ThemeProvider>
-    </ThemeContext.Provider>
+    <ThemeProvider theme={mode === 'dark' ? darkMode : lightMode}>
+      <ThemeContext.Provider
+        value={themeProps}>
+        <Styled>{ children }</Styled>
+      </ThemeContext.Provider>
+    </ThemeProvider>
   );
 
 };
+
+export { ThemeContextProvider, ThemeContext };

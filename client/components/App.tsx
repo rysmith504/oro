@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Profile from '../pages/Profile';
 import Home from '../pages/Home';
@@ -11,6 +11,7 @@ import Login from '../pages/Login';
 import { ArtistContextProvider } from '../context/ArtistContext';
 import { EventContextProvider } from '../context/EventContext';
 import { UserContextProvider } from '../context/UserContext';
+import { ThemeContextProvider, ThemeContext } from '../context/ThemeContext';
 import EventDetails from '../pages/EventDetails';
 import EventFeed from '../pages/EventFeed';
 import Navbar from '../components/Navbar';
@@ -23,6 +24,7 @@ import Navbar from '../components/Navbar';
 
 const App: React.FC = () => {
   // update React.FC, .FC deprecated?
+  const themeContext = useContext(ThemeContext);
   const [isDarkMode, setDarkMode] = useState(true);
 
   return (
@@ -48,7 +50,6 @@ const App: React.FC = () => {
         </ArtistContextProvider>
       </UserContextProvider>
     </EventContextProvider>
-
   );
 };
 
