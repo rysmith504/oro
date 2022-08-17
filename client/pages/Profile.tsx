@@ -40,7 +40,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const Profile: React.FC = () => {
-  const { userEvents, getUserEvents } = useContext(UserContext);
+  const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -53,7 +53,7 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <div>Hello Profile</div>
+      <div>Hello {currentUserInfo.displayName}</div>
       <div>
         <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
