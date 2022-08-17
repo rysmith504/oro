@@ -82,16 +82,16 @@ passport.use(new GoogleStrategy(
 ));
 
 passport.serializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-  console.log(`\n--------> Serialize User:`)
-  console.log(user)
+  // console.log(`\n--------> Serialize User:`)
+  // console.log(user)
   // The USER object is the "authenticated user" from the done() in authUser function.
   // serializeUser() will attach this user to "req.session.passport.user.{user}", so that it is tied to the session object for each session.
   done(null, user);
 });
 
 passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-  console.log("\n--------- Deserialized User:")
-  console.log(user)
+  // console.log("\n--------- Deserialized User:")
+  // console.log(user)
   // This is the {user} that was saved in req.session.passport.user.{user} in the serializationUser()
   // deserializeUser will attach this {user} to the "req.user.{user}", so that it can be used anywhere in the App.
 
@@ -99,11 +99,9 @@ passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
 });
 
 
-const isLoggedIn = (req: {
-  isAuthenticated: any; user: any;
-}, res: { sendStatus: (arg0: number) => any; }, next: () => any) => {
-  req.isAuthenticated ? next() : res.sendStatus(401);
-};
+const isLoggedIn = (req, res, next) => {
+  req.user ? next() : res.sendStatus(401);
+}
 
 app.get('/auth/success', (req, res) => {
   // console.log('auth success');
@@ -129,7 +127,7 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/login',
   }),
   (req, res) => {

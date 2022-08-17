@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
-
-import { styled, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '@mui/material';
+import { OutlinedInput, Fab, styled, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Grid, ImageList, ImageListItem, OutlinedInput, Fab} from '@mui/material';
@@ -11,7 +10,6 @@ const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  // transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
   marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
@@ -120,17 +118,6 @@ const EventFeed: React.FC = () => {
               </Collapse>
             </Card>
           </div>
-
-          // <div key={i}>
-          //   {photo.userId}
-          //   <span>
-          //     <img width='200px' height='auto' src={photo.photoUrl}/>
-          //   </span>
-          //   <div>
-          //     <Comments/>
-          //   </div>
-
-          // </div>
         );
       })}
 
