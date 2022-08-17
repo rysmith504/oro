@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
 import { EventContext } from '../context/EventContext';
+import { useSearchParams } from 'react-router-dom';
 
 
 import { styled, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '@mui/material';
@@ -27,6 +28,9 @@ const EventFeed: React.FC = () => {
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
   const [feedPhotos, setFeedPhotos] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const eventId = searchParams.get('id');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -44,7 +48,11 @@ const EventFeed: React.FC = () => {
   }, [photo]);
 
   const updateFeed = () => {
-    axios.get('/eventFeed')
+    axios.get('/eventFeed', {
+      params: {
+        eventId,
+      }
+    })
       .then((responseObj) => {
         setFeedPhotos(responseObj.data);
       })
@@ -52,7 +60,7 @@ const EventFeed: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(eventDetails);
+    console.log(eventId);
     updateFeed();
   }, []);
 
@@ -70,6 +78,7 @@ const EventFeed: React.FC = () => {
       // console.log('uploaded');
       axios.post('/eventFeed', {
         imageData: previewSource,
+        eventId,
       })
         .then(() => updateFeed())
         .catch((err) => console.error(err));

@@ -21,7 +21,7 @@ eventFeedRouter.post('/', async (req, res) => {
           data: {
             userId: 1,
             photoUrl: uploadedResponse.secure_url,
-            eventAPIid: 'test',
+            eventAPIid: eventId,
           }
 
         })
@@ -51,10 +51,10 @@ eventFeedRouter.post('/', async (req, res) => {
 });
 
 eventFeedRouter.get('/', async (req, res) => {
-  // const {eventId} = req.query;
+  const {eventId} = req.query;
   await prisma.eventPhotos.findMany({
     where: {
-      eventAPIid: 'test',
+      eventAPIid: eventId,
     },
     orderBy: {
       created_at: 'asc'
