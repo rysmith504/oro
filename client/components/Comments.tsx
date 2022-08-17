@@ -4,9 +4,15 @@ import axios from 'axios';
 import { Paper, Grid} from '@mui/material';
 
 const Comments: React.FC = (props) => {
+  const {photo} = props;
+  useEffect(() => {
+    console.log(photo);
+  }, []);
+  
 
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const [comments, setComments] = useState([]);
 
   const showComments = () => {
     if (commentsOpen) {
@@ -18,6 +24,23 @@ const Comments: React.FC = (props) => {
     }
   };
 
+  useEffect(() => {
+    getComments();
+  }, []);
+
+  const getComments = async () => {
+    await axios.get('/comments', {
+      params: {
+        photoUrl: photo.photoUrl
+      }
+    })
+      .then((data) => {
+        console.log(data)
+        setComments(data.data);
+      })
+      .catch((err) => console.error(err));
+  };
+
   const handleComment = (e) => {
     // console.log(e.target.value);
     setMessage(e.target.value);
@@ -26,10 +49,13 @@ const Comments: React.FC = (props) => {
   const handleSend = () => {
     axios.post('/comments', {
       comment: message,
+      photoUrl: photo.photoUrl,
+
+
     })
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setMessage('');
+        getComments();
       })
       .catch((err) => console.error(err));
   };
@@ -43,9 +69,13 @@ const Comments: React.FC = (props) => {
             <Grid item xs={0} md={5}/>
             <Grid item xs={12} md={2}>
               <Paper>
-                <div> THIS IS A COMMENT</div>
-                <div> THIS IS A COMMENT</div>
-                <div> THIS IS A COMMENT</div>
+                {comments.map((comment, i) => {
+                  return (
+                    <div key={i}>
+                      {comment.comment}
+                    </div>
+                  );
+                })}
               </Paper>
             </Grid>
             <Grid item xs={0} md={5}/>

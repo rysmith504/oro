@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
 import { Grid, ImageList, ImageListItem, OutlinedInput, Fab} from '@mui/material';
+import { EventContext } from '../context/EventContext';
 
 const EventFeed = () => {
-
+  // const { getEventDetails, eventDetails } = useContext(EventContext);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
   const [feedPhotos, setFeedPhotos] = useState([]);
@@ -24,7 +25,7 @@ const EventFeed = () => {
   const updateFeed = () => {
     axios.get('/eventFeed')
       .then((responseObj) => {
-        console.log(responseObj);
+        // console.log(responseObj);
         setFeedPhotos(responseObj.data);
       })
       .catch((err) => console.error(err));
@@ -44,8 +45,8 @@ const EventFeed = () => {
       const formData = new FormData();
       formData.append("myFile", photo, photo.name);
 
-      console.log(photo, photo.name);
-      console.log('uploaded');
+      // console.log(photo, photo.name);
+      // console.log('uploaded');
       axios.post('/eventFeed', {
         data: previewSource
       })
@@ -71,7 +72,7 @@ const EventFeed = () => {
               </div>
               <img width='200px' height='auto' src={photo.photoUrl}/>
               <div>
-                <Comments eventId={photo.eventAPIid} />
+                <Comments photo={photo} />
               </div>
             </div>
           );
