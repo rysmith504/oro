@@ -55,7 +55,7 @@ passport.use(new GoogleStrategy(
   },
   (async (req: any, accessToken: any, refreshToken: any, profile: { id: any; emails: { value: any; }[]; displayName: any; photos: { value: any; }[]; }, cb: (arg0: undefined, arg1: undefined) => any) => {
     // console.log('profile here----', profile);
-    const user = await prisma.users.create(
+    await prisma.users.create(
       {
         data: {
           googleId: profile.id,
@@ -63,26 +63,30 @@ passport.use(new GoogleStrategy(
           fullName: profile.displayName,
           profileURL: profile.photos[0].value,
         }
+      })
+      .catch(async () => {
+        return await prisma.users.findUnique({
+          where: {
+            googleId: profile.id,
+          },
+        });
       });
-
-    (function passUser(err, user) {
-      console.log(user);
-      return cb(err, user);
-    })();
+    
+      cb(null, profile);
   }),
 ));
 
 passport.serializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-  // console.log(`\n--------> Serialize User:`)
-  // console.log(user)
+  console.log(`\n--------> Serialize User:`)
+  console.log(user)
   // The USER object is the "authenticated user" from the done() in authUser function.
   // serializeUser() will attach this user to "req.session.passport.user.{user}", so that it is tied to the session object for each session.
   done(null, user);
 });
 
 passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-  // console.log("\n--------- Deserialized User:")
-  // console.log(user)
+  console.log("\n--------- Deserialized User:")
+  console.log(user)
   // This is the {user} that was saved in req.session.passport.user.{user} in the serializationUser()
   // deserializeUser will attach this {user} to the "req.user.{user}", so that it can be used anywhere in the App.
 
@@ -123,10 +127,9 @@ app.get(
     successRedirect: '/profile',
     failureRedirect: '/login',
   }), 
-  // (req, res) => {
-  //   console.log(req);
-  // }
-
+  (req, res) => {
+    console.log('google callback req -----------> ', req);
+  }
 );
 
 app.get('/logout', (req, res) => {
