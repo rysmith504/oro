@@ -123,7 +123,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
 
             <IconButton onClick={toggleMode}>
-              {mode === 'light' ?
+              {mode === 'dark' ?
                 <div>Dark Mode <NightlightIcon fontSize="small"/></div> :
                 <div>Light Mode <WbSunnyIcon fontSize="small"/></div>}
             </IconButton>
