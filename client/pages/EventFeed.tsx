@@ -3,15 +3,23 @@ import axios from 'axios';
 import Comments from '../components/Comments';
 import { Grid, ImageList, ImageListItem, OutlinedInput, Fab} from '@mui/material';
 
-const EventFeed: React.FC = () => {
+const EventFeed = () => {
 
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
   const [feedPhotos, setFeedPhotos] = useState([]);
-
+  
+  
   useEffect(() => {
-    updateFeed();
-  }, []);
+    if (photo) {
+      const reader = new FileReader();
+      reader.readAsDataURL(photo);
+  
+      reader.onloadend = () => {
+        setPreviewSource(reader.result);
+      };
+    }
+  }, [photo]);
 
   const updateFeed = () => {
     axios.get('/eventFeed')
@@ -21,7 +29,10 @@ const EventFeed: React.FC = () => {
       })
       .catch((err) => console.error(err));
   };
-
+    
+  useEffect(() => {
+    updateFeed();
+  }, []);
 
   const handleFileChange = (e) => {
     // console.log("photo changed");
@@ -40,28 +51,11 @@ const EventFeed: React.FC = () => {
       })
         .then(() => updateFeed())
         .catch((err) => console.error(err));
-
-      // await axios
-      //   .post('/api/gallery', {
-      //     data: previewSource,
-      //   })
-      //   .then(() => {})
-      //   .catch((err) => console.error(err));
       setPhoto(null);
     }
   };
 
 
-  useEffect(() => {
-    if (photo) {
-      const reader = new FileReader();
-      reader.readAsDataURL(photo);
-
-      reader.onloadend = () => {
-        setPreviewSource(reader.result);
-      };
-    }
-  }, [photo]);
 
 
 
@@ -69,23 +63,20 @@ const EventFeed: React.FC = () => {
     <div>
       <div>Hello EventFeed</div>
       <div>
-        {/* <ImageList cols={1} sx={{width: 300, height: 600}}> */}
-        {feedPhotos.map((photo, i) => {
+        {feedPhotos.length && feedPhotos.map((photo, i) => {
           return (
             <div key={i}>
               <div style={{textAlign: 'left'}}>
                 {photo.userId}
               </div>
-              {/* <ImageListItem> */}
               <img width='200px' height='auto' src={photo.photoUrl}/>
-              {/* </ImageListItem> */}
               <div>
                 <Comments eventId={photo.eventAPIid} />
               </div>
             </div>
           );
         })}
-        {/* </ImageList> */}
+
       </div>
 
       <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
@@ -97,22 +88,3 @@ const EventFeed: React.FC = () => {
 };
 
 export default EventFeed;
-
-
-{/* <Grid container>
-<Grid item xs={0} md={5}/>
-<Grid item xs={1}>
-  <div>
-    {photo.userId}
-  </div>
-</Grid>
-
-<Grid item xs={11} md={1}>
-  <div>
-    <img width='200px' height='auto' src={photo.photoUrl}/>
-  </div>
-  <div style={{textAlign: 'right'}} >see all comments</div>
-
-</Grid>
-<Grid item xs={0} md={5}/>
-</Grid> */}

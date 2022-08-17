@@ -67,6 +67,7 @@ model EventPhotos {
   userId      Int
   photoUrl    String
   eventAPIid  String
+  deleteToken String?
   created_at  DateTime @default(now())
   comments    Comments? @relation(fields: [commentsId], references: [id])
   commentsId  Int?

@@ -49,8 +49,8 @@ eventFeedRouter.post('/', async (req, res) => {
   }
 });
 
-eventFeedRouter.get('/', (req, res) => {
-  prisma.eventPhotos.findMany({
+eventFeedRouter.get('/', async (req, res) => {
+  await prisma.eventPhotos.findMany({
     where: {
       eventAPIid: 'test',
     },

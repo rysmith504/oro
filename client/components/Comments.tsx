@@ -28,7 +28,7 @@ const Comments: React.FC = (props) => {
       comment: message,
     })
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         setMessage('');
       })
       .catch((err) => console.error(err));
