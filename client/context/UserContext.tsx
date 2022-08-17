@@ -6,6 +6,7 @@ const UserContext = React.createContext({});
 
 const UserContextProvider = ({ children }) => {
   const [userEvents, setUserEvents] = useState([]);
+  const [ currentUserInfo, setCurrentUserInfo ] = useState([]);
 
   const getUserEvents = () => {
     axios.get('/profile/events')
@@ -47,11 +48,30 @@ const UserContextProvider = ({ children }) => {
     axios.get('/profile/:_id')
   }
 
+  const getCurrentUser = () => {
+    // Once user logs in, get user info
+    axios.get('/hidden')
+      .then((info) => {
+        const { data } = info;
+        console.log(data);
+        // set state to user info
+        setCurrentUserInfo(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   const appProps = {
     userEvents,
     setUserEvents,
     getUserEvents,
     logoutUser,
+    currentUserInfo
   };
 
 
