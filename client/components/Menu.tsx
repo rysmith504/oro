@@ -27,8 +27,13 @@ export default function Menu() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {[<Link to='/profile'>My Account</Link>, <Link to='/notifications'>Notifications</Link>, <Link to='/eventListings'>Find Events</Link>, <Link to='/songFinder'>Song Finder</Link>, <Link to='/artists'>Artists</Link>].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {[
+          <Link to='/profile' key={'profile'}>My Account</Link>,
+          <Link to='/notifications' key={'notifications'}>Notifications</Link>,
+          <Link to='/eventListings' key={'eventListings'}>Find Events</Link>,
+          <Link to='/songFinder' key={'songFinder'}>Song Finder</Link>,
+          <Link to='/artists' key={'artists'}>Artists</Link>].map((text, index) => (
+          <ListItem key={`text${index}`} disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -43,8 +48,8 @@ export default function Menu() {
 
   return (
     <div>
-      {['right'].map((anchor) => (
-        <React.Fragment key={anchor}>
+      {['right'].map((anchor, index) => (
+        <React.Fragment key={`anchor${index}`}>
           <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
           <Drawer
             anchor={anchor}

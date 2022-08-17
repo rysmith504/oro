@@ -48,8 +48,8 @@ const EventListings: React.FC = () => {
 
   useEffect(() => {
     getEvents();
-    console.log(keyword);
-    console.log('EVENTS', events);
+    // console.log(keyword);
+    // console.log('EVENTS', events);
   }, []);
 
   const enterClick = (e) => {
@@ -70,11 +70,11 @@ const EventListings: React.FC = () => {
       </div><br/>
       <div>
         {
-          events.map(event => (
+          events.map((event, index) => (
             <EventCardDetails
               events={ events }
               event={event}
-              key={event.eventId}
+              key={`event${index}`}
             />
           ))
         }

@@ -2,15 +2,14 @@
   "name": "oro",
   "version": "1.0.0",
   "description": "",
-  "main": "README.md",
+  "main": "dist/index.js",
   "jest": {
     "verbose": true
   },
   "scripts": {
     "type": "tsc --watch --preserveWatchOutput",
     "build": "webpack -w",
-    "test": "jest",
-    "start": "nodemon dist/index.js",
+    "start": "nodemon dist",
     "lint": "eslint --ext .tsx"
   },
   "prisma": {
