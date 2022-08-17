@@ -7,13 +7,15 @@ import EventListings from '../pages/EventListings';
 import SongFinder from '../pages/SongFinder';
 import Artists from '../pages/Artists';
 import Login from '../pages/Login';
+import EventDetails from '../pages/EventDetails';
+import EventFeed from '../pages/EventFeed';
+import OtherUser from '../pages/OtherUser';
+
+import Navbar from '../components/Navbar';
 
 import { ArtistContextProvider } from '../context/ArtistContext';
 import { EventContextProvider } from '../context/EventContext';
 import { UserContextProvider } from '../context/UserContext';
-import EventDetails from '../pages/EventDetails';
-import EventFeed from '../pages/EventFeed';
-import Navbar from '../components/Navbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const themeDark = createTheme({
@@ -49,6 +51,7 @@ const App: React.FC = () => {
                 <Route path='/artists' element={<Artists />} />
                 <Route path='/details' element={<EventDetails />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='/user' element={<OtherUser />} />
               </Routes>
             </div>
           </ArtistContextProvider>

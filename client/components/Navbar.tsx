@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link, Routes, Route } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+import { UserContext } from '../context/UserContext';
 
 const pages = [
   <Link to='/eventListings' style={{ textDecoration: 'none' }}>Find Events</Link>,
@@ -24,14 +26,23 @@ const pages = [
   <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>,
   <Link to='/profile' style={{ textDecoration: 'none' }}>My Account</Link>,
 ];
-const settings = [
-  'Profile',
-  'Account',
-  <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>, 'Logout'];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const { logoutUser } = useContext(UserContext);
+
+  
+  const handleLogout = () => {
+    logoutUser();
+  }
+
+  const settings = [
+    'Profile',
+    'Account',
+    <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>,
+    <Button onClick={handleLogout}>Logout</Button>
+    ];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
