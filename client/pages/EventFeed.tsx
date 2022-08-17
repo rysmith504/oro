@@ -5,6 +5,7 @@ import Comments from '../components/Comments';
 import { styled, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Grid, ImageList, ImageListItem, OutlinedInput, Fab} from '@mui/material';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -19,40 +20,13 @@ const ExpandMore = styled((props) => {
 
 const EventFeed: React.FC = () => {
   const [expanded, setExpanded] = React.useState(false);
+  const [previewSource, setPreviewSource] = useState();
+  const [photo, setPhoto] = useState(null);
+  const [feedPhotos, setFeedPhotos] = useState([]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  let dummyData = [
-    {
-      userId: 5,
-      photoUrl: 'https://cdn.britannica.com/92/100692-050-5B69B59B/Mallard.jpg',
-      eventApiID: 'test',
-      createdAt: '2022-08-15'
-    },
-    {
-      userId: 5,
-      photoUrl: 'https://www.thespruce.com/thmb/t13CIs9CH0HfuggdQ-DU9zk_QHo=/3780x2126/smart/filters:no_upscale()/do-ducks-have-teeth-4153828-hero-9614a7e9f4a049b48e8a35a9296c562c.jpg',
-      eventApiID: 'test',
-      createdAt: '2022-08-14'
-    },
-    {
-      userId: 1,
-      photoUrl: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/how-to-keep-ducks-call-ducks-1615457181.jpg',
-      eventApiID: 'test',
-      createdAt: '2022-08-13'
-    },
-  ];
-
-import { Grid, ImageList, ImageListItem, OutlinedInput, Fab} from '@mui/material';
-
-const EventFeed = () => {
-
-  const [previewSource, setPreviewSource] = useState();
-  const [photo, setPhoto] = useState(null);
-  const [feedPhotos, setFeedPhotos] = useState([]);
-  
   
   useEffect(() => {
     if (photo) {
@@ -108,9 +82,9 @@ const EventFeed = () => {
     <div>
       <div>Hello EventFeed</div>
 
-      {dummyData.map((photo, i) => {
+      {feedPhotos.map((photo, i) => {
         return (
-          <div>
+          <div key={i}>
             <Card sx={{ maxWidth: 345 }}>
               <CardHeader
                 avatar={
@@ -141,7 +115,7 @@ const EventFeed = () => {
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                   <Typography>
-                    comments
+                    <Comments photo={photo} />
                   </Typography>
                 </CardContent>
               </Collapse>
@@ -160,22 +134,6 @@ const EventFeed = () => {
           // </div>
         );
       })}
-      <div>
-        {feedPhotos.length && feedPhotos.map((photo, i) => {
-          return (
-            <div key={i}>
-              <div style={{textAlign: 'left'}}>
-                {photo.userId}
-              </div>
-              <img width='200px' height='auto' src={photo.photoUrl}/>
-              <div>
-                <Comments eventId={photo.eventAPIid} />
-              </div>
-            </div>
-          );
-        })}
-
-      </div>
 
       <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
       <Fab variant='extended' size='small' onClick={handleFileUpload}>
