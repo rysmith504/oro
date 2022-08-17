@@ -18,6 +18,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { UserContext } from '../context/UserContext';
+import { ThemeContext } from '../context/ThemeContext';
 
 const pages = [
   <Link to='/eventListings' style={{ textDecoration: 'none' }} key={'eventListings'}>Find Events</Link>,
@@ -30,9 +31,8 @@ const pages = [
 ];
 
 const Navbar = () => {
-  const [theme, setTheme] = React.useState<null | string>('light');
-  const isDarkTheme = theme === 'dark';
-  const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark');
+  const themeContext = useContext(ThemeContext);
+  const {mode, setMode, toggleMode} = themeContext;
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -122,8 +122,8 @@ const Navbar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
 
-            <IconButton onClick={toggleTheme}>
-              {isDarkTheme ?
+            <IconButton onClick={toggleMode}>
+              {mode === 'light' ?
                 <div>Dark Mode <NightlightIcon fontSize="small"/></div> :
                 <div>Light Mode <WbSunnyIcon fontSize="small"/></div>}
             </IconButton>

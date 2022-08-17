@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import ArtistInfoCard from '../components/ArtistCards';
 import { ArtistContext } from '../context/ArtistContext';
-import { ThemeContext, ThemeContextProvider } from '../context/ThemeContext';
+import { ThemeContext } from '../context/ThemeContext';
 import {Box,	Grid, Item} from '../styles/material';
 
 const Artists = () => {
