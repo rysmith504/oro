@@ -8,7 +8,7 @@ const dark = {
 };
 
 const light = {
-  backgroundColor: '#FFF',
+  background: '#FFF',
   color: '#1A2027',
 };
 
@@ -17,8 +17,8 @@ const GlobalTheme = createGlobalStyle`
     font-family: Roboto;
     text-align: center;
     margin: 0;
-    display: 'flex';
-    height: 100%;
+    height: 100vh;
+    background: ${(props) => props.theme.background};
   }
   `;
 
