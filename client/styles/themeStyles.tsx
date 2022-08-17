@@ -1,25 +1,31 @@
 import {createGlobalStyle, styled} from 'styled-components';
 
-export const lightMode = {
-  body: '#FFFFFF',
-  fontColor: '#1A2027',
-};
-
-export const darkMode = {
-  body: '#1A2027',
-  fontColor: '#FFFFFF',
-};
-
 // const styleDiv = styled.div
 // `
 // `
 
+//dark mode
+export const GlobalTheme = createGlobalStyle`
+body {
+  margin-right: auto;
+  background: #1A2027;
+  font-family: Roboto;
+  text-align: center;
+  padding: 10px;
+  color: white;
+}
+`;
 
-// export const GlobalTheme = createGlobalStyle`
-// body {
-//   background-color:${props => props.theme.body}
-// }
-// `;
+export const LightTheme = createGlobalStyle`
+body {
+  margin-right: auto;
+  background: #FFFFFF;
+  font-family: Roboto;
+  text-align: center;
+  padding: 10px;
+  color: #1A2027;
+}
+`;
 
 //GenerateGlobalTheme?
 // Theme Provider?
@@ -78,3 +84,4 @@ export const darkMode = {
 // text
 
 // NOTIFICATIONS
+

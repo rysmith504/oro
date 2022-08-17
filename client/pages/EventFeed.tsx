@@ -8,13 +8,13 @@ const EventFeed = () => {
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
   const [feedPhotos, setFeedPhotos] = useState([]);
-  
-  
+
+
   useEffect(() => {
     if (photo) {
       const reader = new FileReader();
       reader.readAsDataURL(photo);
-  
+
       reader.onloadend = () => {
         setPreviewSource(reader.result);
       };
@@ -29,7 +29,7 @@ const EventFeed = () => {
       })
       .catch((err) => console.error(err));
   };
-    
+
   useEffect(() => {
     updateFeed();
   }, []);
@@ -42,7 +42,7 @@ const EventFeed = () => {
   const handleFileUpload = () => {
     if (photo) {
       const formData = new FormData();
-      formData.append("myFile", photo, photo.name);
+      formData.append('myFile', photo, photo.name);
 
       console.log(photo, photo.name);
       console.log('uploaded');
@@ -66,7 +66,7 @@ const EventFeed = () => {
         {feedPhotos.length && feedPhotos.map((photo, i) => {
           return (
             <div key={i}>
-              <div style={{textAlign: 'left'}}>
+              <div>
                 {photo.userId}
               </div>
               <img width='200px' height='auto' src={photo.photoUrl}/>

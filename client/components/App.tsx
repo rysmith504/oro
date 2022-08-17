@@ -15,53 +15,40 @@ import EventDetails from '../pages/EventDetails';
 import EventFeed from '../pages/EventFeed';
 import Navbar from '../components/Navbar';
 
-const ThemeContext = React.createContext({});
 
-const lightMode = {
-  colorBackground: '#FFFFFF',
-  colorText: '#1A2027',
-};
 
-const darkMode = {
-  colorBackground: '#1A2027',
-  colorText: '#FFFFFF',
-};
+
+
+// https://styled-components.com/docs/api#createglobalstyle
 
 const App: React.FC = () => {
   // update React.FC, .FC deprecated?
   const [isDarkMode, setDarkMode] = useState(true);
 
-  const toggleMode = () => {
-    setDarkMode(prevDarkMode => !prevDarkMode);
-    console.log('toggle mode');
-  };
-
-
   return (
-    <ThemeContext.Provider value={{isDarkMode, toggleMode}}>
-      <EventContextProvider>
-        <UserContextProvider>
-          <ArtistContextProvider>
-            <div>
-              <header>
-                <Navbar/>
-              </header>
-              <Routes>
-                <Route path='/home' element={<Home />} />
-                <Route path='/profile' element={<Profile />} />
-                <Route path='/notifications' element={<Notifications />} />
-                <Route path='/eventListings' element={<EventListings />} />
-                <Route path='/eventFeed' element={<EventFeed/>}/>
-                <Route path='/songFinder' element={<SongFinder />} />
-                <Route path='/artists' element={<Artists />} />
-                <Route path='/details' element={<EventDetails />} />
-                <Route path='/login' element={<Login />} />
-              </Routes>
-            </div>
-          </ArtistContextProvider>
-        </UserContextProvider>
-      </EventContextProvider>
-    </ThemeContext.Provider>
+    <EventContextProvider >
+      <UserContextProvider>
+        <ArtistContextProvider>
+          <div>
+            <header>
+              <Navbar />
+            </header>
+            <Routes>
+              <Route path='/home' element={<Home />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/notifications' element={<Notifications />} />
+              <Route path='/eventListings' element={<EventListings />} />
+              <Route path='/eventFeed' element={<EventFeed />} />
+              <Route path='/songFinder' element={<SongFinder />} />
+              <Route path='/artists' element={<Artists />} />
+              <Route path='/details' element={<EventDetails />} />
+              <Route path='/login' element={<Login />} />
+            </Routes>
+          </div>
+        </ArtistContextProvider>
+      </UserContextProvider>
+    </EventContextProvider>
+
   );
 };
 
