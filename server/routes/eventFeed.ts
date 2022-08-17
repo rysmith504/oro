@@ -9,8 +9,9 @@ const eventFeedRouter = Router();
 
 
 eventFeedRouter.post('/', async (req, res) => {
+  const {imageData, eventId} = req.body;
   try {
-    const fileStr = req.body.data;
+    const fileStr = imageData;
     await cloudinary.uploader.upload(fileStr, {
       upload_preset: 'vibeSocietyImages',
     })
@@ -50,6 +51,7 @@ eventFeedRouter.post('/', async (req, res) => {
 });
 
 eventFeedRouter.get('/', async (req, res) => {
+  // const {eventId} = req.query;
   await prisma.eventPhotos.findMany({
     where: {
       eventAPIid: 'test',

@@ -8,15 +8,10 @@ import eventListingsRouter from './routes/eventListingsRouter';
 import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
-<<<<<<< HEAD
-import eventFeedRouter from './routes/eventFeed';
-// import app from './routes/auth';
-=======
 
 import profileRouter from './routes/profile';
 
 import eventFeedRouter from './routes/eventFeed';
->>>>>>> 59761082ca9a2efc85a7696da1737e482c565ad4
 import profileRouter from './routes/profile';
 import commentsRouter from './routes/comments';
 import prisma from './database/db';

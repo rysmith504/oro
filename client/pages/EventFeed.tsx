@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
+import { EventContext } from '../context/EventContext';
+
 
 import { styled, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Grid, ImageList, ImageListItem, OutlinedInput, Fab} from '@mui/material';
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -19,6 +22,7 @@ const ExpandMore = styled((props) => {
 }));
 
 const EventFeed: React.FC = () => {
+  const {eventId} = useContext(EventContext);
   const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
@@ -42,13 +46,14 @@ const EventFeed: React.FC = () => {
   const updateFeed = () => {
     axios.get('/eventFeed')
       .then((responseObj) => {
-        console.log(responseObj);
+        // console.log(responseObj);
         setFeedPhotos(responseObj.data);
       })
       .catch((err) => console.error(err));
   };
     
   useEffect(() => {
+    console.log(eventId);
     updateFeed();
   }, []);
 
@@ -62,10 +67,11 @@ const EventFeed: React.FC = () => {
       const formData = new FormData();
       formData.append("myFile", photo, photo.name);
 
-      console.log(photo, photo.name);
-      console.log('uploaded');
+      // console.log(photo, photo.name);
+      // console.log('uploaded');
       axios.post('/eventFeed', {
-        data: previewSource
+        iamgeData: previewSource,
+        eventId,
       })
         .then(() => updateFeed())
         .catch((err) => console.error(err));
@@ -73,10 +79,6 @@ const EventFeed: React.FC = () => {
     }
   };
 
-
-  const getUserId = () => {
-    console.log();
-  }
 
   return (
     <div>
@@ -88,7 +90,7 @@ const EventFeed: React.FC = () => {
             <Card sx={{ maxWidth: 345 }}>
               <CardHeader
                 avatar={
-                  <Avatar alt={photo.userId} onClick={getUserId}/>
+                  <Avatar alt={photo.userId}/>
                 }
                 subheader={photo.createdAt}
               />
@@ -122,16 +124,6 @@ const EventFeed: React.FC = () => {
             </Card>
           </div>
 
-          // <div key={i}>
-          //   {photo.userId}
-          //   <span>
-          //     <img width='200px' height='auto' src={photo.photoUrl}/>
-          //   </span>
-          //   <div>
-          //     <Comments/>
-          //   </div>
-
-          // </div>
         );
       })}
 

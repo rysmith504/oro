@@ -4,10 +4,13 @@ import { UserContext } from '../context/UserContext';
 import { Paper, Grid} from '@mui/material';
 
 const Comments: React.FC = (props) => {
+
+  const userContext = useContext(UserContext);
+  
   const {photo} = props;
   useEffect(() => {
     // console.log(photo);
-    UserContext;
+    console.log(UserContext);
   }, []);
   
 
