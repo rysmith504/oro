@@ -38,7 +38,8 @@ passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:5000/auth/google/callback',
+    callbackURL: '/auth/google/callback',
+    passReqToCallback: true
     // userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
   },
   (async (req, accessToken, refreshToken, profile, cb ) => {
@@ -50,9 +51,10 @@ passport.use(new GoogleStrategy(
         fullName: profile.displayName,
       }});
 
-    (function passUser (err, user) {
+    const passUser = (err, user) => {
       return cb(err, user);
-    })();
+    };
+    passUser(null, user);
   }),
 ));
 
@@ -79,7 +81,7 @@ const isLoggedIn = (req: { user: any; }, res: { sendStatus: (arg0: number) => an
 };
 
 app.get('/auth/success', (req, res) => {
-  // console.log('auth success');
+  console.log('auth success');
   if (req.user) {
     // console.log(req.user);
     res.status(200).json({
@@ -94,17 +96,17 @@ app.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }),
   (req, res) => {
-    // console.log('auth get', req, res);
+    console.log('auth get', req, res);
   }
 );
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/',
+  passport.authenticate('google', { failureRedirect: '/login',
     successRedirect: '/',
   }),
   (req, res) => {
     // Successful authentication, redirect secrets.
-    // console.log('auth redirect', req, res);
+    console.log('auth redirect', req, res);
     res.redirect('/');
     res.end();
   },

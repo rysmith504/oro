@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import ArtistInfoCard from '../components/ArtistCards';
 import { ArtistContext } from '../context/ArtistContext';
-import { ThemeContext, ThemeContextProvider } from '../context/ThemeContext';
+// import { ThemeContext, ThemeContextProvider } from '../context/ThemeContext';
 import {Box,	Grid, Item} from '../styles/material';
 
 const Artists = () => {
   const artistContext = useContext(ArtistContext);
-  const themeContext = useContext(ThemeContext);
+  // const themeContext = useContext(ThemeContext);
   // console.log(artistContext);
-  const {mode, setMode, toggleMode} = themeContext;
+  // const {mode, setMode, toggleMode} = themeContext;
   const {artistData, getFaveArtists, setArtistData } = artistContext;
   const favorites = artistData;
 
