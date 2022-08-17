@@ -17,12 +17,12 @@ profileRouter.get('/events', (req, res) => {
         })
         .catch(err => {
           console.error(err);
-        })
+        });
 
     })
     .catch((err) => {
       res.send(500);
-    })
-})
+    });
+});
 
 export default profileRouter;

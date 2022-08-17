@@ -6,9 +6,9 @@ import {Box,	Grid, Item} from '../styles/material';
 
 const Artists = () => {
   const artistContext = useContext(ArtistContext);
-  // const themeContext = useContext(ThemeContext);
+  const themeContext = useContext(ThemeContext);
   // console.log(artistContext);
-  // const {mode, setMode, toggleMode} = themeContext;
+  const {mode, setMode, toggleMode} = themeContext;
   const {artistData, getFaveArtists, setArtistData } = artistContext;
   const favorites = artistData;
 
@@ -18,8 +18,10 @@ const Artists = () => {
 
   return (
     <div>
-      <div>Hello ARtists</div>
-      <Box sx={{ flexGrow: 1 }}>
+      <h1 onClick={toggleMode}>Artists</h1>
+      <Box sx={{
+        flexGrow: 1,
+        height: '100%' }}>
         <Grid container spacing={2}>
           {favorites.map((artObj, index) => {
             if (!artObj.image.length) {
@@ -28,7 +30,7 @@ const Artists = () => {
             }
             return (
               <Grid item key={`art${index}`} xs={12} sm={4} md={2}>
-                <ArtistInfoCard artistProps={artObj} key={artObj.id}/>
+                <ArtistInfoCard artistProps={artObj} key={`artistObj${index}`}/>
               </Grid>
             );
           })

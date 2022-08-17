@@ -1,6 +1,6 @@
 import React, { useState, createContext } from 'react';
 
-const ThemeContext = createContext({});
+const ThemeContext = createContext('light');
 
 const ThemeContextProvider = ({ children }) => {
 
@@ -9,8 +9,7 @@ const ThemeContextProvider = ({ children }) => {
   // function to toggle the theme
 
   const toggleMode = () => {
-    mode === 'dark' ? setMode('dark') : setMode('light');
-    console.log('toggle mode');
+    mode === 'dark' ? setMode('light') : setMode('dark');
   };
 
   return (

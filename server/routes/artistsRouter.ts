@@ -2,7 +2,6 @@ import { Router } from 'express';
 import axios from 'axios';
 const artistsRouter = Router();
 import prisma from '../database/db';
-console.log('artist router');
 artistsRouter.get('/events', (req, res) => {
   const { keyword } = req.query;
   // console.log(keyword);

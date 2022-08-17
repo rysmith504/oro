@@ -98,9 +98,9 @@ const Navbar = () => {
           </Box>
           <img src="images/VSLOGO.png" height="75"/>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
-                key={page}
+                key={`page${index}`}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
@@ -113,7 +113,7 @@ const Navbar = () => {
 
             <IconButton onClick={toggleTheme}>
               {isDarkTheme ?
-                <NightlightIcon fontSize="small">Dark Mode </NightlightIcon> :
+                <div>Dark Mode <NightlightIcon fontSize="small"/></div> :
                 <div>Light Mode <WbSunnyIcon fontSize="small"/></div>}
             </IconButton>
             <Tooltip title="Open settings">

@@ -15,19 +15,14 @@ if (!rootElement) {
 const root = createRoot(rootElement);
 
 root.render(
-  <><CssBaseline /><Box>
-    <Grid container>
-      <Grid item xs={12} md={12}>
-        <BrowserRouter>
-          <Routes>
-            <Route path='*' element={<ThemeContextProvider>
-              <Theme>
-                <App />
-              </Theme>
-            </ThemeContextProvider>} />
-          </Routes>
-        </BrowserRouter>
-      </Grid>
-    </Grid>
-  </Box></>
+  <BrowserRouter>
+    <Routes>
+      <Route path='*' element={<ThemeContextProvider>
+        <Theme>
+          <App />
+        </Theme>
+      </ThemeContextProvider>} />
+    </Routes>
+  </BrowserRouter>
+
 );

@@ -2,28 +2,31 @@ import React, { useContext } from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { ThemeContext } from '../context/ThemeContext';
 
-const darkMode = {
+const dark = {
   background: '#1A2027',
   color: 'white',
 };
 
-const lightMode = {
+const light = {
   backgroundColor: '#FFF',
   color: '#1A2027',
 };
 
 const GlobalTheme = createGlobalStyle`
-  * {
+ body {
     font-family: Roboto;
     text-align: center;
-    padding: 10px;
+    margin: 0;
+    display: 'flex';
+    height: 100%;
   }
   `;
 
 export const Theme = ({ children }) => {
-  const { theme } = useContext(ThemeContext); // get the current theme ('light' or 'dark')
+  const themeContext = useContext(ThemeContext);
+  const {mode, setMode, toggleMode} = themeContext;
   return (
-    <ThemeProvider theme={darkMode}>
+    <ThemeProvider theme={mode == 'dark' ? dark : light}>
       <GlobalTheme />
       {children}
     </ThemeProvider>

@@ -24,7 +24,6 @@ const EventFeed = () => {
   const updateFeed = () => {
     axios.get('/eventFeed')
       .then((responseObj) => {
-        console.log(responseObj);
         setFeedPhotos(responseObj.data);
       })
       .catch((err) => console.error(err));
@@ -44,8 +43,8 @@ const EventFeed = () => {
       const formData = new FormData();
       formData.append('myFile', photo, photo.name);
 
-      console.log(photo, photo.name);
-      console.log('uploaded');
+      // console.log(photo, photo.name);
+      // console.log('uploaded');
       axios.post('/eventFeed', {
         data: previewSource
       })

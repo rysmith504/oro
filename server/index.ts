@@ -53,7 +53,14 @@ passport.use(new GoogleStrategy(
         googleId: profile.id,
         email: profile.emails[0].value,
         fullName: profile.displayName,
-      }});
+      }})
+      .catch(async () => {
+        return await prisma.users.findUnique({
+          where: {
+            googleId: profile.id,
+          },
+        });
+      });
 
     const passUser = (err, user) => {
       return cb(err, user);
@@ -85,7 +92,7 @@ const isLoggedIn = (req: { user: any; }, res: { sendStatus: (arg0: number) => an
 };
 
 app.get('/auth/success', (req, res) => {
-  console.log('auth success');
+  // console.log('auth success');
   if (req.user) {
     // console.log(req.user);
     res.status(200).json({
