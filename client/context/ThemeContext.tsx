@@ -1,28 +1,6 @@
-import React, { useState, useEffect } from 'react';
-// import {darkMode, lightMode, GlobalTheme} from '../styles/themeStyles';
-import styled, { ThemeProvider } from 'styled-components';
+import React, { useState, createContext } from 'react';
 
-const darkMode = {
-  backgroundColor: '#1A2027',
-  marginRight: 'auto',
-  fontFamily: 'Roboto',
-  textAlign: 'center',
-  padding: '10px',
-  color: 'white',
-};
-
-const lightMode = {
-  backgroundColor: '#FFF',
-  marginRight: 'auto',
-  fontFamily: 'Roboto',
-  textAlign: 'center',
-  padding: '10px',
-  color: '#1A2027',
-};
-
-const Styled = styled.div``;
-
-const ThemeContext = React.createContext({});
+const ThemeContext = createContext({});
 
 const ThemeContextProvider = ({ children }) => {
 
@@ -35,21 +13,13 @@ const ThemeContextProvider = ({ children }) => {
     console.log('toggle mode');
   };
 
-  const themeProps = {
-    mode,
-    toggleMode,
-    setMode,
-  };
-
   return (
-    <ThemeProvider theme={mode === 'dark' ? darkMode : lightMode}>
-      <ThemeContext.Provider
-        value={themeProps}>
-        <Styled>{ children }</Styled>
-      </ThemeContext.Provider>
-    </ThemeProvider>
+    <ThemeContext.Provider
+      value={{ mode, toggleMode, setMode}}>
+      {children}
+    </ThemeContext.Provider>
   );
 
 };
 
-export { ThemeContextProvider, ThemeContext };
+export {ThemeContext, ThemeContextProvider};

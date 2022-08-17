@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { Box, Grid, Container } from './styles/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import {GlobalTheme} from '../client/styles/themeStyles';
-import { ThemeContextProvider } from './context/ThemeContext';
+import {Theme} from './components/Theme';
+import { ThemeContextProvider, ThemeContext } from './context/ThemeContext';
 
 const rootElement = document.getElementById('root');
 
@@ -15,19 +15,19 @@ if (!rootElement) {
 const root = createRoot(rootElement);
 
 root.render(
-  <ThemeContextProvider>
-    <CssBaseline /><Box>
-      <Grid container>
-        <Grid item xs={12} md={12}>
-          <BrowserRouter>
-            <Routes>
-              <Route path='*' element={
+  <><CssBaseline /><Box>
+    <Grid container>
+      <Grid item xs={12} md={12}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='*' element={<ThemeContextProvider>
+              <Theme>
                 <App />
-              } />
-            </Routes>
-          </BrowserRouter>
-        </Grid>
+              </Theme>
+            </ThemeContextProvider>} />
+          </Routes>
+        </BrowserRouter>
       </Grid>
-    </Box>
-  </ThemeContextProvider>
+    </Grid>
+  </Box></>
 );

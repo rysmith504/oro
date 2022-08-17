@@ -1,18 +1,24 @@
-import {createGlobalStyle, styled} from 'styled-components';
+import React, { useContext } from "react";
+import { ThemeProvider, createGlobalStyle, styled } from "styled-components";
+import { ThemeContext } from "../context/ThemeContext";
 
-// const styleDiv = styled.div
-// `
-// `
+const darkMode = {
+  background: '#1A2027',
+  color: 'white',
+};
 
-//dark mode
+const lightMode = {
+  backgroundColor: '#FFF',
+  color: '#1A2027',
+};
+
 export const GlobalTheme = createGlobalStyle`
-body {
+* {
   margin-right: auto;
-  background: #1A2027;
   font-family: Roboto;
   text-align: center;
   padding: 10px;
-  color: white;
+  transition: all 0.5s;
 }
 `;
 
