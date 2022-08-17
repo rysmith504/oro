@@ -79,7 +79,7 @@ model Comments {
   comment         String
   notifications   Notifications? @relation(fields: [notificationsId], references: [id])
   notificationsId Int?
-  created_at      DateTime
+  created_at      DateTime @default(now())
 }
 
 // //MODELS

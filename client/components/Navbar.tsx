@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,20 +17,17 @@ import { Link, Routes, Route } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import { UserContext } from '../context/UserContext';
 
 const pages = [
-  <Link to='/eventListings' style={{ textDecoration: 'none' }}>Find Events</Link>,
-  <Link to='/eventFeed' style={{ textDecoration: 'none' }}>Event Feed</Link>,
-  <Link to='/songFinder' style={{ textDecoration: 'none' }}>Song Finder</Link>,
-  <Link to='/artists' style={{ textDecoration: 'none' }}>Artists</Link>,
-  <Link to='/details' style={{ textDecoration: 'none' }}>details</Link>,
-  <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>,
-  <Link to='/profile' style={{ textDecoration: 'none' }}>My Account</Link>,
+  <Link to='/eventListings' style={{ textDecoration: 'none' }} key={'eventListings'}>Find Events</Link>,
+  <Link to='/eventFeed' style={{ textDecoration: 'none' }} key={'eventFeed'}>Event Feed</Link>,
+  <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>Song Finder</Link>,
+  <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>Artists</Link>,
+  <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>details</Link>,
+  <Link to="/login" style={{ textDecoration: 'none' }} key={'login'}>Login</Link>,
+  <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>My Account</Link>,
 ];
-const settings = [
-  'Profile',
-  'Account',
-  <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>, 'Logout'];
 
 const Navbar = () => {
   const [theme, setTheme] = React.useState<null | string>('light');
@@ -38,6 +36,19 @@ const Navbar = () => {
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const { logoutUser } = useContext(UserContext);
+
+
+  const handleLogout = () => {
+    logoutUser();
+  };
+
+  const settings = [
+    'Profile',
+    'Account',
+    <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notificationsMenu'}>Notifications</Link>,
+    <Button onClick={handleLogout} key={'logoutButton'}>Logout</Button>
+  ];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

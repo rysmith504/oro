@@ -25,4 +25,16 @@ profileRouter.get('/events', (req, res) => {
     });
 });
 
+profileRouter.get('/:id', (req, res) => {
+  // console.log(req);
+  // const { id } = req.params;
+
+  // prisma.users.findUnique({
+  //   where: {
+  //     id: id,
+  //   }
+  // })
+})
+
+
 export default profileRouter;

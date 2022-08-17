@@ -7,15 +7,18 @@ import EventListings from '../pages/EventListings';
 import SongFinder from '../pages/SongFinder';
 import Artists from '../pages/Artists';
 import Login from '../pages/Login';
+import EventDetails from '../pages/EventDetails';
+import EventFeed from '../pages/EventFeed';
+import OtherUser from '../pages/OtherUser';
+
+import Navbar from '../components/Navbar';
 
 import { ArtistContextProvider } from '../context/ArtistContext';
 import { EventContextProvider } from '../context/EventContext';
 import { UserContextProvider } from '../context/UserContext';
 import { ThemeContextProvider, ThemeContext } from '../context/ThemeContext';
-import EventDetails from '../pages/EventDetails';
-import EventFeed from '../pages/EventFeed';
-import Navbar from '../components/Navbar';
 import { Container } from '../components/Container';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 
 
@@ -32,17 +35,18 @@ const App: React.FC = () => {
       <EventContextProvider >
         <UserContextProvider>
           <ArtistContextProvider>
-            <Navbar />
+            <Navbar/>
             <Routes>
               <Route path='/home' element={<Home />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/notifications' element={<Notifications />} />
               <Route path='/eventListings' element={<EventListings />} />
-              <Route path='/eventFeed' element={<EventFeed />} />
+              <Route path='/eventFeed' element={<EventFeed/>}/>
               <Route path='/songFinder' element={<SongFinder />} />
               <Route path='/artists' element={<Artists />} />
               <Route path='/details' element={<EventDetails />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/user' element={<OtherUser />} />
             </Routes>
           </ArtistContextProvider>
         </UserContextProvider>
