@@ -25,7 +25,7 @@ export default function AccordionCard(props) {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
+          <Typography component={'span'} sx={{ width: '33%', flexShrink: 0 }}>
             {artistName}
           </Typography>
         </AccordionSummary>
@@ -42,10 +42,10 @@ export default function AccordionCard(props) {
           aria-controls="panel2bh-content"
           id="panel2bh-header"
         >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>Artist Bio</Typography>
+          <Typography component={'span'} sx={{ width: '33%', flexShrink: 0 }}>Artist Bio</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
+          <Typography component={'span'}>
             Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus,
             varius pulvinar diam eros in elit. Pellentesque convallis laoreet
             laoreet.

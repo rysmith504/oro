@@ -38,10 +38,8 @@ app.use('/eventFeed', eventFeedRouter);
 // AUTH-----------------
 require('dotenv').config();
 
-import passport from 'passport';
 import googleStrategy from 'passport-google-oauth20';
 const GoogleStrategy = googleStrategy.Strategy;
-import prisma from './database/db';
 
 app.use(
   session({
@@ -78,7 +76,7 @@ passport.use(new GoogleStrategy(
           },
         });
       });
-    
+
       cb(null, profile);
   }),
 ));
@@ -131,7 +129,7 @@ app.get(
   passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/login',
-  }), 
+  }),
   (req, res) => {
     console.log('google callback req -----------> ', req);
   }
