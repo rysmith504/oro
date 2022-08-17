@@ -30,10 +30,8 @@ app.use('/profile', profileRouter);
 // AUTH-----------------
 require('dotenv').config();
 
-import passport from 'passport';
 import googleStrategy from 'passport-google-oauth20';
 const GoogleStrategy = googleStrategy.Strategy;
-import prisma from './database/db';
 
 // console.log('passport file');
 passport.use(new GoogleStrategy(

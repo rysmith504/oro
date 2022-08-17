@@ -20,6 +20,7 @@
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
     // "noUnusedLocals": true,
+    // "noEmitOnError": false,
     "noUnusedParameters": true,
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true

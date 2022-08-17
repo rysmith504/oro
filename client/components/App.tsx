@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import React, {useState} from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Profile from '../pages/Profile';
 import Home from '../pages/Home';
 import Notifications from '../pages/Notifications';
@@ -14,24 +14,31 @@ import { UserContextProvider } from '../context/UserContext';
 import EventDetails from '../pages/EventDetails';
 import EventFeed from '../pages/EventFeed';
 import Navbar from '../components/Navbar';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-const themeDark = createTheme({
-  palette: {
-    background: {
-      default: '#1A2027'
-    },
-    text: {
-      primary: '#1A2027'
-    }
-  }
-});
+const ThemeContext = React.createContext({});
+
+const lightMode = {
+  colorBackground: '#FFFFFF',
+  colorText: '#1A2027',
+};
+
+const darkMode = {
+  colorBackground: '#1A2027',
+  colorText: '#FFFFFF',
+};
 
 const App: React.FC = () => {
   // update React.FC, .FC deprecated?
+  const [isDarkMode, setDarkMode] = useState(true);
+
+  const toggleMode = () => {
+    setDarkMode(prevDarkMode => !prevDarkMode);
+    console.log('toggle mode');
+  };
+
 
   return (
-    <ThemeProvider theme={themeDark}>
+    <ThemeContext.Provider value={{isDarkMode, toggleMode}}>
       <EventContextProvider>
         <UserContextProvider>
           <ArtistContextProvider>
@@ -54,9 +61,8 @@ const App: React.FC = () => {
           </ArtistContextProvider>
         </UserContextProvider>
       </EventContextProvider>
-    </ThemeProvider>
+    </ThemeContext.Provider>
   );
 };
 
 export default App;
-// <Link to='/eventDetails'>Event Details</Link>

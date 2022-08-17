@@ -4,28 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { Box, Grid, Paper, Container } from './styles/material';
 import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 
-const themeLight = createTheme({
-  palette: {
-    background: {
-      default: '#e4f0e2'
-    }
-  }
-});
-
-const themeDark = createTheme({
-  palette: {
-    background: {
-      default: '#1A2027'
-    },
-    text: {
-      primary: '#1A2027'
-    }
-  }
-});
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
@@ -42,20 +21,15 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 root.render(
-  <ThemeProvider theme={themeDark}>
-    <CssBaseline />
-    <Box>
-      <Grid container>
-        <Grid item xs={12} md={12}>
-          <Item>
-            <BrowserRouter>
-              <Routes>
-                <Route path='*' element={<App />} />
-              </Routes>
-            </BrowserRouter>
-          </Item>
-        </Grid>
+  <Box>
+    <Grid container>
+      <Grid item xs={12} md={12}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='*' element={<App />} />
+          </Routes>
+        </BrowserRouter>
       </Grid>
-    </Box>
-  </ThemeProvider>
+    </Grid>
+  </Box>
 );
