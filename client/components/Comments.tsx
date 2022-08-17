@@ -9,7 +9,7 @@ const Comments: React.FC = (props) => {
     // console.log(photo);
     UserContext;
   }, []);
-  
+
 
   // const [commentsOpen, setCommentsOpen] = useState(false);
   const [message, setMessage] = useState('');
