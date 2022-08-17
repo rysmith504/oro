@@ -1,18 +1,27 @@
 import path from 'path';
 import express from 'express';
+import prisma from './database/db';
+import passport from 'passport';
+import session from 'express-session';
 
 import eventListingsRouter from './routes/eventListingsRouter';
 import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
+<<<<<<< HEAD
 import eventFeedRouter from './routes/eventFeed';
 // import app from './routes/auth';
+=======
+
+import profileRouter from './routes/profile';
+
+import eventFeedRouter from './routes/eventFeed';
+>>>>>>> 59761082ca9a2efc85a7696da1737e482c565ad4
 import profileRouter from './routes/profile';
 import commentsRouter from './routes/comments';
 import prisma from './database/db';
 import passport from 'passport';
-// import passportAuth from '../passport';
-import session from 'express-session';
+
 
 // console.log('index server');
 const app = express();
@@ -39,40 +48,9 @@ import googleStrategy from 'passport-google-oauth20';
 const GoogleStrategy = googleStrategy.Strategy;
 import prisma from './database/db';
 
-// console.log('passport file');
-passport.use(new GoogleStrategy(
-  {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:5000/auth/google/callback',
-    // userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
-  },
-  (async (req, accessToken, refreshToken, profile, cb ) => {
-    // console.log('profile here----', profile);
-    const user = await prisma.users.create(
-      { data: {
-        googleId: profile.id,
-        email: profile.emails[0].value,
-        fullName: profile.displayName,
-      }});
-
-    (function passUser (err, user) {
-      return cb(err, user);
-    })();
-  }),
-));
-
-passport.serializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-  done(null, user);
-});
-
 app.use(
   session({
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   }),
@@ -80,8 +58,58 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const isLoggedIn = (req: { user: any; }, res: { sendStatus: (arg0: number) => any; }, next: () => any) => {
-  req.user ? next() : res.sendStatus(401);
+// console.log('passport file');
+passport.use(new GoogleStrategy(
+  {
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL,
+  },
+  (async (req: any, accessToken: any, refreshToken: any, profile: { id: any; emails: { value: any; }[]; displayName: any; photos: { value: any; }[]; }, cb: (arg0: undefined, arg1: undefined) => any) => {
+    // console.log('profile here----', profile);
+    await prisma.users.create(
+      {
+        data: {
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          fullName: profile.displayName,
+          profileURL: profile.photos[0].value,
+        }
+      })
+      .catch(async () => {
+        return await prisma.users.findUnique({
+          where: {
+            googleId: profile.id,
+          },
+        });
+      });
+    
+      cb(null, profile);
+  }),
+));
+
+passport.serializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
+  console.log(`\n--------> Serialize User:`)
+  console.log(user)
+  // The USER object is the "authenticated user" from the done() in authUser function.
+  // serializeUser() will attach this user to "req.session.passport.user.{user}", so that it is tied to the session object for each session.
+  done(null, user);
+});
+
+passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
+  console.log("\n--------- Deserialized User:")
+  console.log(user)
+  // This is the {user} that was saved in req.session.passport.user.{user} in the serializationUser()
+  // deserializeUser will attach this {user} to the "req.user.{user}", so that it can be used anywhere in the App.
+
+  done(null, user);
+});
+
+
+const isLoggedIn = (req: {
+  isAuthenticated: any; user: any;
+}, res: { sendStatus: (arg0: number) => any; }, next: () => any) => {
+  req.isAuthenticated ? next() : res.sendStatus(401);
 };
 
 app.get('/auth/success', (req, res) => {
@@ -96,34 +124,31 @@ app.get('/auth/success', (req, res) => {
   }
 });
 
+app.get('/hidden', isLoggedIn, (req, res) => {
+  res.send(req.user);
+});
+
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
-  (req, res) => {
-    // console.log('auth get', req, res);
-  }
-);
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/',
-    successRedirect: '/',
-  }),
-  (req, res) => {
-    // Successful authentication, redirect secrets.
-    // console.log('auth redirect', req, res);
-    res.redirect('/');
-    res.end();
-  },
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+  }), 
+  (req, res) => {
+    console.log('google callback req -----------> ', req);
+  }
+);
 
 app.get('/logout', (req, res) => {
   req.logout(() => {
     res.redirect('/');
   });
 });
-
-
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {
@@ -132,9 +157,6 @@ app.get('/*', (req, res) => {
     }
   });
 });
-
-
-
 
 const PORT = 5000;
 

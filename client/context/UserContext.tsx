@@ -33,10 +33,25 @@ const UserContextProvider = ({ children }) => {
       })
   }
 
+  const logoutUser = () => {
+    axios.get('/logout')
+      .then(() => {
+        console.log('logged out');
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+  const getOtherUser = () => {
+    axios.get('/profile/:_id')
+  }
+
   const appProps = {
     userEvents,
     setUserEvents,
     getUserEvents,
+    logoutUser,
   };
 
 
