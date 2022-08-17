@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { Paper, Grid} from '@mui/material';
@@ -6,13 +6,13 @@ import { Paper, Grid} from '@mui/material';
 const Comments: React.FC = (props) => {
 
   const userContext = useContext(UserContext);
-  
+
   const {photo} = props;
   useEffect(() => {
     // console.log(photo);
     console.log(UserContext);
   }, []);
-  
+
 
   // const [commentsOpen, setCommentsOpen] = useState(false);
   const [message, setMessage] = useState('');

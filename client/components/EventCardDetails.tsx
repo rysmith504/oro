@@ -28,7 +28,7 @@ const EventCardDetails = ({events, event}) => {
   const getPins = () => {
     axios.get('/events/list/pins')
       .then(responseObj => {
-        setPins(responseObj.data.map(event => event.eventAPIid));
+        setPins(responseObj.data.map((event, index) => event.eventAPIid));
       })
       .catch(err => console.error('GET PINS', err));
   };
@@ -41,7 +41,7 @@ const EventCardDetails = ({events, event}) => {
       eventAPIid: event.eventId
     })
       .then(response => {
-        console.log('POST SUCCESS', response);
+        // console.log('POST SUCCESS', response);
       })
       .then(getPins)
       .catch(err => console.error('POST ERROR', err));
@@ -50,7 +50,7 @@ const EventCardDetails = ({events, event}) => {
   const deleteEvent = () => {
     axios.delete('/events/list/pins', { data: { eventAPIid: event.eventId } })
       .then(() => {
-        console.log('DELETE SUCCESS');
+        // console.log('DELETE SUCCESS');
         getPins();
       })
       .catch(err => console.error('axios delete error', err));
@@ -73,7 +73,7 @@ const EventCardDetails = ({events, event}) => {
   const image = event.artistInfo[0].artistImages[0].url;
 
   const getDetails = () => {
-    console.log('navigate', event.eventId);
+    // console.log('navigate', event.eventId);
     navigate(`/details/?id=${event.eventId}`);
   };
 
@@ -104,15 +104,15 @@ const EventCardDetails = ({events, event}) => {
               <Grid item xs>
                 <Typography variant="body2" gutterBottom>
                   {event.eventName}
-                  {event.artistInfo.map(artist => (
-                    <div>
+                  {event.artistInfo.map((artist, index) => (
+                    <div key={`artistName${index}`}>
                       {artist.artistName}
                     </div>
                   ))}
                   {date}
                   <br/>
-                  {event.venueInfo.map(venue => (
-                    <div>
+                  {event.venueInfo.map((venue, index) => (
+                    <div key={`venue${index}`}>
                       {Object.values(venue.address)}
                       <br/>
                       {venue.city}, {venue.state} {venue.postalCode}

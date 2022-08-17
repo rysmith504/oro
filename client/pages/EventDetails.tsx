@@ -3,6 +3,7 @@ import { EventContext } from '../context/EventContext';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import { useNavigate } from 'react-router-dom';
 // import GitHubIcon from '@mui/icons-material/GitHub';
 // import FacebookIcon from '@mui/icons-material/Facebook';
 // import TwitterIcon from '@mui/icons-material/Twitter';
@@ -18,6 +19,13 @@ const EventDetails: React.FC = () => {
   const { getEventDetails, eventDetails } = useContext(EventContext);
 
   const idEvent = searchParams.get('id');
+  const navigate = useNavigate();
+
+  const getDetails = () => {
+    // console.log('navigate', event.eventId);
+    // navigate(`/eventFeed/?id=${event.eventId}`);
+    navigate(`/eventFeed/?id=${idEvent}`);
+  };
 
   // console.log('THIS IS THE ID', idEvent);
 
@@ -49,6 +57,7 @@ const EventDetails: React.FC = () => {
         <MainFeaturedPost post={mainFeaturedPost} />
         <Grid container spacing={5} sx={{ mt: 3 }}></Grid>
       </main>
+      <button onClick={getDetails}>event feed</button>
     </Container>
   );
 };

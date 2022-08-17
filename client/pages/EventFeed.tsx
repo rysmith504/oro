@@ -22,7 +22,7 @@ const ExpandMore = styled((props) => {
 }));
 
 const EventFeed: React.FC = () => {
-  const {eventId} = useContext(EventContext);
+  const { getEventDetails, eventDetails } = useContext(EventContext)
   const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
@@ -31,12 +31,12 @@ const EventFeed: React.FC = () => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  
+
   useEffect(() => {
     if (photo) {
       const reader = new FileReader();
       reader.readAsDataURL(photo);
-  
+
       reader.onloadend = () => {
         setPreviewSource(reader.result);
       };
@@ -46,14 +46,13 @@ const EventFeed: React.FC = () => {
   const updateFeed = () => {
     axios.get('/eventFeed')
       .then((responseObj) => {
-        // console.log(responseObj);
         setFeedPhotos(responseObj.data);
       })
       .catch((err) => console.error(err));
   };
-    
+
   useEffect(() => {
-    console.log(eventId);
+    console.log(eventDetails);
     updateFeed();
   }, []);
 
@@ -65,13 +64,12 @@ const EventFeed: React.FC = () => {
   const handleFileUpload = () => {
     if (photo) {
       const formData = new FormData();
-      formData.append("myFile", photo, photo.name);
+      formData.append('myFile', photo, photo.name);
 
       // console.log(photo, photo.name);
       // console.log('uploaded');
       axios.post('/eventFeed', {
-        iamgeData: previewSource,
-        eventId,
+        imageData: previewSource,
       })
         .then(() => updateFeed())
         .catch((err) => console.error(err));
@@ -101,7 +99,7 @@ const EventFeed: React.FC = () => {
               />
               <CardContent>
                 <Typography variant='body2'>
-                  This festival was dope! 
+                  This festival was dope!
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>

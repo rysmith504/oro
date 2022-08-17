@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import ArtistInfoCard from '../components/ArtistCards';
-import axios from 'axios';
 import { ArtistContext } from '../context/ArtistContext';
+import { ThemeContext } from '../context/ThemeContext';
 import {Box,	Grid, Item} from '../styles/material';
 
 const Artists = () => {
   const artistContext = useContext(ArtistContext);
+  const themeContext = useContext(ThemeContext);
   // console.log(artistContext);
+  const {mode, setMode, toggleMode} = themeContext;
   const {artistData, getFaveArtists, setArtistData } = artistContext;
   const favorites = artistData;
 
@@ -16,8 +18,10 @@ const Artists = () => {
 
   return (
     <div>
-      <div>Hello ARtists</div>
-      <Box sx={{ flexGrow: 1 }}>
+      <h1 onClick={toggleMode}>Artists</h1>
+      <Box sx={{
+        flexGrow: 1,
+        height: '100%' }}>
         <Grid container spacing={2}>
           {favorites.map((artObj, index) => {
             if (!artObj.image.length) {
@@ -25,8 +29,8 @@ const Artists = () => {
               artObj.image = `https://source.unsplash.com/random/?${musicImages[Math.floor(Math.random() * musicImages.length + 1)]}`;
             }
             return (
-              <Grid item key={artObj.id} xs={12} sm={4} md={2}>
-                <ArtistInfoCard artistProps={artObj} key={artObj.id}/>
+              <Grid item key={`art${index}`} xs={12} sm={4} md={2}>
+                <ArtistInfoCard artistProps={artObj} key={`artistObj${index}`}/>
               </Grid>
             );
           })

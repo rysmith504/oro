@@ -17,13 +17,13 @@ profileRouter.get('/events', (req, res) => {
         })
         .catch(err => {
           console.error(err);
-        })
+        });
 
     })
     .catch((err) => {
       res.send(500);
-    })
-})
+    });
+});
 
 profileRouter.get('/:id', (req, res) => {
   // console.log(req);
@@ -31,7 +31,7 @@ profileRouter.get('/:id', (req, res) => {
 
   // prisma.users.findUnique({
   //   where: {
-  //     id: id, 
+  //     id: id,
   //   }
   // })
 })

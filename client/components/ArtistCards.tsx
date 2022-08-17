@@ -51,13 +51,13 @@ const ArtistInfoCard = ({artistProps}) => {
   // }
 
   const socials = {
-    youtube: [youtube, <YouTubeIcon key={youtube}/>],
-    twitter: [twitter, <TwitterIcon key={twitter}/>],
-    facebook: [facebook, <FacebookIcon key={facebook}/>],
-    instagram: [instagram, <InstagramIcon key={instagram}/>],
-    homepage: [homepage, <LanguageIcon key={homepage}/>],
-    itunes: [itunes, <MusicNoteIcon key={itunes}/>],
-    wiki: [wiki, <QuizIcon key={wiki}/>],
+    youtube: [youtube, <YouTubeIcon key={'youtube'}/>],
+    twitter: [twitter, <TwitterIcon key={'twitter'}/>],
+    facebook: [facebook, <FacebookIcon key={'fb'}/>],
+    instagram: [instagram, <InstagramIcon key={'insta'}/>],
+    homepage: [homepage, <LanguageIcon key={'homepage'}/>],
+    itunes: [itunes, <MusicNoteIcon key={'music'}/>],
+    wiki: [wiki, <QuizIcon key={'wiki'}/>],
   };
   // console.log(artist);
   const handleExpandClick = () => {
@@ -122,9 +122,9 @@ const ArtistInfoCard = ({artistProps}) => {
           <Typography paragraph>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
-                {Object.keys(socials).map((social) => {
+                {Object.keys(socials).map((social, index) => {
                   return (
-                    <Grid item key={social}>
+                    <Grid item key={`social${index}`}>
                       <Item>
                         <a href={socials[social][0]}>{socials[social][1]}</a>
                       </Item>
@@ -140,8 +140,8 @@ const ArtistInfoCard = ({artistProps}) => {
                 events.length > 1
                   ? <Grid item id={artistName}>
                     <Typography paragraph>Events:</Typography>
-                    { events.map((eventObj) => {
-                      return <EventCards events={eventObj} key={eventObj.id}/>;
+                    { events.map((eventObj, index) => {
+                      return <EventCards events={eventObj} key={`event${index}`}/>;
                     })}
                   </Grid>
                   : <Typography paragraph>No Upcoming Events</Typography>

@@ -15,34 +15,40 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link, Routes, Route } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+import NightlightIcon from '@mui/icons-material/Nightlight';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { UserContext } from '../context/UserContext';
+import { ThemeContext } from '../context/ThemeContext';
 
 const pages = [
-  <Link to='/eventListings' style={{ textDecoration: 'none' }}>Find Events</Link>,
-  <Link to='/eventFeed' style={{ textDecoration: 'none' }}>Event Feed</Link>,
-  <Link to='/songFinder' style={{ textDecoration: 'none' }}>Song Finder</Link>,
-  <Link to='/artists' style={{ textDecoration: 'none' }}>Artists</Link>,
-  <Link to='/details' style={{ textDecoration: 'none' }}>details</Link>,
-  <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>,
-  <Link to='/profile' style={{ textDecoration: 'none' }}>My Account</Link>,
+  <Link to='/eventListings' style={{ textDecoration: 'none' }} key={'eventListings'}>Find Events</Link>,
+  <Link to='/eventFeed' style={{ textDecoration: 'none' }} key={'eventFeed'}>Event Feed</Link>,
+  <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>Song Finder</Link>,
+  <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>Artists</Link>,
+  <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>details</Link>,
+  <Link to="/login" style={{ textDecoration: 'none' }} key={'login'}>Login</Link>,
+  <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>My Account</Link>,
 ];
 
 const Navbar = () => {
+  const themeContext = useContext(ThemeContext);
+  const {mode, setMode, toggleMode} = themeContext;
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const { logoutUser } = useContext(UserContext);
 
-  
+
   const handleLogout = () => {
     logoutUser();
-  }
+  };
 
   const settings = [
     'Profile',
     'Account',
-    <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>,
-    <Button onClick={handleLogout}>Logout</Button>
-    ];
+    <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notificationsMenu'}>Notifications</Link>,
+    <Button onClick={handleLogout} key={'logoutButton'}>Logout</Button>
+  ];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -94,8 +100,8 @@ const Navbar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              {pages.map((page, index) => (
+                <MenuItem key={`nav${index}`} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -103,9 +109,9 @@ const Navbar = () => {
           </Box>
           <img src="images/VSLOGO.png" height="75"/>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
-                key={page}
+                key={`page${index}`}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
@@ -115,9 +121,15 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+
+            <IconButton onClick={toggleMode}>
+              {mode === 'light' ?
+                <div>Dark Mode <NightlightIcon fontSize="small"/></div> :
+                <div>Light Mode <WbSunnyIcon fontSize="small"/></div>}
+            </IconButton>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="user" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -136,8 +148,8 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {settings.map((setting, index) => (
+                <MenuItem key={`setting${index}`} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

@@ -16,22 +16,22 @@ eventFeedRouter.post('/', async (req, res) => {
       upload_preset: 'vibeSocietyImages',
     })
       .then(async(uploadedResponse) => {
-        console.log(uploadedResponse);
+        // console.log(uploadedResponse);
         await prisma.eventPhotos.create({
           data: {
             userId: 1,
             photoUrl: uploadedResponse.secure_url,
             eventAPIid: 'test',
           }
-    
+
         })
           .then((data) => {
-            console.log(data);
-            res.sendStatus(200)
+            // console.log(data);
+            res.sendStatus(200);
           })
           .catch((err) => {
-            console.log(err);
-            res.sendStatus(500)
+            // console.log(err);
+            res.sendStatus(500);
           });
       })
       .catch(() => res.sendStatus(500));
@@ -45,7 +45,7 @@ eventFeedRouter.post('/', async (req, res) => {
     //   .catch(() => res.sendStatus(500));
 
   } catch (error) {
-    console.error(error)
+    console.error(error);
     res.sendStatus(500);
   }
 });
@@ -61,12 +61,12 @@ eventFeedRouter.get('/', async (req, res) => {
     }
   })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.status(200).send(data);
     })
     .catch((err) => {
       console.error(err);
-      res.sendStatus(500)
+      res.sendStatus(500);
     });
 
 });
