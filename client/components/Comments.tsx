@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { UserContext } from '../context/UserContext';
 import { Paper, Grid} from '@mui/material';
 
 const Comments: React.FC = (props) => {
   const {photo} = props;
   useEffect(() => {
-    console.log(photo);
+    // console.log(photo);
+    UserContext;
   }, []);
   
 
@@ -35,7 +36,7 @@ const Comments: React.FC = (props) => {
       }
     })
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         setComments(data.data);
       })
       .catch((err) => console.error(err));
