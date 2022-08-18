@@ -59,9 +59,9 @@ const FeedPhoto: React.FC = (props) => {
   return (
     <div>
       <Modal style={{alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
-        <Box sx={{margin: 'auto', bgcolor: 'gray', width: 300, alignItems: 'center', justifyContent: 'center'}}>
+        <Box sx={{margin: 'auto', bgcolor: 'black', width: 350, alignItems: 'center', justifyContent: 'center'}}>
 
-          <img width='300px' height='auto' src={photo.photoUrl}/>
+          <img width='300px' height='auto' margin='auto' src={photo.photoUrl}/>
           <Grid container>
             <Comments photo={photo}/>
           </Grid>
