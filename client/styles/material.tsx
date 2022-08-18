@@ -41,6 +41,9 @@ import arrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import muiAccordion from '@mui/material/Accordion';
 import muiAccordionSummary from '@mui/material/AccordionSummary';
 import muiAccordionDetails from '@mui/material/AccordionDetails';
+import avatar from '@mui/material/Avatar';
+
+
 export const Item = styled(paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
   ...theme.typography.body2,
@@ -82,7 +85,7 @@ export	const	LanguageIcon	=	languageIcon;
 export const MusicOffIcon = musicOffIcon;
 export const ButtonBase = buttonBase;
 export const PushPinIcon = pushPinIcon;
-
+export const Avatar = avatar;
 export const LocalActivityIcon = localActivityIcon;
 export const CalendarMonthIcon = calendarMonthIcon;
 export const InfoIcon = infoIcon;

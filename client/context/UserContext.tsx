@@ -53,9 +53,16 @@ const UserContextProvider = ({ children }) => {
     axios.get('/hidden')
       .then((info) => {
         const { data } = info;
-        console.log(data);
+        const userObj = {
+          fullName: data.displayName,
+          email: data.emails[0].value,
+          id: data.id,
+          firstName: data.name.givenName,
+          lastName: data.name.familyName,
+          googleUrl: data.photos[0].value,
+        }
         // set state to user info
-        setCurrentUserInfo(data);
+        setCurrentUserInfo(userObj);
       })
       .catch((err) => {
         console.error(err);

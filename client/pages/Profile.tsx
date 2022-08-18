@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
-import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button } from '../styles/material';
+import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar } from '../styles/material';
 
 const Accordion = styled((props) => (
   <MuiAccordion children={''} disableGutters elevation={0} square {...props} />
@@ -53,7 +53,12 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <div>Hello {currentUserInfo.displayName}</div>
+      <div>Hello {currentUserInfo.firstName}</div>
+      <Avatar
+        alt={currentUserInfo.fullName}
+        src={currentUserInfo.googleUrl}
+        sx={{ width: 56, height: 56 }}
+      />
       <div>
         <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
@@ -68,7 +73,7 @@ const Profile: React.FC = () => {
               </ListItem>
               <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
               <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
-              <Button onClick={() => {location.href = userEvents.link}}>Purchase Tickets</Button>
+              <Button onClick={() => { location.href = userEvents.link }}>Purchase Tickets</Button>
             </List>
           </AccordionDetails>
         </Accordion>
