@@ -9,46 +9,46 @@ const eventFeedRouter = Router();
 
 
 eventFeedRouter.post('/', async (req, res) => {
-  const {imageData, eventId} = req.body;
+  const {imageData, eventId, userId} = req.body;
   try {
     const fileStr = imageData;
     await cloudinary.uploader.upload(fileStr, {
       upload_preset: 'vibeSocietyImages',
     })
       .then(async(uploadedResponse) => {
-        // console.log(uploadedResponse);
         await prisma.eventPhotos.create({
           data: {
-            userId: 1,
+            userId,
             photoUrl: uploadedResponse.secure_url,
             eventAPIid: eventId,
           }
 
         })
           .then((data) => {
-            // console.log(data);
             res.sendStatus(200);
           })
           .catch((err) => {
-            // console.log(err);
+            console.log(err);
             res.sendStatus(500);
           });
       })
       .catch(() => res.sendStatus(500));
-    // console.log(uploadedResponse);
-    // Gallery.create({
-    //   url: uploadedResponse.secure_url,
-    //   location: req.body.location,
-    //   category: req.body.category
-    // })
-    //   .then(() => res.sendStatus(200))
-    //   .catch(() => res.sendStatus(500));
 
   } catch (error) {
-    console.error(error);
     res.sendStatus(500);
   }
 });
+
+eventFeedRouter.get('/avatar', async (req, res) => {
+  const {userId} = req.query;
+  await prisma.users.findUnique({
+    where: {
+      googleId: userId,
+    }
+  })
+    .then((data) => res.status(200).send(data.profileURL))
+    .catch(() => res.sendStatus(500));
+})
 
 eventFeedRouter.get('/', async (req, res) => {
   const {eventId} = req.query;

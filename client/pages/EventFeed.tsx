@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import { OutlinedInput, Fab, styled, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '@mui/material';
+import {OutlinedInput, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import { styled } from '@mui/material';
 import { EventContext } from '../context/EventContext';
+import { UserContext } from '../context/UserContext';
 import { useSearchParams } from 'react-router-dom';
+import FeedPhoto from '../components/FeedPhoto';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 const EventFeed: React.FC = () => {
+  const userContext = useContext(UserContext);
+  const {currentUserInfo} = userContext;
   const { getEventDetails, eventDetails } = useContext(EventContext)
   const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
@@ -25,9 +21,6 @@ const EventFeed: React.FC = () => {
 
   const eventId = searchParams.get('id');
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   useEffect(() => {
     if (photo) {
@@ -53,7 +46,7 @@ const EventFeed: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(eventId);
+    console.log(currentUserInfo);
     updateFeed();
   }, []);
 
@@ -72,12 +65,14 @@ const EventFeed: React.FC = () => {
       axios.post('/eventFeed', {
         imageData: previewSource,
         eventId,
+        userId: currentUserInfo.id
       })
         .then(() => updateFeed())
         .catch((err) => console.error(err));
       setPhoto(null);
     }
   };
+
 
 
   return (
@@ -87,41 +82,7 @@ const EventFeed: React.FC = () => {
       {feedPhotos.map((photo, i) => {
         return (
           <div key={i}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardHeader
-                avatar={
-                  <Avatar alt={photo.userId}/>
-                }
-                subheader={photo.createdAt}
-              />
-              <CardMedia
-                component="img"
-                height="194"
-                image={photo.photoUrl}
-              />
-              <CardContent>
-                <Typography variant='body2'>
-                  This festival was dope!
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <ExpandMore
-                  expand={expanded}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  <Button>Comments</Button>
-                </ExpandMore>
-              </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  <Typography>
-                    <Comments photo={photo} />
-                  </Typography>
-                </CardContent>
-              </Collapse>
-            </Card>
+            <FeedPhoto photo={photo}/>
           </div>
         );
       })}

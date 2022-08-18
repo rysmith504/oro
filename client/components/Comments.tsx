@@ -6,11 +6,10 @@ import { Paper, Grid} from '@mui/material';
 const Comments: React.FC = (props) => {
 
   const userContext = useContext(UserContext);
+  const {currentUserInfo} = userContext;
 
   const {photo} = props;
   useEffect(() => {
-    // console.log(photo);
-    console.log(UserContext);
   }, []);
 
 
@@ -54,6 +53,7 @@ const Comments: React.FC = (props) => {
     axios.post('/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
+      userId: currentUserInfo.id
 
 
     })
