@@ -45,7 +45,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   }),
 );
 app.use(passport.initialize());
@@ -77,7 +77,7 @@ passport.use(new GoogleStrategy(
         });
       });
 
-      cb(null, profile);
+    cb(null, profile);
   }),
 ));
 
@@ -103,18 +103,6 @@ const isLoggedIn = (req, res, next) => {
   req.user ? next() : res.sendStatus(401);
 }
 
-app.get('/auth/success', (req, res) => {
-  // console.log('auth success');
-  if (req.user) {
-    // console.log(req.user);
-    res.status(200).json({
-      user: req.user,
-      message: 'success',
-      success: true,
-    });
-  }
-});
-
 app.get('/hidden', isLoggedIn, (req, res) => {
   res.send(req.user);
 });
@@ -129,10 +117,7 @@ app.get(
   passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/login',
-  }),
-  (req, res) => {
-    console.log('google callback req -----------> ', req);
-  }
+  })
 );
 
 app.get('/logout', (req, res) => {

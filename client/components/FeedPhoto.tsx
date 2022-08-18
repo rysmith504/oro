@@ -40,7 +40,9 @@ const FeedPhoto: React.FC = (props) => {
         setProfilePic(userProfile.data);
       })
       .catch((err) => console.error(err));
-    
+  };
+
+  const handleAvatarClick = async () => {
   };
 
 
@@ -49,7 +51,7 @@ const FeedPhoto: React.FC = (props) => {
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           avatar={
-            <Avatar src={profilePic}/>
+            <Avatar src={profilePic} onClick={handleAvatarClick}/>
           }
           subheader={photo.created_at}
         />

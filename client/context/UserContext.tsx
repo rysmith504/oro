@@ -44,25 +44,12 @@ const UserContextProvider = ({ children }) => {
       })
   }
 
-  const getOtherUser = () => {
-    axios.get('/profile/:_id')
-  }
-
   const getCurrentUser = () => {
     // Once user logs in, get user info
     axios.get('/hidden')
-      .then((info) => {
-        const { data } = info;
-        const userObj = {
-          fullName: data.displayName,
-          email: data.emails[0].value,
-          id: data.id,
-          firstName: data.name.givenName,
-          lastName: data.name.familyName,
-          googleUrl: data.photos[0].value,
-        }
+      .then(({data}) => {
         // set state to user info
-        setCurrentUserInfo(userObj);
+        setCurrentUserInfo(data);
       })
       .catch((err) => {
         console.error(err);

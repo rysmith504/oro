@@ -53,10 +53,10 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <div>Hello {currentUserInfo.firstName}</div>
+      <div>Hello {currentUserInfo.name.givenName}</div>
       <Avatar
-        alt={currentUserInfo.fullName}
-        src={currentUserInfo.googleUrl}
+        alt={currentUserInfo.displayName}
+        src={currentUserInfo.photos[0].value}
         sx={{ width: 56, height: 56 }}
       />
       <div>
