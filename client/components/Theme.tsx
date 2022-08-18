@@ -6,13 +6,6 @@ import { deepPurple } from '@mui/material/colors';
 import { styled } from '@mui/system';
 
 // MATERIAL UI-THEMES
-interface PaletteColor {
-  light?: string;
-  main: string;
-  dark?: string;
-  contrastText?: string;
-}
-
 // const dark = {
 //   background: '#1A2027',
 //   color: '#F3F3F3',
@@ -30,6 +23,7 @@ const dark = createTheme({
       contrastText: '#F3F3F3',
     },
     secondary: deepPurple,
+    mode: 'dark',
   },
 });
 
@@ -42,8 +36,11 @@ const light = createTheme({
     secondary: {
       main: '#1A2027',
     },
+    mode: 'dark',
   },
 });
+
+
 
 export const StyledCard = styled('div')(({ theme }) => ({
   color: theme.palette.primary.contrastText,

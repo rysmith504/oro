@@ -6,6 +6,7 @@ import {
 } from '../styles/material';
 import EventCards from './EventCards';
 import axios from 'axios';
+import { ThemeContext } from '../context/ThemeContext';
 // import { StyledCard } from './Theme';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -24,6 +25,9 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const ArtistInfoCard = ({artistProps}) => {
   // console.log(artistProps);
+  const themeContext = useContext(ThemeContext);
+  const {mode, setMode, toggleMode} = themeContext;
+  console.log(mode);
   const [expanded, setExpanded] = React.useState(false);
   const [events, setEvents] = useState(
     [{
