@@ -22,12 +22,12 @@ import { ThemeContext } from '../context/ThemeContext';
 
 const pages = [
   <Link to='/eventListings' style={{ textDecoration: 'none' }} key={'eventListings'}>Find Events</Link>,
-  <Link to='/eventFeed' style={{ textDecoration: 'none' }} key={'eventFeed'}>Event Feed</Link>,
   <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>Song Finder</Link>,
   <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>Artists</Link>,
   <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>details</Link>,
   <Link to="/login" style={{ textDecoration: 'none' }} key={'login'}>Login</Link>,
   <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>My Account</Link>,
+  <Link to='/travelPlanner' style={{ textDecoration: 'none' }} key={'travelPlanner'}>Travel Planner</Link>
 ];
 
 const Navbar = () => {
@@ -123,7 +123,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
 
             <IconButton onClick={toggleMode}>
-              {mode === 'light' ?
+              {mode === 'dark' ?
                 <div>Dark Mode <NightlightIcon fontSize="small"/></div> :
                 <div>Light Mode <WbSunnyIcon fontSize="small"/></div>}
             </IconButton>

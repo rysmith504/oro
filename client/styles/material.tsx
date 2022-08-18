@@ -41,6 +41,11 @@ import arrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import muiAccordion from '@mui/material/Accordion';
 import muiAccordionSummary from '@mui/material/AccordionSummary';
 import muiAccordionDetails from '@mui/material/AccordionDetails';
+import outlinedInput from '@mui/material/OutlinedInput';
+import fab from '@mui/material/Fab';
+// import styled from '@mui/system';
+import avatar from '@mui/material/Avatar';
+
 export const Item = styled(paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
   ...theme.typography.body2,
@@ -48,7 +53,11 @@ export const Item = styled(paper)(({ theme }) => ({
   textAlign: 'left',
   color: theme.palette.text.secondary,
 }));
-
+// export styled;
+export const IconButton = iconButton;
+export const OutlinedInput = outlinedInput;
+export const Fab = fab;
+export const Avatar = avatar;
 export	const	Box	=	box;
 export	const	Drawer	=	drawer;
 export	const	Button	=	button;
