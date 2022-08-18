@@ -53,7 +53,7 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <div>Hello {currentUserInfo.displayName}</div>
+      <h1>Hello {currentUserInfo.displayName}</h1>
       <div>
         <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">

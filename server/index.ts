@@ -8,7 +8,7 @@ import eventListingsRouter from './routes/eventListingsRouter';
 import artistsRouter from './routes/artistsRouter';
 import songFinderRouter from './routes/songFinder';
 import eventDetailsRouter from './routes/eventDetail';
-
+import travelPlannerRouter from './routes/travelPlanner';
 import profileRouter from './routes/profile';
 
 import eventFeedRouter from './routes/eventFeed';
@@ -30,10 +30,10 @@ app.use('/events', eventListingsRouter);
 app.use('/favArtists', artistsRouter);
 app.use('/songs', songFinderRouter);
 app.use('/eventDetails', eventDetailsRouter);
-// app.use('/auth', app);
 app.use('/profile', profileRouter);
 app.use('/comments', commentsRouter);
 app.use('/eventFeed', eventFeedRouter);
+app.use('/travelPlanner', travelPlannerRouter);
 
 // AUTH-----------------
 require('dotenv').config();

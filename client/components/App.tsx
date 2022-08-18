@@ -10,7 +10,7 @@ import Login from '../pages/Login';
 import EventDetails from '../pages/EventDetails';
 import EventFeed from '../pages/EventFeed';
 import OtherUser from '../pages/OtherUser';
-
+import TravelPlanner from '../pages/TravelPlanner';
 import Navbar from '../components/Navbar';
 
 import { ArtistContextProvider } from '../context/ArtistContext';
@@ -47,6 +47,7 @@ const App: React.FC = () => {
               <Route path='/details' element={<EventDetails />} />
               <Route path='/login' element={<Login />} />
               <Route path='/user' element={<OtherUser />} />
+              <Route path='/travel-planner' element={<TravelPlanner />} />
             </Routes>
           </ArtistContextProvider>
         </UserContextProvider>
