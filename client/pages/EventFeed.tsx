@@ -73,11 +73,9 @@ const EventFeed: React.FC = () => {
     }
   };
 
-
-
   return (
     <div>
-      <div>Hello EventFeed</div>
+      <h1>EventFeed</h1>
 
       {feedPhotos.map((photo, i) => {
         return (

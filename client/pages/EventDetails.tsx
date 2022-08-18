@@ -1,20 +1,22 @@
 import React, { useContext, useEffect } from 'react';
 import { EventContext } from '../context/EventContext';
-import CssBaseline from '@mui/material/CssBaseline';
+// import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 // import GitHubIcon from '@mui/icons-material/GitHub';
 // import FacebookIcon from '@mui/icons-material/Facebook';
 // import TwitterIcon from '@mui/icons-material/Twitter';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import Header from './Header';
 import MainFeaturedPost from '../components/MainFeaturedPost';
-import { useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { Button } from '@mui/material';
 // import Sidebar from './Sidebar';
 // import Footer from './Footer';
 
 const EventDetails: React.FC = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { getEventDetails, eventDetails } = useContext(EventContext);
 
@@ -35,10 +37,6 @@ const EventDetails: React.FC = () => {
     }
   }, []);
 
-  // const eventDetails = getEventDetails('Z7r9jZ1AdFYep');
-
-  // console.log('EVENT DATA!!!!!', eventDetails);
-
   const mainFeaturedPost: {
     description?: string;
     image?: string;
@@ -49,13 +47,20 @@ const EventDetails: React.FC = () => {
     image: eventDetails?.image,
   };
 
-  const theme = createTheme();
+  const handleClick = () => {
+    const city = eventDetails?.venues.city.name;
+    if (city) {
+      navigate('/travel-planner', { state: { city } });
+    }
+  };
 
   return (
     <Container maxWidth='lg'>
       <main>
         <MainFeaturedPost post={mainFeaturedPost} />
-        <Grid container spacing={5} sx={{ mt: 3 }}></Grid>
+        <Grid container spacing={5} sx={{ mt: 3 }}>
+          <Button onClick={handleClick}>Travel Information</Button>
+        </Grid>
       </main>
       <button onClick={getDetails}>event feed</button>
     </Container>

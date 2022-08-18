@@ -18,7 +18,7 @@ const Artists = () => {
 
   return (
     <div>
-      <h1 onClick={toggleMode}>Artists</h1>
+      <h1>Artists</h1>
       <Box sx={{
         flexGrow: 1,
         height: '100%' }}>
@@ -29,7 +29,7 @@ const Artists = () => {
               artObj.image = `https://source.unsplash.com/random/?${musicImages[Math.floor(Math.random() * musicImages.length + 1)]}`;
             }
             return (
-              <Grid item key={`art${index}`} xs={12} sm={4} md={2}>
+              <Grid item key={`art${index}`} xs={12} sm={4} md={3}>
                 <ArtistInfoCard artistProps={artObj} key={`artistObj${index}`}/>
               </Grid>
             );

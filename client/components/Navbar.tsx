@@ -27,6 +27,7 @@ const pages = [
   <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>details</Link>,
   <Link to="/login" style={{ textDecoration: 'none' }} key={'login'}>Login</Link>,
   <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>My Account</Link>,
+  <Link to='/travelPlanner' style={{ textDecoration: 'none' }} key={'travelPlanner'}>Travel Planner</Link>
 ];
 
 const Navbar = () => {
@@ -122,7 +123,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
 
             <IconButton onClick={toggleMode}>
-              {mode === 'light' ?
+              {mode === 'dark' ?
                 <div>Dark Mode <NightlightIcon fontSize="small"/></div> :
                 <div>Light Mode <WbSunnyIcon fontSize="small"/></div>}
             </IconButton>
