@@ -4,16 +4,18 @@ import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
 
-import eventListingsRouter from './routes/eventListingsRouter';
-import artistsRouter from './routes/artistsRouter';
-import songFinderRouter from './routes/songFinder';
-import eventDetailsRouter from './routes/eventDetail';
-import travelPlannerRouter from './routes/travelPlanner';
-import profileRouter from './routes/profile';
+import api from './routes/index';
 
-import eventFeedRouter from './routes/eventFeed';
-import profileRouter from './routes/profile';
-import commentsRouter from './routes/comments';
+// import eventListingsRouter from './routes/eventListingsRouter';
+// import artistsRouter from './routes/artistsRouter';
+// import songFinderRouter from './routes/songFinder';
+// import eventDetailsRouter from './routes/eventDetail';
+// import travelPlannerRouter from './routes/travelPlanner';
+// import profileRouter from './routes/profile';
+
+// import eventFeedRouter from './routes/eventFeed';
+// import profileRouter from './routes/profile';
+// import commentsRouter from './routes/comments';
 import prisma from './database/db';
 import passport from 'passport';
 
@@ -26,14 +28,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
 
 //ROUTERS------------------------------
-app.use('/events', eventListingsRouter);
-app.use('/favArtists', artistsRouter);
-app.use('/songs', songFinderRouter);
-app.use('/eventDetails', eventDetailsRouter);
-app.use('/profile', profileRouter);
-app.use('/comments', commentsRouter);
-app.use('/eventFeed', eventFeedRouter);
-app.use('/travelPlanner', travelPlannerRouter);
+app.use('/api', api);
+// app.use('/events', eventListingsRouter);
+// app.use('/favArtists', artistsRouter);
+// app.use('/songs', songFinderRouter);
+// app.use('/eventDetails', eventDetailsRouter);
+// app.use('/profile', profileRouter);
+// app.use('/comments', commentsRouter);
+// app.use('/eventFeed', eventFeedRouter);
+// app.use('/travelPlanner', travelPlannerRouter);
 
 // AUTH-----------------
 require('dotenv').config();

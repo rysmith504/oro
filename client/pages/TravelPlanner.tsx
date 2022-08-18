@@ -52,7 +52,7 @@ const TravelPlanner: React.FC = () => {
 
   const fetchLocations = async () => {
     const { city } = location.state as { city: string };
-    const { data } = await axios.get(`/travelPlanner/locations/${city}`);
+    const { data } = await axios.get(`/api/travelPlanner/locations/${city}`);
     console.log('data', data.data);
     setLocations(data.data);
   };

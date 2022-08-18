@@ -24,7 +24,7 @@ const ArtistContextProvider = ({ children }) => {
 
   const getFaveArtists = () => {
     // console.log('artist context executed');
-    axios.get('/favArtists')
+    axios.get('/api/favArtists')
       .then((artistData) => {
         const artistsArr = artistData.data;
         // console.log(artistsArr);

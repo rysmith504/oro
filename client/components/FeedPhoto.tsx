@@ -2,9 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Comments from '../components/Comments';
-import { OutlinedInput, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { styled } from '@mui/material';
-import { UserContext } from '../context/UserContext';
 
 const FeedPhoto: React.FC = (props) => {
   const { photo } = props;
@@ -30,7 +29,7 @@ const FeedPhoto: React.FC = (props) => {
   };
 
   const getAvatar = async () => {
-    await axios.get('/eventFeed/avatar', {
+    await axios.get('/api/eventFeed/avatar', {
       params: {
         userId: photo.userId
       }
