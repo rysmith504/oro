@@ -73,11 +73,11 @@ const EventFeed: React.FC = () => {
 
   const getUserId = () => {
     console.log();
-  }
+  };
 
   return (
     <div>
-      <div>Hello EventFeed</div>
+      <h1>EventFeed</h1>
 
       {feedPhotos.map((photo, i) => {
         return (

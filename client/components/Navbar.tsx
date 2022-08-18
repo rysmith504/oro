@@ -28,6 +28,7 @@ const pages = [
   <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>details</Link>,
   <Link to="/login" style={{ textDecoration: 'none' }} key={'login'}>Login</Link>,
   <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>My Account</Link>,
+  <Link to='/travelPlanner' style={{ textDecoration: 'none' }} key={'travelPlanner'}>Travel Planner</Link>
 ];
 
 const Navbar = () => {

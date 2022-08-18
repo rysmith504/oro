@@ -6,6 +6,7 @@ import {
 } from '../styles/material';
 import EventCards from './EventCards';
 import axios from 'axios';
+// import { StyledCard } from './Theme';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -69,18 +70,13 @@ const ArtistInfoCard = ({artistProps}) => {
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     axios.get('/favArtists/events', { params: { keyword: noSpecialChars } })
       .then((responseObj) => {
-        // console.log(responseObj.data.events);
         setEvents(responseObj.data.events);
       })
-      .then(() => {
-        // console.log(events);
-      })
       .catch(err => console.error(err));
-
-    // console.log(events);
   };
 
   return (
+    // <StyledCard>
     <Card>
       <CardHeader
         title={artistName}
@@ -151,6 +147,7 @@ const ArtistInfoCard = ({artistProps}) => {
         </CardContent>
       </Collapse>
     </Card>
+    // </StyledCard>
   );
 };
 
