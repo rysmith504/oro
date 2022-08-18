@@ -18,7 +18,7 @@ const EventContextProvider = ({ children }) => {
 
   const getEventDetails = (id: string) => {
     axios
-      .get('/eventDetails', { params: { id } })
+      .get('/api/eventDetails', { params: { id } })
       .then(({ data }) => {
         setEventDetails(data);
       })
