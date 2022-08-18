@@ -204,7 +204,7 @@ const SongFinder: React.FC = () => {
 
   return (
     <div>
-      <div>Hello SongFinder</div>
+      <h1>SongFinder</h1>
 
       <div>
         <Grid container>

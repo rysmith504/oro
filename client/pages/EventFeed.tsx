@@ -1,30 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import { OutlinedInput, Fab, styled, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Grid, ImageList, ImageListItem, OutlinedInput, Fab} from '@mui/material';
+import {OutlinedInput, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import { styled } from '@mui/material';
+import { EventContext } from '../context/EventContext';
+import { UserContext } from '../context/UserContext';
+import { useSearchParams } from 'react-router-dom';
+import FeedPhoto from '../components/FeedPhoto';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 const EventFeed: React.FC = () => {
+  const userContext = useContext(UserContext);
+  const {currentUserInfo} = userContext;
+  const { getEventDetails, eventDetails } = useContext(EventContext)
   const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
   const [feedPhotos, setFeedPhotos] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const eventId = searchParams.get('id');
+
 
   useEffect(() => {
     if (photo) {
@@ -38,7 +34,11 @@ const EventFeed: React.FC = () => {
   }, [photo]);
 
   const updateFeed = () => {
-    axios.get('/eventFeed')
+    axios.get('/eventFeed', {
+      params: {
+        eventId,
+      }
+    })
       .then((responseObj) => {
         setFeedPhotos(responseObj.data);
       })
@@ -46,6 +46,7 @@ const EventFeed: React.FC = () => {
   };
 
   useEffect(() => {
+    console.log(currentUserInfo);
     updateFeed();
   }, []);
 
@@ -62,7 +63,9 @@ const EventFeed: React.FC = () => {
       // console.log(photo, photo.name);
       // console.log('uploaded');
       axios.post('/eventFeed', {
-        data: previewSource
+        imageData: previewSource,
+        eventId,
+        userId: currentUserInfo.id
       })
         .then(() => updateFeed())
         .catch((err) => console.error(err));
@@ -70,53 +73,14 @@ const EventFeed: React.FC = () => {
     }
   };
 
-
-  const getUserId = () => {
-    console.log();
-  }
-
   return (
     <div>
-      <div>Hello EventFeed</div>
+      <h1>EventFeed</h1>
 
       {feedPhotos.map((photo, i) => {
         return (
           <div key={i}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardHeader
-                avatar={
-                  <Avatar alt={photo.userId} onClick={getUserId}/>
-                }
-                subheader={photo.createdAt}
-              />
-              <CardMedia
-                component="img"
-                height="194"
-                image={photo.photoUrl}
-              />
-              <CardContent>
-                <Typography variant='body2'>
-                  This festival was dope!
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <ExpandMore
-                  expand={expanded}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  <Button>Comments</Button>
-                </ExpandMore>
-              </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  <Typography>
-                    <Comments photo={photo} />
-                  </Typography>
-                </CardContent>
-              </Collapse>
-            </Card>
+            <FeedPhoto photo={photo}/>
           </div>
         );
       })}
