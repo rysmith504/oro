@@ -26,7 +26,7 @@ const EventCardDetails = ({events, event}) => {
   }, []);
 
   const getPins = () => {
-    axios.get('/events/list/pins')
+    axios.get('/api/events/list/pins')
       .then(responseObj => {
         setPins(responseObj.data.map((event, index) => event.eventAPIid));
       })
@@ -36,7 +36,7 @@ const EventCardDetails = ({events, event}) => {
   const [ pins, setPins ] = useState(['foo', 'bar']);
 
   const postEvent = () => {
-    axios.post('/events/list/pins', {
+    axios.post('/api/events/list/pins', {
       userId: 1,
       eventAPIid: event.eventId
     })
@@ -48,7 +48,7 @@ const EventCardDetails = ({events, event}) => {
   };
 
   const deleteEvent = () => {
-    axios.delete('/events/list/pins', { data: { eventAPIid: event.eventId } })
+    axios.delete('/api/events/list/pins', { data: { eventAPIid: event.eventId } })
       .then(() => {
         // console.log('DELETE SUCCESS');
         getPins();

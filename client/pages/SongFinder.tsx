@@ -56,7 +56,7 @@ const SongFinder: React.FC = () => {
 
   useEffect(() => {
     if (song && artist) {
-      axios.get('/songs', {
+      axios.get('/api/songs', {
         params: {
           artistName: artist,
           song,
@@ -72,7 +72,7 @@ const SongFinder: React.FC = () => {
 
   useEffect(() => {
     if (artist) {
-      axios.get('/favArtists/artist', {
+      axios.get('/api/favArtists/artist', {
         params: {
           artistName: artist,
         }
@@ -93,7 +93,7 @@ const SongFinder: React.FC = () => {
 
   useEffect(() => {
     if (previewSource) {
-      axios.post('/songs', {
+      axios.post('/api/songs', {
         data: previewSource,
       })
         .then((results) => {
@@ -160,7 +160,7 @@ const SongFinder: React.FC = () => {
 
   const addToFavorites = () => {
     // console.log(artist);
-    axios.post('/favArtists', {
+    axios.post('/api/favArtists', {
       artistName: artist
     })
       .then((data) => {
@@ -171,7 +171,7 @@ const SongFinder: React.FC = () => {
   };
 
   const removeFavorites = () => {
-    axios.delete('/favArtists', {
+    axios.delete('/api/favArtists', {
       data: {
         artistName: artist
       }
