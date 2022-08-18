@@ -46,7 +46,7 @@ const EventFeed: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(currentUserInfo);
+    // console.log(currentUserInfo);
     updateFeed();
   }, []);
 
@@ -72,25 +72,33 @@ const EventFeed: React.FC = () => {
       setPhoto(null);
     }
   };
+  if (currentUserInfo.id) {
+    return (
+      <div>
+        <h1>EventFeed</h1>
+  
+        {feedPhotos.map((photo, i) => {
+          return (
+            <div key={i}>
+              <FeedPhoto photo={photo}/>
+            </div>
+          );
+        })}
+  
+        <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
+        <Fab variant='extended' size='small' onClick={handleFileUpload}>
+                Upload
+        </Fab>
+      </div>
+    );
 
-  return (
-    <div>
-      <h1>EventFeed</h1>
-
-      {feedPhotos.map((photo, i) => {
-        return (
-          <div key={i}>
-            <FeedPhoto photo={photo}/>
-          </div>
-        );
-      })}
-
-      <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
-      <Fab variant='extended' size='small' onClick={handleFileUpload}>
-              Upload
-      </Fab>
-    </div>
-  );
+  } else {
+    return (
+      <div>
+        Please Log in to use the app
+      </div>
+    )
+  }
 };
 
 export default EventFeed;

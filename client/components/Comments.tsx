@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { Paper, Grid} from '@mui/material';
-
+import {Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import Comment from './Comment';
 const Comments: React.FC = (props) => {
 
   const userContext = useContext(UserContext);
@@ -70,9 +71,7 @@ const Comments: React.FC = (props) => {
 
       {comments.map((comment, i) => {
         return (
-          <div key={i}>
-            {comment.comment}
-          </div>
+          <Comment key={i} comment={comment}/>
         );
       })}
 
