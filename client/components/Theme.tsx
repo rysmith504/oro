@@ -1,20 +1,39 @@
 import React, { useContext } from 'react';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+import { StyledProvider } from '../styles/material';
 import { ThemeContext } from '../context/ThemeContext';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { deepPurple } from '@mui/material/colors';
 import { styled } from '@mui/system';
 
-// MATERIAL UI-THEMES
-// const dark = {
-//   background: '#1A2027',
-//   color: '#F3F3F3',
-// };
-
-// const light = {
-//   background: '#FFF',
-//   color: '#1A2027',
-// };
+// const theme = (mode) => createTheme({
+//   palette: {
+//     mode,
+//     ...(mode === 'light'
+//       ? {
+//         // palette values for light mode
+//         primary: amber,
+//         divider: amber[200],
+//         text: {
+//           primary: grey[900],
+//           secondary: grey[800],
+//         },
+//       }
+//       : {
+//         // palette values for dark mode
+//         primary: deepOrange,
+//         divider: deepOrange[700],
+//         background: {
+//           default: deepOrange[900],
+//           paper: deepOrange[900],
+//         },
+//         text: {
+//           primary: '#fff',
+//           secondary: grey[500],
+//         },
+//       }),
+//   },
+// });
 
 const dark = createTheme({
   palette: {
@@ -22,7 +41,13 @@ const dark = createTheme({
       main: '#1A2027',
       contrastText: '#F3F3F3',
     },
-    secondary: deepPurple,
+    secondary: {
+      main: '#F3F3F3',
+      contrastText: '#1A2027',
+    },
+    text: {
+      primary: '#1A2027',
+    },
     mode: 'dark',
   },
 });
@@ -35,19 +60,16 @@ const light = createTheme({
     },
     secondary: {
       main: '#1A2027',
+      contrastText: '#F3F3F3',
     },
-    mode: 'dark',
+    text: {
+      primary: '#F3F3F3',
+    },
+    mode: 'light',
   },
 });
 
 
-
-export const StyledCard = styled('div')(({ theme }) => ({
-  color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.primary.main,
-  padding: theme.spacing(1),
-  borderRadius: theme.shape.borderRadius,
-}));
 
 const GlobalTheme = createGlobalStyle`
 
@@ -83,8 +105,10 @@ export const Theme = ({ children }) => {
   const {mode, setMode, toggleMode} = themeContext;
   return (
     <ThemeProvider theme={mode == 'dark' ? dark : light}>
-      <GlobalTheme />
-      {children}
+      <StyledProvider theme={mode == 'dark' ? dark : light}>
+        <GlobalTheme />
+        {children}
+      </StyledProvider >
     </ThemeProvider>
   );
 };

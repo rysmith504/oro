@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import {
@@ -7,6 +7,8 @@ import {
 import EventCards from './EventCards';
 import axios from 'axios';
 import { ThemeContext } from '../context/ThemeContext';
+import { useTheme } from '@mui/material/styles';
+
 // import { StyledCard } from './Theme';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -25,6 +27,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const ArtistInfoCard = ({artistProps}) => {
   // console.log(artistProps);
+  const theme = useTheme();
+  console.log(theme);
   const themeContext = useContext(ThemeContext);
   const {mode, setMode, toggleMode} = themeContext;
   console.log(mode);
@@ -81,27 +85,30 @@ const ArtistInfoCard = ({artistProps}) => {
 
   return (
     // <StyledCard>
-    <Card>
+    <Card sx={{ bgcolor: theme.palette.secondary.main }}>
       <CardHeader
         title={artistName}
+        sx={{ bgcolor: theme.palette.secondary.main }}
       />
       <CardMedia
         component="img"
         height="194"
         image={image}
         alt={artistName}
+        sx={{ bgcolor: theme.palette.secondary.main }}
       />
-      <CardContent>
-        <Typography noWrap variant="body2" color="text.secondary">
+      <CardContent sx={{ bgcolor: theme.palette.secondary.main }}>
+        <Typography noWrap variant="body2">
           {bio}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing sx={{ bgcolor: theme.palette.secondary.main }}>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <FavoriteIcon sx={{ bgcolor: theme.palette.secondary.main }}/>
         </IconButton>
         <ExpandMore
           expand={expanded}
+          sx={{ bgcolor: theme.palette.secondary.main }}
           onClick={()=>{
             handleExpandClick();
             getArtistEvents(artistName);
@@ -114,12 +121,12 @@ const ArtistInfoCard = ({artistProps}) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent id={artistName}>
-          <Typography paragraph>Bio:</Typography>
-          <Typography paragraph>
+          <Typography paragraph sx={{ bgcolor: theme.palette.secondary.main }}>Bio:</Typography>
+          <Typography paragraph sx={{ bgcolor: theme.palette.secondary.main }}>
             {bio}
           </Typography>
-          <Typography paragraph>Socials:</Typography>
-          <Typography paragraph>
+          <Typography paragraph sx={{ bgcolor: theme.palette.secondary.main }}>Socials:</Typography>
+          <Typography paragraph sx={{ bgcolor: theme.palette.secondary.main }}>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
                 {Object.keys(socials).map((social, index) => {
@@ -139,12 +146,12 @@ const ArtistInfoCard = ({artistProps}) => {
               {
                 events.length > 1
                   ? <Grid item id={artistName}>
-                    <Typography paragraph>Events:</Typography>
+                    <Typography paragraph sx={{ bgcolor: theme.palette.secondary.main }}>Events:</Typography>
                     { events.map((eventObj, index) => {
                       return <EventCards events={eventObj} key={`event${index}`}/>;
                     })}
                   </Grid>
-                  : <Typography paragraph>No Upcoming Events</Typography>
+                  : <Typography paragraph sx={{ bgcolor: theme.palette.secondary.main }}>No Upcoming Events</Typography>
               }
             </Grid>
           </Box>
