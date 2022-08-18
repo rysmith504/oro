@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {OutlinedInput, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import { OutlinedInput, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { styled } from '@mui/material';
 import { UserContext } from '../context/UserContext';
 
 const FeedPhoto: React.FC = (props) => {
-  const {photo} = props;
+  const { photo } = props;
   const [profilePic, setProfilePic] = useState('');
   const [expanded, setExpanded] = React.useState(false);
 
   useEffect(() => {
-    console.log(photo);
     getAvatar();
   }, []);
 
@@ -42,16 +42,15 @@ const FeedPhoto: React.FC = (props) => {
       .catch((err) => console.error(err));
   };
 
-  const handleAvatarClick = async () => {
-  };
-
 
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           avatar={
-            <Avatar src={profilePic} onClick={handleAvatarClick}/>
+            <Link to={`/user/profile/${photo.userId}`}>
+              <Avatar src={profilePic} />
+            </Link>
           }
           subheader={photo.created_at}
         />

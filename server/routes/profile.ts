@@ -25,15 +25,20 @@ profileRouter.get('/events', (req, res) => {
     });
 });
 
-profileRouter.get('/:id', (req, res) => {
-  // console.log(req);
-  // const { id } = req.params;
+profileRouter.get('/:_id', (req, res) => {
+  const { _id } = req.params;
 
-  // prisma.users.findUnique({
-  //   where: {
-  //     id: id,
-  //   }
-  // })
+  prisma.users.findUnique({
+    where: {
+      googleId: _id,
+    }
+  })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
 })
 
 
