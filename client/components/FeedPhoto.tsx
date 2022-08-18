@@ -29,7 +29,7 @@ const FeedPhoto: React.FC = (props) => {
   };
 
   const getAvatar = async () => {
-    await axios.get('/eventFeed/avatar', {
+    await axios.get('/api/eventFeed/avatar', {
       params: {
         userId: photo.userId
       }

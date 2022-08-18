@@ -33,7 +33,7 @@ const Comments: React.FC = (props) => {
   }, []);
 
   const getComments = async () => {
-    await axios.get('/comments', {
+    await axios.get('/api/comments', {
       params: {
         photoUrl: photo.photoUrl
       }
@@ -51,7 +51,7 @@ const Comments: React.FC = (props) => {
   };
 
   const handleSend = () => {
-    axios.post('/comments', {
+    axios.post('/api/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
       userId: currentUserInfo.id

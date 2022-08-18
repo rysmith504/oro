@@ -34,7 +34,7 @@ const EventFeed: React.FC = () => {
   }, [photo]);
 
   const updateFeed = () => {
-    axios.get('/eventFeed', {
+    axios.get('/api/eventFeed', {
       params: {
         eventId,
       }
@@ -62,7 +62,7 @@ const EventFeed: React.FC = () => {
 
       // console.log(photo, photo.name);
       // console.log('uploaded');
-      axios.post('/eventFeed', {
+      axios.post('/api/eventFeed', {
         imageData: previewSource,
         eventId,
         userId: currentUserInfo.id

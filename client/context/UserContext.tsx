@@ -9,7 +9,7 @@ const UserContextProvider = ({ children }) => {
   const [ currentUserInfo, setCurrentUserInfo ] = useState([]);
 
   const getUserEvents = () => {
-    axios.get('/profile/events')
+    axios.get('/api/profile/events')
       .then(events => {
         const { data } = events;
         const startDate = data.sales.public.startDateTime;

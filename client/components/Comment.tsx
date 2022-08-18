@@ -9,11 +9,12 @@ const Comment: React.FC = (props) => {
   const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
+    console.log(comment);
     getAvatar();
   }, []);
 
   const getAvatar = async () => {
-    await axios.get('/eventFeed/avatar', {
+    await axios.get('/api/eventFeed/avatar', {
       params: {
         userId: comment.userId
       }

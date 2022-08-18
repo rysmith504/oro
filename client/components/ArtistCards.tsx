@@ -68,7 +68,7 @@ const ArtistInfoCard = ({artistProps}) => {
   const getArtistEvents = (artist) => {
     const noSpecialChars: string = artist
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    axios.get('/favArtists/events', { params: { keyword: noSpecialChars } })
+    axios.get('/api/favArtists/events', { params: { keyword: noSpecialChars } })
       .then((responseObj) => {
         setEvents(responseObj.data.events);
       })
