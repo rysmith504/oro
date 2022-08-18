@@ -22,7 +22,6 @@ import { ThemeContext } from '../context/ThemeContext';
 
 const pages = [
   <Link to='/eventListings' style={{ textDecoration: 'none' }} key={'eventListings'}>Find Events</Link>,
-  <Link to='/eventFeed' style={{ textDecoration: 'none' }} key={'eventFeed'}>Event Feed</Link>,
   <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>Song Finder</Link>,
   <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>Artists</Link>,
   <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>details</Link>,
