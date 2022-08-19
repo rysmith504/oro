@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Profile from '../pages/Profile';
 import Home from '../pages/Home';
-import Notifications from '../pages/Notifications';
+import NotificationsFeed from '../pages/NotificationsFeed';
 import EventListings from '../pages/EventListings';
 import SongFinder from '../pages/SongFinder';
 import Artists from '../pages/Artists';
@@ -39,7 +39,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path='/home' element={<Home />} />
               <Route path='/profile' element={<Profile />} />
-              <Route path='/notifications' element={<Notifications />} />
+              <Route path='/notifications' element={<NotificationsFeed />} />
               <Route path='/eventListings' element={<EventListings />} />
               <Route path='/eventFeed' element={<EventFeed/>}/>
               <Route path='/songFinder' element={<SongFinder />} />

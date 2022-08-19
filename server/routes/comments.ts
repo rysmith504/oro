@@ -24,6 +24,26 @@ commentsRouter.get('/', async (req, res) => {
       res.sendStatus(500);
     });
 });
+commentsRouter.get('/comment', async (req, res) => {
+  let {commentId} = req.query;
+  console.log(commentId);
+  commentId = parseInt(commentId);
+  console.log(typeof commentId);
+
+  await prisma.comments.findUnique({
+    where: {
+      id: commentId, //<<<<<<<<
+    }
+  })
+    .then((data) => {
+      console.log(data);
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+})
 
 commentsRouter.post('/', async (req, res) => {
   const {comment, photoUrl, userId} = req.body;
