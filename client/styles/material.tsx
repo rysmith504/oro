@@ -48,11 +48,10 @@ import avatar from '@mui/material/Avatar';
 import { ThemeProvider } from 'styled-components';
 
 export const Item = styled(paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
+  backgroundColor: 'transparent',
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: 'left',
-  color: theme.palette.text.secondary,
+  textAlign: 'center',
 }));
 // export styled;
 export	const	StyledProvider	=	ThemeProvider;

@@ -18,7 +18,7 @@ const FeedPhoto: React.FC = (props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
   })(({ theme, expand }) => ({
-    marginLeft: 'auto',
+    margin: 'auto',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
@@ -39,13 +39,13 @@ const FeedPhoto: React.FC = (props) => {
         setProfilePic(userProfile.data);
       })
       .catch((err) => console.error(err));
-    
+
   };
 
 
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, margin: 'auto'}}>
         <CardHeader
           avatar={
             <Avatar src={profilePic}/>

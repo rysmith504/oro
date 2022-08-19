@@ -125,8 +125,8 @@ const Navbar = () => {
 
             <IconButton onClick={toggleMode}>
               {mode === 'dark' ?
-                <div>Dark Mode <NightlightIcon fontSize="small"/></div> :
-                <div>Light Mode <WbSunnyIcon fontSize="small"/></div>}
+                <div><Tooltip title="Dark mode"><NightlightIcon fontSize="small"/></Tooltip></div> :
+                <div><Tooltip title="Light mode"><WbSunnyIcon fontSize="small"/></Tooltip></div>}
             </IconButton>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

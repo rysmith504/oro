@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import {
-  Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, Item
+  Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon
 } from '../styles/material';
 import EventCards from './EventCards';
 import axios from 'axios';
@@ -60,13 +60,13 @@ const ArtistInfoCard = ({artistProps}) => {
   // }
 
   const socials = {
-    youtube: [youtube, <YouTubeIcon key={'youtube'}/>],
-    twitter: [twitter, <TwitterIcon key={'twitter'}/>],
-    facebook: [facebook, <FacebookIcon key={'fb'}/>],
-    instagram: [instagram, <InstagramIcon key={'insta'}/>],
-    homepage: [homepage, <LanguageIcon key={'homepage'}/>],
-    itunes: [itunes, <MusicNoteIcon key={'music'}/>],
-    wiki: [wiki, <QuizIcon key={'wiki'}/>],
+    youtube: [youtube, <YouTubeIcon key={'youtube'} sx={{ color: theme.palette.secondary.contrastText }}/>],
+    twitter: [twitter, <TwitterIcon key={'twitter'} sx={{ color: theme.palette.secondary.contrastText }}/>],
+    facebook: [facebook, <FacebookIcon key={'fb'} sx={{ color: theme.palette.secondary.contrastText }}/>],
+    instagram: [instagram, <InstagramIcon key={'insta'} sx={{ color: theme.palette.secondary.contrastText }}/>],
+    homepage: [homepage, <LanguageIcon key={'homepage'} sx={{ color: theme.palette.secondary.contrastText }}/>],
+    itunes: [itunes, <MusicNoteIcon key={'music'} sx={{ color: theme.palette.secondary.contrastText }}/>],
+    wiki: [wiki, <QuizIcon key={'wiki'} sx={{ color: theme.palette.secondary.contrastText }}/>],
   };
   // console.log(artist);
   const handleExpandClick = () => {
@@ -84,7 +84,6 @@ const ArtistInfoCard = ({artistProps}) => {
   };
 
   return (
-    // <StyledCard>
     <Card sx={{ bgcolor: theme.palette.secondary.main }}>
       <CardHeader
         title={artistName}
@@ -104,11 +103,11 @@ const ArtistInfoCard = ({artistProps}) => {
       </CardContent>
       <CardActions disableSpacing sx={{ bgcolor: theme.palette.secondary.main }}>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon sx={{ bgcolor: theme.palette.secondary.main }}/>
+          <FavoriteIcon sx={{ color: theme.palette.secondary.contrastText }}/>
         </IconButton>
         <ExpandMore
           expand={expanded}
-          sx={{ bgcolor: theme.palette.secondary.main }}
+          sx={{ color: theme.palette.secondary.contrastText }}
           onClick={()=>{
             handleExpandClick();
             getArtistEvents(artistName);
@@ -126,15 +125,15 @@ const ArtistInfoCard = ({artistProps}) => {
             {bio}
           </Typography>
           <Typography paragraph sx={{ bgcolor: theme.palette.secondary.main }}>Socials:</Typography>
-          <Typography paragraph sx={{ bgcolor: theme.palette.secondary.main }}>
+          <Typography>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
                 {Object.keys(socials).map((social, index) => {
                   return (
                     <Grid item key={`social${index}`}>
-                      <Item>
+                      <IconButton>
                         <a href={socials[social][0]}>{socials[social][1]}</a>
-                      </Item>
+                      </IconButton>
                     </Grid>
                   );
                 })}
@@ -158,7 +157,6 @@ const ArtistInfoCard = ({artistProps}) => {
         </CardContent>
       </Collapse>
     </Card>
-    // </StyledCard>
   );
 };
 

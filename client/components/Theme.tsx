@@ -3,37 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import { StyledProvider } from '../styles/material';
 import { ThemeContext } from '../context/ThemeContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { deepPurple } from '@mui/material/colors';
-import { styled } from '@mui/system';
 
-// const theme = (mode) => createTheme({
-//   palette: {
-//     mode,
-//     ...(mode === 'light'
-//       ? {
-//         // palette values for light mode
-//         primary: amber,
-//         divider: amber[200],
-//         text: {
-//           primary: grey[900],
-//           secondary: grey[800],
-//         },
-//       }
-//       : {
-//         // palette values for dark mode
-//         primary: deepOrange,
-//         divider: deepOrange[700],
-//         background: {
-//           default: deepOrange[900],
-//           paper: deepOrange[900],
-//         },
-//         text: {
-//           primary: '#fff',
-//           secondary: grey[500],
-//         },
-//       }),
-//   },
-// });
 
 const dark = createTheme({
   palette: {

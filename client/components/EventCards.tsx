@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import moment from 'moment';
+import { useTheme } from '@mui/material/styles';
+
 import {
   Grid,
   Paper,
@@ -21,19 +23,13 @@ const Img = styled('img')({
 });
 
 const EventCards = ({ events }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   let date = events.dates.start.dateTime;
   date = moment(date).add(1, 'day').format('MMMM Do YYYY');
   const image = events.images[0].url;
-  // console.log(image);
-  // if (!image.length) {
-  //   image = 'https://source.unsplash.com/random/?music-festival';
-  // }
   const id = events.id;
   const { name, url, info } = events;
-
-  // useEffect(() => {
-  // }, []);
 
   const getDetails = (id) => {
     navigate(`/details/?id=${id}`);
@@ -46,8 +42,7 @@ const EventCards = ({ events }) => {
         margin: 'auto',
         maxWidth: 500,
         flexGrow: 1,
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        backgroundColor: theme.palette.primary.main,
       }}
     >
       <Grid container spacing={2}>
@@ -66,24 +61,24 @@ const EventCards = ({ events }) => {
               <Img alt='alt tag' src={image} />
             </Grid>
             <Grid item>
-              <Typography variant='h6'>{name}</Typography>
+              <Typography variant='h6' paragraph>{name}</Typography>
             </Grid>
             <Grid item>
-              <CalendarMonthIcon />
+              <CalendarMonthIcon sx={{ color: theme.palette.primary.contrastText }}/>
               {date}
             </Grid>
             {info ? (
               <Grid item>
-                <DescriptionIcon />
+                <DescriptionIcon sx={{ color: theme.palette.primary.contrastText }}/>
                 {info}
               </Grid>
             ) : (
               <Grid item>
-                <DescriptionIcon /> No event details
+                <DescriptionIcon sx={{ color: theme.palette.primary.contrastText }}/> No event details
               </Grid>
             )}
             <Grid item>
-              <LocalActivityIcon />
+              <LocalActivityIcon sx={{ color: theme.palette.primary.contrastText }}/>
               {url}
             </Grid>
           </Grid>

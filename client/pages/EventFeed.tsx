@@ -12,7 +12,7 @@ import FeedPhoto from '../components/FeedPhoto';
 const EventFeed: React.FC = () => {
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
-  const { getEventDetails, eventDetails } = useContext(EventContext)
+  const { getEventDetails, eventDetails } = useContext(EventContext);
   const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
@@ -76,7 +76,7 @@ const EventFeed: React.FC = () => {
     return (
       <div>
         <h1>EventFeed</h1>
-  
+
         {feedPhotos.map((photo, i) => {
           return (
             <div key={i}>
@@ -84,7 +84,7 @@ const EventFeed: React.FC = () => {
             </div>
           );
         })}
-  
+
         <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
         <Fab variant='extended' size='small' onClick={handleFileUpload}>
                 Upload
@@ -97,7 +97,7 @@ const EventFeed: React.FC = () => {
       <div>
         Please Log in to use the app
       </div>
-    )
+    );
   }
 };
 
