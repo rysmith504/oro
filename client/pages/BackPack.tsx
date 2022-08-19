@@ -72,7 +72,7 @@ const BackPack: React.FC = () => {
         <Typography>{userEvents.eventDate}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {console.log('userEvents', userEvents)}
+        {/* {console.log('userEvents', userEvents)} */}
         {/* <List>
               <ListItem>Venue: {userEvents.venue}</ListItem>
               <ListItem>
