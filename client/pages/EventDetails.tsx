@@ -14,7 +14,7 @@ import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@mui/material';
 // import Sidebar from './Sidebar';
 // import Footer from './Footer';
-
+import { useTheme } from '@mui/material/styles';
 const EventDetails: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,6 +22,13 @@ const EventDetails: React.FC = () => {
 
   const idEvent = searchParams.get('id');
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
 
   const getDetails = () => {
     // console.log('navigate', event.eventId);
@@ -58,11 +65,15 @@ const EventDetails: React.FC = () => {
     <Container maxWidth='lg'>
       <main>
         <MainFeaturedPost post={mainFeaturedPost} />
-        <Grid container spacing={5} sx={{ mt: 3 }}>
-          <Button onClick={handleClick}>Travel Information</Button>
-        </Grid>
       </main>
-      <button onClick={getDetails}>event feed</button>
+      <Grid sx={{ mt: 3, alignItems: 'center' }}>
+        <Grid>
+          <Button sx={{ bgcolor: inverseMode }} onClick={handleClick}>Travel Information</Button>
+        </Grid>
+        <Grid>
+          <Button sx={{ bgcolor: inverseMode }} onClick={getDetails}>Event Feed</Button>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
