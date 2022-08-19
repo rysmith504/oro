@@ -65,8 +65,13 @@ body {
 }
 }
 
-  h1 {
-  }
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  background: ${(props) => props.theme.palette.primary.contrastText};
+}
+
+a:-webkit-any-link {
+  color: ${(props) => props.theme.palette.primary.main};
+}
   `;
 
 // Global Theme Export

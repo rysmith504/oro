@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
+import Notification from '../components/Notification';
 
-const Notifications: React.FC = () => {
+const NotificationsFeed: React.FC = () => {
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
 
@@ -15,9 +16,13 @@ const Notifications: React.FC = () => {
 
 
   const getNotifications = () => {
-    axios.get('/api/notifications')
+    axios.get('/api/notifications', {
+      params: {
+        userId: currentUserInfo.id
+      }
+    })
       .then((notificationsObj) => {
-        console.log(notificationsObj.data);
+        // console.log(notificationsObj.data);
         setNotifications(notificationsObj.data);
       })
       .catch((err) => {
@@ -32,7 +37,7 @@ const Notifications: React.FC = () => {
         {notifications.map((notif, i) => {
           return (
             <div key={i}>
-              {notif.commentId}
+              <Notification notif={notif}/>
             </div>
           );
         })}
@@ -42,4 +47,4 @@ const Notifications: React.FC = () => {
   );
 };
 
-export default Notifications;
+export default NotificationsFeed;

@@ -32,7 +32,6 @@ window.oncontextmenu = function (event: any) {
 const Mp3Recorder = new MicRecorder({ bitRate: 128});
 const SongFinder: React.FC = () => {
   const theme = useTheme();
-
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
 

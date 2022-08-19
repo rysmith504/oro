@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Profile from '../pages/Profile';
 import Home from '../pages/Home';
-import Notifications from '../pages/Notifications';
+import NotificationsFeed from '../pages/NotificationsFeed';
 import EventListings from '../pages/EventListings';
 import SongFinder from '../pages/SongFinder';
 import Artists from '../pages/Artists';
@@ -13,6 +13,7 @@ import OtherUser from '../pages/OtherUser';
 import TravelPlanner from '../pages/TravelPlanner';
 import Navbar from '../components/Navbar';
 
+import UserChat from '../pages/UserChat';
 import { ArtistContextProvider } from '../context/ArtistContext';
 import { EventContextProvider } from '../context/EventContext';
 import { UserContextProvider } from '../context/UserContext';
@@ -37,8 +38,8 @@ const App: React.FC = () => {
             <Routes>
               <Route path='/home' element={<Home />} />
               <Route path='/profile' element={<Profile />} />
+              <Route path='/notifications' element={<NotificationsFeed />} />
               <Route path='/backpack' element={<BackPack />} />
-              <Route path='/notifications' element={<Notifications />} />
               <Route path='/eventListings' element={<EventListings />} />
               <Route path='/eventFeed' element={<EventFeed />} />
               <Route path='/songFinder' element={<SongFinder />} />
@@ -47,6 +48,7 @@ const App: React.FC = () => {
               <Route path='/login' element={<Login />} />
               <Route path='/user' element={<OtherUser />} />
               <Route path='/travel-planner' element={<TravelPlanner />} />
+              <Route path='/chat' element={<UserChat />} />
             </Routes>
           </ArtistContextProvider>
         </UserContextProvider>

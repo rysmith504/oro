@@ -11,20 +11,32 @@ datasource db {
 }
 
 model Users {
-  id              Int               @id @default(autoincrement())
-  googleId        String?           @unique
-  fullName        String
-  profileURL      String?
-  email           String            @unique
-  fbId            String?           @unique
-  instaId         String?           @unique
-  twitterId       String?           @unique
-  snapchatId      String?           @unique
-  notifications   Notifications[]
-  eventGallery    EventPhotos[]
-  userEvents      UserEvents[]
-  artistFollowing ArtistFollowing[]
-  comments        Comments[]
+  id               Int               @id @default(autoincrement())
+  sentMessages     Messages[] @relation("sentMessages")
+  receivedMessages Messages[] @relation("receivedMessages")
+  googleId         String?           @unique
+  fullName         String
+  profileURL       String?
+  email            String            @unique
+  fbId             String?           @unique
+  instaId          String?           @unique
+  twitterId        String?           @unique
+  snapchatId       String?           @unique
+  notifications    Notifications[]
+  eventGallery     EventPhotos[]
+  userEvents       UserEvents[]
+  artistFollowing  ArtistFollowing[]
+  comments         Comments[]
+}
+
+
+model Messages {
+  id         Int    @id
+  text       String
+  sender     Users  @relation(name: "sentMessages", fields: [senderId], references: [id])
+  receiver   Users   @relation(name: "receivedMessages", fields: [receiverId], references: [id])
+  senderId   Int
+  receiverId Int
 }
 
 model UserEvents {
@@ -59,6 +71,7 @@ model Notifications {
   userId     String
   commentId  Int
   type String
+  read Boolean @default(false)
   created_at DateTime @default(now())
 }
 
