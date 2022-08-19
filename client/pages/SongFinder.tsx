@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Accordion, AccordionSummary, AccordionDetails, Button, Grid, Fab} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Star, Person, MusicNote, LibraryMusic, Lyrics, RemoveCircleOutline} from '@mui/icons-material';
+import { useTheme } from '@mui/material/styles';
+
 window.oncontextmenu = function (event: any) {
   // eslint-disable-next-line no-console
   // console.log(event); // prints [object PointerEvent]
@@ -29,6 +31,8 @@ window.oncontextmenu = function (event: any) {
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128});
 const SongFinder: React.FC = () => {
+  const theme = useTheme();
+
 
   // const [isRecording, setIsRecording] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);

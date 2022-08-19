@@ -35,9 +35,17 @@ commentsRouter.post('/', async (req, res) => {
       photoUrl,
     }
   })
-    .then((data) => {
-      // console.log(data);
-      res.status(200).send(data);
+    .then(async (data) => {
+      console.log(data);
+      await prisma.notifications.create({
+        data: {
+          userId: data.userId,
+          commentId: data.id,
+          type: 'comment',
+        }
+      }).then(() => {
+        res.status(200).send(data);
+      }).catch(() => res.sendStatus(500));
     })
     .catch((err) => {
       console.log(err);

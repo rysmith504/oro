@@ -7,9 +7,11 @@ import { EventContext } from '../context/EventContext';
 import { UserContext } from '../context/UserContext';
 import { useSearchParams } from 'react-router-dom';
 import FeedPhoto from '../components/FeedPhoto';
+import { useTheme } from '@mui/material/styles';
 
 
 const EventFeed: React.FC = () => {
+  const theme = useTheme();
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
   const { getEventDetails, eventDetails } = useContext(EventContext)

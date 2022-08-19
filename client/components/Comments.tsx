@@ -4,8 +4,10 @@ import { UserContext } from '../context/UserContext';
 import {Fab, OutlinedInput } from '../styles/material';
 import SendIcon from '@mui/icons-material/Send';
 import Comment from './Comment';
-const Comments: React.FC = (props) => {
+import { useTheme } from '@mui/material/styles';
 
+const Comments: React.FC = (props) => {
+  const theme = useTheme();
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
 
