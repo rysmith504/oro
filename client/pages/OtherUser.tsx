@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import UserPhotos from '../components/UserPhotos';
 import { useTheme } from '@mui/material/styles';
 
 const OtherUser: React.FC = () => {
@@ -37,11 +37,7 @@ const OtherUser: React.FC = () => {
   return (
     <div>
       <h1>{userInfo.fullName}</h1>
-      {userPhotos.map(photo => {
-        return (
-          <img src={photo.photoUrl} alt="" />
-        )
-      })}
+      <UserPhotos photos={userPhotos}/>
     </div>
 
   );
