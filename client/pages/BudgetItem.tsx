@@ -1,3 +1,4 @@
+/* eslint-disable func-style */
 import { Button, Checkbox, List, ListItem, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';

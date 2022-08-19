@@ -72,18 +72,11 @@ const BackPack: React.FC = () => {
         <Typography>{userEvents.eventDate}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {/* {console.log('userEvents', userEvents)} */}
-        {/* <List>
-              <ListItem>Venue: {userEvents.venue}</ListItem>
-              <ListItem>
-                Location: {userEvents.address}, {userEvents.city},{' '}
-                {userEvents.state}, {userEvents.postalCode}
-              </ListItem>
-              <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
-              <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
-            </List> */}
+        <BudgetItem eventId={userEvents.eventId} label='Tickets' />
         <BudgetItem eventId={userEvents.eventId} label='Food' />
-        <BudgetItem eventId={userEvents.eventId} label='Coffee' />
+        <BudgetItem eventId={userEvents.eventId} label='Drinks' />
+        <BudgetItem eventId={userEvents.eventId} label='Parking' />
+        <BudgetItem eventId={userEvents.eventId} label='Merch' />
         <BudgetItem eventId={userEvents.eventId} label='Travel' />
       </AccordionDetails>
     </Accordion>
