@@ -45,6 +45,7 @@ import outlinedInput from '@mui/material/OutlinedInput';
 import fab from '@mui/material/Fab';
 // import styled from '@mui/system';
 import avatar from '@mui/material/Avatar';
+import modal from '@mui/material/Modal';
 
 export const Item = styled(paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
@@ -54,6 +55,8 @@ export const Item = styled(paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 // export styled;
+export const Box = box;
+export const Modal = modal;
 export const IconButton = iconButton;
 export const OutlinedInput = outlinedInput;
 export const Fab = fab;

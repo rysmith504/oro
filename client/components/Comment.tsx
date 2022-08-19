@@ -9,7 +9,7 @@ const Comment: React.FC = (props) => {
   const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
-    console.log(comment);
+    // console.log(comment);
     getAvatar();
   }, []);
 

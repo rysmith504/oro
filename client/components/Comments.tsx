@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
-import { Paper, Grid} from '@mui/material';
-import {Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {Fab, OutlinedInput } from '../styles/material';
+import SendIcon from '@mui/icons-material/Send';
 import Comment from './Comment';
 const Comments: React.FC = (props) => {
 
@@ -75,8 +75,8 @@ const Comments: React.FC = (props) => {
         );
       })}
 
-      <input onChange={(e) => handleComment(e)} value={message}></input>
-      <button type='submit' onClick={handleSend}> Send </button>
+      <OutlinedInput size='small' onChange={(e) => handleComment(e)} value={message}></OutlinedInput>
+      <Fab variant='extended' type='submit' onClick={handleSend}><SendIcon/></Fab>
     </div>
   );
 };
