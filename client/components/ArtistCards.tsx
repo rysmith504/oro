@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import {
-  Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, TextColors
+  Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon
 } from '../styles/material';
 import EventCards from './EventCards';
 import axios from 'axios';
@@ -27,14 +27,14 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 
 const ArtistInfoCard = ({artistProps}) => {
-  // console.log(artistProps);
   const theme = useTheme();
-  console.log(theme);
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
   const themeContext = useContext(ThemeContext);
   const {mode, setMode, toggleMode} = themeContext;
-  console.log(mode);
   const [expanded, setExpanded] = React.useState(false);
   const [events, setEvents] = useState(
     [{
