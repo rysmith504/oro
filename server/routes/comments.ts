@@ -26,7 +26,7 @@ commentsRouter.get('/', async (req, res) => {
 });
 
 commentsRouter.post('/', async (req, res) => {
-  const {comment, photoUrl, userId, ownerId} = req.body;
+  const {comment, photoUrl, userId} = req.body;
 
   await prisma.comments.create({
     data: {
@@ -36,16 +36,9 @@ commentsRouter.post('/', async (req, res) => {
     }
   })
     .then(async (data) => {
-      console.log(data);
-      await prisma.notifications.create({
-        data: {
-          userId: ownerId,
-          commentId: data.id, //<<<<<<<<<<WHY IS THIS ERRORING
-          type: 'comment',
-        }
-      }).then(() => {
-        res.status(200).send(data);
-      }).catch(() => res.sendStatus(500));
+      // console.log(data);
+      res.status(200).send(data);
+
     })
     .catch((err) => {
       console.log(err);
