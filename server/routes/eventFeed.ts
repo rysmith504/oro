@@ -48,10 +48,11 @@ eventFeedRouter.get('/avatar', async (req, res) => {
   })
     .then((data) => res.status(200).send(data.profileURL))
     .catch(() => res.sendStatus(500));
-})
+});
 
 eventFeedRouter.get('/', async (req, res) => {
   const {eventId} = req.query;
+  console.log(eventId, req.query);
   await prisma.eventPhotos.findMany({
     where: {
       eventAPIid: eventId,
