@@ -12,9 +12,12 @@ import { useTheme } from '@mui/material/styles';
 
 const EventFeed: React.FC = () => {
   const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
-  const { getEventDetails, eventDetails } = useContext(EventContext)
+  const { getEventDetails, eventDetails } = useContext(EventContext);
   const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);

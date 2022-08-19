@@ -7,6 +7,9 @@ import { useTheme } from '@mui/material/styles';
 
 const FeedPhoto: React.FC = (props) => {
   const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const {photo} = props;
   const [profilePic, setProfilePic] = useState('');
   const [expanded, setExpanded] = React.useState(false);
@@ -23,7 +26,7 @@ const FeedPhoto: React.FC = (props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
   })(({ theme, expand }) => ({
-    marginLeft: 'auto',
+    margin: 'auto',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
@@ -44,7 +47,7 @@ const FeedPhoto: React.FC = (props) => {
         setProfilePic(userProfile.data);
       })
       .catch((err) => console.error(err));
-    
+
   };
 
   const handleOpen = () => {
