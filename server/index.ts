@@ -16,6 +16,7 @@ import api from './routes/index';
 // import eventFeedRouter from './routes/eventFeed';
 // import profileRouter from './routes/profile';
 // import commentsRouter from './routes/comments';
+// import usersRouter from './routes/usersRouter'
 import prisma from './database/db';
 import passport from 'passport';
 
@@ -37,6 +38,7 @@ app.use('/api', api);
 // app.use('/comments', commentsRouter);
 // app.use('/eventFeed', eventFeedRouter);
 // app.use('/travelPlanner', travelPlannerRouter);
+// app.use('/users', usersRouter);
 
 // AUTH-----------------
 require('dotenv').config();

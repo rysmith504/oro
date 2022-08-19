@@ -13,6 +13,7 @@ import OtherUser from '../pages/OtherUser';
 import TravelPlanner from '../pages/TravelPlanner';
 import Navbar from '../components/Navbar';
 
+import UserChat from '../pages/UserChat';
 import { ArtistContextProvider } from '../context/ArtistContext';
 import { EventContextProvider } from '../context/EventContext';
 import { UserContextProvider } from '../context/UserContext';
@@ -47,6 +48,7 @@ const App: React.FC = () => {
               <Route path='/login' element={<Login />} />
               <Route path='/user' element={<OtherUser />} />
               <Route path='/travel-planner' element={<TravelPlanner />} />
+              <Route path='/chat' element={<UserChat />} />
             </Routes>
           </ArtistContextProvider>
         </UserContextProvider>
