@@ -86,7 +86,7 @@ const UserContextProvider = ({ children }) => {
   // }, [])
   const getUserContacts = () => {
     if(currentUserInfo){
-      axios.get('users/allusers', { params: { id: currentUserInfo.id } })
+      axios.get('/api/users/allusers', { params: { id: currentUserInfo.id } })
       .then(resObj => {
         console.log('ALL USERS', resObj)
         setUserContacts(resObj.data)

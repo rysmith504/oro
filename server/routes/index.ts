@@ -8,6 +8,8 @@ import profileRouter from './profile';
 import eventFeedRouter from './eventFeed';
 import commentsRouter from './comments';
 import notificationsRouter from './notifications';
+import usersRouter from './usersRouter'
+
 
 const api = Router();
 
@@ -19,6 +21,7 @@ api.use('/profile', profileRouter);
 api.use('/comments', commentsRouter);
 api.use('/eventFeed', eventFeedRouter);
 api.use('/travelPlanner', travelPlannerRouter);
+api.use('/users', usersRouter);
 api.use('/notifications', notificationsRouter);
 
 
