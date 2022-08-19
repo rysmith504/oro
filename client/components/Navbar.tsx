@@ -8,11 +8,9 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link, Routes, Route } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import NightlightIcon from '@mui/icons-material/Nightlight';
@@ -20,7 +18,6 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
-import { blue } from '@mui/material/colors';
 const iconColors = '';
 const inverseMode = '';
 
@@ -52,7 +49,7 @@ const pages = [
     Login
   </Link>,
   <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-    My Account
+    Account
   </Link>,
   <Link
     to='/travelPlanner'
@@ -63,6 +60,9 @@ const pages = [
   </Link>,
   <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
     BackPack
+  </Link>,
+  <Link to='/notifications' style={{ textDecoration: 'none' }} key={'songFinder'}>
+      Notifications
   </Link>,
 ];
 
@@ -89,21 +89,6 @@ const Navbar = () => {
     logoutUser();
   };
 
-  // const settings = [
-  //   'Profile',
-  //   'Account',
-  //   <Link
-  //     to='/notifications'
-  //     style={{ textDecoration: 'none' }}
-  //     key={'notificationsMenu'}
-  //   >
-  //     Notifications
-  //   </Link>,
-  //   <Button onClick={handleLogout} key={'logoutButton'}>
-  //     Logout
-  //   </Button>,
-  // ];
-
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -120,7 +105,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position='static' sx={{ bgcolor: inverseMode }}>
+    <AppBar position='sticky' sx={{ bgcolor: inverseMode }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
 
@@ -131,7 +116,6 @@ const Navbar = () => {
               aria-controls='menu-appbar'
               aria-haspopup='true'
               onClick={handleOpenNavMenu}
-              // color='inherit'
             >
               <MenuIcon sx={{ color: iconColors }}/>
             </IconButton>
@@ -150,7 +134,7 @@ const Navbar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none'},
+                display: { xs: 'block', md: 'block', lg: 'block' },
               }}
             >
               {pages.map((page, index) => (
