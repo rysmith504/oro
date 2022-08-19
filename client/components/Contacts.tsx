@@ -40,36 +40,6 @@ const Contacts = () => {
 
   return (
     <div>
-      {/* {currentUserImage && currentUserName && (
-        <Container>
-          <div className="brand">
-            <h3>orochat</h3>
-          </div>
-          <div className='contacts'>
-            {
-              userContacts.map((contact, index) => {
-                return (
-                  <div className={`contact ${index === currentSelected ? 'selected': '' 
-                  }`}
-                  key={contact.id}
-                  >
-                    <div className='avatar'>
-                      <img src={contact.profileURL} />
-                    </div>
-                    <div className='username'>
-                      <h3>{contact.fullName}</h3>
-                    </div>
-                  </div>
-                )
-              })}
-          </div>
-        </Container>
-        
-      
-
-      )} */}
-      <div>
-      </div>
       {
         userContacts.map((contact, index) => {
           return(
@@ -89,7 +59,7 @@ const Contacts = () => {
                   <React.Fragment>
                     <Typography
                       key={'contactTypography'+index}
-                      sx={{ display: 'inline'}
+                      sx={{ display: 'inline'}}
                       variant="body2"
                       color="#F3F3F3"
                     >

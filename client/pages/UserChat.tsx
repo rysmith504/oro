@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,24 +16,6 @@ import IconButton from '@mui/material/IconButton';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import ChatContainer from '../components/ChatContainer'
 
-// const Container = styled.div`
-//   height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   gap: 1rem;
-//   align-items: center;
-//   background-color: #131324;
-//   .container {
-//     height: 85vh;
-//     width: 85vw;
-//     background-color: #00000076;
-//     grid-template-columns: 25% 75%;
-//     @media screen and (min-width:360px) and (max-width:480 px) {
-//       grid-template-columns: 35% 65%;
-//     }
-//   }
-// `;
 
 const UserChat: React.FC = () => {
   const userContext = useContext(UserContext);
