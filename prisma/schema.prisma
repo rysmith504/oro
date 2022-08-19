@@ -34,8 +34,8 @@ model Users {
 model Message {
   id         Int    @id
   text       String
-  sender     User   @relation(name: "sentMessages", fields: [senderId], references: [id])
-  receiver   User   @relation(name: "receivedMessages", fields: [receiverId], references: [id])
+  sender     Users  @relation(name: "sentMessages", fields: [senderId], references: [id])
+  receiver   Users   @relation(name: "receivedMessages", fields: [receiverId], references: [id])
   senderId   Int
   receiverId Int
 }
