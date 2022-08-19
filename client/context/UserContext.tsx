@@ -26,13 +26,13 @@ const UserContextProvider = ({ children }) => {
           link: data.url,
           saleStart: moment(startDate).format('LLLL'),
           saleEnd: moment(endDate).format('LLLL')
-        }
+        };
         setUserEvents(eventInfo);
       })
       .catch(err => {
         console.error(err);
-      })
-  }
+      });
+  };
 
   const logoutUser = () => {
     axios.get('/logout')
@@ -41,8 +41,8 @@ const UserContextProvider = ({ children }) => {
       })
       .catch(err => {
         console.error(err);
-      })
-  }
+      });
+  };
 
   const getCurrentUser = () => {
     // Once user logs in, get user info
@@ -53,8 +53,8 @@ const UserContextProvider = ({ children }) => {
       })
       .catch((err) => {
         console.error(err);
-      })
-  }
+      });
+  };
 
   useEffect(() => {
     getCurrentUser();

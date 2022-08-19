@@ -2,13 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {Grid, Modal, Box, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { styled } from '@mui/material';
 
 const FeedPhoto: React.FC = (props) => {
   const { photo } = props;
   const [profilePic, setProfilePic] = useState('');
   const [expanded, setExpanded] = React.useState(false);
+  const [modalStatus, setModalStatus] = useState(false);
+
+
 
   useEffect(() => {
     getAvatar();
@@ -18,7 +21,7 @@ const FeedPhoto: React.FC = (props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
   })(({ theme, expand }) => ({
-    marginLeft: 'auto',
+    margin: 'auto',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
@@ -41,10 +44,29 @@ const FeedPhoto: React.FC = (props) => {
       .catch((err) => console.error(err));
   };
 
+  const handleOpen = () => {
+    console.log('changed');
+    setModalStatus(true);
+  }
+
+  const handleClose = () => {
+    console.log('closed');
+    setModalStatus(false);
+  }
+
 
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      <Modal style={{alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
+        <Box sx={{margin: 'auto', bgcolor: 'black', width: 350, alignItems: 'center', justifyContent: 'center'}}>
+
+          <img width='300px' height='auto' margin='auto' src={photo.photoUrl}/>
+          <Grid container>
+            <Comments photo={photo}/>
+          </Grid>
+        </Box>
+      </Modal>
+      <Card sx={{ maxWidth: 345, margin: 'auto'}}>
         <CardHeader
           avatar={
             <Link to={`/user/?id=${photo.userId}`}>
@@ -57,6 +79,7 @@ const FeedPhoto: React.FC = (props) => {
           component="img"
           height="194"
           image={photo.photoUrl}
+          onClick={handleOpen}
         />
         <CardContent>
           <Typography variant='body2'>

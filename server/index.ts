@@ -104,7 +104,7 @@ passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
 
 const isLoggedIn = (req, res, next) => {
   req.user ? next() : res.sendStatus(401);
-}
+};
 
 app.get('/hidden', isLoggedIn, (req, res) => {
   res.send(req.user);
