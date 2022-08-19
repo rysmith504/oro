@@ -14,12 +14,12 @@ const Notification: React.FC = (props) => {
         commentId: notif.commentId,
       }
     })
-      .then((data) => {
-        setPhotoUrl(data.data.photoUrl);
-        console.log(data)
-        axios.get(`/api/profile/${data.data.userId}`)
+      .then((commentData) => {
+        setPhotoUrl(commentData.data.photoUrl);
+        // console.log(data)
+        axios.get(`/api/profile/${commentData.data.userId}`)
           .then((commenterData) => {
-            console.log(commenterData)
+            // console.log(commenterData)
             setPerson(commenterData.data.fullName)
           })
           .catch((err) => console.error(err));
