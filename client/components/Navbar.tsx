@@ -116,7 +116,30 @@ const Navbar = () => {
     <AppBar position='sticky' sx={{ bgcolor: inverseMode }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
+          <img src='images/VSLOGO.png' height='75' />
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', bgcolor: inverseMode } }}>
+            {pages.map((page, index) => (
+              <Button
+                key={`page${index}`}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
 
+          <Box sx={{ flexGrow: 0}}>
+            <IconButton onClick={toggleMode}>
+              {mode === 'dark' ? (
+                <div><Tooltip title='Dark mode'><NightlightIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
+                </div>
+              ) : (
+                <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
+                </div>
+              )}
+            </IconButton>
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
             <IconButton
               size='large'
@@ -151,31 +174,6 @@ const Navbar = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
-
-          <img src='images/VSLOGO.png' height='75' />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', bgcolor: inverseMode } }}>
-            {pages.map((page, index) => (
-              <Button
-                key={`page${index}`}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={toggleMode}>
-              {mode === 'dark' ? (
-                <div><Tooltip title='Dark mode'><NightlightIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
-                </div>
-              ) : (
-                <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
-                </div>
-              )}
-            </IconButton>
           </Box>
         </Toolbar>
       </Container>

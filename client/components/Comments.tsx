@@ -10,6 +10,9 @@ const Comments: React.FC = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
 
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
@@ -75,7 +78,7 @@ const Comments: React.FC = (props) => {
             console.log('notif', notificationData);
           })
           .catch((err) => console.error(err));
-        
+
       })
       .catch((err) => console.error(err));
   };
