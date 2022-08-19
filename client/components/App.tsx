@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Profile from '../pages/Profile';
 import Home from '../pages/Home';
@@ -19,9 +19,7 @@ import { UserContextProvider } from '../context/UserContext';
 import { ThemeContextProvider, ThemeContext } from '../context/ThemeContext';
 import { Container } from '../components/Container';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
-
-
+import BackPack from '../pages/BackPack';
 
 // https://styled-components.com/docs/api#createglobalstyle
 
@@ -32,16 +30,17 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <EventContextProvider >
+      <EventContextProvider>
         <UserContextProvider>
           <ArtistContextProvider>
-            <Navbar/>
+            <Navbar />
             <Routes>
               <Route path='/home' element={<Home />} />
               <Route path='/profile' element={<Profile />} />
+              <Route path='/backpack' element={<BackPack />} />
               <Route path='/notifications' element={<Notifications />} />
               <Route path='/eventListings' element={<EventListings />} />
-              <Route path='/eventFeed' element={<EventFeed/>}/>
+              <Route path='/eventFeed' element={<EventFeed />} />
               <Route path='/songFinder' element={<SongFinder />} />
               <Route path='/artists' element={<Artists />} />
               <Route path='/details' element={<EventDetails />} />
