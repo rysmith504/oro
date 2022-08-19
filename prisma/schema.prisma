@@ -30,7 +30,7 @@ model Users {
   comments         Comments[]
 }
 
-model Message {
+model Messages {
   id         Int    @id
   text       String
   sender     User   @relation(name: "sentMessages", fields: [senderId], references: [id])

@@ -9,7 +9,7 @@ import eventFeedRouter from './eventFeed';
 import commentsRouter from './comments';
 import notificationsRouter from './notifications';
 import usersRouter from './usersRouter'
-import messageRouter from './messageRouter'
+import messagesRouter from './messagesRouter'
 
 
 const api = Router();
@@ -23,6 +23,7 @@ api.use('/comments', commentsRouter);
 api.use('/eventFeed', eventFeedRouter);
 api.use('/travelPlanner', travelPlannerRouter);
 api.use('/users', usersRouter);
+api.use('/messages', messagesRouter);
 api.use('/notifications', notificationsRouter);
 
 
