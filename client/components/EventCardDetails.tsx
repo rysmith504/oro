@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import moment from 'moment';
-
+import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { InfoIcon } from '../styles/material';
@@ -23,7 +23,13 @@ const Img = styled('img')({
 const EventCardDetails = ({events, event}) => {
   const { currentUserInfo } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState();
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
 
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
   useEffect(() => {
     getPins();
     getUserId();
@@ -87,7 +93,7 @@ const EventCardDetails = ({events, event}) => {
         setUserInfo(data);
       })
       .catch(err => console.error(err));
-  }
+  };
 
   return (
     <div>
@@ -102,7 +108,7 @@ const EventCardDetails = ({events, event}) => {
         }}
       >
 
-        <Grid container spacing={4} alignItems='center'>
+        <Grid container spacing={4} alignItems='center' sx={{ bgcolor: inverseMode }}>
           <Grid item>
             <ButtonBase
               sx={ { width: 128, height: 128 } }
@@ -114,7 +120,7 @@ const EventCardDetails = ({events, event}) => {
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography variant="body2" gutterBottom>
+                <Typography variant="body2" gutterBottom paragraph sx={{ bgcolor: inverseMode }}>
                   {event.eventName}
                   {event.artistInfo.map((artist, index) => (
                     <div key={`artistName${index}`}>

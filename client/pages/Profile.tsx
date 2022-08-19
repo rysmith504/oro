@@ -47,6 +47,10 @@ const Profile: React.FC = () => {
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
 
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -57,19 +61,19 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <div>Hello {currentUserInfo.name.givenName}</div>
+      <h1>Hello {currentUserInfo.name.givenName}</h1>
       <Avatar
         alt={currentUserInfo.displayName}
         src={currentUserInfo.photos[0].value}
         sx={{ width: 56, height: 56 }}
       />
       <div>
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+        <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+          <AccordionSummary sx={{ bgcolor: inverseMode }} aria-controls="panel1d-content" id="panel1d-header">
             <Typography>{userEvents.eventName}</Typography>
             <Typography>{userEvents.eventDate}</Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails sx={{ bgcolor: inverseMode }}>
             <List>
               <ListItem>Venue: {userEvents.venue}</ListItem>
               <ListItem>
@@ -77,7 +81,7 @@ const Profile: React.FC = () => {
               </ListItem>
               <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
               <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
-              <Button onClick={() => { location.href = userEvents.link }}>Purchase Tickets</Button>
+              <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => { location.href = userEvents.link; }}>Purchase Tickets</Button>
             </List>
           </AccordionDetails>
         </Accordion>
