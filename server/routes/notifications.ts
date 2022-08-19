@@ -4,7 +4,12 @@ import prisma from '../database/db';
 const notificationsRouter = Router();
 
 notificationsRouter.get('/', async (req, res) => {
-  await  prisma.notifications.findMany()
+  const {userId} = req.query;
+  await prisma.notifications.findMany({
+    where: {
+      userId,
+    }
+  })
     .then((data) => {
       console.log(data);
       res.status(200).send(data);
