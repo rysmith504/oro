@@ -23,8 +23,8 @@ const UserChat: React.FC = () => {
   const currentUser = currentUserInfo;
   const navigate = useNavigate();
   useEffect(() => {
-    console.log('USERCNTACTS CHAT', userContacts);
-    console.log('currentuser chat', currentUserInfo)
+    // console.log('USERCNTACTS CHAT', userContacts);
+    // console.log('currentuser chat', currentUserInfo)
   }, [])
   // useEffect(() => {
   //   if (!currentUserInfo.id) {
@@ -72,14 +72,14 @@ const UserChat: React.FC = () => {
         </Box>
       </div>
         <React.Fragment>
-          <Grid container columns={2} columnSpacing={0}>
+          <Grid container columns={3} columnSpacing={0}>
           <Grid item xs={1} key='contactscontainer' maxWidth="sm">
-            <Box sx={{ float: 'left', bgcolor: '#0D1013', height: 'auto', width: 'flex' }}>
+            <Box sx={{ bgcolor: '#0D1013', height: 'auto', width: 'flex' }}>
                 <Contacts  key='contacts' />
             </Box>
           </Grid>
-          <Grid item xs={1} key='chatcontainer' maxWidth='sm'>
-            <Box sx={{float: 'right', bgcolor: '#0D1013', height: 'auto', width: 'flex' }}>
+          <Grid item xs={2} key='chatcontainer' maxWidth='sm'>
+            <Box sx={{ bgcolor: '#0D1013', height: 'auto', width: 'flex' }}>
               <ChatContainer />
             </Box>
           </Grid>

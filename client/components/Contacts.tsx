@@ -20,7 +20,6 @@ const Contacts = () => {
   const [ currentSelected, setCurrentSelected ] = useState(undefined)
   const [selectedIndex, setSelectedIndex] = useState(undefined);
   useEffect(() => {
-    console.log('USERCONTACTS', userContacts, 'USER', currentUser)
     if(currentUser) {
       setCurrentUserName(currentUser.fullName);
       setCurrentUserImage(currentUser.profileURL);
