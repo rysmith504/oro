@@ -43,9 +43,8 @@ const Comments: React.FC = (props) => {
         photoUrl: photo.photoUrl
       }
     })
-      .then((data) => {
-        // console.log(data)
-        setComments(data.data);
+      .then((commentData) => {
+        setComments(commentData.data);
       })
       .catch((err) => console.error(err));
   };
@@ -64,9 +63,19 @@ const Comments: React.FC = (props) => {
 
 
     })
-      .then(() => {
+      .then((commentData) => {
+        console.log(commentData);
         setMessage('');
         getComments();
+        axios.post('/api/notifications', {
+          ownerId: photo.userId,
+          commentId: commentData.data.id,
+        })
+          .then((notificationData) => {
+            console.log('notif', notificationData);
+          })
+          .catch((err) => console.error(err));
+        
       })
       .catch((err) => console.error(err));
   };
