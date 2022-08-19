@@ -23,7 +23,7 @@ import { useTheme } from '@mui/material/styles';
 import { blue } from '@mui/material/colors';
 const iconColors = '';
 const inverseMode = '';
-
+ 
 const pages = [
   <Link
     to='/eventListings'
