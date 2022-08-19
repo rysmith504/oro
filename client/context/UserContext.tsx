@@ -47,17 +47,12 @@ const UserContextProvider = ({ children }) => {
       });
   };
 
-  const getOtherUser = () => {
-    axios.get('/profile/:_id');
-  };
-
   const getCurrentUser = () => {
     // Once user logs in, get user info
     axios
       .get('/hidden')
       .then((info) => {
         const { data } = info;
-        console.log(data);
         // set state to user info
         setCurrentUserInfo(data);
       })
