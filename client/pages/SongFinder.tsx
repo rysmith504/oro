@@ -33,6 +33,8 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128});
 const SongFinder: React.FC = () => {
   const theme = useTheme();
 
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
 
   // const [isRecording, setIsRecording] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
@@ -191,13 +193,13 @@ const SongFinder: React.FC = () => {
     if (artist && favorited === true) {
       return (
         <div>
-          <Button variant='contained' size='small' onClick={removeFavorites}>{<RemoveCircleOutline></RemoveCircleOutline>} remove from favorites</Button>
+          <Button sx={{ color: iconColors }} variant='contained' size='small' onClick={removeFavorites}>{<RemoveCircleOutline></RemoveCircleOutline>} remove from favorites</Button>
         </div>
       );
     } else if (artist && favorited === false) {
       return (
         <div>
-          <Button variant='contained' size='small' onClick={addToFavorites}>{<Star></Star>} add to favorites</Button>
+          <Button sx={{ color: iconColors }} variant='contained' size='small' onClick={addToFavorites}>{<Star></Star>} add to favorites</Button>
         </div>
       );
     }
@@ -212,20 +214,20 @@ const SongFinder: React.FC = () => {
 
       <div>
         <Grid container>
-          <Grid item xs = {0} md = {4}></Grid>
+          <Grid item xs = {0} md = {4} sx={{ bgcolor: iconColors }}></Grid>
           <Grid item xs ={12} md = {4}>
-            <Accordion expanded={true} >
-              <AccordionSummary>{<MusicNote></MusicNote>} Song Name
+            <Accordion sx={{ bgcolor: iconColors }} expanded={true} >
+              <AccordionSummary sx={{ bgcolor: inverseMode }}>{<MusicNote></MusicNote>} Song Name
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails sx={{ bgcolor: inverseMode }}>
                 {song}
               </AccordionDetails>
             </Accordion>
 
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<Person></Person>} Artist
+            <Accordion sx={{ bgcolor: iconColors }}>
+              <AccordionSummary sx={{ bgcolor: inverseMode }} expandIcon={<ExpandMoreIcon sx={{ bgcolor: iconColors }}/>}>{<Person></Person>} Artist
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails sx={{ bgcolor: inverseMode }}>
                 <div>
                   <div id='artistName'>
                     {artist}
@@ -238,20 +240,20 @@ const SongFinder: React.FC = () => {
               </AccordionDetails>
             </Accordion>
 
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<Lyrics></Lyrics>} Lyrics
+            <Accordion sx={{ bgcolor: iconColors }}>
+              <AccordionSummary sx={{ bgcolor: inverseMode }} expandIcon={<ExpandMoreIcon sx={{ bgcolor: iconColors }}/>}>{<Lyrics></Lyrics>} Lyrics
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails sx={{ bgcolor: inverseMode }}>
                 <div id='lyrics'>
                   {getLyrics()}
                 </div>
               </AccordionDetails>
             </Accordion>
 
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon/>}>{<LibraryMusic></LibraryMusic>} Album
+            <Accordion sx={{ bgcolor: iconColors }}>
+              <AccordionSummary sx={{ bgcolor: inverseMode }} expandIcon={<ExpandMoreIcon sx={{ bgcolor: iconColors }}/>}>{<LibraryMusic sx={{ color: inverseMode }}></LibraryMusic>} Album
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails sx={{ bgcolor: inverseMode }}>
                 <div>
                   {albumTitle}
                 </div>
@@ -264,7 +266,7 @@ const SongFinder: React.FC = () => {
       </div>
 
       <div style={{marginTop: '10px'}}>
-        <Fab variant='circular' onMouseDown={start} onMouseUp={stop}><MusicNote></MusicNote></Fab>
+        <Fab sx={{ color: iconColors }} variant='circular' onMouseDown={start} onMouseUp={stop}><MusicNote></MusicNote></Fab>
       </div>
     </div>
   );
