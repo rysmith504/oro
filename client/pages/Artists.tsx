@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import ArtistInfoCard from '../components/ArtistCards';
 import { ArtistContext } from '../context/ArtistContext';
 import { ThemeContext } from '../context/ThemeContext';
-import {Box,	Grid, Item, TextColors} from '../styles/material';
+import {Box,	Grid} from '../styles/material';
 
 const Artists = () => {
   const artistContext = useContext(ArtistContext);
   const themeContext = useContext(ThemeContext);
   // console.log(artistContext);
   const {mode, setMode, toggleMode} = themeContext;
-  const {artistData, getFaveArtists, setArtistData } = artistContext;
+  const {artistData, getFaveArtists } = artistContext;
   const favorites = artistData;
 
   useEffect(() => {

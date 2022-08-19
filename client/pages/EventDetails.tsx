@@ -24,11 +24,7 @@ const EventDetails: React.FC = () => {
   const navigate = useNavigate();
 
   const theme = useTheme();
-  const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
-  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
-  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
 
   const getDetails = () => {
     // console.log('navigate', event.eventId);
