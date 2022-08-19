@@ -63,17 +63,17 @@ const BackPack: React.FC = () => {
   }, []);
 
   return (
-        <Accordion
-          expanded={expanded === 'panel1'}
-          onChange={handleChange('panel1')}
-        >
-          <AccordionSummary aria-controls='panel1d-content' id='panel1d-header'>
-            <Typography>{userEvents.eventName}</Typography>
-            <Typography>{userEvents.eventDate}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            {console.log('userEvents', userEvents)}
-            {/* <List>
+    <Accordion
+      expanded={expanded === 'panel1'}
+      onChange={handleChange('panel1')}
+    >
+      <AccordionSummary aria-controls='panel1d-content' id='panel1d-header'>
+        <Typography>{userEvents.eventName}</Typography>
+        <Typography>{userEvents.eventDate}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        {console.log('userEvents', userEvents)}
+        {/* <List>
               <ListItem>Venue: {userEvents.venue}</ListItem>
               <ListItem>
                 Location: {userEvents.address}, {userEvents.city},{' '}
@@ -82,13 +82,11 @@ const BackPack: React.FC = () => {
               <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
               <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
             </List> */}
-            <BudgetItem eventId={userEvents.eventId} label='Food' />
-            <BudgetItem eventId={userEvents.eventId} label='Coffee' />
-            <BudgetItem eventId={userEvents.eventId} label='Travel' />
-          </AccordionDetails>
-        </Accordion>
-      </div>
-    </div>
+        <BudgetItem eventId={userEvents.eventId} label='Food' />
+        <BudgetItem eventId={userEvents.eventId} label='Coffee' />
+        <BudgetItem eventId={userEvents.eventId} label='Travel' />
+      </AccordionDetails>
+    </Accordion>
   );
 };
 
