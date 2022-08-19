@@ -27,11 +27,12 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 
 const ArtistInfoCard = ({artistProps}) => {
-  // console.log(artistProps);
   const theme = useTheme();
-  console.log(theme);
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
   const themeContext = useContext(ThemeContext);
   const {mode, setMode, toggleMode} = themeContext;
   const [expanded, setExpanded] = React.useState(false);
