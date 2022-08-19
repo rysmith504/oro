@@ -4,7 +4,12 @@ import { UserContext } from '../context/UserContext';
 import {Fab, OutlinedInput } from '../styles/material';
 import SendIcon from '@mui/icons-material/Send';
 import Comment from './Comment';
+import { useTheme } from '@mui/material/styles';
+
 const Comments: React.FC = (props) => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
 
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
@@ -50,11 +55,12 @@ const Comments: React.FC = (props) => {
     setMessage(e.target.value);
   };
 
-  const handleSend = () => {
-    axios.post('/api/comments', {
+  const handleSend = async () => {
+    await axios.post('/api/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
-      userId: currentUserInfo.id
+      userId: currentUserInfo.id,
+      ownerId: photo.userId,
 
 
     })
