@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import Comments from '../components/Comments';
 import {Grid, Modal, Box, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
@@ -18,7 +19,6 @@ const FeedPhoto: React.FC = (props) => {
 
 
   useEffect(() => {
-    // console.log(photo);
     getAvatar();
   }, []);
 
@@ -47,7 +47,6 @@ const FeedPhoto: React.FC = (props) => {
         setProfilePic(userProfile.data);
       })
       .catch((err) => console.error(err));
-
   };
 
   const handleOpen = () => {
@@ -75,7 +74,9 @@ const FeedPhoto: React.FC = (props) => {
       <Card sx={{ maxWidth: 345, margin: 'auto'}}>
         <CardHeader
           avatar={
-            <Avatar src={profilePic}/>
+            <Link to={`/user/?id=${photo.userId}`}>
+              <Avatar src={profilePic} />
+            </Link>
           }
           subheader={photo.created_at}
         />
