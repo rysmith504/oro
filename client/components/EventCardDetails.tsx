@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 import moment from 'moment';
 
 import Grid from '@mui/material/Grid';
@@ -20,9 +21,12 @@ const Img = styled('img')({
 
 
 const EventCardDetails = ({events, event}) => {
+  const { currentUserInfo } = useContext(UserContext);
+  const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
     getPins();
+    getUserId();
   }, []);
 
   const getPins = () => {
@@ -37,7 +41,7 @@ const EventCardDetails = ({events, event}) => {
 
   const postEvent = () => {
     axios.post('/api/events/list/pins', {
-      userId: 1,
+      userId: userInfo.id,
       eventAPIid: event.eventId
     })
       .then(response => {
@@ -76,6 +80,14 @@ const EventCardDetails = ({events, event}) => {
     // console.log('navigate', event.eventId);
     navigate(`/details/?id=${event.eventId}`);
   };
+
+  const getUserId = () => {
+    axios.get(`/api/profile/${currentUserInfo.id}`)
+      .then(({ data }) => {
+        setUserInfo(data);
+      })
+      .catch(err => console.error(err));
+  }
 
   return (
     <div>
