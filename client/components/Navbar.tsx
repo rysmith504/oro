@@ -18,9 +18,16 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
+<<<<<<< HEAD
 const iconColors = '';
 const inverseMode = '';
 
+=======
+import { blue } from '@mui/material/colors';
+const iconColors = '';
+const inverseMode = '';
+
+>>>>>>> ddddffa84a7edbba3cd93b0dc95b0de6bf2b8968
 const pages = [
   <Link
     to='/eventListings'
@@ -64,6 +71,7 @@ const pages = [
   <Link to='/notifications' style={{ textDecoration: 'none' }} key={'songFinder'}>
       Notifications
   </Link>,
+<Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
 ];
 
 const Navbar = () => {
