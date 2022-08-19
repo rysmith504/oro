@@ -44,6 +44,7 @@ const TravelPlanner: React.FC = () => {
   const handleOpen = (content) => {
     setModalContent(content);
     setOpen(true);
+    // console.log('data', content);
   };
   const handleClose = () => {
     setModalContent(null);
