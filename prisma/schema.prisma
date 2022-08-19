@@ -12,9 +12,9 @@ datasource db {
 
 model Users {
   id               Int               @id @default(autoincrement())
+  name             String
   sentMessages     Message[] @relation("sentMessages")
   receivedMessages Message[] @relation("receivedMessages")
-  name             String
   googleId         String?           @unique
   fullName         String
   profileURL       String?
@@ -30,7 +30,8 @@ model Users {
   comments         Comments[]
 }
 
-model Messages {
+
+model Message {
   id         Int    @id
   text       String
   sender     User   @relation(name: "sentMessages", fields: [senderId], references: [id])
