@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
 import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar } from '../styles/material';
+import { useTheme } from '@mui/material/styles';
 
 const Accordion = styled((props) => (
   <MuiAccordion children={''} disableGutters elevation={0} square {...props} />
@@ -42,6 +43,9 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const Profile: React.FC = () => {
   const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
   const [expanded, setExpanded] = React.useState('panel1');
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);

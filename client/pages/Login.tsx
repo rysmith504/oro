@@ -1,8 +1,11 @@
 import React from 'react';
-// import UserContext from '../context/UserContext';
 import GoogleButton from 'react-google-button';
+import { useTheme } from '@mui/material/styles';
 
 const Login = () => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
 
   const redirectToGoogle = () => {
     window.open('/auth/google', '_self');
