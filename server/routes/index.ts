@@ -9,6 +9,7 @@ import eventFeedRouter from './eventFeed';
 import commentsRouter from './comments';
 import notificationsRouter from './notifications';
 import usersRouter from './usersRouter'
+import messageRouter from './messageRouter'
 
 
 const api = Router();
