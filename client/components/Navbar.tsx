@@ -23,7 +23,7 @@ import { useTheme } from '@mui/material/styles';
 import { blue } from '@mui/material/colors';
 const iconColors = '';
 const inverseMode = '';
-
+ 
 const pages = [
   <Link
     to='/eventListings'
@@ -64,6 +64,7 @@ const pages = [
   <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
     BackPack
   </Link>,
+<Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
 ];
 
 const Navbar = () => {
