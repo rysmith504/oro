@@ -3,8 +3,13 @@ import axios from 'axios';
 import Comments from '../components/Comments';
 import {Grid, Modal, Box, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { styled } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 const FeedPhoto: React.FC = (props) => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const {photo} = props;
   const [profilePic, setProfilePic] = useState('');
   const [expanded, setExpanded] = React.useState(false);
