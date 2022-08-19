@@ -60,6 +60,7 @@ const pages = [
   <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
     BackPack
   </Link>,
+<Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
 ];
 
 const Navbar = () => {

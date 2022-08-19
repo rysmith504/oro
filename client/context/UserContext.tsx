@@ -6,7 +6,8 @@ const UserContext = React.createContext({});
 
 const UserContextProvider = ({ children }) => {
   const [userEvents, setUserEvents] = useState([]);
-  const [currentUserInfo, setCurrentUserInfo] = useState([]);
+  const [ currentUserInfo, setCurrentUserInfo ] = useState([]);
+  const [userContacts, setUserContacts] = useState([]);
 
   const getUserEvents = () => {
     axios
@@ -67,10 +68,35 @@ const UserContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getCurrentUser();
+     getCurrentUser();
+     getUserContacts();
   }, []);
 
+  useEffect(() => {
+    console.log('CURRENTUSERINFO', currentUserInfo);
+    getUserContacts();
+    console.log(userContacts)
+
+  }, [currentUserInfo])
+
+
+  // useEffect(async () => {
+  //   if(currentUserInfo) {
+  //   }
+  // }, [])
+  const getUserContacts = () => {
+    if(currentUserInfo){
+      axios.get('users/allusers', { params: { id: currentUserInfo.id } })
+      .then(resObj => {
+        console.log('ALL USERS', resObj)
+        setUserContacts(resObj.data)
+      })
+    }
+  }
+  // }
+
   const appProps = {
+    userContacts,
     userEvents,
     setUserEvents,
     getUserEvents,

@@ -9,3 +9,4 @@ const createMany = await prisma.users.createMany({
   },
   ]
 });
+ 
