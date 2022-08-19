@@ -3,13 +3,18 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { Paper, Grid} from '@mui/material';
 import {Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import { useTheme } from '@mui/material/styles';
 
 const Comment: React.FC = (props) => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const {comment} = props;
   const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
-    console.log(comment);
+    // console.log(comment);
     getAvatar();
   }, []);
 

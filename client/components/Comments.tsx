@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
-import { Paper, Grid} from '@mui/material';
-import {Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {Fab, OutlinedInput } from '../styles/material';
+import SendIcon from '@mui/icons-material/Send';
 import Comment from './Comment';
+import { useTheme } from '@mui/material/styles';
+
 const Comments: React.FC = (props) => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
 
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
@@ -50,11 +55,12 @@ const Comments: React.FC = (props) => {
     setMessage(e.target.value);
   };
 
-  const handleSend = () => {
-    axios.post('/api/comments', {
+  const handleSend = async () => {
+    await axios.post('/api/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
-      userId: currentUserInfo.id
+      userId: currentUserInfo.id,
+      ownerId: photo.userId,
 
 
     })
@@ -75,8 +81,8 @@ const Comments: React.FC = (props) => {
         );
       })}
 
-      <input onChange={(e) => handleComment(e)} value={message}></input>
-      <button type='submit' onClick={handleSend}> Send </button>
+      <OutlinedInput size='small' onChange={(e) => handleComment(e)} value={message}></OutlinedInput>
+      <Fab variant='extended' type='submit' onClick={handleSend}><SendIcon/></Fab>
     </div>
   );
 };

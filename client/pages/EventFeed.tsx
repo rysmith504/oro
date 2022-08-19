@@ -7,12 +7,17 @@ import { EventContext } from '../context/EventContext';
 import { UserContext } from '../context/UserContext';
 import { useSearchParams } from 'react-router-dom';
 import FeedPhoto from '../components/FeedPhoto';
+import { useTheme } from '@mui/material/styles';
 
 
 const EventFeed: React.FC = () => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
-  const { getEventDetails, eventDetails } = useContext(EventContext)
+  const { getEventDetails, eventDetails } = useContext(EventContext);
   const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
@@ -72,33 +77,33 @@ const EventFeed: React.FC = () => {
       setPhoto(null);
     }
   };
-  if (currentUserInfo.id) {
-    return (
-      <div>
-        <h1>EventFeed</h1>
-  
-        {feedPhotos.map((photo, i) => {
-          return (
-            <div key={i}>
-              <FeedPhoto photo={photo}/>
-            </div>
-          );
-        })}
-  
-        <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
-        <Fab variant='extended' size='small' onClick={handleFileUpload}>
-                Upload
-        </Fab>
-      </div>
-    );
+  // if (currentUserInfo.id) {
+  return (
+    <div>
+      <h1>EventFeed</h1>
 
-  } else {
-    return (
-      <div>
-        Please Log in to use the app
-      </div>
-    )
-  }
+      {feedPhotos.map((photo, i) => {
+        return (
+          <div key={i}>
+            <FeedPhoto photo={photo}/>
+          </div>
+        );
+      })}
+
+      <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
+      <Fab variant='extended' size='small' onClick={handleFileUpload}>
+              Upload
+      </Fab>
+    </div>
+  );
+
+  // } else {
+  //   return (
+  //     <div>
+  //       Please Log in to use the app
+  //     </div>
+  //   )
+  // }
 };
 
 export default EventFeed;

@@ -45,15 +45,20 @@ import outlinedInput from '@mui/material/OutlinedInput';
 import fab from '@mui/material/Fab';
 // import styled from '@mui/system';
 import avatar from '@mui/material/Avatar';
+import { ThemeProvider } from 'styled-components';
+import modal from '@mui/material/Modal';
+import { useTheme } from '@mui/material/styles';
 
 export const Item = styled(paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#212121',
+  backgroundColor: 'transparent',
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: 'left',
-  color: theme.palette.text.secondary,
+  textAlign: 'center',
 }));
 // export styled;
+export	const	StyledProvider	=	ThemeProvider;
+export const Box = box;
+export const Modal = modal;
 export const IconButton = iconButton;
 export const OutlinedInput = outlinedInput;
 export const Fab = fab;
@@ -91,7 +96,7 @@ export	const	LanguageIcon	=	languageIcon;
 export const MusicOffIcon = musicOffIcon;
 export const ButtonBase = buttonBase;
 export const PushPinIcon = pushPinIcon;
-
+export const Avatar = avatar;
 export const LocalActivityIcon = localActivityIcon;
 export const CalendarMonthIcon = calendarMonthIcon;
 export const InfoIcon = infoIcon;
