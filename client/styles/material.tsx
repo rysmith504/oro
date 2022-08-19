@@ -46,6 +46,7 @@ import fab from '@mui/material/Fab';
 // import styled from '@mui/system';
 import avatar from '@mui/material/Avatar';
 import { ThemeProvider } from 'styled-components';
+import modal from '@mui/material/Modal';
 
 export const Item = styled(paper)(({ theme }) => ({
   backgroundColor: 'transparent',
@@ -55,6 +56,8 @@ export const Item = styled(paper)(({ theme }) => ({
 }));
 // export styled;
 export	const	StyledProvider	=	ThemeProvider;
+export const Box = box;
+export const Modal = modal;
 export const IconButton = iconButton;
 export const OutlinedInput = outlinedInput;
 export const Fab = fab;
