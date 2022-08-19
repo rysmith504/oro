@@ -4,16 +4,18 @@ import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
 
-import eventListingsRouter from './routes/eventListingsRouter';
-import artistsRouter from './routes/artistsRouter';
-import songFinderRouter from './routes/songFinder';
-import eventDetailsRouter from './routes/eventDetail';
-import travelPlannerRouter from './routes/travelPlanner';
-import profileRouter from './routes/profile';
+import api from './routes/index';
 
-import eventFeedRouter from './routes/eventFeed';
-import profileRouter from './routes/profile';
-import commentsRouter from './routes/comments';
+// import eventListingsRouter from './routes/eventListingsRouter';
+// import artistsRouter from './routes/artistsRouter';
+// import songFinderRouter from './routes/songFinder';
+// import eventDetailsRouter from './routes/eventDetail';
+// import travelPlannerRouter from './routes/travelPlanner';
+// import profileRouter from './routes/profile';
+
+// import eventFeedRouter from './routes/eventFeed';
+// import profileRouter from './routes/profile';
+// import commentsRouter from './routes/comments';
 import prisma from './database/db';
 import passport from 'passport';
 
@@ -26,14 +28,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
 
 //ROUTERS------------------------------
-app.use('/events', eventListingsRouter);
-app.use('/favArtists', artistsRouter);
-app.use('/songs', songFinderRouter);
-app.use('/eventDetails', eventDetailsRouter);
-app.use('/profile', profileRouter);
-app.use('/comments', commentsRouter);
-app.use('/eventFeed', eventFeedRouter);
-app.use('/travelPlanner', travelPlannerRouter);
+app.use('/api', api);
+// app.use('/events', eventListingsRouter);
+// app.use('/favArtists', artistsRouter);
+// app.use('/songs', songFinderRouter);
+// app.use('/eventDetails', eventDetailsRouter);
+// app.use('/profile', profileRouter);
+// app.use('/comments', commentsRouter);
+// app.use('/eventFeed', eventFeedRouter);
+// app.use('/travelPlanner', travelPlannerRouter);
 
 // AUTH-----------------
 require('dotenv').config();
@@ -45,7 +48,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   }),
 );
 app.use(passport.initialize());
@@ -77,7 +80,7 @@ passport.use(new GoogleStrategy(
         });
       });
 
-      cb(null, profile);
+    cb(null, profile);
   }),
 ));
 
@@ -101,19 +104,7 @@ passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
 
 const isLoggedIn = (req, res, next) => {
   req.user ? next() : res.sendStatus(401);
-}
-
-app.get('/auth/success', (req, res) => {
-  // console.log('auth success');
-  if (req.user) {
-    // console.log(req.user);
-    res.status(200).json({
-      user: req.user,
-      message: 'success',
-      success: true,
-    });
-  }
-});
+};
 
 app.get('/hidden', isLoggedIn, (req, res) => {
   res.send(req.user);
@@ -129,10 +120,7 @@ app.get(
   passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/login',
-  }),
-  (req, res) => {
-    console.log('google callback req -----------> ', req);
-  }
+  })
 );
 
 app.get('/logout', (req, res) => {

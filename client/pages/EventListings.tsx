@@ -38,7 +38,7 @@ const EventListings: React.FC = () => {
   const [events, setEvents] = useState(eventDummy);
 
   const getEvents = () => {
-    axios.get('/events/list', { params: { keyword: keyword } })
+    axios.get('/api/events/list', { params: { keyword: keyword } })
       .then((responseObj) => {
         setEvents(responseObj.data.events);
       })

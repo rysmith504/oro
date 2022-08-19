@@ -7,12 +7,17 @@ import { EventContext } from '../context/EventContext';
 import { UserContext } from '../context/UserContext';
 import { useSearchParams } from 'react-router-dom';
 import FeedPhoto from '../components/FeedPhoto';
+import { useTheme } from '@mui/material/styles';
 
 
 const EventFeed: React.FC = () => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
-  const { getEventDetails, eventDetails } = useContext(EventContext)
+  const { getEventDetails, eventDetails } = useContext(EventContext);
   const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
@@ -34,7 +39,7 @@ const EventFeed: React.FC = () => {
   }, [photo]);
 
   const updateFeed = () => {
-    axios.get('/eventFeed', {
+    axios.get('/api/eventFeed', {
       params: {
         eventId,
       }
@@ -46,7 +51,7 @@ const EventFeed: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(currentUserInfo);
+    // console.log(currentUserInfo);
     updateFeed();
   }, []);
 
@@ -62,7 +67,7 @@ const EventFeed: React.FC = () => {
 
       // console.log(photo, photo.name);
       // console.log('uploaded');
-      axios.post('/eventFeed', {
+      axios.post('/api/eventFeed', {
         imageData: previewSource,
         eventId,
         userId: currentUserInfo.id
@@ -72,7 +77,7 @@ const EventFeed: React.FC = () => {
       setPhoto(null);
     }
   };
-
+  // if (currentUserInfo.id) {
   return (
     <div>
       <h1>EventFeed</h1>
@@ -91,6 +96,14 @@ const EventFeed: React.FC = () => {
       </Fab>
     </div>
   );
+
+  // } else {
+  //   return (
+  //     <div>
+  //       Please Log in to use the app
+  //     </div>
+  //   )
+  // }
 };
 
 export default EventFeed;
