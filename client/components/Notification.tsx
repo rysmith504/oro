@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import {Paper} from '../styles/material';
+import {Paper, Modal, Box, Grid} from '../styles/material';
 import { useTheme } from '@mui/material/styles';
+import Comments from './Comments';
 
 const Notification: React.FC = (props) => {
   const theme = useTheme();
@@ -11,6 +12,23 @@ const Notification: React.FC = (props) => {
   const [person, setPerson] = useState('');
   const [text, setText] =  useState('');
   const [photoUrl, setPhotoUrl] = useState('');
+  const [modalStatus, setModalStatus] = useState(false);
+  const [photo, setPhoto] = useState({});
+
+  const getPhoto = () => {
+    axios.get('/api/eventFeed/photo', {
+      params: {
+        photoUrl,
+      }
+    })
+      .then((photoObj) => setPhoto(photoObj.data[0]))
+      .catch((err) => console.error(err));
+  }
+
+  useEffect(() => {
+    getPhoto();
+  }, [photoUrl]);
+
 
   const getPerson = () => {
     // console.log(notif.userId);
@@ -44,9 +62,30 @@ const Notification: React.FC = (props) => {
     // console.log(notif);
   }, []);
 
+  const handleOpen = () => {
+    console.log('changed');
+    setModalStatus(true);
+  }
+
+  const handleClose = () => {
+    console.log('closed');
+    setModalStatus(false);
+  }
+
+
   return (
     <div>
-      <Paper sx={{margin: 'auto', marginTop: '5px'}}>
+      <Modal style={{alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
+        <Box sx={{margin: 'auto', bgcolor: 'black', width: 350, alignItems: 'center', justifyContent: 'center'}}>
+
+          <img width='300px' height='auto' margin='auto' src={photoUrl}/>
+          <Grid container>
+            <Comments photo={photo}/>
+          </Grid>
+        </Box>
+      </Modal>
+
+      <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px'}}>
         {person}{text}
         <img height='30px' width='auto' src={photoUrl}/>
       </Paper>

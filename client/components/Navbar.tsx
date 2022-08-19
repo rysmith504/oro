@@ -65,6 +65,7 @@ const pages = [
     BackPack
   </Link>,
 <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
+<Link to='/notifications' style={{ textDecoration: 'none' }} key={'chat'}>Notifications</Link>
 ];
 
 const Navbar = () => {
