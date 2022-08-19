@@ -19,8 +19,6 @@ const FeedPhoto: React.FC = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [modalStatus, setModalStatus] = useState(false);
 
-
-
   useEffect(() => {
     getAvatar();
   }, []);
@@ -53,12 +51,10 @@ const FeedPhoto: React.FC = (props) => {
   };
 
   const handleOpen = () => {
-    console.log('changed');
     setModalStatus(true);
   };
 
   const handleClose = () => {
-    console.log('closed');
     setModalStatus(false);
   };
 
