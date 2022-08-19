@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import ArtistInfoCard from '../components/ArtistCards';
 import { ArtistContext } from '../context/ArtistContext';
 import { ThemeContext } from '../context/ThemeContext';
-import {Box,	Grid, Item} from '../styles/material';
+import {Box,	Grid, Item, TextColors} from '../styles/material';
 
 const Artists = () => {
   const artistContext = useContext(ArtistContext);

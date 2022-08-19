@@ -47,6 +47,7 @@ import fab from '@mui/material/Fab';
 import avatar from '@mui/material/Avatar';
 import { ThemeProvider } from 'styled-components';
 import modal from '@mui/material/Modal';
+import { useTheme } from '@mui/material/styles';
 
 export const Item = styled(paper)(({ theme }) => ({
   backgroundColor: 'transparent',

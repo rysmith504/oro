@@ -39,10 +39,11 @@ const EventCards = ({ events }) => {
     <Paper
       sx={{
         p: 2,
-        margin: 'auto',
+        marginTop: 1,
         maxWidth: 500,
         flexGrow: 1,
         backgroundColor: theme.palette.primary.main,
+        color: theme.palette.secondary.main
       }}
     >
       <Grid container spacing={2}>
