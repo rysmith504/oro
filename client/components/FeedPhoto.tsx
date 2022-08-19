@@ -47,7 +47,7 @@ const FeedPhoto: React.FC = (props) => {
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           avatar={
-            <Link to={`/user/profile/${photo.userId}`}>
+            <Link to={`/user/?id=${photo.userId}`}>
               <Avatar src={profilePic} />
             </Link>
           }

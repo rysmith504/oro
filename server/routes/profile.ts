@@ -33,8 +33,8 @@ profileRouter.get('/:_id', (req, res) => {
       googleId: _id,
     }
   })
-    .then((data) => {
-      console.log(data);
+    .then((userInfo) => {
+      res.status(200).send(userInfo);
     })
     .catch((err) => {
       console.error(err);
