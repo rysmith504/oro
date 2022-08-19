@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import {Paper} from '../styles/material';
+import { useTheme } from '@mui/material/styles';
 
 const Notification: React.FC = (props) => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
   const {notif} = props;
   const [person, setPerson] = useState('');
   const [text, setText] =  useState('');
@@ -41,8 +46,10 @@ const Notification: React.FC = (props) => {
 
   return (
     <div>
-      {person}{text}
-      <img height='30px' width='auto' src={photoUrl}/>
+      <Paper sx={{margin: 'auto', marginTop: '5px'}}>
+        {person}{text}
+        <img height='30px' width='auto' src={photoUrl}/>
+      </Paper>
     </div>
   );
 };

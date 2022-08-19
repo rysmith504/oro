@@ -11,7 +11,7 @@ notificationsRouter.get('/', async (req, res) => {
     }
   })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.status(200).send(data);
     })
     .catch((err) => {
@@ -30,7 +30,7 @@ notificationsRouter.post('/', async (req, res) => {
       type: 'comment',
     }
   }).then((data) => {
-    console.log(data);
+    // console.log(data);
     res.status(200).send(data);
   }).catch(() => res.sendStatus(500));
 });
