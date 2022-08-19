@@ -6,8 +6,8 @@ import prisma from '../database/db';
 const messagesRouter = Router();
 
 
-messagesRouter.post('/addmsg', addMessage);
-messagesRouter.post('getmsg', getAllMessages);
+// messagesRouter.post('/addmsg', addMessage);
+// messagesRouter.post('getmsg', getAllMessages);
 
 
 export default messagesRouter;
