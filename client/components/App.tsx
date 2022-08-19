@@ -10,7 +10,7 @@ import Login from '../pages/Login';
 import EventDetails from '../pages/EventDetails';
 import EventFeed from '../pages/EventFeed';
 import OtherUser from '../pages/OtherUser';
-// import TravelPlanner from '../pages/TravelPlanner';
+import TravelPlanner from '../pages/TravelPlanner';
 import Navbar from '../components/Navbar';
 
 import UserChat from '../pages/UserChat';
