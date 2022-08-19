@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import {Paper} from '../styles/material';
+import { useTheme } from '@mui/material/styles';
 
 const Notification: React.FC = (props) => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
   const {notif} = props;
   const [person, setPerson] = useState('');
   const [text, setText] =  useState('');
@@ -9,24 +14,22 @@ const Notification: React.FC = (props) => {
 
   const getPerson = () => {
     // console.log(notif.userId);
-    axios.get(`/api/profile/${notif.userId}`)
-      .then((commenterData) => {
-        // console.log(commenterData);
-        setPerson(commenterData.data.fullName);
-        axios.get('/api/comments/comment', {
-          params: {
-            commentId: notif.commentId,
-          }
-        })
-          .then((commentData) => {
-            console.log(commentData);
-            setPhotoUrl(commentData.data.photoUrl);
+    axios.get('/api/comments/comment', {
+      params: {
+        commentId: notif.commentId,
+      }
+    })
+      .then((commentData) => {
+        setPhotoUrl(commentData.data.photoUrl);
+        // console.log(data)
+        axios.get(`/api/profile/${commentData.data.userId}`)
+          .then((commenterData) => {
+            // console.log(commenterData)
+            setPerson(commenterData.data.fullName)
           })
           .catch((err) => console.error(err));
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   };
 
   const getType = () => {
@@ -38,13 +41,15 @@ const Notification: React.FC = (props) => {
   useEffect(() => {
     getPerson();
     getType();
-    console.log(notif);
+    // console.log(notif);
   }, []);
 
   return (
     <div>
-      {person}{text}
-      <img height='30px' width='auto' src={photoUrl}/>
+      <Paper sx={{margin: 'auto', marginTop: '5px'}}>
+        {person}{text}
+        <img height='30px' width='auto' src={photoUrl}/>
+      </Paper>
     </div>
   );
 };
