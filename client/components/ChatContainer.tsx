@@ -35,7 +35,7 @@ const ChatContainer: React.FC<{}> = () => {
       
       <React.Fragment>
       <Container >
-        <Box sx={{ bgcolor: '#cfe8fc', height: '55vh' }}>
+        <Box sx={{ bgcolor: '#cfe8fc', height: 'inherit' }}>
           {/* <Messages/> */}
         </Box>
       <Grid container>

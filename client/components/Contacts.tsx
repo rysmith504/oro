@@ -13,8 +13,6 @@ const Contacts = () => {
   const userContext = useContext(UserContext);
   const { currentUserInfo, userContacts } = userContext;
   const currentUser = currentUserInfo;
-  const userContext = useContext(UserContext);
-  const { currentUserInfo, userContacts } = userContext;
   const [currentUserName, setCurrentUserName ] = useState(undefined)
   const [ currentUserImage, setCurrentUserImage ] = useState(undefined)
   const [ currentSelected, setCurrentSelected ] = useState(undefined)
