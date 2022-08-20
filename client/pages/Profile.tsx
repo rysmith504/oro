@@ -3,7 +3,7 @@ import axios from 'axios';
 import UserPhotos from '../components/UserPhotos';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
-import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '../styles/material';
+import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 
 const Accordion = styled((props) => (
@@ -93,6 +93,7 @@ const Profile: React.FC = () => {
               <DialogContentText>
                 Add your social media accounts to stay connected with other concert and festival goers.
               </DialogContentText>
+              <FacebookIcon></FacebookIcon>
               <TextField
                 autoFocus
                 margin="dense"
