@@ -17,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Moonshot-io/oro.git"
+    "url": "git+https://github.com/Moonshot-io/vibes.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Moonshot-io/oro/issues"
+    "url": "https://github.com/Moonshot-io/vibes"
   },
-  "homepage": "https://github.com/Moonshot-io/oro#readme",
+  "homepage": "https://github.com/Moonshot-io/vibes#readme",
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",

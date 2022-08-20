@@ -8,11 +8,9 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link, Routes, Route } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import NightlightIcon from '@mui/icons-material/Nightlight';
@@ -20,10 +18,16 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
+<<<<<<< HEAD
+const iconColors = '';
+const inverseMode = '';
+
+=======
 import { blue } from '@mui/material/colors';
 const iconColors = '';
 const inverseMode = '';
- 
+
+>>>>>>> ddddffa84a7edbba3cd93b0dc95b0de6bf2b8968
 const pages = [
   <Link
     to='/eventListings'
@@ -52,7 +56,7 @@ const pages = [
     Login
   </Link>,
   <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-    My Account
+    Account
   </Link>,
   <Link
     to='/travelPlanner'
@@ -64,6 +68,9 @@ const pages = [
   <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
     BackPack
   </Link>,
+  <Link to='/notifications' style={{ textDecoration: 'none' }} key={'songFinder'}>
+      Notifications
+  </Link>,
 <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
 ];
 
@@ -71,9 +78,6 @@ const Navbar = () => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
-  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
-  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
 
   const themeContext = useContext(ThemeContext);
   const { mode, setMode, toggleMode } = themeContext;
@@ -89,21 +93,6 @@ const Navbar = () => {
   const handleLogout = () => {
     logoutUser();
   };
-
-  // const settings = [
-  //   'Profile',
-  //   'Account',
-  //   <Link
-  //     to='/notifications'
-  //     style={{ textDecoration: 'none' }}
-  //     key={'notificationsMenu'}
-  //   >
-  //     Notifications
-  //   </Link>,
-  //   <Button onClick={handleLogout} key={'logoutButton'}>
-  //     Logout
-  //   </Button>,
-  // ];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -121,10 +110,33 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position='static' sx={{ bgcolor: inverseMode }}>
+    <AppBar position='sticky' sx={{ bgcolor: inverseMode }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
+          <img src='images/VSLOGO.png' height='75' />
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', bgcolor: inverseMode } }}>
+            {pages.map((page, index) => (
+              <Button
+                key={`page${index}`}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
 
+          <Box sx={{ flexGrow: 0}}>
+            <IconButton onClick={toggleMode}>
+              {mode === 'dark' ? (
+                <div><Tooltip title='Dark mode'><NightlightIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
+                </div>
+              ) : (
+                <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
+                </div>
+              )}
+            </IconButton>
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
             <IconButton
               size='large'
@@ -132,7 +144,6 @@ const Navbar = () => {
               aria-controls='menu-appbar'
               aria-haspopup='true'
               onClick={handleOpenNavMenu}
-              // color='inherit'
             >
               <MenuIcon sx={{ color: iconColors }}/>
             </IconButton>
@@ -151,7 +162,7 @@ const Navbar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none'},
+                display: { xs: 'block', md: 'block', lg: 'block' },
               }}
             >
               {pages.map((page, index) => (
@@ -160,31 +171,6 @@ const Navbar = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
-
-          <img src='images/VSLOGO.png' height='75' />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', bgcolor: inverseMode } }}>
-            {pages.map((page, index) => (
-              <Button
-                key={`page${index}`}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={toggleMode}>
-              {mode === 'dark' ? (
-                <div><Tooltip title='Dark mode'><NightlightIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
-                </div>
-              ) : (
-                <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
-                </div>
-              )}
-            </IconButton>
           </Box>
         </Toolbar>
       </Container>
