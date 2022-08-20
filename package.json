@@ -25,14 +25,13 @@
   "bugs": {
     "url": "https://github.com/Moonshot-io/oro/issues"
   },
-
-  
   "homepage": "https://github.com/Moonshot-io/oro#readme",
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.3",
+    "@mui/system": "^5.10.1",
     "@prisma/client": "^4.1.1",
     "@types/passport-google-oauth20": "^2.0.11",
     "@typescript-eslint/parser": "^5.32.0",

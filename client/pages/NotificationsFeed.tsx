@@ -16,7 +16,11 @@ const NotificationsFeed: React.FC = () => {
 
 
   const getNotifications = () => {
-    axios.get('/api/notifications')
+    axios.get('/api/notifications', {
+      params: {
+        userId: currentUserInfo.id
+      }
+    })
       .then((notificationsObj) => {
         // console.log(notificationsObj.data);
         setNotifications(notificationsObj.data);
