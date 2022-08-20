@@ -82,7 +82,7 @@ const Profile: React.FC = () => {
         "twitter": `${twitterLink}` || null
       }
     })
-    .then(() => handleClose())
+    .then(handleClose())
     .catch(err => console.error(err));
   };
 
