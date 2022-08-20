@@ -8,21 +8,26 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 
 const Contacts = ({changeChat}) => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const userContext = useContext(UserContext);
   const { currentUserInfo, userContacts } = userContext;
   const currentUser = currentUserInfo;
-  const [currentUserName, setCurrentUserName ] = useState(undefined)
-  const [ currentUserImage, setCurrentUserImage ] = useState(undefined)
-  const [ currentSelected, setCurrentSelected ] = useState(undefined)
+  const [currentUserName, setCurrentUserName ] = useState(undefined);
+  const [ currentUserImage, setCurrentUserImage ] = useState(undefined);
+  const [ currentSelected, setCurrentSelected ] = useState(undefined);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   useEffect(() => {
-    if(currentUser) {
+    if (currentUser) {
       setCurrentUserName(currentUser.fullName);
       setCurrentUserImage(currentUser.profileURL);
     }
-  }, [currentUser])
+  }, [currentUser]);
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
@@ -39,42 +44,44 @@ const Contacts = ({changeChat}) => {
     <div>
       {
         userContacts.map((contact, index) => {
-          return(
-          <List key={'list'+index}>
-          <ListItemButton
-            key={'listitembutton'+index}
-            alignItems="flex-start"
-            selected={selectedIndex === index}
-            onClick={(event) => {
-              handleListItemClick(event, index);
-              changeCurrentChat(index, contact);
-            }}
-          >
-              <ListItemAvatar key={'listitemavatar'+index}>
-                <Avatar key={'avatar'+index} src={contact.profileURL} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={contact.fullName}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      key={'contactTypography'+index}
-                      sx={{ display: 'inline'}}
-                      variant="body2"
-                      color="#F3F3F3"
-                    >
+          return (
+            <List sx={{ bgcolor: inverseMode }} key={'list' + index}>
+              <ListItemButton
+                sx={{ color: iconColors }}
+                key={'listitembutton' + index}
+                alignItems="flex-start"
+                selected={selectedIndex === index}
+                onClick={(event) => {
+                  handleListItemClick(event, index);
+                  changeCurrentChat(index, contact);
+                }}
+              >
+                <ListItemAvatar key={'listitemavatar' + index}>
+                  <Avatar key={'avatar' + index} src={contact.profileURL} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={contact.fullName}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        key={'contactTypography' + index}
+                        sx={{ display: 'inline', color: iconColors}}
+                        variant="body2"
+                        color="#F3F3F3"
+                      >
                     messages
-                    </Typography>
-                  </React.Fragment>
-                }
+                      </Typography>
+                    </React.Fragment>
+                  }
                 />
-            </ListItemButton>
-            <Divider key={'divider'+index} variant="inset" component="li" />
-          </List>
-            )})
-          }
-      </div>
-  )
-}
+              </ListItemButton>
+              <Divider key={'divider' + index} variant="inset" component="li" />
+            </List>
+          );
+        })
+      }
+    </div>
+  );
+};
 
 export default Contacts;

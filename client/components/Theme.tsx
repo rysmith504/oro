@@ -89,6 +89,18 @@ margin-top: 20px;
   color: ${(props) => props.theme.palette.primary.contrastText};
 }
 
+.css-v2i77y-MuiInputBase-input-MuiFilledInput-input {
+  background: ${(props) => props.theme.palette.primary.main};
+}
+
+.css-1gb7w2s-MuiGrid-root {
+color: ${(props) => props.theme.palette.primary.contrastText};
+}
+
+.css-r6wjqo-MuiTypography-root {
+  text-align: left;
+}
+
 `;
 
 // Global Theme Export
