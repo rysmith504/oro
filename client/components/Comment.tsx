@@ -32,10 +32,18 @@ const Comment: React.FC = (props) => {
       .catch((err) => console.error(err));
 
   };
+
+
   return (
     <div>
-      <Avatar sx={{ height: '30px', width: '30px'}} src={profilePic}/>
-      {comment.comment}
+      <Grid container spacing={4}>
+        <Grid item xs={2} sm={2} md={2}>
+          <Avatar sx={{ height: '30px', width: '30px', ml: '15px', mb: '20px'}} src={profilePic}/>
+        </Grid>
+        <Grid item xs={8} sm={8} md={8}>
+          <Typography textAlign='left' sx={{ color: iconColors, mb: '20px' }}>{comment.comment}</Typography>
+        </Grid>
+      </Grid>
     </div>
   );
 };
