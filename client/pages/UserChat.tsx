@@ -21,6 +21,7 @@ const UserChat: React.FC = () => {
   const userContext = useContext(UserContext);
   const { currentUserInfo, userContacts } = userContext;
   const currentUser = currentUserInfo;
+  const [ currentChat, setCurrentChat ] = useState(undefined)
   const navigate = useNavigate();
   useEffect(() => {
     // console.log('USERCNTACTS CHAT', userContacts);
@@ -37,7 +38,7 @@ const UserChat: React.FC = () => {
   //   //   setUserImage(currentUser.profileURL)
   //   }
   // }, [currentUserInfo]);
-  
+
 
   //WORKING LOGIN REDIRECT
   // useEffect(() => {
@@ -46,6 +47,9 @@ const UserChat: React.FC = () => {
   //     }
   //   }, [currentUserInfo]);
 
+  const handleChatChange = (chat) => {
+    setCurrentChat(chat);
+  }
 
   return (
     <div>
@@ -75,12 +79,12 @@ const UserChat: React.FC = () => {
           <Grid container columns={3} columnSpacing={0}>
           <Grid item xs={1} key='contactscontainer' maxWidth="sm">
             <Box sx={{ bgcolor: '#0D1013', height: 'auto', width: 'flex' }}>
-                <Contacts  key='contacts' />
+                <Contacts  key='contacts' changeChat={handleChatChange} />
             </Box>
           </Grid>
           <Grid item xs={2} key='chatcontainer' maxWidth='sm'>
             <Box sx={{ bgcolor: '#0D1013', height: 'auto', width: 'flex' }}>
-              <ChatContainer />
+              <ChatContainer currentChat={currentChat} />
             </Box>
           </Grid>
           </Grid>

@@ -11,14 +11,16 @@ import { setFlagsFromString } from 'v8';
 import Button from '@mui/material/Button';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import Grid from '@mui/material/Grid';
+import axios from 'axios';
 
 
 
-const ChatContainer: React.FC<{}> = () => {
+const ChatContainer: React.FC<{}> = ({ currentChat }) => {
   const userContext = useContext(UserContext);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const [msg, setMsg] = useState('');
-
+  const { currentUserInfo } = userContext;
+  const currentUser = currentUserInfo;
 
   const handleEmojiMenuToggle = () => {
     setShowEmojiPicker(!showEmojiPicker)
@@ -31,7 +33,18 @@ const ChatContainer: React.FC<{}> = () => {
   }
 
   const handleSendMsg = async (msg) => {
-    alert('msg sent');
+    console.log('CURRENTUSER.ID', currentUser.id);
+    console.log('CURRENTchat.googleID', currentChat.googleId);
+    
+    await axios.post('/api/messages/addmsg', {
+      text: msg,
+      senderId: currentUser.id,
+      receiverId: currentChat.googleId,
+    })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => console.error(err))
   }
   
   const sendChat = (e) => {

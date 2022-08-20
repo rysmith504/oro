@@ -31,12 +31,12 @@ model Users {
 
 
 model Messages {
-  id         Int    @id
+  id         Int     @id @default(autoincrement())
   text       String
-  sender     Users  @relation(name: "sentMessages", fields: [senderId], references: [id])
-  receiver   Users   @relation(name: "receivedMessages", fields: [receiverId], references: [id])
-  senderId   Int
-  receiverId Int
+  sender     Users   @relation(name: "sentMessages", fields: [senderId], references: [googleId])
+  receiver   Users   @relation(name: "receivedMessages", fields: [receiverId], references: [googleId])
+  senderId   String
+  receiverId String
 }
 
 model UserEvents {

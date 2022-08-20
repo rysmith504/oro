@@ -9,14 +9,14 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-const Contacts = () => {
+const Contacts = ({changeChat}) => {
   const userContext = useContext(UserContext);
   const { currentUserInfo, userContacts } = userContext;
   const currentUser = currentUserInfo;
   const [currentUserName, setCurrentUserName ] = useState(undefined)
   const [ currentUserImage, setCurrentUserImage ] = useState(undefined)
   const [ currentSelected, setCurrentSelected ] = useState(undefined)
-  const [selectedIndex, setSelectedIndex] = useState(undefined);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   useEffect(() => {
     if(currentUser) {
       setCurrentUserName(currentUser.fullName);
@@ -25,7 +25,7 @@ const Contacts = () => {
   }, [currentUser])
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
-    // changeChat(contact);
+    changeChat(contact);
   };
 
   const handleListItemClick = (
@@ -41,11 +41,14 @@ const Contacts = () => {
         userContacts.map((contact, index) => {
           return(
           <List key={'list'+index}>
-          <ListItemButton 
+          <ListItemButton
             key={'listitembutton'+index}
             alignItems="flex-start"
             selected={selectedIndex === index}
-            onClick={(event) => handleListItemClick(event, index)}
+            onClick={(event) => {
+              handleListItemClick(event, index);
+              changeCurrentChat(index, contact);
+            }}
           >
               <ListItemAvatar key={'listitemavatar'+index}>
                 <Avatar key={'avatar'+index} src={contact.profileURL} />

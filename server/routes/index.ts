@@ -23,7 +23,7 @@ api.use('/comments', commentsRouter);
 api.use('/eventFeed', eventFeedRouter);
 api.use('/travelPlanner', travelPlannerRouter);
 api.use('/users', usersRouter);
-api.use('/messages', messagesRouter);
+api.use('/messages/', messagesRouter);
 api.use('/notifications', notificationsRouter);
 
 
