@@ -6,6 +6,7 @@ import session from 'express-session';
 import {Server} from 'socket.io';
 require('dotenv').config();
 
+
 import api from './routes/index';
 
 // import eventListingsRouter from './routes/eventListingsRouter';
@@ -31,11 +32,32 @@ const io = new Server({
   }
 });
 
+let onlineUsers = [];
+
+
+const addNewUser = (userId, socketId) => {
+  if (!onlineUsers.some(user=>user.username === username) && onlineUsers.push({userId, socketId}))
+}
+
+const removeUser = (socketId) => {
+  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
+}
+
+const getUser = (userId) => {
+  return onlineUsers.find((user) => user.userId === userId);
+}
+
 io.on('connection', (socket) => {
   console.log('someone has connected');
 
+
+  socket.on('newUser', (userId) => {
+    addNewUser(userId, socket.id);
+  })
+
   socket.on('disconnect', () => {
     console.log('someone has left');
+    removeUser(socket.id);
   })
 });
 
@@ -137,7 +159,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'], accessType: 'offline', prompt: 'consent' })
 );
 
 app.get(
