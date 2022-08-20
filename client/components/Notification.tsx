@@ -21,7 +21,10 @@ const Notification: React.FC = (props) => {
         photoUrl,
       }
     })
-      .then((photoObj) => setPhoto(photoObj.data[0]))
+      .then((photoObj) => {
+        // console.log(photoObj);
+        setPhoto(photoObj.data)
+      })
       .catch((err) => console.error(err));
   }
 

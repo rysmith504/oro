@@ -75,7 +75,7 @@ eventFeedRouter.get('/', async (req, res) => {
 eventFeedRouter.get('/photo', async (req, res) => {
   const {photoUrl} = req.query;
   // console.log(eventId, req.query);
-  await prisma.eventPhotos.findMany({
+  await prisma.eventPhotos.findFirst({
     where: {
       photoUrl,
     },

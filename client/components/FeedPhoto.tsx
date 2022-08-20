@@ -50,12 +50,12 @@ const FeedPhoto: React.FC = (props) => {
   };
 
   const handleOpen = () => {
-    console.log('changed');
+    // console.log('changed');
     setModalStatus(true);
   }
 
   const handleClose = () => {
-    console.log('closed');
+    // console.log('closed');
     setModalStatus(false);
   }
 
