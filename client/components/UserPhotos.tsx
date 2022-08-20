@@ -2,21 +2,16 @@ import React, { useState } from 'react';
 import { ImageList, ImageListItem, Modal, Grid, Box } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 import Comments from '../components/Comments';
-import { height } from '@mui/system';
-import { useTheme } from '@mui/material/styles';
 
 const UserPhotos: React.FC = ({ photos }) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  const [modalStatus, setModalStatus] = useState(false);
   // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
   // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
   // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
 
-  const [modalStatus, setModalStatus] = useState(false);
-  const theme = useTheme();
-  const iconColors = theme.palette.secondary.contrastText;
-  const inverseMode = theme.palette.secondary.main;
 
   const handleOpen = () => {
     setModalStatus(true);
