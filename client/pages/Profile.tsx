@@ -65,7 +65,6 @@ const Profile: React.FC = () => {
   useEffect(() => {
     getUserEvents();
     getUserPhotos();
-    console.log(currentUserInfo);
   }, []);
   
   if (currentUserInfo.id) {

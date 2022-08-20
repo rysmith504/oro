@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
 import { Paper, Grid } from '@mui/material';
 import { Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
