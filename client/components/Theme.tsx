@@ -72,6 +72,12 @@ body {
 a:-webkit-any-link {
   color: ${(props) => props.theme.palette.primary.main};
 }
+
+.css-vj1n65-MuiGrid-root {
+margin-top: 20px;
+}
+
+
   `;
 
 // Global Theme Export
