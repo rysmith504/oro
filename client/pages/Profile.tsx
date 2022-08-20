@@ -56,7 +56,7 @@ const Profile: React.FC = () => {
         setUserPhotos(data);
       })
       .catch(err => console.error(err));
-  }
+  };
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -64,35 +64,35 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     getUserEvents();
-    getUserPhotos()
+    getUserPhotos();
+    console.log(currentUserInfo);
   }, []);
 
-  console.log(userPhotos);
-  
+
   if (currentUserInfo.id) {
     return (
       <div>
-        <div>Hello {currentUserInfo.name.givenName}</div>
+        <h1>Hello {currentUserInfo.name.givenName}</h1>
         <Avatar
           alt={currentUserInfo.displayName}
           src={currentUserInfo.photos[0].value}
           sx={{ width: 56, height: 56 }}
         />
         <div>
-          <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-            <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+          <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+            <AccordionSummary sx={{ bgcolor: inverseMode }} aria-controls="panel1d-content" id="panel1d-header">
               <Typography>{userEvents.eventName}</Typography>
               <Typography>{userEvents.eventDate}</Typography>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails sx={{ bgcolor: inverseMode }}>
               <List>
                 <ListItem>Venue: {userEvents.venue}</ListItem>
                 <ListItem>
-                  Location: {userEvents.address}, {userEvents.city}, {userEvents.state}, {userEvents.postalCode}
+                Location: {userEvents.address}, {userEvents.city}, {userEvents.state}, {userEvents.postalCode}
                 </ListItem>
                 <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
                 <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
-                <Button onClick={() => { location.href = userEvents.link }}>Purchase Tickets</Button>
+                <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => { location.href = userEvents.link; }}>Purchase Tickets</Button>
               </List>
             </AccordionDetails>
           </Accordion>
@@ -103,8 +103,8 @@ const Profile: React.FC = () => {
   } else if (!currentUserInfo.length) {
     return (
       <h1>Please Sign In To View Profile</h1>
-    )
-  } 
+    );
+  }
 };
 
 export default Profile;
