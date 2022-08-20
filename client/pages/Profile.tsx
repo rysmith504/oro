@@ -3,7 +3,7 @@ import axios from 'axios';
 import UserPhotos from '../components/UserPhotos';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
-import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon } from '../styles/material';
+import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon, Grid, IconButton, Box, Link } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 
 const Accordion = styled((props) => (
@@ -45,6 +45,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const Profile: React.FC = () => {
   const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
   const [userPhotos, setUserPhotos] = useState([]);
+  const [dbUser, setDbUser] = useState([]);
   const [facebookLink, setFacebookLink] = useState('')
   const [instagramLink, setInstagramLink] = useState('')
   const [twitterLink, setTwitterLink] = useState('')
@@ -53,6 +54,14 @@ const Profile: React.FC = () => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+
+  const getDbUser = () => {
+    axios.get(`/api/profile/${currentUserInfo.id}`)
+      .then(({ data }) => {
+        setDbUser(data);
+      })
+      .catch(err => console.error(err));
+  };
 
   const getUserPhotos = () => {
     axios.get(`/api/profile/event_photos/${currentUserInfo.id}`)
@@ -82,8 +91,8 @@ const Profile: React.FC = () => {
         "twitter": `${twitterLink}` || null
       }
     })
-    .then(handleClose())
-    .catch(err => console.error(err));
+      .then(handleClose())
+      .catch(err => console.error(err));
   };
 
   const handleFacebookChange = e => {
@@ -93,12 +102,13 @@ const Profile: React.FC = () => {
   const handleInstagramChange = e => {
     setInstagramLink(e.target.value);
   }
-  
+
   const handleTwitterChange = e => {
     setTwitterLink(e.target.value);
   }
-  
+
   useEffect(() => {
+    getDbUser();
     getUserEvents();
     getUserPhotos();
   }, []);
@@ -107,12 +117,14 @@ const Profile: React.FC = () => {
     return (
       <div>
         <h1>Hello {currentUserInfo.name.givenName}</h1>
-        <div>
+        <div id='profile_avatar'>
           <Avatar
             alt={currentUserInfo.displayName}
             src={currentUserInfo.photos[0].value}
             sx={{ width: 75, height: 75 }}
           />
+        </div>
+        <div>
           <Button variant="outlined" onClick={handleClickOpen}>Update Profile</Button>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Update Profile</DialogTitle>
@@ -125,7 +137,7 @@ const Profile: React.FC = () => {
                   autoFocus
                   margin="dense"
                   id="name"
-                  label={<FacebookIcon/>}
+                  label={<FacebookIcon />}
                   type="email"
                   fullWidth
                   variant="standard"
@@ -137,7 +149,7 @@ const Profile: React.FC = () => {
                 autoFocus
                 margin="dense"
                 id="name"
-                label={<InstagramIcon/>}
+                label={<InstagramIcon />}
                 type="email"
                 fullWidth
                 variant="standard"
@@ -148,7 +160,7 @@ const Profile: React.FC = () => {
                 autoFocus
                 margin="dense"
                 id="name"
-                label={<TwitterIcon/>}
+                label={<TwitterIcon />}
                 type="email"
                 fullWidth
                 variant="standard"
@@ -161,6 +173,27 @@ const Profile: React.FC = () => {
               <Button onClick={handleUpdate}>Update</Button>
             </DialogActions>
           </Dialog>
+        </div>
+        <div>
+          <Box>
+            <Grid container spacing={2}>
+              <Grid item>
+                <Link href={dbUser.fbId}>
+                  <IconButton><FacebookIcon /></IconButton>
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href={dbUser.instaId}>
+                  <IconButton><InstagramIcon /></IconButton>
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href={dbUser.twitterId}>
+                  <IconButton><TwitterIcon /></IconButton>
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
         </div>
         <div>
           <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>

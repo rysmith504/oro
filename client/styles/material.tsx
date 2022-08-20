@@ -54,6 +54,7 @@ import dialogActions from '@mui/material/DialogActions';
 import dialogContent from '@mui/material/DialogContent';
 import dialogContentText from '@mui/material/DialogContentText';
 import dialogTitle from '@mui/material/DialogTitle';
+import link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
 
 export const Item = styled(paper)(({ theme }) => ({
@@ -143,3 +144,4 @@ export const DialogActions = dialogActions;
 export const DialogContent = dialogContent;
 export const DialogContentText = dialogContentText;
 export const DialogTitle = dialogTitle;
+export const Link = link;
