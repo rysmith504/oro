@@ -12,6 +12,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Item } from '../styles/material';
+import { useTheme } from '@mui/material/styles';
 
 type Location = {
   location_id: string;
@@ -41,6 +42,14 @@ const TravelPlanner: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState<Location | null>(null);
 
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
+
   const handleOpen = (content) => {
     setModalContent(content);
     setOpen(true);
@@ -64,25 +73,27 @@ const TravelPlanner: React.FC = () => {
   }, []);
 
   return (
-    <Grid container spacing={2}>
-      {locations.map((loc) => (
-        <Grid xs={8} key={loc.location_id}>
-          <Item>
-            <Card sx={{ minWidth: 275 }}>
+    <Grid spacing={2}>
+      {locations.map((loc) => {
+        const image = `https://source.unsplash.com/random/?${loc.name}`;
+        return (
+          <Grid xs={8} key={loc.location_id}>
+            <Card sx={{ minWidth: 275, ml: 'auto', mr: 'auto', bgcolor: inverseMode }}>
               <CardContent>
+                <img src={image} width='80%' object-fit='cover'/>
                 <Typography variant='h5' component='div'>
                   {loc.name}
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size='small' onClick={() => handleOpen(loc)}>
-                  View
+                <Button size='small' onClick={() => handleOpen(loc)} sx={{ bgcolor: inverseMode, ml: 'auto', mr: 'auto' }}>
+                View
                 </Button>
               </CardActions>
             </Card>
-          </Item>
-        </Grid>
-      ))}
+          </Grid>
+        );
+      })}
       <Modal
         open={open}
         onClose={handleClose}

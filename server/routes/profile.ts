@@ -41,5 +41,18 @@ profileRouter.get('/:_id', (req, res) => {
     })
 })
 
+profileRouter.get('/event_photos/:_id', (req, res) => {
+  const { _id } = req.params;
+  
+  prisma.eventPhotos.findMany({
+    where: { userId: _id},
+  })
+    .then(userPhotos => {
+      res.status(200).send(userPhotos);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+})
 
 export default profileRouter;
