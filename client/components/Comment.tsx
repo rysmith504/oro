@@ -9,12 +9,14 @@ const Comment: React.FC = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
 
   const {comment} = props;
   const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
-    // console.log(comment);
     getAvatar();
   }, []);
 
@@ -28,15 +30,12 @@ const Comment: React.FC = (props) => {
         setProfilePic(userProfile.data);
       })
       .catch((err) => console.error(err));
-    
+
   };
   return (
     <div>
-      <span>
-        <Avatar sx={{ height: '30px', width: '30px'}} src={profilePic}/>
-        {comment.comment}
-      </span>
-
+      <Avatar sx={{ height: '30px', width: '30px'}} src={profilePic}/>
+      {comment.comment}
     </div>
   );
 };
