@@ -1,4 +1,6 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import UserPhotos from '../components/UserPhotos';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
 import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar } from '../styles/material';
@@ -42,10 +44,19 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const Profile: React.FC = () => {
   const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
+  const [userPhotos, setUserPhotos] = useState([]);
   const [expanded, setExpanded] = React.useState('panel1');
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+
+  const getUserPhotos = () => {
+    axios.get(`/api/profile/event_photos/${currentUserInfo.id}`)
+      .then(({ data }) => {
+        setUserPhotos(data);
+      })
+      .catch(err => console.error(err));
+  }
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -53,37 +64,47 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     getUserEvents();
+    getUserPhotos()
   }, []);
 
-  return (
-    <div>
-      <div>Hello {currentUserInfo.name.givenName}</div>
-      <Avatar
-        alt={currentUserInfo.displayName}
-        src={currentUserInfo.photos[0].value}
-        sx={{ width: 56, height: 56 }}
-      />
+  console.log(userPhotos);
+  
+  if (currentUserInfo.id) {
+    return (
       <div>
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography>{userEvents.eventName}</Typography>
-            <Typography>{userEvents.eventDate}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <List>
-              <ListItem>Venue: {userEvents.venue}</ListItem>
-              <ListItem>
-                Location: {userEvents.address}, {userEvents.city}, {userEvents.state}, {userEvents.postalCode}
-              </ListItem>
-              <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
-              <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
-              <Button onClick={() => { location.href = userEvents.link }}>Purchase Tickets</Button>
-            </List>
-          </AccordionDetails>
-        </Accordion>
+        <div>Hello {currentUserInfo.name.givenName}</div>
+        <Avatar
+          alt={currentUserInfo.displayName}
+          src={currentUserInfo.photos[0].value}
+          sx={{ width: 56, height: 56 }}
+        />
+        <div>
+          <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+            <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+              <Typography>{userEvents.eventName}</Typography>
+              <Typography>{userEvents.eventDate}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List>
+                <ListItem>Venue: {userEvents.venue}</ListItem>
+                <ListItem>
+                  Location: {userEvents.address}, {userEvents.city}, {userEvents.state}, {userEvents.postalCode}
+                </ListItem>
+                <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
+                <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
+                <Button onClick={() => { location.href = userEvents.link }}>Purchase Tickets</Button>
+              </List>
+            </AccordionDetails>
+          </Accordion>
+        </div>
+        <UserPhotos photos={userPhotos}/>
       </div>
-    </div>
-  );
+    );
+  } else if (!currentUserInfo.length) {
+    return (
+      <h1>Please Sign In To View Profile</h1>
+    )
+  } 
 };
 
 export default Profile;
