@@ -9,6 +9,7 @@ const NotificationsFeed: React.FC = () => {
 
   const [notifications, setNotifications] = useState([]);
 
+
   useEffect(() => {
     getNotifications();
 
@@ -29,14 +30,18 @@ const NotificationsFeed: React.FC = () => {
         console.error(err);
       })
   }
+  
+
 
   return (
     <div>
       <h1>Notifications</h1>
+
       <div>
         {notifications.map((notif, i) => {
           return (
             <div key={i}>
+              
               <Notification notif={notif}/>
             </div>
           );
