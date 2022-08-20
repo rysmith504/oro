@@ -9,7 +9,6 @@ import axios from 'axios';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
 
-// import { StyledCard } from './Theme';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -30,9 +29,7 @@ const ArtistInfoCard = ({artistProps}) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
-  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
-  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
+
   const themeContext = useContext(ThemeContext);
   const {mode, setMode, toggleMode} = themeContext;
   const [expanded, setExpanded] = React.useState(false);
@@ -57,11 +54,6 @@ const ArtistInfoCard = ({artistProps}) => {
     youtube,
   } = artistProps;
 
-  // console.log(image);
-  // if (!image.length) {
-  //   image = 'https://source.unsplash.com/random/?music-festival';
-  // }
-
   const socials = {
     youtube: [youtube, <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />],
     twitter: [twitter, <TwitterIcon key={'twitter'} sx={{ color: iconColors }}/>],
@@ -71,7 +63,7 @@ const ArtistInfoCard = ({artistProps}) => {
     itunes: [itunes, <MusicNoteIcon key={'music'} sx={{ color: iconColors }}/>],
     wiki: [wiki, <QuizIcon key={'wiki'} sx={{ color: iconColors }}/>],
   };
-  // console.log(artist);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
