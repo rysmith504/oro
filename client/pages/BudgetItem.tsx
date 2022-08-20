@@ -1,8 +1,17 @@
 /* eslint-disable func-style */
-import { Button, Checkbox, List, ListItem, TextField } from '@mui/material';
+import { Button, Checkbox, List, ListItem, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useTheme } from '@mui/material/styles';
 function BudgetItem(props: any) {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
+
   const [formData, setFormData] = useState({
     itemName: props.label,
     budget: 0,
@@ -20,20 +29,21 @@ function BudgetItem(props: any) {
       .catch((err) => {
         console.error(err);
       });
-    //console.log('Customer Submitted Budget', formData);
   };
   return (
     <>
       <List>
         <ListItem>
           <TextField
-            label={`Enter your budget ${props.label}?`}
-            variant='outlined'
+            sx={{ bgcolor: iconColors, color: iconColors, mr: '20px' }}
+            label={`Enter your ${props.label} budget`}
             onChange={(e) =>
               setFormData({ ...formData, budget: e.target.value })
             }
           />
-          <Button onClick={handleBudgetSubmit}>Submit Budget</Button>
+          <Button
+            sx={{ bgcolor: iconColors, color: inverseMode }}
+            onClick={handleBudgetSubmit}>Submit Budget</Button>
         </ListItem>
       </List>
     </>
