@@ -22,24 +22,17 @@ const ChatContainer: React.FC<{}> = ({ currentChat }) => {
       senderId: currentUser.id,
       receiverId: currentChat.googleId
       });
-      console.log('GET RESPONSE', response)
       setMessages(response.data);
     }
     getMessages();
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    console.log('CURRENTUSER.ID', currentUser.id);
-    console.log('CURRENTchat.googleID', currentChat.googleId);
-
     await axios.post('/api/messages/addmsg', {
       text: msg,
       senderId: currentUser.id,
       receiverId: currentChat.googleId,
     })
-      .then(res => {
-        console.log(res)
-      })
       .catch(err => console.error(err))
   }
 

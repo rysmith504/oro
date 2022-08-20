@@ -7,7 +7,6 @@ const messagesRouter = Router();
 
 const addMessage = async (req, res, next) => {
   try {
-    console.log('REQ.BODY HEY ITS ME',req.body)
     const { senderId, receiverId, text } = req.body;
     const data = await prisma.messages.create({
       data: {
@@ -19,7 +18,6 @@ const addMessage = async (req, res, next) => {
     if (data) return res.json({ msg: 'MSG POST SUCCESS'})
     return res.json({msg: 'POST FAILED TO ADD TO DB'})
   } catch (ex) {
-    console.error(ex);
     next(ex);
   }
 }
@@ -61,18 +59,15 @@ const getAllMessages = async (req, res, next) => {
         ]
       }
     })
-    console.log('unsorted', messages)
 
-    messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
-    console.log('SORTED MSGS', messages)
+  messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
   const projectMessages = messages.map(msg => {
     return{
       fromSelf: msg.senderId === senderId,
       message: msg.text
     }
   })
-    console.log(messages);
-    console.log('PROJECT MESSAGES',projectMessages)
+
     return res.json(projectMessages);
   } catch (ex) {
       next(ex);
