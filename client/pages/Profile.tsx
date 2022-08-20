@@ -75,7 +75,15 @@ const Profile: React.FC = () => {
   };
 
   const handleUpdate = () => {
-    setOpen(false);
+    axios.put(`/api/profile/${currentUserInfo.id}`, {
+      "socialMedia": {
+        "facebook": `${facebookLink}` || null,
+        "instagram": `${instagramLink}` || null,
+        "twitter": `${twitterLink}` || null
+      }
+    })
+    .then(() => handleClose())
+    .catch(err => console.error(err));
   };
 
   const handleFacebookChange = e => {

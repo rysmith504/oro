@@ -8,9 +8,7 @@ const Notification: React.FC = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
-  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
-  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
+
   const {notif} = props;
   const [person, setPerson] = useState('');
   const [text, setText] = useState('');
@@ -81,6 +79,17 @@ const Notification: React.FC = (props) => {
 
   return (
     <div>
+      <Modal style={{alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
+        <Box sx={{margin: 'auto', bgcolor: 'black', width: 350, alignItems: 'center', justifyContent: 'center'}}>
+
+          <img width='300px' height='auto' margin='auto' src={photoUrl}/>
+          <Grid container>
+            <Comments photo={photo}/>
+          </Grid>
+        </Box>
+      </Modal>
+
+      <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px'}}>
       <Paper sx={{margin: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
         {person}{text}
         <img height='30px' width='auto' src={photoUrl}/>

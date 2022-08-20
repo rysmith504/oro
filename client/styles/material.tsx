@@ -62,6 +62,29 @@ export const Item = styled(paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: 'center',
 }));
+export const TextField = textField;
+
+export const CssTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#9B27B0',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: '#9B27B0',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#1A76D2',
+    },
+    '&:hover fieldset': {
+      borderColor: '#BDBDBD',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#9B27B0',
+    },
+  },
+});
+
+
 // export styled;
 export	const	StyledProvider	=	ThemeProvider;
 export const Box = box;

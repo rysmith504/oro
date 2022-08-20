@@ -7,16 +7,7 @@ const UserContext = React.createContext({});
 const UserContextProvider = ({ children }) => {
   const [userEvents, setUserEvents] = useState([]);
   const [ currentUserInfo, setCurrentUserInfo ] = useState([]);
-  const [dbUserInfo, setDbUserInfo] = useState([]);
   const [userContacts, setUserContacts] = useState([]);
-
-  // const getDbUserInfo = () => {
-  //   axios.get(`/api/profile/${currentUserInfo.id}`)
-  //     .then(({ data }) => {
-  //       setDbUserInfo(data);
-  //     })
-  //     .catch(err => console.error(err));
-  // }
 
   const getUserEvents = () => {
     axios
@@ -57,17 +48,13 @@ const UserContextProvider = ({ children }) => {
       });
   };
 
-  const getCurrentUser = () => {
+  const getCurrentUser = async () => {
     // Once user logs in, get user info
-    axios
+    await axios
       .get('/hidden')
-      .then((info) => {
-        const { data } = info;
+      .then(({data}) => {
         // set state to user info
         setCurrentUserInfo(data);
-      })
-      .then(() => {
-        console.log(currentUserInfo);
       })
       .catch((err) => {
         console.error(err);
@@ -93,15 +80,13 @@ const UserContextProvider = ({ children }) => {
     }
   }
 
-  console.log(dbUserInfo);
-
   const appProps = {
     userContacts,
     userEvents,
     setUserEvents,
     getUserEvents,
     logoutUser,
-    currentUserInfo,
+    currentUserInfo
   };
 
   return (
