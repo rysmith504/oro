@@ -1,15 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
-import Picker from 'emoji-picker-react'
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { IoMdSend } from 'react-icons/io'
-import { BsEmojiSmileFill } from 'react-icons/bs';
-import { setFlagsFromString } from 'v8';
+import ChatInput from './ChatInput';
 import Button from '@mui/material/Button';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import Grid from '@mui/material/Grid';
 import axios from 'axios';
 
@@ -17,25 +12,26 @@ import axios from 'axios';
 
 const ChatContainer: React.FC<{}> = ({ currentChat }) => {
   const userContext = useContext(UserContext);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-  const [msg, setMsg] = useState('');
   const { currentUserInfo } = userContext;
   const currentUser = currentUserInfo;
+  const [messages, setMessages] = useState([]);
 
-  const handleEmojiMenuToggle = () => {
-    setShowEmojiPicker(!showEmojiPicker)
-  }
-
-  const handleEmojiClick = (e, emoji) => {
-    let message = msg;
-    message += emoji.emoji;
-    setMsg(message);
-  }
+  useEffect(() => {
+    const getMessages = async () => {
+      const response = await axios.post('/api/messages/getmsg', {
+      senderId: currentUser.id,
+      receiverId: currentChat.googleId
+      });
+      console.log('GET RESPONSE', response)
+      setMessages(response.data);
+    }
+    getMessages();
+  }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
     console.log('CURRENTUSER.ID', currentUser.id);
     console.log('CURRENTchat.googleID', currentChat.googleId);
-    
+
     await axios.post('/api/messages/addmsg', {
       text: msg,
       senderId: currentUser.id,
@@ -46,53 +42,31 @@ const ChatContainer: React.FC<{}> = ({ currentChat }) => {
       })
       .catch(err => console.error(err))
   }
-  
-  const sendChat = (e) => {
-    e.preventDefault();
-    if(msg.length > 0) {
-      handleSendMsg(msg);
-      setMsg('');
-    }
-  }
-
-  const enterClick = (e) => {
-    if (e.keyCode === 13) {
-      sendChat(e)
-    }
-  };
 
   return (
     <div>
       Welcome
       <React.Fragment>
-      <Container >
+      <Container > 
         <Box sx={{ bgcolor: '#cfe8fc', height: '55vh' }}>
           {/* <Messages/> */}
-        </Box>
-      <Grid container>
-        <Grid item xs={1} sx={{mt: 1.5}}>
-          <BsEmojiSmileFill onClick={handleEmojiMenuToggle} />
           {
-            showEmojiPicker &&
-              <Picker pickerStyle={{ position: 'relative', top: '-350px'}} onEmojiClick={handleEmojiClick} />
+            messages.map((message, index) => {
+              return (
+                <div key={`currentchatmessage`+index}>
+                  <div className={`message ${message.fromSelf ? 'sent' : 'received'}`}>
+                    <div className='content'>
+                      <p>
+                        {message.message}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
           }
-        </Grid>
-        <Grid item xs={10}>
-          <TextField
-            hiddenLabel
-            id="filled-hidden-label-small"
-            defaultValue="message"
-            variant="filled"
-            size="small"
-            value={msg}
-            onChange={(e)=>setMsg(e.target.value)}
-            onKeyDown={(e)=>enterClick(e)}
-            />
-        </Grid>
-        <Grid item xs={1} sx={{mt: 1.2}}>
-          <IoMdSend />
-        </Grid>
-      </Grid>
+        </Box>
+        <ChatInput handleSendMsg={handleSendMsg} />
       </Container>
     </React.Fragment>
     </div>

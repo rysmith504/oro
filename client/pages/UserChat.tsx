@@ -38,14 +38,14 @@ const UserChat: React.FC = () => {
   //   //   setUserImage(currentUser.profileURL)
   //   }
   // }, [currentUserInfo]);
-
+  const obj = {googleId: '88'}
 
   //WORKING LOGIN REDIRECT
-  // useEffect(() => {
-  //   if (!currentUserInfo.id) {
-  //     navigate('/login');
-  //     }
-  //   }, [currentUserInfo]);
+  useEffect(() => {
+    if (!currentUserInfo.id) {
+      navigate('/login');
+      }
+    }, [currentUserInfo]);
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
