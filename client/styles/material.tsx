@@ -45,10 +45,15 @@ import outlinedInput from '@mui/material/OutlinedInput';
 import fab from '@mui/material/Fab';
 import imageList from '@mui/material/ImageList';
 import imageListItem from '@mui/material/ImageListItem';
-// import styled from '@mui/system';
 import avatar from '@mui/material/Avatar';
 import { ThemeProvider } from 'styled-components';
 import modal from '@mui/material/Modal';
+import textField from '@mui/material/TextField';
+import dialog from '@mui/material/Dialog';
+import dialogActions from '@mui/material/DialogActions';
+import dialogContent from '@mui/material/DialogContent';
+import dialogContentText from '@mui/material/DialogContentText';
+import dialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '@mui/material/styles';
 
 export const Item = styled(paper)(({ theme }) => ({
@@ -57,6 +62,29 @@ export const Item = styled(paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: 'center',
 }));
+export const TextField = textField;
+
+export const CssTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#9B27B0',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: '#9B27B0',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#1A76D2',
+    },
+    '&:hover fieldset': {
+      borderColor: '#BDBDBD',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#9B27B0',
+    },
+  },
+});
+
+
 // export styled;
 export	const	StyledProvider	=	ThemeProvider;
 export const Box = box;
@@ -109,3 +137,8 @@ export const MuiAccordionSummary = muiAccordionSummary;
 export const MuiAccordionDetails = muiAccordionDetails;
 export const ImageList = imageList;
 export const ImageListItem = imageListItem;
+export const Dialog = dialog;
+export const DialogActions = dialogActions;
+export const DialogContent = dialogContent;
+export const DialogContentText = dialogContentText;
+export const DialogTitle = dialogTitle;

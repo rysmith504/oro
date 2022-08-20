@@ -14,19 +14,23 @@ import Contacts from '../components/Contacts';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import IconButton from '@mui/material/IconButton';
 import RateReviewIcon from '@mui/icons-material/RateReview';
-import ChatContainer from '../components/ChatContainer'
-
+import ChatContainer from '../components/ChatContainer';
+import { useTheme } from '@mui/material/styles';
 
 const UserChat: React.FC = () => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const userContext = useContext(UserContext);
   const { currentUserInfo, userContacts } = userContext;
   const currentUser = currentUserInfo;
-  const [ currentChat, setCurrentChat ] = useState(undefined)
+  const [ currentChat, setCurrentChat ] = useState(undefined);
   const navigate = useNavigate();
   useEffect(() => {
     // console.log('USERCNTACTS CHAT', userContacts);
     // console.log('currentuser chat', currentUserInfo)
-  }, [])
+  }, []);
   // useEffect(() => {
   //   if (!currentUserInfo.id) {
   //     navigate('/login');
@@ -49,13 +53,13 @@ const UserChat: React.FC = () => {
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
-  }
+  };
 
   return (
     <div>
       <div>
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
+          <AppBar position="static" sx={{ bgcolor: inverseMode }}>
             <Toolbar>
               <IconButton
                 size="large"
@@ -64,22 +68,22 @@ const UserChat: React.FC = () => {
                 aria-label="menu"
                 href='/profile'
                 sx={{ mr: 2 }}
-                >
+              >
                 <ArrowBackIosNewIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 {currentUser.fullName}
               </Typography>
-              <Button color="inherit">< RateReviewIcon /></Button>
+              <Button sx={{ color: iconColors }}>< RateReviewIcon /></Button>
             </Toolbar>
           </AppBar>
         </Box>
       </div>
-        <React.Fragment>
-          <Grid container columns={3} columnSpacing={0}>
+      <React.Fragment>
+        <Grid container columns={3} columnSpacing={0}>
           <Grid item xs={1} key='contactscontainer' maxWidth="sm">
             <Box sx={{ bgcolor: '#0D1013', height: 'auto', width: 'flex' }}>
-                <Contacts  key='contacts' changeChat={handleChatChange} />
+              <Contacts key='contacts' changeChat={handleChatChange} />
             </Box>
           </Grid>
           <Grid item xs={2} key='chatcontainer' maxWidth='sm'>
@@ -87,11 +91,11 @@ const UserChat: React.FC = () => {
               <ChatContainer currentChat={currentChat} />
             </Box>
           </Grid>
-          </Grid>
-    </React.Fragment>
+        </Grid>
+      </React.Fragment>
     </div>
   );
-}
+};
 
 
 export default UserChat;

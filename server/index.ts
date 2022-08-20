@@ -3,6 +3,9 @@ import express from 'express';
 import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
+import {Server} from 'socket.io';
+require('dotenv').config();
+
 
 import api from './routes/index';
 
@@ -23,6 +26,46 @@ import passport from 'passport';
 
 // console.log('index server');
 const app = express();
+const io = new Server({
+  cors: {
+    origin: 'http://localhost:5000'
+  }
+});
+
+let onlineUsers = [];
+
+
+const addNewUser = (userId, socketId) => {
+  if (!onlineUsers.some(user=>user.username === username) && onlineUsers.push({userId, socketId}))
+}
+
+const removeUser = (socketId) => {
+  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
+}
+
+const getUser = (userId) => {
+  return onlineUsers.find((user) => user.userId === userId);
+}
+
+io.on('connection', (socket) => {
+  console.log('someone has connected');
+
+
+  socket.on('newUser', (userId) => {
+    addNewUser(userId, socket.id);
+  })
+
+  socket.on('disconnect', () => {
+    console.log('someone has left');
+    removeUser(socket.id);
+  })
+});
+
+io.listen(3000);
+
+
+
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,6 +73,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 //ROUTERS------------------------------
 app.use('/api', api);
+
+ 
 // app.use('/events', eventListingsRouter);
 // app.use('/favArtists', artistsRouter);
 // app.use('/songs', songFinderRouter);
@@ -41,7 +86,7 @@ app.use('/api', api);
 // app.use('/users', usersRouter);
 
 // AUTH-----------------
-require('dotenv').config();
+// require('dotenv').config();
 
 import googleStrategy from 'passport-google-oauth20';
 const GoogleStrategy = googleStrategy.Strategy;
@@ -54,7 +99,7 @@ app.use(
   }),
 );
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()) // Why did you remove me Vincent?!
 
 // console.log('passport file');
 passport.use(new GoogleStrategy(
@@ -114,7 +159,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'], accessType: 'offline', prompt: 'consent' })
 );
 
 app.get(

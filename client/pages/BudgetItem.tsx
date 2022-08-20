@@ -1,39 +1,34 @@
 /* eslint-disable func-style */
-import { Button, Checkbox, List, ListItem, TextField } from '@mui/material';
+import { Checkbox, List, ListItem } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
-function BudgetItem(props: any) {
-  const [formData, setFormData] = useState({
-    itemName: props.label,
-    budget: 0,
-    event_id: 0,
-    customer_id: 0,
-  });
+import { CssTextField } from '../styles/material';
+type BudgetItemProps = {
+  label: string;
+  value?: number;
+  onChange?: () => void;
+};
 
-  const handleBudgetSubmit = async () => {
-    formData.event_id = props.eventId;
-    axios
-      .post('/api/events/budgetsubmit', formData)
-      .then((events) => {
-        console.log('Successfully submitted budget');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    //console.log('Customer Submitted Budget', formData);
-  };
+const fontColor = {
+  style: { color: '#9B27B0' }
+};
+
+function BudgetItem({ label, value, onChange }: BudgetItemProps): JSX.Element {
   return (
     <>
       <List>
         <ListItem>
-          <TextField
-            label={`Enter your budget ${props.label}?`}
+          <span>{label}</span>
+          <CssTextField
+            InputLabelProps={fontColor}
+            inputProps={fontColor}
+            color="secondary"
+            label={`Enter your budget ${label}?`}
             variant='outlined'
-            onChange={(e) =>
-              setFormData({ ...formData, budget: e.target.value })
-            }
+            value={value}
+            onChange={onChange}
           />
-          <Button onClick={handleBudgetSubmit}>Submit Budget</Button>
+          <span>: ${value ?? 0}</span>
         </ListItem>
       </List>
     </>

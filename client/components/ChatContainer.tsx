@@ -7,10 +7,14 @@ import ChatInput from './ChatInput';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import axios from 'axios';
-
-
+import { useTheme } from '@mui/material/styles';
+import { CssTextField } from '../styles/material';
 
 const ChatContainer: React.FC<{}> = ({ currentChat }) => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const userContext = useContext(UserContext);
   const { currentUserInfo } = userContext;
   const currentUser = currentUserInfo;
@@ -35,6 +39,10 @@ const ChatContainer: React.FC<{}> = ({ currentChat }) => {
     })
       .catch(err => console.error(err))
   }
+
+  const fontColor = {
+    style: { color: '#9B27B0' }
+  };
 
   return (
     <div>
@@ -63,8 +71,8 @@ const ChatContainer: React.FC<{}> = ({ currentChat }) => {
       </Container>
     </React.Fragment>
     </div>
-  )
-}
+  );
+};
 
 
 export default ChatContainer;
@@ -74,4 +82,4 @@ const EmojiBox = styled.div`
     position: absolute;
     top: -350px;
   }
-`
+`;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Comments from '../components/Comments';
 import {Grid, Modal, Box, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
@@ -49,58 +49,62 @@ const FeedPhoto: React.FC = (props) => {
 
   const handleOpen = () => {
     setModalStatus(true);
-  }
+  };
 
   const handleClose = () => {
     setModalStatus(false);
-  }
+  };
 
 
   return (
     <div>
-      <Modal style={{alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
-        <Box sx={{margin: 'auto', bgcolor: 'black', width: 350, alignItems: 'center', justifyContent: 'center'}}>
+      <Modal style={{alignItems: 'left', justifyContent: 'left'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
+        <Box sx={{margin: 'auto', bgcolor: 'black', width: 400, alignItems: 'left', justifyContent: 'left'}}>
 
-          <img width='300px' height='auto' margin='auto' src={photo.photoUrl}/>
+          <img width='350px' height='auto' margin='auto' src={photo.photoUrl}/>
           <Grid container>
             <Comments photo={photo}/>
           </Grid>
         </Box>
       </Modal>
-      <Card sx={{ maxWidth: 345, margin: 'auto'}}>
+      <Card sx={{ maxWidth: 400, margin: 'auto'}}>
         <CardHeader
           avatar={
             <Link to={`/user/?id=${photo.userId}`}>
               <Avatar src={profilePic} />
             </Link>
           }
-          subheader={photo.created_at}
+          subheader={<Typography sx={{ bgcolor: inverseMode }}>{photo.created_at}</Typography>}
+          sx={{ bgcolor: inverseMode }}
         />
         <CardMedia
           component="img"
           height="194"
           image={photo.photoUrl}
           onClick={handleOpen}
+          sx={{ bgcolor: inverseMode }}
         />
-        <CardContent>
-          <Typography variant='body2'>
+        <CardContent sx={{ bgcolor: inverseMode }}>
+          <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
             This festival was dope!
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
+        <CardActions
+          sx={{ bgcolor: inverseMode }}
+          disableSpacing>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <Button>Comments</Button>
+            <Button sx={{ color: iconColors }}>Comments</Button>
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography>
-              <Comments photo={photo} />
+          <CardContent sx={{ bgcolor: inverseMode }}>
+            <Typography sx={{ bgcolor: inverseMode }}>
+              <Comments photo={photo}/>
             </Typography>
           </CardContent>
         </Collapse>

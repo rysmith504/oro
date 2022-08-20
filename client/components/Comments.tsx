@@ -5,11 +5,12 @@ import {Fab, OutlinedInput } from '../styles/material';
 import SendIcon from '@mui/icons-material/Send';
 import Comment from './Comment';
 import { useTheme } from '@mui/material/styles';
-
+import { CssTextField } from '../styles/material';
 const Comments: React.FC = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+
 
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
@@ -32,6 +33,12 @@ const Comments: React.FC = (props) => {
   //     // console.log('shown');
   //   }
   // };
+
+  const fontColor = {
+    style: { color: '#9B27B0' }
+  };
+
+  { /* <CssTextField InputLabelProps={fontColor} inputProps={fontColor} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} /> */ }
 
   useEffect(() => {
     getComments();
@@ -75,7 +82,7 @@ const Comments: React.FC = (props) => {
             console.log('notif', notificationData);
           })
           .catch((err) => console.error(err));
-        
+
       })
       .catch((err) => console.error(err));
   };
@@ -90,8 +97,9 @@ const Comments: React.FC = (props) => {
         );
       })}
 
-      <OutlinedInput size='small' onChange={(e) => handleComment(e)} value={message}></OutlinedInput>
-      <Fab variant='extended' type='submit' onClick={handleSend}><SendIcon/></Fab>
+      <CssTextField InputLabelProps={fontColor} inputProps={fontColor} sx={{ ml: '15px'}} color="secondary" size='small' onChange={(e) => handleComment(e)} value={message}/>
+      <Fab variant='extended' type='submit' onClick={handleSend}
+        sx={{bgcolor: inverseMode}}><SendIcon sx={{ color: iconColors}}/></Fab>
     </div>
   );
 };
