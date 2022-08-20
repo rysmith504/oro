@@ -8,6 +8,9 @@ notificationsRouter.get('/', async (req, res) => {
   await prisma.notifications.findMany({
     where: {
       userId,
+    },
+    orderBy: {
+      created_at: 'desc',
     }
   })
     .then((data) => {
