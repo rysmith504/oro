@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Profile from '../pages/Profile';
 import Home from '../pages/Home';
@@ -22,12 +22,18 @@ import { Container } from '../components/Container';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import BackPack from '../pages/BackPack';
 
+import { io } from 'socket.io-client';
+
 // https://styled-components.com/docs/api#createglobalstyle
 
 const App: React.FC = () => {
   // update React.FC, .FC deprecated?
   const themeContext = useContext(ThemeContext);
   const [isDarkMode, setDarkMode] = useState(true);
+
+  useEffect(() => {
+    const socket = io('http://localhost:3000');
+  }, [])
 
   return (
     <Container>

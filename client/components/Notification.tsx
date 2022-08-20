@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import {Paper} from '../styles/material';
+import {Paper, Modal, Box, Grid} from '../styles/material';
 import { useTheme } from '@mui/material/styles';
+import Comments from './Comments';
 
 const Notification: React.FC = (props) => {
   const theme = useTheme();
@@ -12,6 +13,26 @@ const Notification: React.FC = (props) => {
   const [person, setPerson] = useState('');
   const [text, setText] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
+  const [modalStatus, setModalStatus] = useState(false);
+  const [photo, setPhoto] = useState({});
+
+  const getPhoto = () => {
+    axios.get('/api/eventFeed/photo', {
+      params: {
+        photoUrl,
+      }
+    })
+      .then((photoObj) => {
+        // console.log(photoObj);
+        setPhoto(photoObj.data)
+      })
+      .catch((err) => console.error(err));
+  }
+
+  useEffect(() => {
+    getPhoto();
+  }, [photoUrl]);
+
 
   const getPerson = () => {
     // console.log(notif.userId);
@@ -44,6 +65,17 @@ const Notification: React.FC = (props) => {
     getType();
     // console.log(notif);
   }, []);
+
+  const handleOpen = () => {
+    console.log('changed');
+    setModalStatus(true);
+  }
+
+  const handleClose = () => {
+    console.log('closed');
+    setModalStatus(false);
+  }
+
 
   return (
     <div>
