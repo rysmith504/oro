@@ -50,9 +50,6 @@ const Profile: React.FC = () => {
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
 
-  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
-  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
-  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
   const getUserPhotos = () => {
     axios.get(`/api/profile/event_photos/${currentUserInfo.id}`)
       .then(({ data }) => {
@@ -68,7 +65,9 @@ const Profile: React.FC = () => {
   useEffect(() => {
     getUserEvents();
     getUserPhotos();
+    console.log(currentUserInfo);
   }, []);
+
 
   if (currentUserInfo.id) {
     return (
