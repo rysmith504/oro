@@ -77,8 +77,19 @@ a:-webkit-any-link {
 margin-top: 20px;
 }
 
+.css-9425fu-MuiOutlinedInput-notchedOutline {
+  border-color: ${(props) => props.theme.palette.primary.main};
+}
 
-  `;
+.css-1xc75p7-MuiFormLabel-root-MuiInputLabel-root {
+  color: ${(props) => props.theme.palette.primary.main};
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  color: ${(props) => props.theme.palette.primary.contrastText};
+}
+
+`;
 
 // Global Theme Export
 export const Theme = ({ children }) => {
