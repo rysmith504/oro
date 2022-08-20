@@ -99,7 +99,7 @@ app.use(
   }),
 );
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session()) // Why did you remove me Vincent?!
 
 // console.log('passport file');
 passport.use(new GoogleStrategy(
@@ -159,7 +159,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'], accessType: 'offline', prompt: 'consent' })
 );
 
 app.get(
