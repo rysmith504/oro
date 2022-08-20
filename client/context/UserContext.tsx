@@ -7,7 +7,16 @@ const UserContext = React.createContext({});
 const UserContextProvider = ({ children }) => {
   const [userEvents, setUserEvents] = useState([]);
   const [ currentUserInfo, setCurrentUserInfo ] = useState([]);
+  const [dbUserInfo, setDbUserInfo] = useState([]);
   const [userContacts, setUserContacts] = useState([]);
+
+  // const getDbUserInfo = () => {
+  //   axios.get(`/api/profile/${currentUserInfo.id}`)
+  //     .then(({ data }) => {
+  //       setDbUserInfo(data);
+  //     })
+  //     .catch(err => console.error(err));
+  // }
 
   const getUserEvents = () => {
     axios
@@ -57,6 +66,9 @@ const UserContextProvider = ({ children }) => {
         // set state to user info
         setCurrentUserInfo(data);
       })
+      .then(() => {
+        console.log(currentUserInfo);
+      })
       .catch((err) => {
         console.error(err);
       });
@@ -72,11 +84,6 @@ const UserContextProvider = ({ children }) => {
 
   }, [currentUserInfo])
 
-
-  // useEffect(async () => {
-  //   if(currentUserInfo) {
-  //   }
-  // }, [])
   const getUserContacts = () => {
     if(currentUserInfo){
       axios.get('/api/users/allusers', { params: { id: currentUserInfo.id } })
@@ -85,7 +92,8 @@ const UserContextProvider = ({ children }) => {
       })
     }
   }
-  // }
+
+  console.log(dbUserInfo);
 
   const appProps = {
     userContacts,

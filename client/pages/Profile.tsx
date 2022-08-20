@@ -45,6 +45,9 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const Profile: React.FC = () => {
   const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
   const [userPhotos, setUserPhotos] = useState([]);
+  const [facebookLink, setFacebookLink] = useState('')
+  const [instagramLink, setInstagramLink] = useState('')
+  const [twitterLink, setTwitterLink] = useState('')
   const [expanded, setExpanded] = React.useState('panel1');
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
@@ -71,6 +74,22 @@ const Profile: React.FC = () => {
     setOpen(false);
   };
 
+  const handleUpdate = () => {
+    setOpen(false);
+  };
+
+  const handleFacebookChange = e => {
+    setFacebookLink(e.target.value);
+  }
+
+  const handleInstagramChange = e => {
+    setInstagramLink(e.target.value);
+  }
+  
+  const handleTwitterChange = e => {
+    setTwitterLink(e.target.value);
+  }
+  
   useEffect(() => {
     getUserEvents();
     getUserPhotos();
@@ -93,38 +112,45 @@ const Profile: React.FC = () => {
               <DialogContentText>
                 Add your social media accounts to stay connected with other concert and festival goers.
               </DialogContentText>
-              <FacebookIcon></FacebookIcon>
+              <div>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label={<FacebookIcon/>}
+                  type="email"
+                  fullWidth
+                  variant="standard"
+                  placeholder='Facebook Link'
+                  onChange={handleFacebookChange}
+                />
+              </div>
               <TextField
                 autoFocus
                 margin="dense"
                 id="name"
-                label="Facebook"
+                label={<InstagramIcon/>}
                 type="email"
                 fullWidth
                 variant="standard"
+                placeholder='Instagram Link'
+                onChange={handleInstagramChange}
               />
               <TextField
                 autoFocus
                 margin="dense"
                 id="name"
-                label="Instagram"
+                label={<TwitterIcon/>}
                 type="email"
                 fullWidth
                 variant="standard"
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Twitter"
-                type="email"
-                fullWidth
-                variant="standard"
+                placeholder='Twitter Link'
+                onChange={handleTwitterChange}
               />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleClose}>Update</Button>
+              <Button onClick={handleUpdate}>Update</Button>
             </DialogActions>
           </Dialog>
         </div>
