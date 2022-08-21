@@ -51,9 +51,9 @@ const EventFeed: React.FC = ({socket, userId}) => {
   };
 
   useEffect(() => {
-    console.log('USERID', userId);
-    console.log('SOCKET', socket);
-    // console.log(currentUserInfo);
+    // console.log('USERID', userId);
+    // console.log('SOCKET', socket);
+    console.log(currentUserInfo);
     updateFeed();
   }, []);
 
@@ -92,8 +92,8 @@ const EventFeed: React.FC = ({socket, userId}) => {
         );
       })}
 
-      <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
-      <Fab variant='extended' size='small' onClick={handleFileUpload}>
+      <OutlinedInput sx={{mt: '20px'}} accept="image/*" type='file' name='image' onChange={handleFileChange}/>
+      <Fab variant='extended' size='small' onClick={handleFileUpload} sx={{ml: '20px'}}>
               Upload
       </Fab>
     </div>
