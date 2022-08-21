@@ -58,16 +58,16 @@ const FeedPhoto: React.FC = (props) => {
 
   return (
     <div>
-      <Modal style={{alignItems: 'left', justifyContent: 'left'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
-        <Box sx={{margin: 'auto', bgcolor: 'black', width: 400, alignItems: 'left', justifyContent: 'left'}}>
+      <Modal style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
+        <Box sx={{margin: 'auto', bgcolor: inverseMode, width: 400, alignItems: 'left', justifyContent: 'left', pt: '20px', outline: 'none'}}>
 
-          <img width='350px' height='auto' margin='auto' src={photo.photoUrl}/>
-          <Grid container>
+          <img width='350px' height='auto' src={photo.photoUrl}/>
+          <Grid container sx={{mt: '20px'}}>
             <Comments photo={photo}/>
           </Grid>
         </Box>
       </Modal>
-      <Card sx={{ maxWidth: 400, margin: 'auto'}}>
+      <Card sx={{ maxWidth: 400, margin: 'auto', mt: '20px'}}>
         <CardHeader
           avatar={
             <Link to={`/user/?id=${photo.userId}`}>

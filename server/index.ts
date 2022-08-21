@@ -9,22 +9,8 @@ require('dotenv').config();
 
 import api from './routes/index';
 
-// import eventListingsRouter from './routes/eventListingsRouter';
-// import artistsRouter from './routes/artistsRouter';
-// import songFinderRouter from './routes/songFinder';
-// import eventDetailsRouter from './routes/eventDetail';
-// import travelPlannerRouter from './routes/travelPlanner';
-// import profileRouter from './routes/profile';
 
-// import eventFeedRouter from './routes/eventFeed';
-// import profileRouter from './routes/profile';
-// import commentsRouter from './routes/comments';
-// import usersRouter from './routes/usersRouter'
-import prisma from './database/db';
-import passport from 'passport';
-
-
-// console.log('index server');
+console.log('index server');
 const app = express();
 const io = new Server({
   cors: {
@@ -35,17 +21,17 @@ const io = new Server({
 let onlineUsers = [];
 
 
-const addNewUser = (userId, socketId) => {
-  if (!onlineUsers.some(user=>user.username === username) && onlineUsers.push({userId, socketId}))
-}
+// const addNewUser = (userId, socketId) => {
+//   if (!onlineUsers.some(user=>user.username === username) && onlineUsers.push({userId, socketId}))
+// }
 
 const removeUser = (socketId) => {
   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
-}
+};
 
 const getUser = (userId) => {
   return onlineUsers.find((user) => user.userId === userId);
-}
+};
 
 io.on('connection', (socket) => {
   console.log('someone has connected');
@@ -53,12 +39,12 @@ io.on('connection', (socket) => {
 
   socket.on('newUser', (userId) => {
     addNewUser(userId, socket.id);
-  })
+  });
 
   socket.on('disconnect', () => {
     console.log('someone has left');
     removeUser(socket.id);
-  })
+  });
 });
 
 io.listen(3000);
@@ -74,7 +60,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 //ROUTERS------------------------------
 app.use('/api', api);
 
- 
+
 // app.use('/events', eventListingsRouter);
 // app.use('/favArtists', artistsRouter);
 // app.use('/songs', songFinderRouter);

@@ -38,8 +38,6 @@ const Comments: React.FC = (props) => {
     style: { color: '#9B27B0' }
   };
 
-  { /* <CssTextField InputLabelProps={fontColor} inputProps={fontColor} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} /> */ }
-
   useEffect(() => {
     getComments();
   }, []);
@@ -97,9 +95,9 @@ const Comments: React.FC = (props) => {
         );
       })}
 
-      <CssTextField InputLabelProps={fontColor} inputProps={fontColor} sx={{ ml: '15px'}} color="secondary" size='small' onChange={(e) => handleComment(e)} value={message}/>
+      <CssTextField InputLabelProps={fontColor} inputProps={fontColor} sx={{ ml: '15px', mb: '40px', mt: '20px'}} color="secondary" size='small' onChange={(e) => handleComment(e)} value={message}/>
       <Fab variant='extended' type='submit' onClick={handleSend}
-        sx={{bgcolor: inverseMode}}><SendIcon sx={{ color: iconColors}}/></Fab>
+        sx={{bgcolor: iconColors, ml: '20px', mt: '15px'}}><SendIcon sx={{ color: inverseMode }}/></Fab>
     </div>
   );
 };

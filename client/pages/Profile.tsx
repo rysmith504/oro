@@ -138,18 +138,16 @@ const Profile: React.FC = () => {
   if (currentUserInfo.id) {
     return (
       <div>
+        <Avatar
+          alt={currentUserInfo.displayName}
+          src={currentUserInfo.photos[0].value}
+          sx={{ width: 150, height: 150, mt: '30px', ml: 'auto', mr: 'auto' }}
+        />
         <h1>Hello {currentUserInfo.name.givenName}</h1>
-        <div id='profile_avatar'>
-          <Avatar
-            alt={currentUserInfo.displayName}
-            src={currentUserInfo.photos[0].value}
-            sx={{ width: 75, height: 75 }}
-          />
-        </div>
         <div>
-          <Button variant="outlined" onClick={handleClickOpen}>Update Profile</Button>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Update Profile</DialogTitle>
+          <Button sx={{ bgcolor: inverseMode, colors: inverseMode, mb: '30px', }} variant="outlined" onClick={handleClickOpen}>Update Profile</Button>
+          <Dialog open={open} onClose={handleClose} sx={{ bgcolor: inverseMode, colors: inverseMode }}>
+            <DialogTitle sx={{ bgcolor: inverseMode, colors: inverseMode }}>Update Profile</DialogTitle>
             <DialogContent>
               <DialogContentText>
                 Add your social media accounts to stay connected with other concert and festival goers.

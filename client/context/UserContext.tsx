@@ -67,16 +67,16 @@ const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     getUserContacts();
-  }, [currentUserInfo])
+  }, [currentUserInfo]);
 
   const getUserContacts = () => {
-    if(currentUserInfo){
+    if (currentUserInfo) {
       axios.get('/api/users/allusers', { params: { id: currentUserInfo.id } })
-      .then(resObj => {
-        setUserContacts(resObj.data)
-      })
+        .then(resObj => {
+          setUserContacts(resObj.data);
+        });
     }
-  }
+  };
 
   const appProps = {
     userContacts,

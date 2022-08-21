@@ -8,8 +8,8 @@ import profileRouter from './profile';
 import eventFeedRouter from './eventFeed';
 import commentsRouter from './comments';
 import notificationsRouter from './notifications';
-import usersRouter from './usersRouter'
-import messagesRouter from './messagesRouter'
+import usersRouter from './usersRouter';
+import messagesRouter from './messagesRouter';
 
 
 const api = Router();
