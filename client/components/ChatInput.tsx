@@ -24,7 +24,6 @@ const ChatInput: React.FC<{}> = ({ handleSendMsg }) => {
   const handleEmojiMenuToggle = () => {
     setShowEmojiPicker(!showEmojiPicker)
   }
-  useEffect(()=>{console.log('INPUT', document.querySelectorAll(" p > div "))}, [])
 
   const enterClick = (e) => {
     if (e.keyCode === 13) {

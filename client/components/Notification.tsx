@@ -24,10 +24,10 @@ const Notification: React.FC = (props) => {
     })
       .then((photoObj) => {
         // console.log(photoObj);
-        setPhoto(photoObj.data)
+        setPhoto(photoObj.data);
       })
       .catch((err) => console.error(err));
-  }
+  };
 
   useEffect(() => {
     getPhoto();
@@ -67,30 +67,36 @@ const Notification: React.FC = (props) => {
   }, []);
 
   const handleOpen = () => {
-    console.log('changed');
+    // console.log('changed');
     setModalStatus(true);
-  }
+  };
 
   const handleClose = () => {
-    console.log('closed');
+    // console.log('closed');
     setModalStatus(false);
-  }
+  };
 
 
   return (
     <div>
-      <Modal style={{alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
-        <Box sx={{margin: 'auto', bgcolor: 'black', width: 350, alignItems: 'center', justifyContent: 'center'}}>
+      <Modal
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'}}
+        sx={{overflow: 'scroll', marginTop: '40px', paddingTop: '10px'}}
+        open={modalStatus}
+        onClose={handleClose}>
+        <Box sx={{margin: 'auto', bgcolor: inverseMode, width: 350, alignItems: 'center', justifyContent: 'center', pt: '20px', outline: 'none'}}>
 
-          <img width='300px' height='auto' margin='auto' src={photoUrl}/>
-          <Grid container>
+          <img width='300px' height='auto' src={photoUrl}/>
+          <Grid container sx={{mt: '20px'}}>
             <Comments photo={photo}/>
           </Grid>
         </Box>
       </Modal>
 
-      <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px'}}>
-      <Paper sx={{margin: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
+      <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
         {person}{text}
         <img height='30px' width='auto' src={photoUrl}/>
       </Paper>
