@@ -1,12 +1,12 @@
 import path from 'path';
 import express from 'express';
-import cors from 'cors'
+import cors from 'cors';
 import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
 import prisma from '../database/db';
 // import * as socket from 'socket.io';
-const socket = require('socket.io')
+const socket = require('socket.io');
 require('dotenv').config();
 
 
@@ -235,10 +235,10 @@ io.on('connection', (socket) => {
   });
 
   socket.on('send-msg', (data) => {
-    console.log('sendmsg', data, 'ONLINEUSERS', onlineUsers, 'GLOBAL OU', global.onlineUsers,)
+    console.log('sendmsg', data, 'ONLINEUSERS', onlineUsers, 'GLOBAL OU', global.onlineUsers,);
     const sendUserSocket = onlineUsers.get(data.receiverId);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit('msg-receive', data.text)
+      socket.to(sendUserSocket).emit('msg-receive', data.text);
     }
   });
 });
