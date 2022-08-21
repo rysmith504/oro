@@ -38,4 +38,24 @@ notificationsRouter.post('/', async (req, res) => {
   }).catch(() => res.sendStatus(500));
 });
 
+notificationsRouter.delete('/', async (req, res) => {
+  const {userId} = req.body;
+  console.log(userId);
+  console.log(req);
+
+  await prisma.notifications.deleteMany({
+    where: {
+      userId,
+    }
+  })
+    .then((data) => {
+      console.log(data);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    })
+})
+
 export default notificationsRouter;
