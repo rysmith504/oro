@@ -63,12 +63,10 @@ const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
      getCurrentUser();
-     getUserContacts();
   }, []);
 
   useEffect(() => {
     getUserContacts();
-
   }, [currentUserInfo])
 
   const getUserContacts = () => {

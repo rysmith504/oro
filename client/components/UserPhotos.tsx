@@ -33,7 +33,6 @@ const UserPhotos: React.FC = ({ photos }) => {
               onClose={handleClose}
             >
               <Box sx={{ margin: 'auto', bgcolor: inverseMode, width: 350, alignItems: 'center', justifyContent: 'center' }}>
-
                 <img width='300px' height='auto' margin='auto' src={photo.photoUrl} />
                 <Grid container>
                   <Comments photo={photo} />
