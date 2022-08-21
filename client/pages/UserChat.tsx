@@ -55,9 +55,6 @@ const UserChat: React.FC = () => {
         socket.current = io('http://localhost:5000');
         socket.current.emit('add-user', currentUser.id)
     }
-
-      console.log(currentUser);
-      console.log('CURRENTCHAT', currentChat)
   }, [currentUser]);
   useEffect(()=>{console.log('CHAT', document.querySelectorAll(" p > div "))}, [])
 
