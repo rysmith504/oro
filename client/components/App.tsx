@@ -36,6 +36,7 @@ const App: React.FC = () => {
   const {currentUserInfo} = userContext;
 
   const [notifications, setNotifications] = React.useState(0);
+  const [profilePic, setProfilePic] = useState('');
 
   const getNotifications = () => {
     axios.get('/api/notifications', {
@@ -59,7 +60,20 @@ const App: React.FC = () => {
   // }, [currentUser]);
   const navClick = () => {
     getNotifications();
+    getAvatar();
   }
+
+    const getAvatar = async () => {
+    await axios.get('/api/eventFeed/avatar', {
+      params: {
+        userId: currentUserInfo.id
+      }
+    })
+      .then((userProfile) => {
+        setProfilePic(userProfile.data);
+      })
+      .catch((err) => console.error(err));
+  };
 
 
 
@@ -67,7 +81,7 @@ const App: React.FC = () => {
     <Container onClick={navClick}>
       <EventContextProvider>
         <ArtistContextProvider>
-          <Navbar notif={notifications}/>
+          <Navbar notif={notifications} profile={profilePic}/>
           <Routes>
             <Route path='/home' element={<Home />} />
             <Route path='/profile' element={<Profile />} />

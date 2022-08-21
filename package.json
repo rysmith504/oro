@@ -66,6 +66,7 @@
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.5",
     "ts-postgres": "^1.2.1",
+    "uuid": "^8.3.2",
     "webpackbar": "^5.0.2",
     "yarn": "^1.22.19"
   },

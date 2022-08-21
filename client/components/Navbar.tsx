@@ -23,7 +23,8 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Grid, Container } from '../styles/material';
 import Badge from '@mui/material/Badge';
 import { UserContext } from '../context/UserContext';
-
+import {Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail} from '@mui/icons-material';
+import {Avatar} from '../styles/material';
 const iconColors = '';
 const inverseMode = '';
 
@@ -31,7 +32,7 @@ const inverseMode = '';
 
 const Navbar = (props) => {
 
-  const {notif} = props;
+  const {notif, profile} = props;
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -39,12 +40,16 @@ const Navbar = (props) => {
   const themeContext = useContext(ThemeContext);
   const { mode, setMode, toggleMode } = themeContext;
 
+  
+
   const pages = [
+  
     <Link
       to='/home'
       style={{ textDecoration: 'none'}}
       key={'home'}
     >
+      <Home/>
     HOME
     </Link>,
     <Link
@@ -52,44 +57,43 @@ const Navbar = (props) => {
       style={{ textDecoration: 'none'}}
       key={'eventListings'}
     >
+      <TravelExplore/>
       Find Events
-    </Link>,
-    <Link
-      to='/eventFeed'
-      style={{ textDecoration: 'none' }}
-      key={'eventListings'}
-    >
-      Event Feed
-    </Link>,
-    <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
-      Song Finder
-    </Link>,
-    <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
-      Artists
-    </Link>,
-    <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>
-      details
     </Link>,
     <Link
       to='/travelPlanner'
       style={{ textDecoration: 'none' }}
       key={'travelPlanner'}
     >
+      <Luggage/>
       Travel Planner
     </Link>,
     <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
-      BackPack
+      <PriceChange/>
+      Budgets
     </Link>,
-    <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
-    <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
-    Login
+    <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
+      <MusicNote/>
+      Song Finder
     </Link>,
+    <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
+      <Grade/>
+      Favorite Artists
+    </Link>,
+    <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum/> Chat</Link>,
+    <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
+      <Badge badgeContent={notif} color="primary" >
+        <Mail/>
+      </Badge>
+      Notifications</Link>,
     <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
+      <Avatar src={profile}/>
     Account
     </Link>,
-    <Badge badgeContent={notif} color="primary"  key={'notifications'}>
-      <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>
-    </Badge>
+    <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
+      <Login/>
+    Login
+    </Link>,
   ];
 
 
