@@ -16,17 +16,17 @@ if (!rootElement) {
 const root = createRoot(rootElement);
 
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path='*' element={
-        <ThemeContextProvider>
-          <Theme>
-            <UserContextProvider>
-              <App/>
-            </UserContextProvider>
-          </Theme>
-        </ThemeContextProvider>} />
-    </Routes>
-  </BrowserRouter>
+  <UserContextProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path='*' element={
+          <ThemeContextProvider>
+            <Theme>
+              <App />
+            </Theme>
+          </ThemeContextProvider>} />
+      </Routes>
+    </BrowserRouter>
+  </UserContextProvider>
 
 );

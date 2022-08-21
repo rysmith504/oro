@@ -96,61 +96,55 @@ const EventCardDetails = ({events, event}) => {
   };
 
   return (
-    <div>
-      <Paper
-        sx={{
-          p: 2,
-          margin: 'auto auto 10px auto',
-          maxWidth: 500,
-          flexGrow: 1,
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        }}
-      >
 
-        <Grid container spacing={4} alignItems='center' sx={{ bgcolor: inverseMode }}>
-          <Grid item>
-            <ButtonBase
-              sx={ { width: 128, height: 128 } }
-              onClick={()=> getDetails()}>
-              <InfoIcon/>
-              <Img alt="alt tag" src={image} />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography variant="body2" gutterBottom paragraph sx={{ bgcolor: inverseMode }}>
-                  {event.eventName}
-                  {event.artistInfo.map((artist, index) => (
-                    <div key={`artistName${index}`}>
-                      {artist.artistName}
-                    </div>
-                  ))}
-                  {date}
+    <Grid container spacing={4} alignItems='center'
+      sx={{ bgcolor: inverseMode,
+        color: iconColors,
+        p: 2,
+        margin: 'auto auto 10px auto',
+        maxWidth: 500,
+        flexGrow: 1, }}>
+      <Grid item>
+        <ButtonBase
+          sx={ { width: 128, height: 128 } }
+          onClick={()=> getDetails()}>
+          <InfoIcon sx={{ mr: '20px' }}/>
+          <Img alt="alt tag" src={image} />
+        </ButtonBase>
+      </Grid>
+      <Grid item xs={12} sm container>
+        <Grid item xs container direction="column" spacing={2}>
+          <Grid item xs>
+            <Typography variant="body2" gutterBottom paragraph sx={{ bgcolor: inverseMode }}>
+              {event.eventName}
+              {event.artistInfo.map((artist, index) => (
+                <div key={`artistName${index}`}>
+                  {artist.artistName}
+                </div>
+              ))}
+              {date}
+              <br/>
+              {event.venueInfo.map((venue, index) => (
+                <div key={`venue${index}`}>
+                  {Object.values(venue.address)}
                   <br/>
-                  {event.venueInfo.map((venue, index) => (
-                    <div key={`venue${index}`}>
-                      {Object.values(venue.address)}
-                      <br/>
-                      {venue.city}, {venue.state} {venue.postalCode}
-                    </div>
-                  ))
-                  }
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <PushPinIcon
-                id={event.eventId}
-                color={pins.includes(event.eventId) ? 'secondary' : 'action'}
-                onClick={ handleClick }
-              />
-            </Grid>
+                  {venue.city}, {venue.state} {venue.postalCode}
+                </div>
+              ))
+              }
+            </Typography>
           </Grid>
         </Grid>
-      </Paper>
-    </div>
+        <Grid item>
+          <PushPinIcon
+            id={event.eventId}
+            color={pins.includes(event.eventId) ? '#1A76D2' : iconColors}
+            onClick={ handleClick }
+            sx={{ mr: '20px' }}
+          />
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

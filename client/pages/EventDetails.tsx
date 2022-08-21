@@ -21,7 +21,6 @@ const EventDetails: React.FC = () => {
   const { getEventDetails, eventDetails } = useContext(EventContext);
 
   const idEvent = searchParams.get('id');
-  const navigate = useNavigate();
 
   const theme = useTheme();
   const inverseMode = theme.palette.secondary.main;

@@ -15,7 +15,11 @@ const NotificationsFeed: React.FC = () => {
 
   useEffect(() => {
     getNotifications();
-
+    axios.put('/api/notifications', {
+      userId: currentUserInfo.id,
+    })
+      .then(() => console.log('updated'))
+      .catch((err) => console.error(err));
   }, []);
 
 

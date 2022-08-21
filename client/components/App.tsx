@@ -32,33 +32,40 @@ const App: React.FC = () => {
   const [isDarkMode, setDarkMode] = useState(true);
 
 
+  useEffect(() => {
+    console.log(currentUserInfo.id);
+  }, []);
 
+  useEffect(() => {
+    // setSocket(io('http://localhost:3000'));
+  }, [currentUser]);
 
 
 
   return (
     <Container>
       <EventContextProvider>
-        <UserContextProvider>
-          <ArtistContextProvider>
-            <Navbar />
-            <Routes>
-              <Route path='/home' element={<Home />} />
-              <Route path='/profile' element={<Profile />} />
-              <Route path='/notifications' element={<NotificationsFeed/>} />
-              <Route path='/backpack' element={<BackPack />} />
-              <Route path='/eventListings' element={<EventListings />} />
-              <Route path='/eventFeed' element={<EventFeed/>} />
-              <Route path='/songFinder' element={<SongFinder />} />
-              <Route path='/artists' element={<Artists />} />
-              <Route path='/details' element={<EventDetails />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/user' element={<OtherUser />} />
-              <Route path='/travel-planner' element={<TravelPlanner />} />
-              <Route path='/chat' element={<UserChat />} />
-            </Routes>
-          </ArtistContextProvider>
-        </UserContextProvider>
+        {/* <UserContextProvider> */}
+        <ArtistContextProvider>
+          <Navbar socket={socket}/>
+          <Routes>
+            <Route path='/home' element={<Home />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/notifications' element={<NotificationsFeed socket={socket}/>} />
+            <Route path='/backpack' element={<BackPack />} />
+            <Route path='/eventListings' element={<EventListings />} />
+            <Route path='/eventFeed' element={<EventFeed socket={socket}/>} />
+            <Route path='/songFinder' element={<SongFinder />} />
+            <Route path='/artists' element={<Artists />} />
+            <Route path='/artists/*' element={<Artists />}/>
+            <Route path='/details' element={<EventDetails />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/user' element={<OtherUser />} />
+            <Route path='/travel-planner' element={<TravelPlanner />} />
+            <Route path='/chat' element={<UserChat />} />
+          </Routes>
+        </ArtistContextProvider>
+        {/* </UserContextProvider> */}
       </EventContextProvider>
     </Container>
   );
