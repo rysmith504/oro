@@ -89,8 +89,8 @@ const Notification: React.FC = (props) => {
         </Box>
       </Modal>
 
-      <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px'}}>
-      <Paper sx={{margin: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
+      {/* <Paper  sx={{margin: 'auto', marginTop: '5px'}}> */}
+      <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
         {person}{text}
         <img height='30px' width='auto' src={photoUrl}/>
       </Paper>
