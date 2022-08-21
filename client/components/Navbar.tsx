@@ -104,7 +104,7 @@ const Navbar = () => {
     <AppBar position='sticky' sx={{ bgcolor: inverseMode }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <img src={mode === 'dark' ? 'images/VSLOGO-dark.png' : 'images/VSLOGO.png'} height='75'/>
+          <a href='/'><img src={mode === 'dark' ? 'images/VSLOGO-dark.png' : 'images/VSLOGO.png'} height='75'/></a>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', bgcolor: inverseMode } }}>
             {pages.map((page, index) => (
               <Button
