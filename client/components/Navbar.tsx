@@ -25,12 +25,12 @@ const inverseMode = '';
 
 const pages = [
   <Link
-  to='/home'
-  style={{ textDecoration: 'none'}}
-  key={'home'}
->
+    to='/home'
+    style={{ textDecoration: 'none'}}
+    key={'home'}
+  >
   HOME
-</Link>,
+  </Link>,
   <Link
     to='/eventListings'
     style={{ textDecoration: 'none'}}
@@ -62,7 +62,7 @@ const pages = [
     Travel Planner
   </Link>,
   <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
-    BackPack
+    Budgets
   </Link>,
   <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
   <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
