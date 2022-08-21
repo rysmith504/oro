@@ -1,4 +1,6 @@
 import * as React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
 import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,68 +21,77 @@ import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
 import { Box, Grid, Container } from '../styles/material';
+import Badge from '@mui/material/Badge';
+import { UserContext } from '../context/UserContext';
 
 const iconColors = '';
 const inverseMode = '';
 
-const pages = [
-  <Link
-  to='/home'
-  style={{ textDecoration: 'none'}}
-  key={'home'}
->
-  HOME
-</Link>,
-  <Link
-    to='/eventListings'
-    style={{ textDecoration: 'none'}}
-    key={'eventListings'}
-  >
-    Find Events
-  </Link>,
-  <Link
-    to='/eventFeed'
-    style={{ textDecoration: 'none' }}
-    key={'eventListings'}
-  >
-    Event Feed
-  </Link>,
-  <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
-    Song Finder
-  </Link>,
-  <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
-    Artists
-  </Link>,
-  <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>
-    details
-  </Link>,
-  <Link
-    to='/travelPlanner'
-    style={{ textDecoration: 'none' }}
-    key={'travelPlanner'}
-  >
-    Travel Planner
-  </Link>,
-  <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
-    BackPack
-  </Link>,
-  <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
-  <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
-  Login
-  </Link>,
-  <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-  Account
-  </Link>,
-  <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>Notifications</Link>
-];
 
-const Navbar = () => {
+
+const Navbar = (props) => {
+
+  const {notif} = props;
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
 
   const themeContext = useContext(ThemeContext);
   const { mode, setMode, toggleMode } = themeContext;
+
+  const pages = [
+    <Link
+      to='/home'
+      style={{ textDecoration: 'none'}}
+      key={'home'}
+    >
+    HOME
+    </Link>,
+    <Link
+      to='/eventListings'
+      style={{ textDecoration: 'none'}}
+      key={'eventListings'}
+    >
+      Find Events
+    </Link>,
+    <Link
+      to='/eventFeed'
+      style={{ textDecoration: 'none' }}
+      key={'eventListings'}
+    >
+      Event Feed
+    </Link>,
+    <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
+      Song Finder
+    </Link>,
+    <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
+      Artists
+    </Link>,
+    <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>
+      details
+    </Link>,
+    <Link
+      to='/travelPlanner'
+      style={{ textDecoration: 'none' }}
+      key={'travelPlanner'}
+    >
+      Travel Planner
+    </Link>,
+    <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
+      BackPack
+    </Link>,
+    <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
+    <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
+    Login
+    </Link>,
+    <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
+    Account
+    </Link>,
+    <Badge badgeContent={notif} color="primary"  key={'notifications'}>
+      <Link to='/notifications' style={{ textDecoration: 'none' }}>Notifications</Link>
+    </Badge>
+  ];
+
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null

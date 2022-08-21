@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import axios from 'axios';
+
 import Profile from '../pages/Profile';
 import Home from '../pages/Home';
 import NotificationsFeed from '../pages/NotificationsFeed';
@@ -30,6 +32,22 @@ const App: React.FC = () => {
   // update React.FC, .FC deprecated?
   const themeContext = useContext(ThemeContext);
   const [isDarkMode, setDarkMode] = useState(true);
+  const userContext = useContext(UserContext);
+  const {currentUserInfo} = userContext;
+
+  const [notifications, setNotifications] = React.useState(0);
+
+  const getNotifications = () => {
+    axios.get('/api/notifications', {
+      params: {
+        userId: currentUserInfo.id
+      }
+    })
+      .then((notifData) => {
+        setNotifications(notifData.data.filter((notif) => !notif.read).length)
+      })
+      .catch((err) => console.error(err));
+  }
 
 
   // useEffect(() => {
@@ -39,15 +57,17 @@ const App: React.FC = () => {
   // useEffect(() => {
   //   // setSocket(io('http://localhost:3000'));
   // }, [currentUser]);
+  const navClick = () => {
+    getNotifications();
+  }
 
 
 
   return (
-    <Container>
+    <Container onClick={navClick}>
       <EventContextProvider>
-        {/* <UserContextProvider> */}
         <ArtistContextProvider>
-          <Navbar/>
+          <Navbar notif={notifications}/>
           <Routes>
             <Route path='/home' element={<Home />} />
             <Route path='/profile' element={<Profile />} />
@@ -65,7 +85,6 @@ const App: React.FC = () => {
             <Route path='/chat' element={<UserChat />} />
           </Routes>
         </ArtistContextProvider>
-        {/* </UserContextProvider> */}
       </EventContextProvider>
     </Container>
   );

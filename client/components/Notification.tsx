@@ -23,7 +23,6 @@ const Notification: React.FC = (props) => {
       }
     })
       .then((photoObj) => {
-        // console.log(photoObj);
         setPhoto(photoObj.data)
       })
       .catch((err) => console.error(err));
@@ -35,7 +34,6 @@ const Notification: React.FC = (props) => {
 
 
   const getPerson = () => {
-    // console.log(notif.userId);
     axios.get('/api/comments/comment', {
       params: {
         commentId: notif.commentId,
@@ -43,10 +41,8 @@ const Notification: React.FC = (props) => {
     })
       .then((commentData) => {
         setPhotoUrl(commentData.data.photoUrl);
-        // console.log(data)
         axios.get(`/api/profile/${commentData.data.userId}`)
           .then((commenterData) => {
-            // console.log(commenterData)
             setPerson(commenterData.data.fullName);
           })
           .catch((err) => console.error(err));
@@ -63,16 +59,13 @@ const Notification: React.FC = (props) => {
   useEffect(() => {
     getPerson();
     getType();
-    // console.log(notif);
   }, []);
 
   const handleOpen = () => {
-    console.log('changed');
     setModalStatus(true);
   }
 
   const handleClose = () => {
-    console.log('closed');
     setModalStatus(false);
   }
 
