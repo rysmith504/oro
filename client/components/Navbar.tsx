@@ -18,6 +18,8 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
+import { Box, Grid, Container } from '../styles/material';
+
 const iconColors = '';
 const inverseMode = '';
 
@@ -101,68 +103,70 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position='sticky' sx={{ bgcolor: inverseMode }}>
+    <AppBar position='sticky' sx={{ bgcolor: inverseMode, paddingRight: '20px' }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <a href='/'><img src={mode === 'dark' ? 'images/VSLOGO-dark.png' : 'images/VSLOGO.png'} height='75'/></a>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', bgcolor: inverseMode } }}>
-            {pages.map((page, index) => (
-              <Button
-                key={`page${index}`}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+          <Grid container>
+            <Grid item xs={9} sm={10} style={{ display: 'flex', alignItems: 'left' }}>
+              <a href='/'><img src={mode === 'dark' ? 'images/VSLOGO-dark.png' : 'images/VSLOGO.png'} height='75'/></a>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'none', bgcolor: inverseMode }, mr: '5px' }}>
+                {pages.map((page, index) => (
+                  <Button
+                    key={`page${index}`}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Box>
+            </Grid>
+            <Grid item xs={2} sm={1} style={{ display: 'flex'}} sx={{margin: 'auto'}}>
+              <IconButton onClick={toggleMode}>
+                {mode === 'dark' ? (
+                  <div><Tooltip title='Dark mode'><NightlightIcon fontSize='medium' sx={{ color: iconColors }}/></Tooltip>
+                  </div>
+                ) : (
+                  <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='medium' sx={{ color: iconColors }}/></Tooltip>
+                  </div>
+                )}
+              </IconButton>
+            </Grid>
+            <Grid item xs={1} style={{ display: 'flex' }} sx={{margin: 'auto'}}>
+              <IconButton
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleOpenNavMenu}
               >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0}}>
-            <IconButton onClick={toggleMode}>
-              {mode === 'dark' ? (
-                <div><Tooltip title='Dark mode'><NightlightIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
-                </div>
-              ) : (
-                <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='small' sx={{ color: iconColors }}/></Tooltip>
-                </div>
-              )}
-            </IconButton>
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-            >
-              <MenuIcon sx={{ color: iconColors }}/>
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'block', lg: 'block' },
-              }}
-            >
-              {pages.map((page, index) => (
-                <MenuItem key={`nav${index}`} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                <MenuIcon sx={{ color: iconColors }} fontSize='large'/>
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'block', lg: 'block' },
+                }}
+              >
+                {pages.map((page, index) => (
+                  <MenuItem key={`nav${index}`} onClick={handleCloseNavMenu}>
+                    <Typography textAlign='center'>{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Grid>
+          </Grid>
         </Toolbar>
       </Container>
     </AppBar>
