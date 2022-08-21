@@ -47,12 +47,6 @@ const pages = [
   <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>
     details
   </Link>,
-  <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
-    Login
-  </Link>,
-  <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-    Account
-  </Link>,
   <Link
     to='/travelPlanner'
     style={{ textDecoration: 'none' }}
@@ -64,6 +58,12 @@ const pages = [
     BackPack
   </Link>,
   <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
+  <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
+  Login
+  </Link>,
+  <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
+  Account
+  </Link>,
   <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>Notifications</Link>
 ];
 

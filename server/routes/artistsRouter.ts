@@ -3,6 +3,17 @@ import axios from 'axios';
 const artistsRouter = Router();
 import prisma from '../database/db';
 
+artistsRouter.get('/events', (req, res) => {
+  const { keyword } = req.query;
+  axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=10&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
+    .then((responseObj) => {
+
+      if (responseObj.data._embedded) {
+        res.status(200).send(responseObj.data._embedded);
+      }
+    })
+    .catch(err => console.error(err));
+});
 artistsRouter.get('/:id', (req, res) => {
   const { id } = req.params;
   prisma.users.findUnique({
@@ -37,42 +48,31 @@ artistsRouter.get('/:id', (req, res) => {
         });
     });
 });
-artistsRouter.get('/events', (req, res) => {
-  const { keyword } = req.query;
-  artistsRouter.get('/', (req, res) => {
-    const { _id } = req.params;
-    prisma.users.findUnique({
-      where: {
-        googleId: _id,
-      }
-    })
-      .then((userInfo) => {
-        prisma.artistFollowing.findUnique({
-          where: {
-            userId: userInfo._id,
-          }
-        })
-          .then((data) => {
-          // console.log(data);
-            res.status(200).send(data);
-          })
-          .catch((err) => res.sendStatus(500));
-      })
-      .catch((err) => {
-        res.sendStatus(500);
-      });
+// artistsRouter.get('/', (req, res) => {
+//   const { _id } = req.params;
+//   prisma.users.findUnique({
+//     where: {
+//       googleId: _id,
+//     }
+//   })
+//     .then((userInfo) => {
+//       prisma.artistFollowing.findUnique({
+//         where: {
+//           userId: userInfo._id,
+//         }
+//       })
+//         .then((data) => {
+//           // console.log(data);
+//           res.status(200).send(data);
+//         })
+//         .catch((err) => res.sendStatus(500));
+//     })
+//     .catch((err) => {
+//       res.sendStatus(500);
+//     });
 
-  });
+// });
 
-  axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?size=10&keyword=${keyword}&apikey=${process.env.TICKETMASTER_API_KEY}`)
-    .then((responseObj) => {
-
-      if (responseObj.data._embedded) {
-        res.status(200).send(responseObj.data._embedded);
-      }
-    })
-    .catch(err => console.error(err));
-});
 
 
 artistsRouter.post('/', (req, res) => {
@@ -96,7 +96,7 @@ artistsRouter.post('/', (req, res) => {
       if (artistData.data.artist.bio.summary) {
         obj.bio = artistData.data.artist.bio.summary;
       }
-      // console.info(artistData.data.artist.bio.summary);
+
       axios.get(`https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=${process.env.TICKETMASTER_API_KEY}&keyword=${artistName}`)
         .then(async (attractionData) => {
           if (attractionData.data._embedded.attraction) {
