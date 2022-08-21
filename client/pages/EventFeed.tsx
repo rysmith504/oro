@@ -86,7 +86,7 @@ const EventFeed: React.FC = ({socket, userId}) => {
 
       {feedPhotos.map((photo, i) => {
         return (
-          <div key={i}>
+          <div key={i} margin-top="30px">
             <FeedPhoto photo={photo}/>
           </div>
         );
