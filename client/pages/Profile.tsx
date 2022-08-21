@@ -3,8 +3,9 @@ import axios from 'axios';
 import UserPhotos from '../components/UserPhotos';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
-import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon, Grid, IconButton, Box, Link } from '../styles/material';
+import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon, Grid, IconButton, Box, Link, Snackbar } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 const Accordion = styled((props) => (
   <MuiAccordion children={''} disableGutters elevation={0} square {...props} />
@@ -51,9 +52,17 @@ const Profile: React.FC = () => {
   const [twitterLink, setTwitterLink] = useState('')
   const [expanded, setExpanded] = React.useState('panel1');
   const [open, setOpen] = React.useState(false);
+  const [openSnack, setOpenSnack] = React.useState(false);
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+
+  const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+  ) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
   const getDbUser = () => {
     axios.get(`/api/profile/${currentUserInfo.id}`)
@@ -83,6 +92,18 @@ const Profile: React.FC = () => {
     setOpen(false);
   };
 
+  const handleSnackClick = () => {
+    setOpenSnack(true);
+  };
+
+  const handleSnackClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
+
   const handleUpdate = () => {
     axios.put(`/api/profile/${currentUserInfo.id}`, {
       "socialMedia": {
@@ -91,6 +112,7 @@ const Profile: React.FC = () => {
         "twitter": `${twitterLink}` || null
       }
     })
+      .then(handleSnackClick())
       .then(handleClose())
       .catch(err => console.error(err));
   };
@@ -173,6 +195,11 @@ const Profile: React.FC = () => {
               <Button onClick={handleUpdate}>Update</Button>
             </DialogActions>
           </Dialog>
+          <Snackbar open={openSnack} autoHideDuration={1500} onClose={handleSnackClose}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+              Profile Updated
+            </Alert>
+          </Snackbar>
         </div>
         <div>
           <Box>

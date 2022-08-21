@@ -92,9 +92,6 @@ profileRouter.put('/:_id', (req, res) => {
     where: { googleId: _id },
     data: { fbId: facebook, instaId: instagram, twitterId: twitter },
   })
-  .then(() => {
-    console.log('update successful');
-  })
   .catch(err => console.error(err));
 })
 
