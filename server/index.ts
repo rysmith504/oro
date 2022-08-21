@@ -1,53 +1,95 @@
 import path from 'path';
 import express from 'express';
+import cors from 'cors'
 import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
-import {Server} from 'socket.io';
+import prisma from '../database/db';
+// import * as socket from 'socket.io';
+const socket = require('socket.io')
 require('dotenv').config();
 
 
 import api from './routes/index';
 
+// import eventListingsRouter from './routes/eventListingsRouter';
+// import artistsRouter from './routes/artistsRouter';
+// import songFinderRouter from './routes/songFinder';
+// import eventDetailsRouter from './routes/eventDetail';
+// import travelPlannerRouter from './routes/travelPlanner';
+// import profileRouter from './routes/profile';
 
-console.log('index server');
+// import eventFeedRouter from './routes/eventFeed';
+// import profileRouter from './routes/profile';
+// import commentsRouter from './routes/comments';
+// import usersRouter from './routes/usersRouter'
+import prisma from './database/db';
+import passport from 'passport';
+
 const app = express();
-const io = new Server({
-  cors: {
-    origin: 'http://localhost:5000'
-  }
-});
+app.use(cors());
+app.use(express.json());
 
-let onlineUsers = [];
+// const io = socket(server, {
+//   cors: {
+//     origin: 'http://localhost:3000',
+//   }
+// });
+// const io = socket(server, {
+//   cors: {
+//     origin: 'http://localhost:5000',
+//     credentials: true,
+//   },
+// });
+
+// let onlineUsers = [];
+// global.onlineUsers = new Map();
+
+// io.on('connection', (socket) => {
+//   global.chatSocket = socket;
+//   socket.on('add-user', (userId) => {
+//     onlineUsers.set(userId, socket.id);
+//   });
+//   socket.on('send-msg', (data) => {
+//     const sendUserSocket = onlineUsers.get(data.to);
+//     if (sendUserSocket) {
+//       socket.to(sendUserSocket).emit('msg-receive', data.msg)
+//     }
+//   });
+// });
+
+
+// console.log('index server');
+
 
 
 // const addNewUser = (userId, socketId) => {
 //   if (!onlineUsers.some(user=>user.username === username) && onlineUsers.push({userId, socketId}))
 // }
 
-const removeUser = (socketId) => {
-  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
-};
+// const removeUser = (socketId) => {
+//   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
+// }
 
-const getUser = (userId) => {
-  return onlineUsers.find((user) => user.userId === userId);
-};
+// const getUser = (userId) => {
+//   return onlineUsers.find((user) => user.userId === userId);
+// }
 
-io.on('connection', (socket) => {
-  
-  
-  socket.on('newUser', (userId) => {
-    console.log('someone has connected');
-    addNewUser(userId, socket.id);
-  });
+// io.on('connection', (socket) => {
+//   console.log('someone has connected');
 
-  socket.on('disconnect', () => {
-    console.log('someone has left');
-    removeUser(socket.id);
-  });
-});
 
-io.listen(3000);
+//   socket.on('newUser', (userId) => {
+//     addNewUser(userId, socket.id);
+//   })
+
+//   socket.on('disconnect', () => {
+//     console.log('someone has left');
+//     removeUser(socket.id);
+//   })
+// });
+
+// io.listen(3000);
 
 
 
@@ -172,6 +214,31 @@ app.get('/*', (req, res) => {
 
 const PORT = 5000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`App listening on port http://localhost:${PORT}`);
+});
+
+
+const io = socket(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    credentials: true
+  }
+});
+
+global.onlineUsers = new Map();
+
+io.on('connection', (socket) => {
+  global.chatSocket = socket;
+  socket.on('add-user', (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+
+  socket.on('send-msg', (data) => {
+    console.log('sendmsg', data, 'ONLINEUSERS', onlineUsers, 'GLOBAL OU', global.onlineUsers,)
+    const sendUserSocket = onlineUsers.get(data.receiverId);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit('msg-receive', data.text)
+    }
+  });
 });
