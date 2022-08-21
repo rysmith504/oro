@@ -47,7 +47,8 @@ const EventListings: React.FC = () => {
     <div>
       <br/>
       <div>
-        <CssTextField InputLabelProps={fontColor} inputProps={fontColor} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} />
+        <CssTextField InputLabelProps={fontColor} inputProps={fontColor}
+          sx={{ mb: '15px'}} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} />
       </div><br/>
       <div>
         {

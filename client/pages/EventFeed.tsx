@@ -92,8 +92,8 @@ const EventFeed: React.FC = ({socket, userId}) => {
         );
       })}
 
-      <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
-      <Fab variant='extended' size='small' onClick={handleFileUpload}>
+      <OutlinedInput sx={{mt: '20px'}} accept="image/*" type='file' name='image' onChange={handleFileChange}/>
+      <Fab variant='extended' size='small' onClick={handleFileUpload} sx={{ml: '20px'}}>
               Upload
       </Fab>
     </div>
