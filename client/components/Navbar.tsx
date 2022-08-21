@@ -19,10 +19,19 @@ import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
 import { blue } from '@mui/material/colors';
+
+
 const iconColors = '';
 const inverseMode = '';
 
 const pages = [
+  <Link
+  to='/home'
+  style={{ textDecoration: 'none'}}
+  key={'home'}
+>
+  HOME
+</Link>,
   <Link
     to='/eventListings'
     style={{ textDecoration: 'none'}}

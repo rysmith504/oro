@@ -51,9 +51,9 @@ const EventFeed: React.FC = ({socket, userId}) => {
   };
 
   useEffect(() => {
-    console.log('USERID', userId);
-    console.log('SOCKET', socket);
-    // console.log(currentUserInfo);
+    // console.log('USERID', userId);
+    // console.log('SOCKET', socket);
+    console.log(currentUserInfo);
     updateFeed();
   }, []);
 
