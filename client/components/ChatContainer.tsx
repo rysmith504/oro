@@ -31,7 +31,6 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
       }
       getMessages();
     }
-    console.log(currentChat)
   }, [currentChat]);
   
   const handleSendMsg = async (msg) => {
@@ -40,32 +39,22 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
       receiverId: currentChat.googleId,
       text: msg
     })
-
     await axios.post('/api/messages/addmsg', {
       senderId: currentUser.id,
       receiverId: currentChat.googleId,
       text: msg,
     });
-
-    console.log(currentUser.id, currentChat.googleId);
-
     const msgs = [...messages];
     msgs.push({ fromSelf: true, text: msg});
     setMessages(msgs);
-    console.log('MSGS', msgs);
-
   };
-  useEffect(()=>{console.log('CONTAINER', document.querySelectorAll(" p > div "))}, [])
 
   useEffect(() => {
-    console.log('SOCKET', socket, 'SOCKET.CURRENT', socket.current)
     if(socket.current) {
       socket.current.on('msg-receive', (msg) => {
-        console.log(msg);
         setArrivalMessage({fromSelf: false, text: msg});
       })
     }
-    console.log(currentChat)
   })
 
   const fontColor = {
@@ -75,18 +64,16 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
   useEffect(() => {
 
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage])
-    console.log('ARRIVAL MESSAGE', arrivalMessage)
   }, [arrivalMessage])
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth'});
-    console.log('SOCKET', socket, 'SOCKET.CURRENT', socket.current)
   }, [messages]);
 
 //   return (
 //     <div>
 //       <React.Fragment>
-//       <Container > 
+//       <Container >
 //         <Box sx={{ bgcolor: '#cfe8fc', height: '55vh' }}>
 //           {/* <Messages/> */}
 //           <ChatBox>
