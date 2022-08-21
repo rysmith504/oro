@@ -2,29 +2,24 @@ import { Router } from 'express';
 import axios from 'axios';
 const artistsRouter = Router();
 import prisma from '../database/db';
-console.log('artist router');
 
 artistsRouter.get('/:id', (req, res) => {
   const { id } = req.params;
-  console.log(req.params, id);
   prisma.users.findUnique({
     where: {
       googleId: id,
     }
   })
     .then((userInfo) => {
-      console.log(userInfo);
       prisma.artistFollowing.findMany({
         where: {
           userId: userInfo.id,
         }
       })
         .then((data) => {
-          console.log(data);
           if (!data.length) {
             prisma.artistFollowing.findMany()
               .then((data) => {
-                console.log(data);
                 res.status(200).send({allArtists: data, artists: null});
               });
           } else {
@@ -46,14 +41,12 @@ artistsRouter.get('/events', (req, res) => {
   const { keyword } = req.query;
   artistsRouter.get('/', (req, res) => {
     const { _id } = req.params;
-    console.log(req.params);
     prisma.users.findUnique({
       where: {
         googleId: _id,
       }
     })
       .then((userInfo) => {
-        console.log(userInfo);
         prisma.artistFollowing.findUnique({
           where: {
             userId: userInfo._id,
@@ -116,7 +109,6 @@ artistsRouter.post('/', (req, res) => {
             obj.wiki = attractionData.data._embedded.attractions[0].externalLinks.wiki[0].url;
             obj.homepage = attractionData.data._embedded.attractions[0].externalLinks.homepage[0].url;
             obj.image = attractionData.data._embedded.attractions[0].images[0].url;
-            console.info(obj);
           }
 
           await prisma.artistFollowing.create({
@@ -129,14 +121,12 @@ artistsRouter.post('/', (req, res) => {
             .catch((err) => res.sendStatus(500));
         })
         .catch((err) => {
-          console.error(err);
           res.status(500);
           res.end();
         });
       // res.status(200).send(artistData.data.artist.bio);
     })
     .catch((err) => {
-      console.error(err);
       res.status(500);
       res.end();
     });

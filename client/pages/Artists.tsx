@@ -16,7 +16,6 @@ const Artists = () => {
   const {artistData, getFaveArtists } = artistContext;
 
   const {allArtists, artists} = artistData;
-  console.log(allArtists, artists);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   // const artistName = searchParams.get(...);
