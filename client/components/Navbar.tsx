@@ -25,6 +25,13 @@ const inverseMode = '';
 
 const pages = [
   <Link
+  to='/home'
+  style={{ textDecoration: 'none'}}
+  key={'home'}
+>
+  HOME
+</Link>,
+  <Link
     to='/eventListings'
     style={{ textDecoration: 'none'}}
     key={'eventListings'}

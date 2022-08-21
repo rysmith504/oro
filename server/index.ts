@@ -34,10 +34,10 @@ const getUser = (userId) => {
 };
 
 io.on('connection', (socket) => {
-  console.log('someone has connected');
-
-
+  
+  
   socket.on('newUser', (userId) => {
+    console.log('someone has connected');
     addNewUser(userId, socket.id);
   });
 
@@ -151,7 +151,7 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/',
+    successRedirect: '/eventListings',
     failureRedirect: '/login',
   })
 );
