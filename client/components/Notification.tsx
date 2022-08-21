@@ -24,10 +24,10 @@ const Notification: React.FC = (props) => {
     })
       .then((photoObj) => {
         // console.log(photoObj);
-        setPhoto(photoObj.data)
+        setPhoto(photoObj.data);
       })
       .catch((err) => console.error(err));
-  }
+  };
 
   useEffect(() => {
     getPhoto();
@@ -69,12 +69,12 @@ const Notification: React.FC = (props) => {
   const handleOpen = () => {
     console.log('changed');
     setModalStatus(true);
-  }
+  };
 
   const handleClose = () => {
     console.log('closed');
     setModalStatus(false);
-  }
+  };
 
 
   return (
@@ -89,8 +89,7 @@ const Notification: React.FC = (props) => {
         </Box>
       </Modal>
 
-      <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px'}}>
-      <Paper sx={{margin: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
+      <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
         {person}{text}
         <img height='30px' width='auto' src={photoUrl}/>
       </Paper>
