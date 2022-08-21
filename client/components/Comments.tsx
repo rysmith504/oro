@@ -69,7 +69,7 @@ const Comments: React.FC = (props) => {
 
     })
       .then((commentData) => {
-        console.log(commentData);
+        // console.log(commentData);
         setMessage('');
         getComments();
         axios.post('/api/notifications', {
