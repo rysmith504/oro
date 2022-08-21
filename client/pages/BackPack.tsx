@@ -13,7 +13,7 @@ import {
 } from '../styles/material';
 import BudgetItem from './BudgetItem';
 import axios from 'axios';
-
+import { useTheme } from '@mui/material/styles';
 const Accordion = styled((props) => (
   <MuiAccordion children={''} disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -70,6 +70,12 @@ const BackPack: React.FC = () => {
 
   const [budgetList, setBudgetList] = React.useState([...SAMPLE_BUDGET_LIST]);
 
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -89,12 +95,12 @@ const BackPack: React.FC = () => {
 
   console.log({ userEvents, totalSum });
 
-  const handleSubmit = async () => { 
+  const handleSubmit = async () => {
     const url = `api/eventa/budgetsubmit`;
 
-    try { 
+    try {
       axios.post(
-        url, budgetList 
+        url, budgetList
       ).then(resp => console.log("Successful budget"))
       .catch(err => console.log(err))
 
@@ -105,6 +111,7 @@ const BackPack: React.FC = () => {
     <Accordion
       expanded={expanded === 'panel1'}
       onChange={handleChange('panel1')}
+      sx={{ bgcolor: inverseMode }}
     >
       <AccordionSummary aria-controls='panel1d-content' id='panel1d-header'>
         <Typography>{userEvents.eventName}</Typography>
