@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 const ArtistContext = React.createContext({});
@@ -22,23 +22,25 @@ const ArtistContextProvider = ({ children }) => {
     }]
   );
 
-  const getFaveArtists = () => {
-    // console.log('artist context executed');
-    axios.get('/api/favArtists')
-      .then((artistData) => {
-        const artistsArr = artistData.data;
-        // console.log(artistsArr);
-        setArtistData(artistsArr);
-      })
-      .catch((err) => {
-        // console.log('artistEvents');
-        // console.error(err);
-      });
+  const getFaveArtists = (id) => {
+    console.log('artist context executed', id);
+    if (id) {
+      axios.get(`/api/favArtists/${id}`)
+        .then((artistData) => {
+          const artistsArr = artistData.data;
+          console.log(artistsArr);
+          setArtistData(artistsArr);
+        })
+        .catch((err) => {
+          // console.log('artistEvents');
+          // console.error(err);
+        });
+    }
   };
 
-  useEffect(() => {
-    getFaveArtists();
-  }, []);
+  // useEffect(() => {
+  //   getFaveArtists();
+  // }, []);
 
   const artistProps = {
     artistData,

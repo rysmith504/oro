@@ -64,7 +64,7 @@ const getAllMessages = async (req, res, next) => {
   const projectMessages = messages.map(msg => {
     return{
       fromSelf: msg.senderId === senderId,
-      message: msg.text
+      text: msg.text
     }
   })
 

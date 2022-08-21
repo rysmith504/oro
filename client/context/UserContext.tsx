@@ -48,12 +48,11 @@ const UserContextProvider = ({ children }) => {
       });
   };
 
-  const getCurrentUser = () => {
+  const getCurrentUser = async () => {
     // Once user logs in, get user info
-    axios
+    await axios
       .get('/hidden')
-      .then((info) => {
-        const { data } = info;
+      .then(({data}) => {
         // set state to user info
         setCurrentUserInfo(data);
       })
@@ -64,28 +63,20 @@ const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
      getCurrentUser();
-     getUserContacts();
   }, []);
 
   useEffect(() => {
     getUserContacts();
+  }, [currentUserInfo]);
 
-  }, [currentUserInfo])
-
-
-  // useEffect(async () => {
-  //   if(currentUserInfo) {
-  //   }
-  // }, [])
   const getUserContacts = () => {
-    if(currentUserInfo){
+    if (currentUserInfo) {
       axios.get('/api/users/allusers', { params: { id: currentUserInfo.id } })
-      .then(resObj => {
-        setUserContacts(resObj.data)
-      })
+        .then(resObj => {
+          setUserContacts(resObj.data);
+        });
     }
-  }
-  // }
+  };
 
   const appProps = {
     userContacts,
@@ -93,7 +84,7 @@ const UserContextProvider = ({ children }) => {
     setUserEvents,
     getUserEvents,
     logoutUser,
-    currentUserInfo,
+    currentUserInfo
   };
 
   return (

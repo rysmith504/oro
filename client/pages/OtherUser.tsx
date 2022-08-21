@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserPhotos from '../components/UserPhotos';
 import { useTheme } from '@mui/material/styles';
+import { Box, Grid, Link, IconButton, FacebookIcon, InstagramIcon, TwitterIcon, Avatar } from '../styles/material';
 
 const OtherUser: React.FC = () => {
   const [userInfo, setUserInfo] = useState([]);
@@ -19,7 +20,7 @@ const OtherUser: React.FC = () => {
         setUserInfo(data);
       })
       .catch(err => console.error(err));
-  }
+  };
 
   const getUserPhotos = () => {
     axios.get(`/api/profile/event_photos/${id}`)
@@ -27,7 +28,7 @@ const OtherUser: React.FC = () => {
         setUserPhotos(data);
       })
       .catch(err => console.error(err));
-  }
+  };
 
   useEffect(() => {
     getUserInfo();
@@ -37,7 +38,35 @@ const OtherUser: React.FC = () => {
   return (
     <div>
       <h1>{userInfo.fullName}</h1>
-      <UserPhotos photos={userPhotos}/>
+      <div id='profile_avatar'>
+          <Avatar
+            alt={userInfo.fullName}
+            src={userInfo.profileURL}
+            sx={{ width: 75, height: 75 }}
+          />
+        </div>
+      <div>
+        <Box>
+          <Grid container spacing={2}>
+            <Grid item>
+              <Link href={userInfo.fbId}>
+                <IconButton><FacebookIcon /></IconButton>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href={userInfo.instaId}>
+                <IconButton><InstagramIcon /></IconButton>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href={userInfo.twitterId}>
+                <IconButton><TwitterIcon /></IconButton>
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </div>
+      <UserPhotos photos={userPhotos} />
     </div>
 
   );

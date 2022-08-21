@@ -66,12 +66,12 @@ profileRouter.get('/:_id', (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-    })
-})
+    });
+});
 
 profileRouter.get('/event_photos/:_id', (req, res) => {
   const { _id } = req.params;
-  
+
   prisma.eventPhotos.findMany({
     where: { userId: _id},
   })
@@ -80,7 +80,19 @@ profileRouter.get('/event_photos/:_id', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-    })
+    });
+});
+
+profileRouter.put('/:_id', (req, res) => {
+  const { _id } = req.params;
+  const { socialMedia } = req.body;
+  const {facebook, instagram, twitter} = socialMedia;
+
+  prisma.users.update({
+    where: { googleId: _id },
+    data: { fbId: facebook, instaId: instagram, twitterId: twitter },
+  })
+  .catch(err => console.error(err));
 })
 
 export default profileRouter;
