@@ -67,23 +67,30 @@ const Notification: React.FC = (props) => {
   }, []);
 
   const handleOpen = () => {
-    console.log('changed');
+    // console.log('changed');
     setModalStatus(true);
   };
 
   const handleClose = () => {
-    console.log('closed');
+    // console.log('closed');
     setModalStatus(false);
   };
 
 
   return (
     <div>
-      <Modal style={{alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
-        <Box sx={{margin: 'auto', bgcolor: 'black', width: 350, alignItems: 'center', justifyContent: 'center'}}>
+      <Modal
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'}}
+        sx={{overflow: 'scroll', marginTop: '40px', paddingTop: '10px'}}
+        open={modalStatus}
+        onClose={handleClose}>
+        <Box sx={{margin: 'auto', bgcolor: inverseMode, width: 350, alignItems: 'center', justifyContent: 'center', pt: '20px', outline: 'none'}}>
 
-          <img width='300px' height='auto' margin='auto' src={photoUrl}/>
-          <Grid container>
+          <img width='300px' height='auto' src={photoUrl}/>
+          <Grid container sx={{mt: '20px'}}>
             <Comments photo={photo}/>
           </Grid>
         </Box>
