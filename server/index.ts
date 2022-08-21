@@ -151,7 +151,7 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/home',
+    successRedirect: '/eventListings',
     failureRedirect: '/login',
   })
 );

@@ -32,13 +32,13 @@ const App: React.FC = () => {
   const [isDarkMode, setDarkMode] = useState(true);
 
 
-  useEffect(() => {
-    console.log(currentUserInfo.id);
-  }, []);
+  // useEffect(() => {
+  //   console.log(currentUserInfo.id);
+  // }, []);
 
-  useEffect(() => {
-    // setSocket(io('http://localhost:3000'));
-  }, [currentUser]);
+  // useEffect(() => {
+  //   // setSocket(io('http://localhost:3000'));
+  // }, [currentUser]);
 
 
 
@@ -47,14 +47,14 @@ const App: React.FC = () => {
       <EventContextProvider>
         {/* <UserContextProvider> */}
         <ArtistContextProvider>
-          <Navbar socket={socket}/>
+          <Navbar/>
           <Routes>
             <Route path='/home' element={<Home />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/notifications' element={<NotificationsFeed socket={socket}/>} />
+            <Route path='/notifications' element={<NotificationsFeed/>} />
             <Route path='/backpack' element={<BackPack />} />
             <Route path='/eventListings' element={<EventListings />} />
-            <Route path='/eventFeed' element={<EventFeed socket={socket}/>} />
+            <Route path='/eventFeed' element={<EventFeed />} />
             <Route path='/songFinder' element={<SongFinder />} />
             <Route path='/artists' element={<Artists />} />
             <Route path='/artists/*' element={<Artists />}/>
