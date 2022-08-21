@@ -93,7 +93,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
           sx={{ bgcolor: inverseMode }} />
         <CardMedia
           component="img"
-          height="194"
+          height="250"
           image={image}
           alt={artistName}
           sx={{ bgcolor: inverseMode }} />
