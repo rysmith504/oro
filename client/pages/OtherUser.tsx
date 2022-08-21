@@ -20,7 +20,7 @@ const OtherUser: React.FC = () => {
         setUserInfo(data);
       })
       .catch(err => console.error(err));
-  }
+  };
 
   const getUserPhotos = () => {
     axios.get(`/api/profile/event_photos/${id}`)
@@ -28,7 +28,7 @@ const OtherUser: React.FC = () => {
         setUserPhotos(data);
       })
       .catch(err => console.error(err));
-  }
+  };
 
   useEffect(() => {
     getUserInfo();
