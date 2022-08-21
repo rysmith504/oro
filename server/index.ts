@@ -235,7 +235,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('send-msg', (data) => {
-    console.log('sendmsg', data, 'ONLINEUSERS', onlineUsers, 'GLOBAL OU', global.onlineUsers,)
     const sendUserSocket = onlineUsers.get(data.receiverId);
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit('msg-receive', data.text)
