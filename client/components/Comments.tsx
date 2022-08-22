@@ -6,6 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Comment from './Comment';
 import { useTheme } from '@mui/material/styles';
 import { CssTextField } from '../styles/material';
+
 const Comments: React.FC = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
@@ -69,7 +70,7 @@ const Comments: React.FC = (props) => {
 
     })
       .then((commentData) => {
-        console.log(commentData);
+        // console.log(commentData);
         setMessage('');
         getComments();
         axios.post('/api/notifications', {

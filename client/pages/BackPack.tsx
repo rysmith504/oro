@@ -131,7 +131,7 @@ const BackPack: React.FC = () => {
           );
         })}
 
-        <div>Total: ${totalSum ? formatCurrency(totalSum) : 0}</div>
+        <div margin-top='20px'><Typography>Total: ${totalSum ? formatCurrency(totalSum) : 0}</Typography></div>
         <Button onClick={handleSubmit}>Submit Budget</Button>
       </AccordionDetails>
     </Accordion>

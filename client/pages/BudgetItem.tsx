@@ -2,7 +2,8 @@
 import { Checkbox, List, ListItem } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
-import { CssTextField } from '../styles/material';
+import { CssTextField, Grid } from '../styles/material';
+
 type BudgetItemProps = {
   label: string;
   value?: number;
@@ -15,23 +16,27 @@ const fontColor = {
 
 function BudgetItem({ label, value, onChange }: BudgetItemProps): JSX.Element {
   return (
-    <>
-      <List>
-        <ListItem>
-          <span>{label}</span>
-          <CssTextField
-            InputLabelProps={fontColor}
-            inputProps={fontColor}
-            color="secondary"
-            label={`Enter your budget ${label}?`}
-            variant='outlined'
-            value={value}
-            onChange={onChange}
-          />
-          <span>: ${value ?? 0}</span>
-        </ListItem>
-      </List>
-    </>
+    <Grid container sx={{mt: '20px'}}>
+      <Grid xs={2}>
+        <span>{label}</span>
+      </Grid>
+      <Grid xs={8}>
+        <CssTextField
+          InputLabelProps={fontColor}
+          inputProps={fontColor}
+          color="secondary"
+          label={`Enter Your ${label} Budget`}
+          variant='outlined'
+          value={value}
+          onChange={onChange}
+          fullWidth
+        />
+      </Grid>
+      <Grid xs={1}>
+        <span>: ${value ?? 0}</span>
+      </Grid>
+    </Grid>
   );
 }
 export default BudgetItem;
+
