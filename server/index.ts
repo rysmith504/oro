@@ -88,54 +88,56 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 app.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'], accessType: 'offline', prompt: 'consent' })
+);
+  
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/eventListings',
+    failureRedirect: '/login',
+  })
   );
   
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google', {
-      successRedirect: '/eventListings',
-      failureRedirect: '/login',
-    })
-    );
-    
-    app.get('/logout', (req, res) => {
-      req.logout(() => {
-        res.redirect('/');
-      });
+  app.get('/logout', (req, res) => {
+    req.logout(() => {
+      res.redirect('/');
     });
-    
-    app.get('/*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {
-        if (err) {
-          res.status(500).send(err);
-        }
-      });
-    });
-    
-    const PORT = 5000;
-    
-    app.listen(PORT, () => {
-      console.log(`App listening on port http://localhost:${PORT}`);
-    });
-    
-  const httpServer = createServer(app);
-  const io = new Server(httpServer, {
-    cors: {
-      origin: 'http://localhost:3000',
-      credentials: true
-    }
   });
   
-  global.onlineUsers = new Map();
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+    });
+  });
+  
+  const PORT = 5000;
+  
+  app.listen(PORT, () => {
+    console.log(`App listening on port http://localhost:${PORT}`);
+  });
+
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: 'http://localhost:3000',
+    credentials: true
+  }
+});
+
+httpServer.listen(3000);
+
+global.onlineUsers = new Map();
 
 io.on('connection', (socket) => {
-  console.log(CONNNNECTED YOOOOO SOCKETT TO ME BABY)
+  console.log(CONNECTED SOCKET)
   global.chatSocket = socket;
   socket.on('add-user', (userId) => {
     onlineUsers.set(userId, socket.id);
   });
 
-  io.on('send-msg', (data) => {
+io.on('send-msg', (data) => {
     console.log('sendmsg', data, 'ONLINEUSERS', onlineUsers, 'GLOBAL OU', global.onlineUsers,)
     const sendUserSocket = onlineUsers.get(data.receiverId);
     if (sendUserSocket) {
@@ -144,4 +146,3 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(3000);
