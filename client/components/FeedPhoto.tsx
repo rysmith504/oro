@@ -5,6 +5,7 @@ import Comments from '../components/Comments';
 import {Grid, Modal, Box, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { styled } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import moment from 'moment';
 
 const FeedPhoto: React.FC = (props) => {
   const theme = useTheme();
@@ -74,7 +75,7 @@ const FeedPhoto: React.FC = (props) => {
               <Avatar src={profilePic} />
             </Link>
           }
-          subheader={<Typography sx={{ bgcolor: inverseMode }}>{photo.created_at}</Typography>}
+          subheader={<Typography sx={{ bgcolor: inverseMode }}>{moment(photo.created_at).calendar()}</Typography>}
           sx={{ bgcolor: inverseMode }}
         />
         <CardMedia

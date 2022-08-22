@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {OutlinedInput, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {OutlinedInput, Fab, Box} from '../styles/material';
 import { styled } from '@mui/material';
 import { EventContext } from '../context/EventContext';
 import { UserContext } from '../context/UserContext';
 import { useSearchParams } from 'react-router-dom';
 import FeedPhoto from '../components/FeedPhoto';
 import { useTheme } from '@mui/material/styles';
+
 
 
 const EventFeed: React.FC = ({socket, userId}) => {
@@ -86,11 +87,12 @@ const EventFeed: React.FC = ({socket, userId}) => {
           </div>
         );
       })}
-
-      <OutlinedInput sx={{mt: '20px'}} accept="image/*" type='file' name='image' onChange={handleFileChange}/>
-      <Fab variant='extended' size='small' onClick={handleFileUpload} sx={{ml: '20px'}}>
-              Upload
-      </Fab>
+      <Box sx={{position: 'sticky'}}>
+        <OutlinedInput sx={{mt: '20px'}} accept="image/*" type='file' name='image' onChange={handleFileChange}/>
+        <Fab variant='extended' size='small' onClick={handleFileUpload} sx={{ml: '20px'}}>
+                Upload
+        </Fab>
+      </Box>
     </div>
   );
 
