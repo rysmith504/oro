@@ -50,9 +50,9 @@ const Profile: React.FC = () => {
   const [facebookLink, setFacebookLink] = useState('')
   const [instagramLink, setInstagramLink] = useState('')
   const [twitterLink, setTwitterLink] = useState('')
-  const [expanded, setExpanded] = React.useState('panel1');
-  const [open, setOpen] = React.useState(false);
-  const [openSnack, setOpenSnack] = React.useState(false);
+  const [expanded, setExpanded] = useState('panel1');
+  const [open, setOpen] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
