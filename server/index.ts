@@ -120,7 +120,7 @@ app.get(
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: `${process.env{SOCKET_URL}${SOCKET_PORT}}`,
+    origin: `${process.env(SOCKET_URL)}:${process.env(SOCKET_PORT)}}`,
     credentials: true
   }
 });
