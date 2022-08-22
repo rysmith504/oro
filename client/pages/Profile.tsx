@@ -193,7 +193,7 @@ const Profile: React.FC = () => {
               <Button onClick={handleUpdate}>Update</Button>
             </DialogActions>
           </Dialog>
-          <Snackbar open={openSnack} autoHideDuration={1500} onClose={handleSnackClose}>
+          <Snackbar open={openSnack} autoHideDuration={2500} onClose={handleSnackClose}>
             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
               Profile Updated
             </Alert>
