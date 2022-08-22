@@ -112,16 +112,15 @@ app.get(
     });
   });
   
-  const PORT = 5000;
   
-  app.listen(PORT, () => {
+  app.listen(process.env(APP_PORT), () => {
     console.log(`App listening on port http://localhost:${PORT}`);
   });
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: `${process.env{SOCKET_URL}${SOCKET_PORT}}`,
     credentials: true
   }
 });
