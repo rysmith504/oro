@@ -18,7 +18,7 @@ const NotificationsFeed: React.FC = () => {
     axios.put('/api/notifications', {
       userId: currentUserInfo.id,
     })
-      .then(() => console.log('updated'))
+      .then(() => {})
       .catch((err) => console.error(err));
   }, []);
 
@@ -30,7 +30,6 @@ const NotificationsFeed: React.FC = () => {
       }
     })
       .then((notificationsObj) => {
-        // console.log(notificationsObj.data);
         setNotifications(notificationsObj.data);
       })
       .catch((err) => {
@@ -39,7 +38,6 @@ const NotificationsFeed: React.FC = () => {
   }
 
   const clearNotifications = () => {
-    console.log(currentUserInfo.id);
     axios.delete('/api/notifications', {
       data: {
         userId: currentUserInfo.id,

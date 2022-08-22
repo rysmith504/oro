@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Paper, Modal, Box, Grid} from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 import Comments from './Comments';
+import {Avatar} from '../styles/material';
 
 const Notification: React.FC = (props) => {
   const theme = useTheme();
@@ -15,6 +16,7 @@ const Notification: React.FC = (props) => {
   const [photoUrl, setPhotoUrl] = useState('');
   const [modalStatus, setModalStatus] = useState(false);
   const [photo, setPhoto] = useState({});
+  const [userAvatar, setUserAvatar] = useState('');
 
   const getPhoto = () => {
     axios.get('/api/eventFeed/photo', {
@@ -35,7 +37,6 @@ const Notification: React.FC = (props) => {
 
 
   const getPerson = () => {
-    // console.log(notif.userId);
     axios.get('/api/comments/comment', {
       params: {
         commentId: notif.commentId,
@@ -43,11 +44,11 @@ const Notification: React.FC = (props) => {
     })
       .then((commentData) => {
         setPhotoUrl(commentData.data.photoUrl);
-        // console.log(data)
         axios.get(`/api/profile/${commentData.data.userId}`)
           .then((commenterData) => {
-            // console.log(commenterData)
+            console.log(commenterData.data.profileURL);
             setPerson(commenterData.data.fullName);
+            setUserAvatar(commentData.data.profileURL);
           })
           .catch((err) => console.error(err));
       })
@@ -63,7 +64,6 @@ const Notification: React.FC = (props) => {
   useEffect(() => {
     getPerson();
     getType();
-    // console.log(notif);
   }, []);
 
   const handleOpen = () => {
@@ -97,6 +97,7 @@ const Notification: React.FC = (props) => {
       </Modal>
 
       <Paper onClick={handleOpen} sx={{margin: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
+        <Avatar src={userAvatar}/>
         {person}{text}
         <img height='30px' width='auto' src={photoUrl}/>
       </Paper>

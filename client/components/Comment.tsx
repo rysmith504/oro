@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Paper, Grid } from '@mui/material';
-import { Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import { Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 
 const Comment: React.FC = (props) => {
@@ -42,6 +42,10 @@ const Comment: React.FC = (props) => {
           <Typography textAlign='left' sx={{ color: iconColors, mb: '20px' }}>{comment.comment}</Typography>
         </Grid>
       </Grid>
+      <div>
+        {/* <Fab href='edit' variant='extended' size='small'>edit</Fab>
+        <Fab href='delete' variant='extended' size='small'>delete</Fab> */}
+      </div>
     </div>
   );
 };

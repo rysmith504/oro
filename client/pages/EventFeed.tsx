@@ -51,14 +51,10 @@ const EventFeed: React.FC = ({socket, userId}) => {
   };
 
   useEffect(() => {
-    // console.log('USERID', userId);
-    // console.log('SOCKET', socket);
-    console.log(currentUserInfo);
     updateFeed();
   }, []);
 
   const handleFileChange = (e) => {
-    // console.log("photo changed");
     setPhoto(e.target.files[0]);
   };
 
@@ -79,7 +75,6 @@ const EventFeed: React.FC = ({socket, userId}) => {
       setPhoto(null);
     }
   };
-  // if (currentUserInfo.id) {
   return (
     <div>
       <h1>EventFeed</h1>
