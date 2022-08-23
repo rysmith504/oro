@@ -91,6 +91,7 @@ model Comments {
   userId     String
   photoUrl   String
   comment    String
+  edited Boolean @default(false)
   created_at DateTime @default(now())
 }
 
