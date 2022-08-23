@@ -33,7 +33,7 @@ const ArtistContextProvider = ({ children }) => {
         })
         .catch((err) => {
           // console.log('artistEvents');
-          // console.error(err);
+          console.error(err);
         });
     }
   };

@@ -1,30 +1,22 @@
 import React, { useEffect, useContext } from 'react';
-import { useContext, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link, Routes, Route } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
+import { Link } from 'react-router-dom';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
-import { Box, Grid, Container } from '../styles/material';
+import { Box, Grid, Container, Avatar } from '../styles/material';
 import Badge from '@mui/material/Badge';
-import { UserContext } from '../context/UserContext';
 import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
-import { Avatar } from '../styles/material';
-const iconColors = '';
-const inverseMode = '';
 
 
 
@@ -37,7 +29,7 @@ const Navbar = (props) => {
   const inverseMode = theme.palette.secondary.main;
 
   const themeContext = useContext(ThemeContext);
-  const { mode, setMode, toggleMode } = themeContext;
+  const { mode, toggleMode } = themeContext;
 
 
 

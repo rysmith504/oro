@@ -9,7 +9,7 @@ const Artists = () => {
   const artistContext = useContext(ArtistContext);
   const themeContext = useContext(ThemeContext);
   // console.log(artistContext);
-  const {mode, setMode, toggleMode} = themeContext;
+  // const {mode, setMode, toggleMode} = themeContext;
   const {artistData, getFaveArtists } = artistContext;
   const favorites = artistData;
 

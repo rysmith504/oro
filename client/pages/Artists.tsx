@@ -12,7 +12,7 @@ const Artists = () => {
   const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
   const artistContext = useContext(ArtistContext);
   const themeContext = useContext(ThemeContext);
-  const {mode, setMode, toggleMode} = themeContext;
+  // const {mode, setMode, toggleMode} = themeContext;
   const {artistData, getFaveArtists } = artistContext;
 
   const {allArtists, artists} = artistData;

@@ -1,22 +1,18 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import React, { useState } from 'react';
+import { IconButtonProps } from '@mui/material/IconButton';
 import {
-  Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon
+  Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, IconButton, UseTheme, Styled, ArrowBackIosNewIcon
 } from '../styles/material';
 import EventCards from './EventCards';
 import axios from 'axios';
-import { ThemeContext } from '../context/ThemeContext';
-import { useTheme } from '@mui/material/styles';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
 
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
+const ExpandMore = Styled((props: ExpandMoreProps) => {
+  const { ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
@@ -28,12 +24,10 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 
 const ArtistInfoCard = ({artistProps, resetSingle}) => {
-  const theme = useTheme();
+  const theme = UseTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
   const navigate = useNavigate();
-  const themeContext = useContext(ThemeContext);
-  const {mode, setMode, toggleMode} = themeContext;
   const [expanded, setExpanded] = React.useState(false);
   const [events, setEvents] = useState(
     [{
