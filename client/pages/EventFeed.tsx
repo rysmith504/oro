@@ -103,7 +103,11 @@ const EventFeed: React.FC = () => {
   }
   return (
     <div>
-      <h1>{eventName}</h1>
+
+      <h1>
+        {eventName}
+      </h1>
+
 
       {feedPhotos.map((photo, i) => {
         return (

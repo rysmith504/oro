@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
 import { Accordion, AccordionSummary, AccordionDetails, Button, Grid, Fab} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Star, Person, MusicNote, LibraryMusic, Lyrics, RemoveCircleOutline} from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
+import { UserContext } from '../context/UserContext';
 
 window.oncontextmenu = function (event: any) {
   // eslint-disable-next-line no-console
@@ -30,10 +31,13 @@ window.oncontextmenu = function (event: any) {
 };
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128});
+
 const SongFinder: React.FC = () => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  const userContext = useContext(UserContext);
+  const {currentUserInfo} = userContext;
 
   // const [isRecording, setIsRecording] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
@@ -77,19 +81,19 @@ const SongFinder: React.FC = () => {
 
   useEffect(() => {
     if (artist) {
-      axios.get('/api/favArtists/artist', {
-        params: {
-          artistName: artist,
-        }
-      })
+      axios.get(`/api/favArtists/${currentUserInfo.id}`)
         .then((results) => {
-          // console.log(results.data);
-          // console.log(results.data);
-          if (results.data.length) {
-            setFavorited(true);
-          } else {
-            setFavorited(false);
-          }
+          console.log(results);
+          results.data.allArtists.forEach((artistObj) => {
+            if (artistObj.artistName === artist) {
+              setFavorited(true);
+            }
+          });
+          // if (results.data.length) {
+          //   setFavorited(true);
+          // } else {
+          //   setFavorited(false);
+          // }
         })
         .catch((err) => console.error(err));
 
@@ -102,7 +106,6 @@ const SongFinder: React.FC = () => {
         data: previewSource,
       })
         .then((results) => {
-          // console.log(results);
           setSong(results.data.title);
           setArtist(results.data.apple_music.artistName);
           setAlbumTitle(results.data.apple_music.albumName);
@@ -145,6 +148,7 @@ const SongFinder: React.FC = () => {
         setAlbumTitle('');
         setAlbumImage('');
         setLyrics([]);
+        setFavorited(false);
       })
       .catch((e) => console.log(e));
   };
@@ -166,7 +170,8 @@ const SongFinder: React.FC = () => {
   const addToFavorites = () => {
     // console.log(artist);
     axios.post('/api/favArtists', {
-      artistName: artist
+      artistName: artist,
+      userId: currentUserInfo.id
     })
       .then((data) => {
         setFavorited(true);
@@ -178,7 +183,8 @@ const SongFinder: React.FC = () => {
   const removeFavorites = () => {
     axios.delete('/api/favArtists', {
       data: {
-        artistName: artist
+        artistName: artist,
+        userId: currentUserInfo.id
       }
     })
       .then(() => {

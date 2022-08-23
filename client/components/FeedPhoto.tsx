@@ -59,7 +59,7 @@ const FeedPhoto: React.FC = (props) => {
 
   return (
     <div>
-      <Modal style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
+      {/* <Modal style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
         <Box sx={{margin: 'auto', bgcolor: inverseMode, width: 400, alignItems: 'left', justifyContent: 'left', pt: '20px', outline: 'none'}}>
 
           <img width='350px' height='auto' src={photo.photoUrl}/>
@@ -67,7 +67,7 @@ const FeedPhoto: React.FC = (props) => {
             <Comments photo={photo}/>
           </Grid>
         </Box>
-      </Modal>
+      </Modal> */}
       <Card sx={{ maxWidth: 400, margin: 'auto', mt: '20px'}}>
         <CardHeader
           avatar={
