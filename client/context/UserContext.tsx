@@ -39,9 +39,9 @@ const UserContextProvider = ({ children }) => {
 
   const logoutUser = () => {
     axios
-      .get('/logout')
+      .post('/logout')
       .then(() => {
-        console.log('logged out');
+        setCurrentUserInfo([]);
       })
       .catch((err) => {
         console.error(err);
@@ -84,7 +84,8 @@ const UserContextProvider = ({ children }) => {
     setUserEvents,
     getUserEvents,
     logoutUser,
-    currentUserInfo
+    currentUserInfo,
+    getCurrentUser
   };
 
   return (
