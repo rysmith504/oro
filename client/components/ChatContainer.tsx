@@ -17,28 +17,28 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
   // const inverseMode = theme.palette.secondary.main;
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
-  const [arrivalMessage, setArrivalMessage] = useState(null)
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const userContext = useContext(UserContext);
   const { currentUserInfo } = userContext;
   useEffect(() => {
-    if(currentChat){
+    if (currentChat) {
       const getMessages = async () => {
         const response = await axios.post('/api/messages/getmsg', {
           senderId: currentUser.id,
           receiverId: currentChat.googleId
         });
         setMessages(response.data);
-      }
+      };
       getMessages();
     }
   }, [currentChat]);
-  
+
   const handleSendMsg = async (msg) => {
     socket.current.emit('send-msg', {
       senderId: currentUser.id,
       receiverId: currentChat.googleId,
       text: msg
-    })
+    });
     await axios.post('/api/messages/addmsg', {
       senderId: currentUser.id,
       receiverId: currentChat.googleId,
@@ -50,12 +50,12 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
   };
 
   useEffect(() => {
-    if(socket.current) {
+    if (socket.current) {
       socket.current.on('msg-receive', (msg) => {
         setArrivalMessage({fromSelf: false, text: msg});
-      })
+      });
     }
-  })
+  });
 
   const fontColor = {
     style: { color: '#9B27B0' }
@@ -63,88 +63,88 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
 
   useEffect(() => {
 
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage])
-  }, [arrivalMessage])
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth'});
   }, [messages]);
 
-//   return (
-//     <div>
-//       <React.Fragment>
-//       <Container >
-//         <Box sx={{ bgcolor: '#cfe8fc', height: '55vh' }}>
-//           {/* <Messages/> */}
-//           <ChatBox>
-//           <div className="chat-messages">
+  //   return (
+  //     <div>
+  //       <React.Fragment>
+  //       <Container >
+  //         <Box sx={{ bgcolor: '#cfe8fc', height: '55vh' }}>
+  //           {/* <Messages/> */}
+  //           <ChatBox>
+  //           <div className="chat-messages">
 
-//           {
-//             messages.map((message, index) => {
-//               return (
-//                 <div key={uuidv4()} ref={scrollRef}>
-//                   <div className={`message ${
-//                     message.fromSelf ? 'sent' : 'received'
-//                     }`}
-//                   >
-//                     <div className='content'>
-//                       {message.text}
-//                     </div>
-//                   </div>
-//                 </div>
-//               )
-//             })
-//           }
-//               </div>
-//           </ChatBox>
-//         </Box>
-//         <ChatInput handleSendMsg={handleSendMsg} />
-//       </Container>
-//     </React.Fragment>
-//     </div>
-//   );
-// };
+  //           {
+  //             messages.map((message, index) => {
+  //               return (
+  //                 <div key={uuidv4()} ref={scrollRef}>
+  //                   <div className={`message ${
+  //                     message.fromSelf ? 'sent' : 'received'
+  //                     }`}
+  //                   >
+  //                     <div className='content'>
+  //                       {message.text}
+  //                     </div>
+  //                   </div>
+  //                 </div>
+  //               )
+  //             })
+  //           }
+  //               </div>
+  //           </ChatBox>
+  //         </Box>
+  //         <ChatInput handleSendMsg={handleSendMsg} />
+  //       </Container>
+  //     </React.Fragment>
+  //     </div>
+  //   );
+  // };
 
-return (
-  <Box>
+  return (
+    <Box>
 
-  <Container>
-    <div className="chat-header">
-      <div className="user-details">
-        <div className="avatar">
-          {/* <img
+      <Container>
+        <div className="chat-header">
+          <div className="user-details">
+            <div className="avatar">
+              {/* <img
             src={`data:image/svg+xml;base64,${currentChat.profileURL}`}
             alt=""
           /> */}
-        </div>
-        <div className="username">
-          {/* <h3>{currentChat.fullName}</h3> */}
-        </div>
-       </div>
-      {/* <Logout /> */}
-    </div> *
-    <div className="chat-messages">
-      {messages.map((message) => {
-        return (
-          <div ref={scrollRef} key={uuidv4()}>
-            <div
-              className={`message ${
-                message.fromSelf ? "sent" : "received"
-              }`}
-            >
-              <div className="content ">
-                {message.text}
-              </div>
+            </div>
+            <div className="username">
+              {/* <h3>{currentChat.fullName}</h3> */}
             </div>
           </div>
-        );
-      })}
-    </div>
-    <ChatInput handleSendMsg={handleSendMsg} />
-  </Container>
-      </Box>
-);
-}
+          {/* <Logout /> */}
+        </div> *
+        <div className="chat-messages">
+          {messages.map((message) => {
+            return (
+              <div ref={scrollRef} key={uuidv4()}>
+                <div
+                  className={`message ${
+                    message.fromSelf ? 'sent' : 'received'
+                  }`}
+                >
+                  <div className="content ">
+                    {message.text}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <ChatInput handleSendMsg={handleSendMsg} />
+      </Container>
+    </Box>
+  );
+};
 
 const Container = styled.div`
   .chat-messages {
@@ -152,7 +152,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    height: 100vh;
+    height: 80vh;
     overflow: auto;
     .message {
       display: flex;
