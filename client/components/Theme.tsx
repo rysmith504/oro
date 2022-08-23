@@ -106,7 +106,7 @@ color: ${(props) => props.theme.palette.primary.contrastText};
 // Global Theme Export
 export const Theme = ({ children }) => {
   const themeContext = useContext(ThemeContext);
-  const {mode, setMode, toggleMode} = themeContext;
+  const {mode} = themeContext;
   return (
     <ThemeProvider theme={mode == 'dark' ? dark : light}>
       <StyledProvider theme={mode == 'dark' ? dark : light}>

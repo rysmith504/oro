@@ -5,6 +5,7 @@ import Comments from '../components/Comments';
 import {Grid, Modal, Box, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { styled } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import moment from 'moment';
 
 const FeedPhoto: React.FC = (props) => {
   const theme = useTheme();
@@ -58,7 +59,7 @@ const FeedPhoto: React.FC = (props) => {
 
   return (
     <div>
-      <Modal style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
+      {/* <Modal style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
         <Box sx={{margin: 'auto', bgcolor: inverseMode, width: 400, alignItems: 'left', justifyContent: 'left', pt: '20px', outline: 'none'}}>
 
           <img width='350px' height='auto' src={photo.photoUrl}/>
@@ -66,7 +67,7 @@ const FeedPhoto: React.FC = (props) => {
             <Comments photo={photo}/>
           </Grid>
         </Box>
-      </Modal>
+      </Modal> */}
       <Card sx={{ maxWidth: 400, margin: 'auto', mt: '20px'}}>
         <CardHeader
           avatar={
@@ -74,7 +75,7 @@ const FeedPhoto: React.FC = (props) => {
               <Avatar src={profilePic} />
             </Link>
           }
-          subheader={<Typography sx={{ bgcolor: inverseMode }}>{photo.created_at}</Typography>}
+          subheader={<Typography sx={{ bgcolor: inverseMode }}>{moment(photo.created_at).calendar()}</Typography>}
           sx={{ bgcolor: inverseMode }}
         />
         <CardMedia
@@ -85,9 +86,9 @@ const FeedPhoto: React.FC = (props) => {
           sx={{ bgcolor: inverseMode }}
         />
         <CardContent sx={{ bgcolor: inverseMode }}>
-          <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
+          {/* <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
             This festival was dope!
-          </Typography>
+          </Typography> */}
         </CardContent>
         <CardActions
           sx={{ bgcolor: inverseMode }}
@@ -98,7 +99,7 @@ const FeedPhoto: React.FC = (props) => {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <Button sx={{ color: iconColors }}>Comments</Button>
+            <Button sx={{ color: iconColors }}>see all comments</Button>
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
