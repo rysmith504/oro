@@ -65,9 +65,43 @@ body {
 }
 }
 
-  h1 {
-  }
-  `;
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  background: ${(props) => props.theme.palette.primary.contrastText};
+}
+
+a:-webkit-any-link {
+  color: ${(props) => props.theme.palette.primary.main};
+}
+
+.css-vj1n65-MuiGrid-root {
+margin-top: 20px;
+}
+
+.css-9425fu-MuiOutlinedInput-notchedOutline {
+  border-color: ${(props) => props.theme.palette.primary.main};
+}
+
+.css-1xc75p7-MuiFormLabel-root-MuiInputLabel-root {
+  color: ${(props) => props.theme.palette.primary.main};
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  color: ${(props) => props.theme.palette.primary.contrastText};
+}
+
+.css-v2i77y-MuiInputBase-input-MuiFilledInput-input {
+  background: ${(props) => props.theme.palette.primary.main};
+}
+
+.css-1gb7w2s-MuiGrid-root {
+color: ${(props) => props.theme.palette.primary.contrastText};
+}
+
+.css-r6wjqo-MuiTypography-root {
+  text-align: left;
+}
+
+`;
 
 // Global Theme Export
 export const Theme = ({ children }) => {

@@ -8,22 +8,32 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link, Routes, Route } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
+import { useTheme } from '@mui/material/styles';
+import { Box, Grid, Container } from '../styles/material';
+
+const iconColors = '';
+const inverseMode = '';
 
 const pages = [
   <Link
+    to='/home'
+    style={{ textDecoration: 'none'}}
+    key={'home'}
+  >
+  HOME
+  </Link>,
+  <Link
     to='/eventListings'
-    style={{ textDecoration: 'none' }}
+    style={{ textDecoration: 'none'}}
     key={'eventListings'}
   >
     Find Events
@@ -44,12 +54,6 @@ const pages = [
   <Link to='/details' style={{ textDecoration: 'none' }} key={'details'}>
     details
   </Link>,
-  <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
-    Login
-  </Link>,
-  <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-    My Account
-  </Link>,
   <Link
     to='/travelPlanner'
     style={{ textDecoration: 'none' }}
@@ -58,11 +62,23 @@ const pages = [
     Travel Planner
   </Link>,
   <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
-    BackPack
+    Budgets
   </Link>,
+  <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}>Chat</Link>,
+  <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
+  Login
+  </Link>,
+  <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
+  Account
+  </Link>,
+  <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>Notifications</Link>
 ];
 
 const Navbar = () => {
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
+
   const themeContext = useContext(ThemeContext);
   const { mode, setMode, toggleMode } = themeContext;
 
@@ -77,21 +93,6 @@ const Navbar = () => {
   const handleLogout = () => {
     logoutUser();
   };
-
-  const settings = [
-    'Profile',
-    'Account',
-    <Link
-      to='/notifications'
-      style={{ textDecoration: 'none' }}
-      key={'notificationsMenu'}
-    >
-      Notifications
-    </Link>,
-    <Button onClick={handleLogout} key={'logoutButton'}>
-      Logout
-    </Button>,
-  ];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -109,98 +110,70 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position='static'>
+    <AppBar position='sticky' sx={{ bgcolor: inverseMode, paddingRight: '20px' }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-              color='inherit'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page, index) => (
-                <MenuItem key={`nav${index}`} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <img src='images/VSLOGO.png' height='75' />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page, index) => (
-              <Button
-                key={`page${index}`}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={toggleMode}>
-              {mode === 'dark' ? (
-                <div>
-                  Dark Mode <NightlightIcon fontSize='small' />
-                </div>
-              ) : (
-                <div>
-                  Light Mode <WbSunnyIcon fontSize='small' />
-                </div>
-              )}
-            </IconButton>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='user' src='/static/images/avatar/2.jpg' />
+          <Grid container>
+            <Grid item xs={9} sm={10} style={{ display: 'flex', alignItems: 'left' }}>
+              <a href='/'><img src={mode === 'dark' ? 'images/VSLOGO-dark.png' : 'images/VSLOGO.png'} height='75'/></a>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'none', bgcolor: inverseMode }, mr: '5px' }}>
+                {pages.map((page, index) => (
+                  <Button
+                    key={`page${index}`}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Box>
+            </Grid>
+            <Grid item xs={2} sm={1} style={{ display: 'flex'}} sx={{margin: 'auto'}}>
+              <IconButton onClick={toggleMode}>
+                {mode === 'dark' ? (
+                  <div><Tooltip title='Dark mode'><NightlightIcon fontSize='medium' sx={{ color: iconColors }}/></Tooltip>
+                  </div>
+                ) : (
+                  <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='medium' sx={{ color: iconColors }}/></Tooltip>
+                  </div>
+                )}
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting, index) => (
-                <MenuItem key={`setting${index}`} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+            </Grid>
+            <Grid item xs={1} style={{ display: 'flex' }} sx={{margin: 'auto'}}>
+              <IconButton
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleOpenNavMenu}
+              >
+                <MenuIcon sx={{ color: iconColors }} fontSize='large'/>
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'block', lg: 'block' },
+                }}
+              >
+                {pages.map((page, index) => (
+                  <MenuItem key={`nav${index}`} onClick={handleCloseNavMenu}>
+                    <Typography textAlign='center'>{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Grid>
+          </Grid>
         </Toolbar>
       </Container>
     </AppBar>

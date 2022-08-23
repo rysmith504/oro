@@ -10,7 +10,7 @@ import FeedPhoto from '../components/FeedPhoto';
 import { useTheme } from '@mui/material/styles';
 
 
-const EventFeed: React.FC = () => {
+const EventFeed: React.FC = ({socket, userId}) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -51,7 +51,9 @@ const EventFeed: React.FC = () => {
   };
 
   useEffect(() => {
-    // console.log(currentUserInfo);
+    // console.log('USERID', userId);
+    // console.log('SOCKET', socket);
+    console.log(currentUserInfo);
     updateFeed();
   }, []);
 
@@ -84,14 +86,14 @@ const EventFeed: React.FC = () => {
 
       {feedPhotos.map((photo, i) => {
         return (
-          <div key={i}>
+          <div key={i} margin-top="30px">
             <FeedPhoto photo={photo}/>
           </div>
         );
       })}
 
-      <OutlinedInput accept="image/*" type='file' name='image' onChange={handleFileChange}/>
-      <Fab variant='extended' size='small' onClick={handleFileUpload}>
+      <OutlinedInput sx={{mt: '20px'}} accept="image/*" type='file' name='image' onChange={handleFileChange}/>
+      <Fab variant='extended' size='small' onClick={handleFileUpload} sx={{ml: '20px'}}>
               Upload
       </Fab>
     </div>

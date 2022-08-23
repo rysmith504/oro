@@ -5,11 +5,13 @@ import {Fab, OutlinedInput } from '../styles/material';
 import SendIcon from '@mui/icons-material/Send';
 import Comment from './Comment';
 import { useTheme } from '@mui/material/styles';
+import { CssTextField } from '../styles/material';
 
 const Comments: React.FC = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+
 
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
@@ -33,6 +35,10 @@ const Comments: React.FC = (props) => {
   //   }
   // };
 
+  const fontColor = {
+    style: { color: '#9B27B0' }
+  };
+
   useEffect(() => {
     getComments();
   }, []);
@@ -43,9 +49,8 @@ const Comments: React.FC = (props) => {
         photoUrl: photo.photoUrl
       }
     })
-      .then((data) => {
-        // console.log(data)
-        setComments(data.data);
+      .then((commentData) => {
+        setComments(commentData.data);
       })
       .catch((err) => console.error(err));
   };
@@ -64,9 +69,19 @@ const Comments: React.FC = (props) => {
 
 
     })
-      .then(() => {
+      .then((commentData) => {
+        // console.log(commentData);
         setMessage('');
         getComments();
+        axios.post('/api/notifications', {
+          ownerId: photo.userId,
+          commentId: commentData.data.id,
+        })
+          .then((notificationData) => {
+            console.log('notif', notificationData);
+          })
+          .catch((err) => console.error(err));
+
       })
       .catch((err) => console.error(err));
   };
@@ -81,8 +96,9 @@ const Comments: React.FC = (props) => {
         );
       })}
 
-      <OutlinedInput size='small' onChange={(e) => handleComment(e)} value={message}></OutlinedInput>
-      <Fab variant='extended' type='submit' onClick={handleSend}><SendIcon/></Fab>
+      <CssTextField InputLabelProps={fontColor} inputProps={fontColor} sx={{ ml: '15px', mb: '40px', mt: '20px'}} color="secondary" size='small' onChange={(e) => handleComment(e)} value={message}/>
+      <Fab variant='extended' type='submit' onClick={handleSend}
+        sx={{bgcolor: iconColors, ml: '20px', mt: '15px'}}><SendIcon sx={{ color: inverseMode }}/></Fab>
     </div>
   );
 };

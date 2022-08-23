@@ -1,8 +1,14 @@
 import path from 'path';
 import express from 'express';
+import cors from 'cors'
 import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
+import prisma from '../database/db';
+// import * as socket from 'socket.io';
+const socket = require('socket.io')
+require('dotenv').config();
+
 
 import api from './routes/index';
 
@@ -16,12 +22,78 @@ import api from './routes/index';
 // import eventFeedRouter from './routes/eventFeed';
 // import profileRouter from './routes/profile';
 // import commentsRouter from './routes/comments';
+// import usersRouter from './routes/usersRouter'
 import prisma from './database/db';
 import passport from 'passport';
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// const io = socket(server, {
+//   cors: {
+//     origin: 'http://localhost:3000',
+//   }
+// });
+// const io = socket(server, {
+//   cors: {
+//     origin: 'http://localhost:5000',
+//     credentials: true,
+//   },
+// });
+
+// let onlineUsers = [];
+// global.onlineUsers = new Map();
+
+// io.on('connection', (socket) => {
+//   global.chatSocket = socket;
+//   socket.on('add-user', (userId) => {
+//     onlineUsers.set(userId, socket.id);
+//   });
+//   socket.on('send-msg', (data) => {
+//     const sendUserSocket = onlineUsers.get(data.to);
+//     if (sendUserSocket) {
+//       socket.to(sendUserSocket).emit('msg-receive', data.msg)
+//     }
+//   });
+// });
+
 
 // console.log('index server');
-const app = express();
+
+
+
+// const addNewUser = (userId, socketId) => {
+//   if (!onlineUsers.some(user=>user.username === username) && onlineUsers.push({userId, socketId}))
+// }
+
+// const removeUser = (socketId) => {
+//   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
+// }
+
+// const getUser = (userId) => {
+//   return onlineUsers.find((user) => user.userId === userId);
+// }
+
+// io.on('connection', (socket) => {
+//   console.log('someone has connected');
+
+
+//   socket.on('newUser', (userId) => {
+//     addNewUser(userId, socket.id);
+//   })
+
+//   socket.on('disconnect', () => {
+//     console.log('someone has left');
+//     removeUser(socket.id);
+//   })
+// });
+
+// io.listen(3000);
+
+
+
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,6 +101,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 //ROUTERS------------------------------
 app.use('/api', api);
+
+
 // app.use('/events', eventListingsRouter);
 // app.use('/favArtists', artistsRouter);
 // app.use('/songs', songFinderRouter);
@@ -37,9 +111,10 @@ app.use('/api', api);
 // app.use('/comments', commentsRouter);
 // app.use('/eventFeed', eventFeedRouter);
 // app.use('/travelPlanner', travelPlannerRouter);
+// app.use('/users', usersRouter);
 
 // AUTH-----------------
-require('dotenv').config();
+// require('dotenv').config();
 
 import googleStrategy from 'passport-google-oauth20';
 const GoogleStrategy = googleStrategy.Strategy;
@@ -52,7 +127,7 @@ app.use(
   }),
 );
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); // Why did you remove me Vincent?!
 
 // console.log('passport file');
 passport.use(new GoogleStrategy(
@@ -112,13 +187,13 @@ app.get('/hidden', isLoggedIn, (req, res) => {
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'], accessType: 'offline', prompt: 'consent' })
 );
 
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/',
+    successRedirect: '/eventListings',
     failureRedirect: '/login',
   })
 );
@@ -139,6 +214,30 @@ app.get('/*', (req, res) => {
 
 const PORT = 5000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`App listening on port http://localhost:${PORT}`);
+});
+
+
+const io = socket(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    credentials: true
+  }
+});
+
+global.onlineUsers = new Map();
+
+io.on('connection', (socket) => {
+  global.chatSocket = socket;
+  socket.on('add-user', (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+
+  socket.on('send-msg', (data) => {
+    const sendUserSocket = onlineUsers.get(data.receiverId);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit('msg-receive', data.text)
+    }
+  });
 });

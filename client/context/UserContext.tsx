@@ -6,7 +6,8 @@ const UserContext = React.createContext({});
 
 const UserContextProvider = ({ children }) => {
   const [userEvents, setUserEvents] = useState([]);
-  const [currentUserInfo, setCurrentUserInfo] = useState([]);
+  const [ currentUserInfo, setCurrentUserInfo ] = useState([]);
+  const [userContacts, setUserContacts] = useState([]);
 
   const getUserEvents = () => {
     axios
@@ -47,17 +48,11 @@ const UserContextProvider = ({ children }) => {
       });
   };
 
-  const getOtherUser = () => {
-    axios.get('/profile/:_id');
-  };
-
-  const getCurrentUser = () => {
+  const getCurrentUser = async () => {
     // Once user logs in, get user info
-    axios
+    await axios
       .get('/hidden')
-      .then((info) => {
-        const { data } = info;
-        console.log(data);
+      .then(({data}) => {
         // set state to user info
         setCurrentUserInfo(data);
       })
@@ -67,15 +62,29 @@ const UserContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getCurrentUser();
+     getCurrentUser();
   }, []);
 
+  useEffect(() => {
+    getUserContacts();
+  }, [currentUserInfo]);
+
+  const getUserContacts = () => {
+    if (currentUserInfo) {
+      axios.get('/api/users/allusers', { params: { id: currentUserInfo.id } })
+        .then(resObj => {
+          setUserContacts(resObj.data);
+        });
+    }
+  };
+
   const appProps = {
+    userContacts,
     userEvents,
     setUserEvents,
     getUserEvents,
     logoutUser,
-    currentUserInfo,
+    currentUserInfo
   };
 
   return (

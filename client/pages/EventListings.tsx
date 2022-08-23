@@ -2,29 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import EventCardDetails from '../components/EventCardDetails';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import eventDummy from '../../server/database/data/eventDummy';
+import { CssTextField } from '../styles/material';
 
-
-const CssTextField = styled(TextField)({
-  '& label.Mui-focused': {
-    color: '#9B27B0',
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#9B27B0',
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: '#1A76D2',
-    },
-    '&:hover fieldset': {
-      borderColor: '#BDBDBD',
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: '#9B27B0',
-    },
-  },
-});
 
 
 const fontColor = {
@@ -66,7 +47,8 @@ const EventListings: React.FC = () => {
     <div>
       <br/>
       <div>
-        <CssTextField InputLabelProps={fontColor} inputProps={fontColor} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} />
+        <CssTextField InputLabelProps={fontColor} inputProps={fontColor}
+          sx={{ mb: '15px'}} id="keywordSearch" color="secondary" label="search events" type='text' onChange={ handleChange } value={keyword} onKeyDown={enterClick} />
       </div><br/>
       <div>
         {

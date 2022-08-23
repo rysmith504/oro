@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 import moment from 'moment';
-
+import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { InfoIcon } from '../styles/material';
@@ -20,9 +21,18 @@ const Img = styled('img')({
 
 
 const EventCardDetails = ({events, event}) => {
+  const { currentUserInfo } = useContext(UserContext);
+  const [userInfo, setUserInfo] = useState();
+  const theme = useTheme();
+  const iconColors = theme.palette.secondary.contrastText;
+  const inverseMode = theme.palette.secondary.main;
 
+  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
+  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
+  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
   useEffect(() => {
     getPins();
+    getUserId();
   }, []);
 
   const getPins = () => {
@@ -37,7 +47,7 @@ const EventCardDetails = ({events, event}) => {
 
   const postEvent = () => {
     axios.post('/api/events/list/pins', {
-      userId: 1,
+      userId: userInfo.id,
       eventAPIid: event.eventId
     })
       .then(response => {
@@ -77,62 +87,64 @@ const EventCardDetails = ({events, event}) => {
     navigate(`/details/?id=${event.eventId}`);
   };
 
-  return (
-    <div>
-      <Paper
-        sx={{
-          p: 2,
-          margin: 'auto auto 10px auto',
-          maxWidth: 500,
-          flexGrow: 1,
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        }}
-      >
+  const getUserId = () => {
+    axios.get(`/api/profile/${currentUserInfo.id}`)
+      .then(({ data }) => {
+        setUserInfo(data);
+      })
+      .catch(err => console.error(err));
+  };
 
-        <Grid container spacing={4} alignItems='center'>
-          <Grid item>
-            <ButtonBase
-              sx={ { width: 128, height: 128 } }
-              onClick={()=> getDetails()}>
-              <InfoIcon/>
-              <Img alt="alt tag" src={image} />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography variant="body2" gutterBottom>
-                  {event.eventName}
-                  {event.artistInfo.map((artist, index) => (
-                    <div key={`artistName${index}`}>
-                      {artist.artistName}
-                    </div>
-                  ))}
-                  {date}
+  return (
+
+    <Grid container spacing={4} alignItems='center'
+      sx={{ bgcolor: inverseMode,
+        color: iconColors,
+        p: 2,
+        margin: 'auto auto 10px auto',
+        maxWidth: 500,
+        flexGrow: 1, }}>
+      <Grid item>
+        <ButtonBase
+          sx={ { width: 128, height: 128 } }
+          onClick={()=> getDetails()}>
+          <InfoIcon sx={{ mr: '20px' }}/>
+          <Img alt="alt tag" src={image} />
+        </ButtonBase>
+      </Grid>
+      <Grid item xs={12} sm container>
+        <Grid item xs container direction="column" spacing={2}>
+          <Grid item xs>
+            <Typography variant="body2" gutterBottom paragraph sx={{ bgcolor: inverseMode }}>
+              {event.eventName}
+              {event.artistInfo.map((artist, index) => (
+                <div key={`artistName${index}`}>
+                  {artist.artistName}
+                </div>
+              ))}
+              {date}
+              <br/>
+              {event.venueInfo.map((venue, index) => (
+                <div key={`venue${index}`}>
+                  {Object.values(venue.address)}
                   <br/>
-                  {event.venueInfo.map((venue, index) => (
-                    <div key={`venue${index}`}>
-                      {Object.values(venue.address)}
-                      <br/>
-                      {venue.city}, {venue.state} {venue.postalCode}
-                    </div>
-                  ))
-                  }
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <PushPinIcon
-                id={event.eventId}
-                color={pins.includes(event.eventId) ? 'secondary' : 'action'}
-                onClick={ handleClick }
-              />
-            </Grid>
+                  {venue.city}, {venue.state} {venue.postalCode}
+                </div>
+              ))
+              }
+            </Typography>
           </Grid>
         </Grid>
-      </Paper>
-    </div>
+        <Grid item>
+          <PushPinIcon
+            id={event.eventId}
+            color={pins.includes(event.eventId) ? '#1A76D2' : iconColors}
+            onClick={ handleClick }
+            sx={{ mr: '20px' }}
+          />
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

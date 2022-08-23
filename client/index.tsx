@@ -6,6 +6,7 @@ import { Box, Grid, Container } from './styles/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import {Theme} from './components/Theme';
 import { ThemeContextProvider, ThemeContext } from './context/ThemeContext';
+import { UserContextProvider } from './context/UserContext';
 
 const rootElement = document.getElementById('root');
 
@@ -15,14 +16,17 @@ if (!rootElement) {
 const root = createRoot(rootElement);
 
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path='*' element={<ThemeContextProvider>
-        <Theme>
-          <App />
-        </Theme>
-      </ThemeContextProvider>} />
-    </Routes>
-  </BrowserRouter>
+  <UserContextProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path='*' element={
+          <ThemeContextProvider>
+            <Theme>
+              <App />
+            </Theme>
+          </ThemeContextProvider>} />
+      </Routes>
+    </BrowserRouter>
+  </UserContextProvider>
 
 );

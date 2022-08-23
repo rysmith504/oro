@@ -1,30 +1,74 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import UserPhotos from '../components/UserPhotos';
 import { useTheme } from '@mui/material/styles';
+import { Box, Grid, Link, IconButton, FacebookIcon, InstagramIcon, TwitterIcon, Avatar } from '../styles/material';
 
 const OtherUser: React.FC = () => {
   const [userInfo, setUserInfo] = useState([]);
+  const [userPhotos, setUserPhotos] = useState([]);
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
 
-  const getUserInfo = () => {
-    let params = (new URL(document.location)).searchParams;
-    let id = params.get('id');
+  const params = (new URL(document.location)).searchParams;
+  const id = params.get('id');
 
+  const getUserInfo = () => {
     axios.get(`/api/profile/${id}`)
       .then(({ data }) => {
         setUserInfo(data);
       })
       .catch(err => console.error(err));
-  }
+  };
+
+  const getUserPhotos = () => {
+    axios.get(`/api/profile/event_photos/${id}`)
+      .then(({ data }) => {
+        setUserPhotos(data);
+      })
+      .catch(err => console.error(err));
+  };
 
   useEffect(() => {
     getUserInfo();
+    getUserPhotos();
   }, []);
 
   return (
-    <h1>{userInfo.fullName}</h1>
+    <div>
+      <h1>{userInfo.fullName}</h1>
+      <div id='profile_avatar'>
+          <Avatar
+            alt={userInfo.fullName}
+            src={userInfo.profileURL}
+            sx={{ width: 75, height: 75 }}
+          />
+        </div>
+      <div>
+        <Box>
+          <Grid container spacing={2}>
+            <Grid item>
+              <Link href={userInfo.fbId}>
+                <IconButton><FacebookIcon /></IconButton>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href={userInfo.instaId}>
+                <IconButton><InstagramIcon /></IconButton>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href={userInfo.twitterId}>
+                <IconButton><TwitterIcon /></IconButton>
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </div>
+      <UserPhotos photos={userPhotos} />
+    </div>
+
   );
 };
 
