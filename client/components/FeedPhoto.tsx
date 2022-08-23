@@ -86,9 +86,9 @@ const FeedPhoto: React.FC = (props) => {
           sx={{ bgcolor: inverseMode }}
         />
         <CardContent sx={{ bgcolor: inverseMode }}>
-          <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
+          {/* <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
             This festival was dope!
-          </Typography>
+          </Typography> */}
         </CardContent>
         <CardActions
           sx={{ bgcolor: inverseMode }}
@@ -99,7 +99,7 @@ const FeedPhoto: React.FC = (props) => {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <Button sx={{ color: iconColors }}>Comments</Button>
+            <Button sx={{ color: iconColors }}>see all comments</Button>
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>

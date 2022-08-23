@@ -20,8 +20,6 @@ const EventFeed: React.FC = () => {
 
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
-  const { getEventDetails, eventDetails } = useContext(EventContext);
-  const [expanded, setExpanded] = React.useState(false);
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
   const [feedPhotos, setFeedPhotos] = useState([]);
