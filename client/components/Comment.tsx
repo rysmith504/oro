@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Paper, Grid } from '@mui/material';
-import { Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import { Paper, Grid, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
+import moment from 'moment';
 
 const Comment: React.FC = (props) => {
   const theme = useTheme();
@@ -14,6 +14,7 @@ const Comment: React.FC = (props) => {
   const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
+    console.log(comment)
     getAvatar();
   }, []);
 
@@ -39,7 +40,21 @@ const Comment: React.FC = (props) => {
           </Link>
         </Grid>
         <Grid item xs={8} sm={8} md={8}>
-          <Typography textAlign='left' sx={{ color: iconColors, mb: '20px' }}>{comment.comment}</Typography>
+          <Paper>
+            <Typography textAlign='left' sx={{ color: inverseMode, mb: '20px', ml: '5px'}}>{comment.comment}</Typography>
+            <Typography textAlign='right' sx={{ color: inverseMode, mb: '20px' }}>{moment(comment.created_at).calendar()}</Typography>
+          </Paper>
+          <Typography textAlign='right' sx={{ color: iconColors, mb: '20px' }}>
+            <span>
+              edit
+            </span>
+            <span>
+              |
+            </span>
+            <span>
+              delete
+            </span>
+          </Typography>
         </Grid>
       </Grid>
       <div>
