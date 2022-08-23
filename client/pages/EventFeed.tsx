@@ -60,7 +60,6 @@ const EventFeed: React.FC = () => {
       }
     })
       .then((eventData) => {
-        console.log(eventData)
         setEventName(eventData.data.name);
       })
       .catch((err) => console.error(err));
@@ -72,7 +71,6 @@ const EventFeed: React.FC = () => {
   }, []);
 
   const handleFileChange = (e) => {
-    console.log(e.target.files[0]);
     setPhoto(e.target.files[0]);
   };
 
@@ -84,8 +82,6 @@ const EventFeed: React.FC = () => {
       const formData = new FormData();
       formData.append('myFile', photo, photo.name);
 
-      // console.log(photo, photo.name);
-      // console.log('uploaded');
       axios.post('/api/eventFeed', {
         imageData: previewSource,
         eventId,

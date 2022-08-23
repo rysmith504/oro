@@ -27,7 +27,6 @@ const Notification: React.FC = (props) => {
       }
     })
       .then((photoObj) => {
-        // console.log(photoObj);
         setPhoto(photoObj.data);
       })
       .catch((err) => console.error(err));
@@ -72,12 +71,10 @@ const Notification: React.FC = (props) => {
   }, []);
 
   const handleOpen = () => {
-    // console.log('changed');
     setModalStatus(true);
   };
 
   const handleClose = () => {
-    // console.log('closed');
     setModalStatus(false);
   };
 

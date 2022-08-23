@@ -63,37 +63,16 @@ const SongFinder: React.FC = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   if (song && artist) {
-  //     axios.get('/api/songs', {
-  //       params: {
-  //         artistName: artist,
-  //         song,
-  //       }
-  //     })
-  //       .then((results) => {
-  //         // console.log(results.data)
-  //         setLyrics(results.data);
-  //       })
-  //       .catch((err) => console.error(err));
-  //   }
-  // }, [artist, song]);
 
   useEffect(() => {
     if (artist) {
       axios.get(`/api/favArtists/${currentUserInfo.id}`)
         .then((results) => {
-          console.log(results);
           results.data.allArtists.forEach((artistObj) => {
             if (artistObj.artistName === artist) {
               setFavorited(true);
             }
           });
-          // if (results.data.length) {
-          //   setFavorited(true);
-          // } else {
-          //   setFavorited(false);
-          // }
         })
         .catch((err) => console.error(err));
 
@@ -106,20 +85,11 @@ const SongFinder: React.FC = () => {
         data: previewSource,
       })
         .then((results) => {
-          console.log('AUDD', results);
           setLyrics(results.data.lyrics.lyrics.split('\n'));
           setSong(results.data.title);
           setArtist(results.data.apple_music.artistName);
           setAlbumTitle(results.data.apple_music.albumName);
           setAlbumImage(results.data.spotify.album.images[0].url);
-          // console.log(results.data.spotify.album.images);
-          // console.log(results.data);
-          // axios.delete('/songs', {
-          //   data: {
-          //     delete_token: results.data.delete_token;
-          //   }
-          // })
-          // console.log('SUCCESS', results);
         })
         .catch((err) => console.error(err));
 
@@ -170,14 +140,12 @@ const SongFinder: React.FC = () => {
   };
 
   const addToFavorites = () => {
-    // console.log(artist);
     axios.post('/api/favArtists', {
       artistName: artist,
       userId: currentUserInfo.id
     })
       .then((data) => {
         setFavorited(true);
-        // console.log('success', data)
       })
       .catch((err) => console.error(err));
   };
@@ -190,7 +158,6 @@ const SongFinder: React.FC = () => {
       }
     })
       .then(() => {
-        // console.log('removed')
         setFavorited(false);
       })
       .catch((err) => console.error(err));

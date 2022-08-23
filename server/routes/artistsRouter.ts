@@ -49,25 +49,6 @@ artistsRouter.get('/:id', (req, res) => {
     });
 });
 
-// artistsRouter.get('/artist', async (req, res) => {
-//   const { artistName, userId } = req.query;
-//   console.log(artistName);
-//   console.log(userId);
-//   await prisma.artistFollowing.findMany({
-//     where: {
-//       userId,
-//       artistName,
-//     }
-//   })
-//     .then((data) => {
-//       // console.log(data);
-//       res.status(200).send(data);
-//     })
-//     .catch((err) => res.sendStatus(500));
-// });
-
-
-
 artistsRouter.post('/', (req, res) => {
   const {artistName, userId} = req.body;
   console.log(artistName);
