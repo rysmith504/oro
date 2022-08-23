@@ -63,21 +63,21 @@ const SongFinder: React.FC = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (song && artist) {
-      axios.get('/api/songs', {
-        params: {
-          artistName: artist,
-          song,
-        }
-      })
-        .then((results) => {
-          // console.log(results.data)
-          setLyrics(results.data);
-        })
-        .catch((err) => console.error(err));
-    }
-  }, [artist, song]);
+  // useEffect(() => {
+  //   if (song && artist) {
+  //     axios.get('/api/songs', {
+  //       params: {
+  //         artistName: artist,
+  //         song,
+  //       }
+  //     })
+  //       .then((results) => {
+  //         // console.log(results.data)
+  //         setLyrics(results.data);
+  //       })
+  //       .catch((err) => console.error(err));
+  //   }
+  // }, [artist, song]);
 
   useEffect(() => {
     if (artist) {
@@ -106,6 +106,8 @@ const SongFinder: React.FC = () => {
         data: previewSource,
       })
         .then((results) => {
+          console.log('AUDD', results);
+          setLyrics(results.data.lyrics.lyrics.split('\n'));
           setSong(results.data.title);
           setArtist(results.data.apple_music.artistName);
           setAlbumTitle(results.data.apple_music.albumName);

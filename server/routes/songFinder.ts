@@ -48,10 +48,11 @@ songFinderRouter.post('/', async (req, res) => {
 
           'api_token': process.env.AUDD_TOKEN,
           'url': uploadResponse.secure_url,
-          'return': 'apple_music,spotify',
+          'return': 'lyrics,apple_music,spotify',
 
         })
           .then((data) => {
+            console.log(data);
             // data.data.result.delete_by_token = uploadResponse.delete_token;
             // console.log(data.data.result);
             res.status(200).send(data.data.result);
