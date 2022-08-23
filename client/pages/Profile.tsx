@@ -104,7 +104,7 @@ const Profile: React.FC = () => {
     setOpenSnack(false);
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     axios.put(`/api/profile/${currentUserInfo.id}`, {
       "socialMedia": {
         "facebook": `${facebookLink}` || null,
@@ -135,9 +135,14 @@ const Profile: React.FC = () => {
     getUserPhotos();
   }, []);
 
+  const handleDbUser = () => {
+    console.log(dbUser);
+  }
+
   if (currentUserInfo.id) {
     return (
       <div>
+        <Button onClick={handleDbUser} sx={{ bgcolor: inverseMode, colors: inverseMode, mb: '30px', }} variant="outlined">dbUser</Button>
         <Avatar
           alt={currentUserInfo.displayName}
           src={currentUserInfo.photos[0].value}

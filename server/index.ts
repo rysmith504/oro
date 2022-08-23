@@ -198,7 +198,7 @@ app.get(
   })
 );
 
-app.get('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
   req.logout(() => {
     res.redirect('/');
   });

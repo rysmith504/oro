@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Comments from './Comments';
-import { Grid, Box, ImageListItem, CloseRoundedIcon, Dialog, DialogTitle, DialogContent, AppBar, Toolbar, Slide, IconButton } from '../styles/material';
+import { Grid, Box, ImageListItem, CloseRoundedIcon, Dialog, DialogContent, AppBar, Toolbar, Slide, IconButton } from '../styles/material';
 import { useTheme} from '@mui/material/styles';
 import { TransitionProps } from '@mui/material/transitions';
 
