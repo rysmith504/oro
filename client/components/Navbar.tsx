@@ -1,7 +1,7 @@
 import * as React from 'react';
 import React, { useState, useEffect, useContext } from 'react';
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -23,16 +23,17 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Grid, Container } from '../styles/material';
 import Badge from '@mui/material/Badge';
 import { UserContext } from '../context/UserContext';
-import {Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail} from '@mui/icons-material';
-import {Avatar} from '../styles/material';
+import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
+import { Avatar } from '../styles/material';
 const iconColors = '';
 const inverseMode = '';
 
 
 
 const Navbar = (props) => {
+  const { currentUserInfo, getCurrentUser, logoutUser } = useContext(UserContext);
 
-  const {notif, profile} = props;
+  const { notif, profile } = props;
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -40,24 +41,24 @@ const Navbar = (props) => {
   const themeContext = useContext(ThemeContext);
   const { mode, setMode, toggleMode } = themeContext;
 
-  
+
 
   const pages = [
-  
+
     <Link
       to='/home'
-      style={{ textDecoration: 'none'}}
+      style={{ textDecoration: 'none' }}
       key={'home'}
     >
-      <Home/>
-    HOME
+      <Home />
+      HOME
     </Link>,
     <Link
       to='/eventListings'
-      style={{ textDecoration: 'none'}}
+      style={{ textDecoration: 'none' }}
       key={'eventListings'}
     >
-      <TravelExplore/>
+      <TravelExplore />
       Find Events
     </Link>,
     <Link
@@ -65,34 +66,30 @@ const Navbar = (props) => {
       style={{ textDecoration: 'none' }}
       key={'travelPlanner'}
     >
-      <Luggage/>
+      <Luggage />
       Travel Planner
     </Link>,
     <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
-      <PriceChange/>
+      <PriceChange />
       Budgets
     </Link>,
     <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
-      <MusicNote/>
+      <MusicNote />
       Song Finder
     </Link>,
     <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
-      <Grade/>
+      <Grade />
       Favorite Artists
     </Link>,
-    <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum/> Chat</Link>,
+    <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum /> Chat</Link>,
     <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
       <Badge badgeContent={notif} color="primary" >
-        <Mail/>
+        <Mail />
       </Badge>
       Notifications</Link>,
     <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-      <Avatar src={profile}/>
-    Account
-    </Link>,
-    <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
-      <Login/>
-    Login
+      <Avatar src={profile} />
+      Account
     </Link>,
   ];
 
@@ -103,11 +100,6 @@ const Navbar = (props) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const { logoutUser } = useContext(UserContext);
-
-  const handleLogout = () => {
-    logoutUser();
-  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -124,13 +116,23 @@ const Navbar = (props) => {
     setAnchorElUser(null);
   };
 
+  let isLoggedIn = false;
+
+  if (currentUserInfo.id) {
+    isLoggedIn = true;
+  }
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   return (
     <AppBar position='sticky' sx={{ bgcolor: inverseMode, paddingRight: '20px' }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Grid container>
             <Grid item xs={9} sm={10} style={{ display: 'flex', alignItems: 'left' }}>
-              <a href='/'><img src={mode === 'dark' ? 'images/VSLOGO-dark.png' : 'images/VSLOGO.png'} height='75'/></a>
+              <a href='/'><img src={mode === 'dark' ? 'images/VSLOGO-dark.png' : 'images/VSLOGO.png'} height='75' /></a>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'none', bgcolor: inverseMode }, mr: '5px' }}>
                 {pages.map((page, index) => (
                   <Button
@@ -143,25 +145,25 @@ const Navbar = (props) => {
                 ))}
               </Box>
             </Grid>
-            <Grid item xs={2} sm={1} style={{ display: 'flex'}} sx={{margin: 'auto'}}>
+            <Grid item xs={2} sm={1} style={{ display: 'flex' }} sx={{ margin: 'auto' }}>
               <IconButton onClick={toggleMode}>
                 {mode === 'dark' ? (
-                  <div><Tooltip title='Dark mode'><NightlightIcon fontSize='medium' sx={{ color: iconColors }}/></Tooltip>
+                  <div><Tooltip title='Dark mode'><NightlightIcon fontSize='medium' sx={{ color: iconColors }} /></Tooltip>
                   </div>
                 ) : (
-                  <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='medium' sx={{ color: iconColors }}/></Tooltip>
+                  <div><Tooltip title='Light mode'><WbSunnyIcon fontSize='medium' sx={{ color: iconColors }} /></Tooltip>
                   </div>
                 )}
               </IconButton>
             </Grid>
-            <Grid item xs={1} style={{ display: 'flex' }} sx={{margin: 'auto'}}>
+            <Grid item xs={1} style={{ display: 'flex' }} sx={{ margin: 'auto' }}>
               <IconButton
                 aria-label='account of current user'
                 aria-controls='menu-appbar'
                 aria-haspopup='true'
                 onClick={handleOpenNavMenu}
               >
-                <MenuIcon sx={{ color: iconColors }} fontSize='large'/>
+                <MenuIcon sx={{ color: iconColors }} fontSize='large' />
               </IconButton>
               <Menu
                 id='menu-appbar'
@@ -186,6 +188,19 @@ const Navbar = (props) => {
                     <Typography textAlign='center'>{page}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem onClick={handleCloseNavMenu}>
+                  {
+                    isLoggedIn 
+                      ? <Link to='/home' style={{ textDecoration: 'none' }} key={'logout'} onClick={logoutUser}>
+                          <Logout/>
+                          Logout
+                        </Link>
+                      : <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
+                          <Login />
+                          Login
+                        </Link>
+                  }
+                </MenuItem>
               </Menu>
             </Grid>
           </Grid>
