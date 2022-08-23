@@ -57,6 +57,11 @@ import dialogTitle from '@mui/material/DialogTitle';
 import link from '@mui/material/Link';
 import snackbar from '@mui/material/Snackbar';
 import speedDial from '@mui/material/SpeedDial';
+import closeRoundedIcon from '@mui/icons-material/CloseRounded';
+import appBar from '@mui/material/AppBar';
+import toolbar from '@mui/material/Toolbar';
+import slide from '@mui/material/Slide';
+
 
 import { useTheme } from '@mui/material/styles';
 
@@ -150,3 +155,7 @@ export const DialogContentText = dialogContentText;
 export const DialogTitle = dialogTitle;
 export const Link = link;
 export const Snackbar = snackbar;
+export const CloseRoundedIcon = closeRoundedIcon;
+export const AppBar = appBar;
+export const Toolbar = toolbar;
+export const Slide = slide;
