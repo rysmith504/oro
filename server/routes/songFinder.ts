@@ -35,9 +35,9 @@ songFinderRouter.post('/', async (req, res) => {
           .then((data) => {
             res.status(200).send(data.data.result);
           })
-          .catch((err) => res.sendStatus(500));
+          .catch((_err) => res.sendStatus(500));
       })
-      .catch((err) => res.sendStatus(500));
+      .catch((_err) => res.sendStatus(500));
   } catch (error) {
     res.sendStatus(500);
   }

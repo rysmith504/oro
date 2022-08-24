@@ -21,7 +21,7 @@ profileRouter.get('/events/:_id', (req, res) => {
     .then(arr => {
       axios.all(arr)
         .then(axios.spread((...responses) => {
-          const userEventsArr: any[] = [];
+          const userEventsArr: (string)[] = [];
           responses.forEach(response => {
             userEventsArr.push(response.data._embedded.events[0]);
           })
