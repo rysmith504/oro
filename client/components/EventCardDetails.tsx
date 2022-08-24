@@ -22,7 +22,6 @@ const Img = styled('img')({
 
 const EventCardDetails = ({events, event}) => {
   const { currentUserInfo } = useContext(UserContext);
-  const [userInfo, setUserInfo] = useState();
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -32,7 +31,6 @@ const EventCardDetails = ({events, event}) => {
   // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
   useEffect(() => {
     getPins();
-    getUserId();
   }, []);
 
   const getPins = () => {
@@ -47,7 +45,7 @@ const EventCardDetails = ({events, event}) => {
 
   const postEvent = () => {
     axios.post('/api/events/list/pins', {
-      userId: userInfo.id,
+      userId: currentUserInfo.id,
       eventAPIid: event.eventId
     })
       .then(response => {
@@ -85,14 +83,6 @@ const EventCardDetails = ({events, event}) => {
   const getDetails = () => {
     // console.log('navigate', event.eventId);
     navigate(`/details/?id=${event.eventId}`);
-  };
-
-  const getUserId = () => {
-    axios.get(`/api/profile/${currentUserInfo.id}`)
-      .then(({ data }) => {
-        setUserInfo(data);
-      })
-      .catch(err => console.error(err));
   };
 
   return (
