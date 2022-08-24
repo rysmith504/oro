@@ -51,7 +51,7 @@ model ArtistFollowing {
   id         Int     @id @default(autoincrement())
   user       Users?  @relation(fields: [userId], references: [googleId])
   userId     String?
-  artistName String
+  artistName String  @unique
   bio        String
   ticketId   String
   youtube    String

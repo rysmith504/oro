@@ -49,30 +49,30 @@ artistsRouter.get('/:id', (req, res) => {
     });
 });
 
-artistsRouter.get('/update', (req, res) => {
-  const { artist, user } = req.params;
-  const { artistId } = artist;
-  const { userId } = user;
-  prisma.artistFollowing.findUnique({
-    where: {
-      id: artistId,
-    }
-  })
-    .then((userInfo) => {
-      prisma.artistFollowing.findMany({
-        where: {
-          userId: userInfo.id,
-        }
-      });
-    });
-});
+// artistsRouter.get('/update', (req, res) => {
+//   const { artist, user } = req.params;
+//   const { artistId } = artist;
+//   const { userId } = user;
+//   prisma.artistFollowing.findUnique({
+//     where: {
+//       id: artistId,
+//     }
+//   })
+//     .then((userInfo) => {
+//       prisma.artistFollowing.findMany({
+//         where: {
+//           userId: userInfo.id,
+//         }
+//       });
+//     });
+// });
 
 artistsRouter.post('/', (req, res) => {
   const {artistName, userId} = req.body;
   console.log(artistName);
   console.log(userId);
+
   const obj = {
-    userId,
     artistName,
     bio: '',
     ticketId: '',
@@ -105,8 +105,17 @@ artistsRouter.post('/', (req, res) => {
             obj.image = attractionData.data._embedded.attractions[0].images[0].url;
           }
 
-          await prisma.artistFollowing.create({
-            data: obj
+          await prisma.artistFollowing.update({
+            where: {
+              artistName
+            },
+            data: {
+              user: {
+                connect: {
+                  googleId: userId,
+                },
+              }
+            }
           })
             .then((data) => {
               // console.log(data);
