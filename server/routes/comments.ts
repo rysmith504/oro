@@ -11,6 +11,11 @@ commentsRouter.get('/', async (req, res) => {
   const {photoUrl} = req.query;
 
   await prisma.comments.findMany({
+    orderBy: [
+      {
+        created_at: 'asc'
+      }
+    ],
     where: {
       photoUrl: photoUrl
     }
@@ -64,16 +69,34 @@ commentsRouter.post('/', async (req, res) => {
       console.log(err);
       res.sendStatus(500)
     });
-  // prisma.comments.create({
-  //   data: {
-  //     userId: 1,
-  //     comment,
-  //     photoId: 1,
-  //   }
-  // })
-  //   .then((data) => res.status(200).send(data))
-  //   .catch(() => res.sendStatus(500));
 });
+commentsRouter.put('/', async (req, res) => {
+  const {id, comment} = req.body;
+
+  await prisma.comments.update({
+    where: {
+      id,
+    },
+    data: {
+      comment,
+      edited: true,
+    }
+  })
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(500));
+})
+
+commentsRouter.delete('/', async (req, res) => {
+  const {id} = req.body;
+
+  await prisma.comments.delete({
+    where: {
+      id,
+    }
+  })
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(500));
+})
 
 
 

@@ -64,7 +64,7 @@ const Comments: React.FC = (props) => {
     await axios.post('/api/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
-      userId: currentUserInfo.id,
+      userId: currentUserInfo.googleId,
       ownerId: photo.userId,
 
 
@@ -92,7 +92,7 @@ const Comments: React.FC = (props) => {
 
       {comments.map((comment, i) => {
         return (
-          <Comment key={i} comment={comment}/>
+          <Comment key={i} comment={comment} getComments={getComments}/>
         );
       })}
 

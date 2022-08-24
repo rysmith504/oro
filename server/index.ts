@@ -4,7 +4,6 @@ import cors from 'cors';
 import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
-import prisma from '../database/db';
 // import * as socket from 'socket.io';
 const socket = require('socket.io');
 require('dotenv').config();
@@ -23,8 +22,6 @@ import api from './routes/index';
 // import profileRouter from './routes/profile';
 // import commentsRouter from './routes/comments';
 // import usersRouter from './routes/usersRouter'
-import prisma from './database/db';
-import passport from 'passport';
 
 const app = express();
 app.use(cors());
@@ -93,7 +90,7 @@ app.use(cors());
 
 
 
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -127,7 +124,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session()); // Why did you remove me Vincent?!
 
-// console.log('passport file');
 passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -175,12 +171,19 @@ passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
 });
 
 
-const isLoggedIn = (req, res, next) => {
+const isLoggedIn = (req: { user: any; }, res: { sendStatus: (arg0: number) => any; }, next: () => any) => {
   req.user ? next() : res.sendStatus(401);
 };
 
 app.get('/hidden', isLoggedIn, (req, res) => {
-  res.send(req.user);
+  // res.send(req.user);
+  const userObj = req.user;
+
+  prisma.users.findUnique({ where: { googleId: userObj.id }})
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch(err => console.error(err));
 });
 
 app.get(
@@ -226,13 +229,13 @@ const io = socket(server, {
 
 global.onlineUsers = new Map();
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: { on: (arg0: string, arg1: { (userId: any): void; (data: any): void; }) => void; id: any; to: (arg0: any) => { (): any; new(): any; emit: { (arg0: string, arg1: any): void; new(): any; }; }; }) => {
   global.chatSocket = socket;
-  socket.on('add-user', (userId) => {
+  socket.on('add-user', (userId: any) => {
     onlineUsers.set(userId, socket.id);
   });
 
-  socket.on('send-msg', (data) => {
+  socket.on('send-msg', (data: { receiverId: any; text: any; }) => {
     const sendUserSocket = onlineUsers.get(data.receiverId);
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit('msg-receive', data.text);

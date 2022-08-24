@@ -6,52 +6,36 @@ import prisma from '../database/db';
 const profileRouter = Router();
 const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 
-profileRouter.get('/events', (req, res) => {
-  prisma.userEvents.findMany({ where: { userId: 1 }})
-    .then((userEvents) => {
-      const eventId = userEvents[0]?.eventAPIid;
+profileRouter.get('/events/:_id', (req, res) => {
+  const { _id } = req.params;
+  const id = Number(_id);
 
-      axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&id=${eventId}`)
-        .then(event => {
-          res.status(200).send(event.data._embedded.events[0]);
-        })
-        .catch(err => {
-          console.error(err);
-        });
-
+  prisma.userEvents.findMany({ where: { userId: id } })
+    .then((events) => {
+      const apiUrls: any[] | PromiseLike<any[]> = [];
+      events.forEach(event => {
+        apiUrls.push(axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&id=${event.eventAPIid}`));
+      })
+      return apiUrls
     })
-    .catch((err) => {
-      res.send(500);
-    });
+    .then(arr => {
+      axios.all(arr)
+        .then(axios.spread((...responses) => {
+          const userEventsArr: (string)[] = [];
+          responses.forEach(response => {
+            userEventsArr.push(response.data._embedded.events[0]);
+          })
+          return userEventsArr;
+        }))
+        .then(eventsArr => {
+          // console.log(eventsArr);
+          res.status(200).send(eventsArr);
+        })
+        .catch(err => console.error(err));
+    })
+    .catch(err => console.error(err));
 });
 
-// profileRouter.get('/events/:_id', (req, res) => {
-//   const { _id } = req.params;
-//   let userEvents = [];
-//   prisma.users.findUnique({ where: { googleId: _id }})
-//     .then((user) => {
-//       const { id } = user;
-//       return id;
-//     })
-//     .then((id => {
-//       prisma.userEvents.findMany({ where: { userId: id }})
-//         .then((events) => {
-//           events.forEach(event => {
-//             axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&id=${event.eventAPIid}`)
-//               .then(({data}) => {
-//                 const { _embedded } = data;
-//                 userEvents.push(_embedded.events);
-//               })
-//               .catch(err => console.error(err));
-//           })
-//         })
-//         .then(() => {
-//           console.log(userEvents);
-//         })
-//         .catch(err => console.error(err));
-//     }))
-//     .catch(err => console.error(err));
-// });
 
 profileRouter.get('/:_id', (req, res) => {
   const { _id } = req.params;
@@ -73,7 +57,7 @@ profileRouter.get('/event_photos/:_id', (req, res) => {
   const { _id } = req.params;
 
   prisma.eventPhotos.findMany({
-    where: { userId: _id},
+    where: { userId: _id },
   })
     .then(userPhotos => {
       res.status(200).send(userPhotos);
@@ -83,16 +67,16 @@ profileRouter.get('/event_photos/:_id', (req, res) => {
     });
 });
 
-profileRouter.put('/:_id', (req, res) => {
+profileRouter.put('/:_id', (req, _res) => {
   const { _id } = req.params;
   const { socialMedia } = req.body;
-  const {facebook, instagram, twitter} = socialMedia;
+  const { facebook, instagram, twitter } = socialMedia;
 
   prisma.users.update({
     where: { googleId: _id },
     data: { fbId: facebook, instaId: instagram, twitterId: twitter },
   })
-  .catch(err => console.error(err));
+    .catch(err => console.error(err));
 })
 
 export default profileRouter;

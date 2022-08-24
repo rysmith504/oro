@@ -56,6 +56,7 @@ import dialogContentText from '@mui/material/DialogContentText';
 import dialogTitle from '@mui/material/DialogTitle';
 import link from '@mui/material/Link';
 import snackbar from '@mui/material/Snackbar';
+import speedDial from '@mui/material/SpeedDial';
 import closeRoundedIcon from '@mui/icons-material/CloseRounded';
 import appBar from '@mui/material/AppBar';
 import toolbar from '@mui/material/Toolbar';
@@ -94,13 +95,12 @@ export const CssTextField = styled(TextField)({
 
 
 // export styled;
+export const SpeedDial = speedDial;
 export	const	StyledProvider	=	ThemeProvider;
-export const Box = box;
 export const Modal = modal;
 export const IconButton = iconButton;
 export const OutlinedInput = outlinedInput;
 export const Fab = fab;
-export const Avatar = avatar;
 export	const	Box	=	box;
 export	const	Drawer	=	drawer;
 export	const	Button	=	button;
@@ -145,7 +145,6 @@ export const MuiAccordionSummary = muiAccordionSummary;
 export const MuiAccordionDetails = muiAccordionDetails;
 export const ImageList = imageList;
 export const ImageListItem = imageListItem;
-export const TextField = textField;
 export const Dialog = dialog;
 export const DialogActions = dialogActions;
 export const DialogContent = dialogContent;

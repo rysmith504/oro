@@ -1,19 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Paper, Grid } from '@mui/material';
-import { Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import { Paper, Grid, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
+import moment from 'moment';
+import { UserContext } from '../context/UserContext';
 
 const Comment: React.FC = (props) => {
+
+  const userContext = useContext(UserContext);
+  const {currentUserInfo} = userContext;
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  const [commentText, setCommentText] = useState('');
+  const [editor, setEditor] = useState('');
+  const { comment, getComments } = props;
 
-  const { comment } = props;
   const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
+    console.log(comment)
     getAvatar();
   }, []);
 
@@ -29,6 +36,61 @@ const Comment: React.FC = (props) => {
       .catch((err) => console.error(err));
   };
 
+  const deleteComment = () => {
+    axios.delete('/api/comments', {
+      data: {
+        id: comment.id,
+      }
+    })
+      .then(() => getComments())
+      .catch((err) => console.error(err));
+  };
+
+  const handleEdit = (e) => {
+    console.log(e.target.value);
+    setCommentText(e.target.value);
+  }
+
+  const handleSubmitEdit = () => {
+    axios.put('/api/comments', {
+      id: comment.id,
+      comment: commentText,
+    })
+      .then(() => {
+        setCommentText('');
+        setEditor(false);
+        getComments();
+      })
+      .catch((err) => console.error(err));
+  }
+
+  const openEditor = () => {
+    setEditor(true);
+  }
+
+  const closeEditor = () => {
+    setEditor(false);
+    setCommentText('');
+  }
+
+  const getEditDeleteOptions = () => {
+    if (comment.userId === currentUserInfo.googleId) {
+      return (
+        <Typography textAlign='right' sx={{ color: iconColors, mb: '20px' }}>
+          <span onClick={openEditor}>
+            edit 
+          </span>
+          <span>
+            |
+          </span>
+          <span onClick={deleteComment}>
+            delete
+          </span>
+        </Typography>
+      )
+    }
+  }
+
 
   return (
     <div>
@@ -39,7 +101,14 @@ const Comment: React.FC = (props) => {
           </Link>
         </Grid>
         <Grid item xs={8} sm={8} md={8}>
-          <Typography textAlign='left' sx={{ color: iconColors, mb: '20px' }}>{comment.comment}</Typography>
+          <Paper>
+            {!editor && <Typography textAlign='left' sx={{ color: inverseMode, mb: '20px', ml: '5px'}}>{comment.comment} {comment.edited && ' (edited)'}</Typography>}
+            {!editor && <Typography textAlign='right' sx={{ color: inverseMode, mb: '20px' }}>{moment(comment.created_at).calendar()}</Typography>}
+            {editor && <input placeholder={comment.comment} value={commentText} onChange={handleEdit}/>}
+            {editor && <button onClick={handleSubmitEdit}>confirm changes</button>}
+            {editor && <button onClick={closeEditor}>cancel</button>}
+          </Paper>
+          {getEditDeleteOptions()}
         </Grid>
       </Grid>
       <div>

@@ -14,6 +14,7 @@ artistsRouter.get('/events', (req, res) => {
     })
     .catch(err => console.error(err));
 });
+
 artistsRouter.get('/:id', (req, res) => {
   const { id } = req.params;
   prisma.users.findUnique({
@@ -48,38 +49,14 @@ artistsRouter.get('/:id', (req, res) => {
         });
     });
 });
-// artistsRouter.get('/', (req, res) => {
-//   const { _id } = req.params;
-//   prisma.users.findUnique({
-//     where: {
-//       googleId: _id,
-//     }
-//   })
-//     .then((userInfo) => {
-//       prisma.artistFollowing.findUnique({
-//         where: {
-//           userId: userInfo._id,
-//         }
-//       })
-//         .then((data) => {
-//           // console.log(data);
-//           res.status(200).send(data);
-//         })
-//         .catch((err) => res.sendStatus(500));
-//     })
-//     .catch((err) => {
-//       res.sendStatus(500);
-//     });
-
-// });
-
-
 
 artistsRouter.post('/', (req, res) => {
-  const {artistName} = req.body;
+  const {artistName, userId} = req.body;
+  console.log(artistName);
+  console.log(userId);
   const obj = {
-    userId: 1,
-    artistName: artistName,
+    userId,
+    artistName,
     bio: '',
     ticketId: '',
     youtube: '',
@@ -118,9 +95,13 @@ artistsRouter.post('/', (req, res) => {
               // console.log(data);
               res.status(200).send(data);
             })
-            .catch((err) => res.sendStatus(500));
+            .catch((err) => {
+              res.sendStatus(500)
+              console.log(err);
+            });
         })
         .catch((err) => {
+          console.log(err);
           res.status(500);
           res.end();
         });
@@ -133,11 +114,11 @@ artistsRouter.post('/', (req, res) => {
 });
 
 artistsRouter.delete('/', (req, res) => {
-  const {artistName} = req.body;
+  const {artistName, userId} = req.body;
   // console.log(artistName);
   prisma.artistFollowing.deleteMany({
     where: {
-      userId: 1,
+      userId,
       artistName,
     }
   })
