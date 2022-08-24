@@ -66,7 +66,7 @@ const App: React.FC = () => {
   const getAvatar = async () => {
     await axios.get('/api/eventFeed/avatar', {
       params: {
-        userId: currentUserInfo.id
+        userId: currentUserInfo.googleId
       }
     })
       .then((userProfile) => {

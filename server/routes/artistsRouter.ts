@@ -14,6 +14,7 @@ artistsRouter.get('/events', (req, res) => {
     })
     .catch(err => console.error(err));
 });
+
 artistsRouter.get('/:id', (req, res) => {
   const { id } = req.params;
   prisma.users.findUnique({

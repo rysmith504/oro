@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
 import {
@@ -64,8 +64,9 @@ const formatCurrency = (number) => {
 };
 
 const BackPack: React.FC = () => {
-  const { userEvents, getUserEvents, currentUserInfo } =
+  const {  currentUserInfo  }=
     useContext(UserContext);
+  const [userEvents, setUserEvents] = useState([]);
   const [expanded, setExpanded] = React.useState('panel1');
 
   const [budgetList, setBudgetList] = React.useState([...SAMPLE_BUDGET_LIST]);
@@ -83,6 +84,14 @@ const BackPack: React.FC = () => {
   useEffect(() => {
     getUserEvents();
   }, []);
+
+  const getUserEvents = () => {
+    axios.get(`/api/profile/events/${currentUserInfo.id}`)
+      .then(({data}) => {
+        setUserEvents(data);
+      })
+      .catch(err => console.error(err));
+  }
 
   const handleBudgetChange = (value, index) => {
     console.log({ value, index });

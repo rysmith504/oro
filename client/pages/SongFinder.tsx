@@ -66,7 +66,7 @@ const SongFinder: React.FC = () => {
 
   useEffect(() => {
     if (artist) {
-      axios.get(`/api/favArtists/${currentUserInfo.id}`)
+      axios.get(`/api/favArtists/${currentUserInfo.googleId}`)
         .then((results) => {
           results.data.allArtists.forEach((artistObj) => {
             if (artistObj.artistName === artist) {
