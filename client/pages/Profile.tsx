@@ -65,8 +65,11 @@ const Profile: React.FC = () => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  const startDate = moment(userEvents.sales.public.startDateTime).format('LLLL');
-  const endDate = moment(userEvents.sales.public.endDateTime).format('LLLL');
+  
+  // const startDate = moment(userEvents.sales.public.startDateTime).format('LLLL');
+  // const endDate = moment(userEvents.sales.public.endDateTime).format('LLLL');
+  // const eventDate = 
+
 
   const getUserEvents = () => {
     axios.get(`/api/profile/events/${currentUserInfo.id}`)
@@ -235,10 +238,10 @@ const Profile: React.FC = () => {
                   <List>
                     <ListItem>Venue: {event._embedded.venues[0].name}</ListItem>
                     <ListItem>
-                      Location: {userEvents.address}, {userEvents.city}, {userEvents.state}, {userEvents.postalCode}
+                      Location: {}, {}, {}, {}
                     </ListItem>
-                    <ListItem>Ticket sale starts: {}</ListItem>
-                    <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
+                    <ListItem>Ticket sale starts: {moment(event.sales.public.startDateTime).format('llll')}</ListItem>
+                    <ListItem>Ticket sale ends: {}</ListItem>
                     <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => { location.href = userEvents.link; }}>Purchase Tickets</Button>
                   </List>
                 </AccordionDetails>
