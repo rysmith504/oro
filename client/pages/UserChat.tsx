@@ -18,7 +18,6 @@ import ChatContainer from '../components/ChatContainer';
 import { useTheme } from '@mui/material/styles';
 import { io } from 'socket.io-client'
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';

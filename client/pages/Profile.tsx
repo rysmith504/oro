@@ -80,7 +80,7 @@ const Profile: React.FC = () => {
   }
 
   const getUserPhotos = () => {
-    axios.get(`/api/profile/event_photos/${currentUserInfo.id}`)
+    axios.get(`/api/profile/event_photos/${currentUserInfo.googleId}`)
       .then(({ data }) => {
         setUserPhotos(data);
       })
@@ -112,7 +112,7 @@ const Profile: React.FC = () => {
   };
 
   const handleUpdate = async () => {
-    axios.put(`/api/profile/${currentUserInfo.id}`, {
+    axios.put(`/api/profile/${currentUserInfo.googleId}`, {
       "socialMedia": {
         "facebook": `${facebookLink}` || null,
         "instagram": `${instagramLink}` || null,
