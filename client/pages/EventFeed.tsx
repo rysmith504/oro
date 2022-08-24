@@ -70,6 +70,7 @@ const EventFeed: React.FC = () => {
   }
 
   useEffect(() => {
+    console.log(currentUserInfo);
     getEvent();
     updateFeed();
   }, []);

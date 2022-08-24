@@ -49,8 +49,8 @@ model UserEvents {
 // artistFollowing Model
 model ArtistFollowing {
   id         Int    @id @default(autoincrement())
-  user       Users  @relation(fields: [userId], references: [googleId])
-  userId     String
+  user       Users?  @relation(fields: [userId], references: [googleId])
+  userId     String?
   artistName String
   bio        String
   ticketId   String
