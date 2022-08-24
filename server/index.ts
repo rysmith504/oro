@@ -127,7 +127,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session()); // Why did you remove me Vincent?!
 
-// console.log('passport file');
 passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -180,7 +179,14 @@ const isLoggedIn = (req, res, next) => {
 };
 
 app.get('/hidden', isLoggedIn, (req, res) => {
-  res.send(req.user);
+  // res.send(req.user);
+  const userObj = req.user;
+
+  prisma.users.findUnique({ where: { googleId: userObj.id }})
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch(err => console.error(err));
 });
 
 app.get(
