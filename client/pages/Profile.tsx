@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon, Grid, IconButton, Box, Link, Snackbar } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import moment from 'moment';
 
 const Accordion = styled((props) => (
   <MuiAccordion children={''} disableGutters elevation={0} square {...props} />
@@ -44,9 +45,9 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const Profile: React.FC = () => {
-  const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
+  const { currentUserInfo } = useContext(UserContext);
+  const [userEvents, setUserEvents] = useState([]);
   const [userPhotos, setUserPhotos] = useState([]);
-  const [dbUser, setDbUser] = useState([]);
   const [facebookLink, setFacebookLink] = useState('')
   const [instagramLink, setInstagramLink] = useState('')
   const [twitterLink, setTwitterLink] = useState('')
@@ -64,13 +65,19 @@ const Profile: React.FC = () => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  const getDbUser = () => {
-    axios.get(`/api/profile/${currentUserInfo.id}`)
-      .then(({ data }) => {
-        setDbUser(data);
+  
+  // const startDate = moment(userEvents.sales.public.startDateTime).format('LLLL');
+  // const endDate = moment(userEvents.sales.public.endDateTime).format('LLLL');
+  // const eventDate = 
+
+
+  const getUserEvents = () => {
+    axios.get(`/api/profile/events/${currentUserInfo.id}`)
+      .then(({data}) => {
+        setUserEvents(data);
       })
       .catch(err => console.error(err));
-  };
+  }
 
   const getUserPhotos = () => {
     axios.get(`/api/profile/event_photos/${currentUserInfo.id}`)
@@ -130,25 +137,19 @@ const Profile: React.FC = () => {
   }
 
   useEffect(() => {
-    getDbUser();
-    getUserEvents();
     getUserPhotos();
+    getUserEvents();
   }, []);
-
-  const handleDbUser = () => {
-    console.log(dbUser);
-  }
 
   if (currentUserInfo.id) {
     return (
       <div>
-        <Button onClick={handleDbUser} sx={{ bgcolor: inverseMode, colors: inverseMode, mb: '30px', }} variant="outlined">dbUser</Button>
         <Avatar
-          alt={currentUserInfo.displayName}
-          src={currentUserInfo.photos[0].value}
+          alt={currentUserInfo.fullName}
+          src={currentUserInfo.profileURL}
           sx={{ width: 150, height: 150, mt: '30px', ml: 'auto', mr: 'auto' }}
         />
-        <h1>Hello {currentUserInfo.name.givenName}</h1>
+        <h1>Hello {currentUserInfo.fullName}</h1>
         <div>
           <Button sx={{ bgcolor: inverseMode, colors: inverseMode, mb: '30px', }} variant="outlined" onClick={handleClickOpen}>Update Profile</Button>
           <Dialog open={open} onClose={handleClose} sx={{ bgcolor: inverseMode, colors: inverseMode }}>
@@ -208,42 +209,46 @@ const Profile: React.FC = () => {
           <Box>
             <Grid container spacing={2}>
               <Grid item>
-                <Link href={dbUser.fbId}>
+                <Link href={currentUserInfo.fbId}>
                   <IconButton><FacebookIcon /></IconButton>
                 </Link>
               </Grid>
               <Grid item>
-                <Link href={dbUser.instaId}>
+                <Link href={currentUserInfo.instaId}>
                   <IconButton><InstagramIcon /></IconButton>
                 </Link>
               </Grid>
               <Grid item>
-                <Link href={dbUser.twitterId}>
+                <Link href={currentUserInfo.twitterId}>
                   <IconButton><TwitterIcon /></IconButton>
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </div>
-        <div>
-          <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-            <AccordionSummary sx={{ bgcolor: inverseMode }} aria-controls="panel1d-content" id="panel1d-header">
-              <Typography>{userEvents.eventName}</Typography>
-              <Typography>{userEvents.eventDate}</Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ bgcolor: inverseMode }}>
-              <List>
-                <ListItem>Venue: {userEvents.venue}</ListItem>
-                <ListItem>
-                  Location: {userEvents.address}, {userEvents.city}, {userEvents.state}, {userEvents.postalCode}
-                </ListItem>
-                <ListItem>Ticket sale starts: {userEvents.saleStart}</ListItem>
-                <ListItem>Ticket sale ends: {userEvents.saleEnd}</ListItem>
-                <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => { location.href = userEvents.link; }}>Purchase Tickets</Button>
-              </List>
-            </AccordionDetails>
-          </Accordion>
-        </div>
+        {userEvents.map((event, index) => {
+          return (
+            <div key={index}>
+              <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                <AccordionSummary sx={{ bgcolor: inverseMode }} aria-controls="panel1d-content" id="panel1d-header">
+                  <Typography>{event.name}</Typography>
+                  <Typography>{}</Typography>
+                </AccordionSummary>
+                <AccordionDetails sx={{ bgcolor: inverseMode }}>
+                  <List>
+                    <ListItem>Venue: {event._embedded.venues[0].name}</ListItem>
+                    <ListItem>
+                      Location: {}, {}, {}, {}
+                    </ListItem>
+                    <ListItem>Ticket sale starts: {moment(event.sales.public.startDateTime).format('llll')}</ListItem>
+                    <ListItem>Ticket sale ends: {}</ListItem>
+                    <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => { location.href = userEvents.link; }}>Purchase Tickets</Button>
+                  </List>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+          )
+        })}
         <UserPhotos photos={userPhotos} />
       </div>
     );

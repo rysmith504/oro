@@ -78,7 +78,7 @@ const Navbar = (props) => {
       </Badge>
       Notifications</Link>,
     <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-      <Avatar src={profile} />
+      <Avatar src={currentUserInfo.profileURL} />
       Account
     </Link>,
   ];
