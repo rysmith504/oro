@@ -64,12 +64,29 @@ const SongFinder: React.FC = () => {
   }, []);
 
 
+  // useEffect(() => {
+  //   if (artist) {
+  //     axios.get(`/api/favArtists/${currentUserInfo.id}`)
+  //       .then((results) => {
+  //         results.data.allArtists.forEach((artistObj) => {
+  //           if (artistObj.artistName === artist) {
+  //             setFavorited(true);
+  //           }
+  //         });
+  //       })
+  //       .catch((err) => console.error(err));
+
+  //   }
+  // }, [artist]);
+
   useEffect(() => {
     if (artist) {
+      console.log(currentUserInfo.id);
       axios.get(`/api/favArtists/${currentUserInfo.id}`)
         .then((results) => {
+
           results.data.allArtists.forEach((artistObj) => {
-            if (artistObj.artistName === artist) {
+            if (artistObj.userId === currentUserInfo.id) {
               setFavorited(true);
             }
           });

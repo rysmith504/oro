@@ -1,22 +1,9 @@
-import React, { useEffect, useContext, useState } from 'react';
-import ArtistInfoCard from './ArtistCards';
-import { ArtistContext } from '../context/ArtistContext';
-import { ThemeContext } from '../context/ThemeContext';
-import {
-  Grid,	Card,	CardHeader,	CardMedia
-} from '../styles/material';
-import { useTheme } from '@mui/material/styles';
-
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Card,	CardHeader,	CardMedia, UseTheme } from '../styles/material';
+import { useNavigate } from 'react-router-dom';
 
 const ArtistThumbnail = ({artistProps, updateSingle}) => {
-  const artistContext = useContext(ArtistContext);
-  const themeContext = useContext(ThemeContext);
-  // console.log(artistContext);
-
-  const {artistData, getFaveArtists } = artistContext;
-  const favorites = artistData;
-  const theme = useTheme();
+  const theme = UseTheme();
   const inverseMode = theme.palette.secondary.main;
   const navigate = useNavigate();
   const [singleArtist, setSingleArtist] = useState('');

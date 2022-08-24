@@ -43,7 +43,7 @@ commentsRouter.get('/comment', async (req, res) => {
       console.log(err);
       res.sendStatus(500);
     });
-})
+});
 
 commentsRouter.post('/', async (req, res) => {
   const {comment, photoUrl, userId} = req.body;
@@ -62,7 +62,7 @@ commentsRouter.post('/', async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.sendStatus(500)
+      res.sendStatus(500);
     });
   // prisma.comments.create({
   //   data: {
@@ -73,6 +73,23 @@ commentsRouter.post('/', async (req, res) => {
   // })
   //   .then((data) => res.status(200).send(data))
   //   .catch(() => res.sendStatus(500));
+});
+
+
+commentsRouter.put('/', async (req, res) => {
+  const {id, comment} = req.body;
+
+  await prisma.comments.update({
+    where: {
+      id,
+    },
+    data: {
+      comment,
+      edited: true,
+    }
+  })
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(500));
 });
 
 

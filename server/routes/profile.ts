@@ -92,7 +92,7 @@ profileRouter.put('/:_id', (req, res) => {
     where: { googleId: _id },
     data: { fbId: facebook, instaId: instagram, twitterId: twitter },
   })
-  .catch(err => console.error(err));
-})
+    .catch(err => console.error(err));
+});
 
 export default profileRouter;

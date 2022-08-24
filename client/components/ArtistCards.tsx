@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { IconButtonProps } from '@mui/material/IconButton';
 import {
   Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, IconButton, UseTheme, Styled, ArrowBackIosNewIcon
@@ -6,7 +6,7 @@ import {
 import EventCards from './EventCards';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { UserContext } from '../context/UserContext';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -24,6 +24,7 @@ const ExpandMore = Styled((props: ExpandMoreProps) => {
 
 
 const ArtistInfoCard = ({artistProps, resetSingle}) => {
+  const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
   const theme = UseTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -38,6 +39,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
     }]
   );
   const {
+    id,
     artistName,
     bio,
     facebook,
@@ -49,6 +51,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
     wiki,
     youtube,
   } = artistProps;
+
 
   const socials = {
     youtube: [youtube, <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />],
@@ -68,6 +71,17 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
     const noSpecialChars: string = artist
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     axios.get('/api/favArtists/events', { params: { keyword: noSpecialChars } })
+      .then((responseObj) => {
+        setEvents(responseObj.data.events);
+      })
+      .catch(err => console.error(err));
+  };
+
+  const handleFavorite = (artistId) => {
+    console.log(currentUserInfo.id, artistId);
+    const userId = currentUserInfo.id;
+    console.log('update');
+    axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
       .then((responseObj) => {
         setEvents(responseObj.data.events);
       })
@@ -97,7 +111,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing sx={{ bgcolor: inverseMode }}>
-          <IconButton aria-label="add to favorites">
+          <IconButton aria-label="add to favorites" onClick={()=>{ handleFavorite(id); }}>
             <FavoriteIcon sx={{ color: iconColors }} />
           </IconButton>
           <ExpandMore

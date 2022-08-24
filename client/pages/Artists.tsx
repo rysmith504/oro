@@ -5,7 +5,7 @@ import { ThemeContext } from '../context/ThemeContext';
 import { UserContext } from '../context/UserContext';
 import {Box,	Grid} from '../styles/material';
 import ArtistThumbnail from '../components/ArtistThumbnail';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Login from './Login';
 
 const Artists = () => {

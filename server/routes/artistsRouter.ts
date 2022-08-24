@@ -24,7 +24,7 @@ artistsRouter.get('/:id', (req, res) => {
     .then((userInfo) => {
       prisma.artistFollowing.findMany({
         where: {
-          userId: userInfo.id,
+          userId: userInfo.googleId,
         }
       })
         .then((data) => {
@@ -46,6 +46,24 @@ artistsRouter.get('/:id', (req, res) => {
         .catch((err) => {
           res.sendStatus(500);
         });
+    });
+});
+
+artistsRouter.get('/update', (req, res) => {
+  const { artist, user } = req.params;
+  const { artistId } = artist;
+  const { userId } = user;
+  prisma.artistFollowing.findUnique({
+    where: {
+      id: artistId,
+    }
+  })
+    .then((userInfo) => {
+      prisma.artistFollowing.findMany({
+        where: {
+          userId: userInfo.id,
+        }
+      });
     });
 });
 
@@ -95,7 +113,7 @@ artistsRouter.post('/', (req, res) => {
               res.status(200).send(data);
             })
             .catch((err) => {
-              res.sendStatus(500)
+              res.sendStatus(500);
               console.log(err);
             });
         })

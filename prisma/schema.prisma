@@ -25,8 +25,34 @@ model Users {
   notifications    Notifications[]
   eventGallery     EventPhotos[]
   userEvents       UserEvents[]
-  artistFollowing  ArtistFollowing[]
+  artistFollowing  ArtistUsersJoin[]
   comments         Comments[]
+}
+
+model ArtistUsersJoin {
+  user     Users           @relation(fields: [userId], references: [googleId])
+  userId   String
+  artist   ArtistFollowing @relation(fields: [artistId], references: [id])
+  artistId Int
+
+  @@id([userId, artistId])
+}
+
+// artistFollowing Model
+model ArtistFollowing {
+  id         Int               @id @default(autoincrement())
+  userId     ArtistUsersJoin[]
+  artistName String
+  bio        String
+  ticketId   String
+  youtube    String
+  twitter    String
+  facebook   String
+  instagram  String
+  itunes     String
+  wiki       String
+  homepage   String
+  image      String
 }
 
 model Messages {
@@ -44,24 +70,6 @@ model UserEvents {
   user       Users  @relation(fields: [userId], references: [id])
   userId     Int
   eventAPIid String
-}
-
-// artistFollowing Model
-model ArtistFollowing {
-  id         Int    @id @default(autoincrement())
-  user       Users  @relation(fields: [userId], references: [googleId])
-  userId     String
-  artistName String
-  bio        String
-  ticketId   String
-  youtube    String
-  twitter    String
-  facebook   String
-  instagram  String
-  itunes     String
-  wiki       String
-  homepage   String
-  image      String
 }
 
 // Notifications Model
