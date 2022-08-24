@@ -84,7 +84,7 @@ const SongFinder: React.FC = () => {
       console.log(currentUserInfo.id);
       axios.get(`/api/favArtists/${currentUserInfo.id}`)
         .then((results) => {
-
+          console.log(results);
           results.data.allArtists.forEach((artistObj) => {
             if (artistObj.userId === currentUserInfo.id) {
               setFavorited(true);
