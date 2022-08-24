@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {Button, Fab, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { styled } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import moment from 'moment';
@@ -15,8 +15,8 @@ const FeedPhoto: React.FC = (props) => {
   const {photo} = props;
   const [profilePic, setProfilePic] = useState('');
   const [expanded, setExpanded] = React.useState(false);
-  const [captionText, setCaptionText] = useState('');
-  const [editor, setEditor] = useState(false);
+  // const [captionText, setCaptionText] = useState('');
+  // const [editor, setEditor] = useState(false);
 
   useEffect(() => {
     getAvatar();
@@ -48,29 +48,29 @@ const FeedPhoto: React.FC = (props) => {
       .catch((err) => console.error(err));
   };
 
-  const handleEdit = (e) => {
-    setCaptionText(e.target.value);
-  };
-  const handleSubmitEdit = () => {
-    axios.put('/api/eventFeed', {
-      photoUrl: photo.photoUrl,
-      caption: captionText,
-    })
-      .then(() => {
-        setCaptionText('');
-        setEditor(false);
-      })
-      .catch((err) => console.error(err));
-  }
+  // const handleEdit = (e) => {
+  //   setCaptionText(e.target.value);
+  // };
+  // const handleSubmitEdit = () => {
+  //   axios.put('/api/eventFeed', {
+  //     photoUrl: photo.photoUrl,
+  //     caption: captionText,
+  //   })
+  //     .then(() => {
+  //       setCaptionText('');
+  //       setEditor(false);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }
 
-  const openEditor = () => {
-    setEditor(true);
-  };
+  // const openEditor = () => {
+  //   setEditor(true);
+  // };
 
-  const closeEditor = () => {
-    setEditor(false);
-    setCaptionText('');
-  };
+  // const closeEditor = () => {
+  //   setEditor(false);
+  //   setCaptionText('');
+  // };
 
 
   return (
@@ -102,7 +102,8 @@ const FeedPhoto: React.FC = (props) => {
         />
         <CardContent sx={{ bgcolor: inverseMode }}>
           <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
-            <span>
+            {photo.caption}
+            {/* <span>
               {!editor && photo.caption}
             </span>
             {editor && <input placeholder={photo.caption} value={captionText} onChange={handleEdit}/>}
@@ -110,7 +111,7 @@ const FeedPhoto: React.FC = (props) => {
             {editor && <button onClick={closeEditor}>cancel</button>}
             <span onClick={openEditor}>
               <Typography textAlign='right' sx={{ color: iconColors, mb: '20px', ml: '5px'}}>edit</Typography>
-            </span>
+            </span> */}
           </Typography>
         </CardContent>
         <CardActions

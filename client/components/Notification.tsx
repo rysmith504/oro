@@ -16,7 +16,7 @@ const Notification: React.FC = (props) => {
   const [text, setText] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [modalStatus, setModalStatus] = useState(false);
-  const [photo, setPhoto] = useState({});
+  const [photo, setPhoto] = useState(null);
   const [userAvatar, setUserAvatar] = useState('');
   const [read, setRead] = useState('');
 
@@ -44,12 +44,11 @@ const Notification: React.FC = (props) => {
       }
     })
       .then((commentData) => {
-        setPhotoUrl(commentData.data.photoUrl);
         axios.get(`/api/profile/${commentData.data.userId}`)
           .then((commenterData) => {
-            console.log(commenterData.data.profileURL);
             setPerson(commenterData.data.fullName);
             setUserAvatar(commentData.data.profileURL);
+            setPhotoUrl(commentData.data.photoUrl);
           })
           .catch((err) => console.error(err));
       })
@@ -81,41 +80,43 @@ const Notification: React.FC = (props) => {
 
   return (
     <div>
-      <Box sx={{m: 'auto'}}>
-        <Modal
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'}}
-          sx={{overflow: 'scroll', marginTop: '40px', paddingTop: '10px'}}
-          open={modalStatus}
-          onClose={handleClose}>
-          <Box sx={{margin: 'auto', bgcolor: inverseMode, width: 350, alignItems: 'center', justifyContent: 'center', pt: '20px', outline: 'none'}}>
+      {
+        photo && <Box sx={{m: 'auto'}}>
+          <Modal
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'}}
+            sx={{overflow: 'scroll', marginTop: '40px', paddingTop: '10px'}}
+            open={modalStatus}
+            onClose={handleClose}>
+            <Box sx={{margin: 'auto', bgcolor: inverseMode, width: 350, alignItems: 'center', justifyContent: 'center', pt: '20px', outline: 'none'}}>
 
-            <img width='300px' height='auto' src={photoUrl}/>
-            <Grid container sx={{mt: '20px'}}>
-              <Comments photo={photo}/>
+              <img width='300px' height='auto' src={photoUrl}/>
+              <Grid container sx={{mt: '20px'}}>
+                {photo && <Comments photo={photo}/>}
+              </Grid>
+            </Box>
+          </Modal>
+
+          <Paper onClick={handleOpen} sx={{m: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
+            <Grid container sx={{margin: 'auto'}}>
+              <Grid item xs={2} sx={{margin: 'auto'}}>
+                <Avatar src={userAvatar}/>
+              </Grid>
+
+              <Grid item xs={8} sx={{margin: 'auto'}}>
+                <Typography textAlign='left' sx={{ color: iconColors, mb: '20px', ml: '5px'}}>{read} {person}{text} {moment(notif.created_at).fromNow()}</Typography>
+              </Grid>
+
+              <Grid item xs={2} sx={{margin: 'auto'}}>
+                <img height='30px' width='auto' src={photoUrl}/>
+              </Grid>
             </Grid>
-          </Box>
-        </Modal>
+          </Paper>
 
-        <Paper onClick={handleOpen} sx={{m: 'auto', marginTop: '5px', bgcolor: inverseMode, color: iconColors}}>
-          <Grid container sx={{margin: 'auto'}}>
-            <Grid item xs={2} sx={{margin: 'auto'}}>
-              <Avatar src={userAvatar}/>
-            </Grid>
-
-            <Grid item xs={8} sx={{margin: 'auto'}}>
-              <Typography textAlign='left' sx={{ color: iconColors, mb: '20px', ml: '5px'}}>{read} {person}{text} {moment(notif.created_at).fromNow()}</Typography>
-            </Grid>
-
-            <Grid item xs={2} sx={{margin: 'auto'}}>
-              <img height='30px' width='auto' src={photoUrl}/>
-            </Grid>
-          </Grid>
-        </Paper>
-
-      </Box>
+        </Box>
+      }
     </div>
   );
 };
