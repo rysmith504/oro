@@ -41,7 +41,7 @@ const App: React.FC = () => {
   const getNotifications = () => {
     axios.get('/api/notifications', {
       params: {
-        userId: currentUserInfo.id
+        userId: currentUserInfo.googleId
       }
     })
       .then((notifData) => {
@@ -63,7 +63,7 @@ const App: React.FC = () => {
     getAvatar();
   }
 
-    const getAvatar = async () => {
+  const getAvatar = async () => {
     await axios.get('/api/eventFeed/avatar', {
       params: {
         userId: currentUserInfo.id
@@ -72,7 +72,7 @@ const App: React.FC = () => {
       .then((userProfile) => {
         setProfilePic(userProfile.data);
       })
-      .catch((err) => console.error(err));
+      .catch(() => console.log('no notifications'));
   };
 
 

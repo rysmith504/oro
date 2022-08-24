@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {OutlinedInput, Fab, Box, SpeedDial} from '../styles/material';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-import { styled } from '@mui/material';
-import { EventContext } from '../context/EventContext';
+import {OutlinedInput, Fab, Box} from '../styles/material';
+
 import { UserContext } from '../context/UserContext';
 import { useSearchParams } from 'react-router-dom';
 import FeedPhoto from '../components/FeedPhoto';
@@ -50,7 +48,6 @@ const EventFeed: React.FC = () => {
       }
     })
       .then((responseObj) => {
-        // console.log(responseObj.data.reverse());
         setFeedPhotos(responseObj.data.reverse());
         setPhoto(null);
         setDialogOpen(false);
@@ -70,7 +67,6 @@ const EventFeed: React.FC = () => {
   }
 
   useEffect(() => {
-    console.log(currentUserInfo);
     getEvent();
     updateFeed();
   }, []);
@@ -80,6 +76,8 @@ const EventFeed: React.FC = () => {
     setDialogOpen(true);
   };
 
+
+
   const handleFileUpload = async () => {
     if (photo) {
       const formData = new FormData();
@@ -88,11 +86,10 @@ const EventFeed: React.FC = () => {
       await axios.post('/api/eventFeed', {
         imageData: previewSource,
         eventId,
-        userId: currentUserInfo.id,
+        userId: currentUserInfo.googleId,
         caption,
       })
         .then((data) => {
-          console.log(data);
           updateFeed()
   
         })

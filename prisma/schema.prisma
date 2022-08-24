@@ -51,17 +51,17 @@ model ArtistFollowing {
   id         Int    @id @default(autoincrement())
   user       Users?  @relation(fields: [userId], references: [googleId])
   userId     String?
-  artistName String
-  bio        String
-  ticketId   String
-  youtube    String
-  twitter    String
-  facebook   String
-  instagram  String
-  itunes     String
-  wiki       String
-  homepage   String
-  image      String
+  artistName String?
+  bio        String?
+  ticketId   String?
+  youtube    String?
+  twitter    String?
+  facebook   String?
+  instagram  String?
+  itunes     String?
+  wiki       String?
+  homepage   String?
+  image      String?
 }
 
 // Notifications Model
@@ -77,8 +77,8 @@ model Notifications {
 
 model EventPhotos {
   id          Int      @id @default(autoincrement())
-  user        Users    @relation(fields: [userId], references: [googleId])
-  userId      String
+  user        Users?    @relation(fields: [userId], references: [googleId])
+  userId      String?
   photoUrl    String
   eventAPIid  String
   deleteToken String?
