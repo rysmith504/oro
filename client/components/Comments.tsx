@@ -64,7 +64,7 @@ const Comments: React.FC = (props) => {
     await axios.post('/api/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
-      userId: currentUserInfo.id,
+      userId: currentUserInfo.googleId,
       ownerId: photo.userId,
 
 

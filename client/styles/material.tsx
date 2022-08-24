@@ -98,12 +98,11 @@ export const CssTextField = Styled(TextField)({
 // export styled;
 export const SpeedDial = speedDial;
 export	const	StyledProvider	=	ThemeProvider;
-export const Box = box;
 export const Modal = modal;
 export const IconButton = iconButton;
 export const OutlinedInput = outlinedInput;
 export const Fab = fab;
-export const Avatar = avatar;
+export	const	Box	=	box;
 export	const	Drawer	=	drawer;
 export	const	Button	=	button;
 export	const	List	=	list;

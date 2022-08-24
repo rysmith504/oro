@@ -43,7 +43,7 @@ const UserContextProvider = ({ children }) => {
 
   const getUserContacts = () => {
     if (currentUserInfo) {
-      axios.get('/api/users/allusers', { params: { id: currentUserInfo.id } })
+      axios.get('/api/users/allusers', { params: { id: currentUserInfo.googleId } })
         .then(resObj => {
           setUserContacts(resObj.data);
         });

@@ -81,8 +81,7 @@ const SongFinder: React.FC = () => {
 
   useEffect(() => {
     if (artist) {
-      console.log(currentUserInfo.id);
-      axios.get(`/api/favArtists/${currentUserInfo.id}`)
+      axios.get(`/api/favArtists/${currentUserInfo.googleId}`)
         .then((results) => {
           console.log(results);
           results.data.allArtists.forEach((artistObj) => {
@@ -171,7 +170,7 @@ const SongFinder: React.FC = () => {
     axios.delete('/api/favArtists', {
       data: {
         artistName: artist,
-        userId: currentUserInfo.id
+        userId: currentUserInfo.googleId
       }
     })
       .then(() => {

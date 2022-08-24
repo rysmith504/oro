@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, ReactNode } from 'react';
 
 interface themeTypeProps {
   mode: string;
@@ -8,7 +8,11 @@ interface themeTypeProps {
 
 const ThemeContext = createContext({} as themeTypeProps);
 
-const ThemeContextProvider = ({ children }) => {
+interface Props {
+  children?: ReactNode
+}
+
+const ThemeContextProvider = ({ children, ...props }: Props) => {
 
   const [mode, setMode] = useState('dark');
 
@@ -19,6 +23,7 @@ const ThemeContextProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider
+      {...props}
       value={{ mode, toggleMode, setMode}}>
       {children}
     </ThemeContext.Provider>

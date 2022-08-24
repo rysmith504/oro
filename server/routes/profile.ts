@@ -12,7 +12,7 @@ profileRouter.get('/events/:_id', (req, res) => {
 
   prisma.userEvents.findMany({ where: { userId: id } })
     .then((events) => {
-      const apiUrls = [];
+      const apiUrls: any[] | PromiseLike<any[]> = [];
       events.forEach(event => {
         apiUrls.push(axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&id=${event.eventAPIid}`));
       })
@@ -21,7 +21,7 @@ profileRouter.get('/events/:_id', (req, res) => {
     .then(arr => {
       axios.all(arr)
         .then(axios.spread((...responses) => {
-          const userEventsArr = [];
+          const userEventsArr: (string)[] = [];
           responses.forEach(response => {
             userEventsArr.push(response.data._embedded.events[0]);
           })
