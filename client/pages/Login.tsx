@@ -12,13 +12,13 @@ const Login = () => {
   };
 
   return (
-    <div align='center'>
+    <div>
       <br></br>
       <h3>
    Please Login to Use Our App
       </h3>
-      <form action="/auth/google">
-        <GoogleButton onClick={ redirectToGoogle }/>
+      <form action="/auth/google" >
+        <GoogleButton onClick={ redirectToGoogle } id='google-button'/>
       </form>
     </div>
   );

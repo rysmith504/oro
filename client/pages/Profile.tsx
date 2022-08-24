@@ -80,7 +80,7 @@ const Profile: React.FC = () => {
   }
 
   const getUserPhotos = () => {
-    axios.get(`/api/profile/event_photos/${currentUserInfo.id}`)
+    axios.get(`/api/profile/event_photos/${currentUserInfo.googleId}`)
       .then(({ data }) => {
         setUserPhotos(data);
       })
@@ -112,7 +112,7 @@ const Profile: React.FC = () => {
   };
 
   const handleUpdate = async () => {
-    axios.put(`/api/profile/${currentUserInfo.id}`, {
+    axios.put(`/api/profile/${currentUserInfo.googleId}`, {
       "socialMedia": {
         "facebook": `${facebookLink}` || null,
         "instagram": `${instagramLink}` || null,
@@ -232,17 +232,17 @@ const Profile: React.FC = () => {
               <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary sx={{ bgcolor: inverseMode }} aria-controls="panel1d-content" id="panel1d-header">
                   <Typography>{event.name}</Typography>
-                  <Typography>{}</Typography>
+                  <Typography>{event.dates.start.localDate}</Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{ bgcolor: inverseMode }}>
                   <List>
                     <ListItem>Venue: {event._embedded.venues[0].name}</ListItem>
                     <ListItem>
-                      Location: {}, {}, {}, {}
+                      Location: {event._embedded.venues[0].address.line1}, {event._embedded.venues[0].city.name}, {event._embedded.venues[0].postalCode}
                     </ListItem>
                     <ListItem>Ticket sale starts: {moment(event.sales.public.startDateTime).format('llll')}</ListItem>
-                    <ListItem>Ticket sale ends: {}</ListItem>
-                    <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => { location.href = userEvents.link; }}>Purchase Tickets</Button>
+                    <ListItem>Ticket sale ends: {moment(event.sales.public.startDateTime).format('llll')}</ListItem>
+                    <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => { location.href = event.url; }}>Purchase Tickets</Button>
                   </List>
                 </AccordionDetails>
               </Accordion>

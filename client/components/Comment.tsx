@@ -74,7 +74,7 @@ const Comment: React.FC = (props) => {
   }
 
   const getEditDeleteOptions = () => {
-    if (comment.userId === currentUserInfo.id) {
+    if (comment.userId === currentUserInfo.googleId) {
       return (
         <Typography textAlign='right' sx={{ color: iconColors, mb: '20px' }}>
           <span onClick={openEditor}>

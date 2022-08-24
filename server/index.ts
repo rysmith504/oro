@@ -4,7 +4,6 @@ import cors from 'cors';
 import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
-import prisma from '../database/db';
 // import * as socket from 'socket.io';
 const socket = require('socket.io');
 require('dotenv').config();
@@ -23,8 +22,6 @@ import api from './routes/index';
 // import profileRouter from './routes/profile';
 // import commentsRouter from './routes/comments';
 // import usersRouter from './routes/usersRouter'
-import prisma from './database/db';
-import passport from 'passport';
 
 const app = express();
 app.use(cors());
@@ -174,7 +171,7 @@ passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
 });
 
 
-const isLoggedIn = (req, res, next) => {
+const isLoggedIn = (req: { user: any; }, res: { sendStatus: (arg0: number) => any; }, next: () => any) => {
   req.user ? next() : res.sendStatus(401);
 };
 
@@ -232,13 +229,13 @@ const io = socket(server, {
 
 global.onlineUsers = new Map();
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: { on: (arg0: string, arg1: { (userId: any): void; (data: any): void; }) => void; id: any; to: (arg0: any) => { (): any; new(): any; emit: { (arg0: string, arg1: any): void; new(): any; }; }; }) => {
   global.chatSocket = socket;
-  socket.on('add-user', (userId) => {
+  socket.on('add-user', (userId: any) => {
     onlineUsers.set(userId, socket.id);
   });
 
-  socket.on('send-msg', (data) => {
+  socket.on('send-msg', (data: { receiverId: any; text: any; }) => {
     const sendUserSocket = onlineUsers.get(data.receiverId);
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit('msg-receive', data.text);
