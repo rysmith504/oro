@@ -9,7 +9,7 @@ const eventFeedRouter = Router();
 
 
 eventFeedRouter.post('/', async (req, res) => {
-  const {imageData, eventId, userId} = req.body;
+  const {imageData, eventId, userId, caption} = req.body;
   try {
     const fileStr = imageData;
     await cloudinary.uploader.upload(fileStr, {
@@ -21,14 +21,14 @@ eventFeedRouter.post('/', async (req, res) => {
             userId,
             photoUrl: uploadedResponse.secure_url,
             eventAPIid: eventId,
+            caption,
           }
 
         })
           .then((data) => {
-            res.sendStatus(200);
+            res.status(200).send(data);
           })
           .catch((err) => {
-            console.log(err);
             res.sendStatus(500);
           });
       })
@@ -52,21 +52,20 @@ eventFeedRouter.get('/avatar', async (req, res) => {
 
 eventFeedRouter.get('/', async (req, res) => {
   const {eventId} = req.query;
-  // console.log(eventId, req.query);
   await prisma.eventPhotos.findMany({
     where: {
       eventAPIid: eventId,
     },
-    orderBy: {
-      created_at: 'asc'
-    }
+    orderBy: [
+      {
+        created_at: 'asc'
+      }
+    ]
   })
     .then((data) => {
-      // console.log(data);
       res.status(200).send(data);
     })
     .catch((err) => {
-      console.error(err);
       res.sendStatus(500);
     });
 
@@ -74,18 +73,15 @@ eventFeedRouter.get('/', async (req, res) => {
 
 eventFeedRouter.get('/photo', async (req, res) => {
   const {photoUrl} = req.query;
-  // console.log(eventId, req.query);
   await prisma.eventPhotos.findFirst({
     where: {
       photoUrl,
     },
   })
     .then((data) => {
-      // console.log(data);
       res.status(200).send(data);
     })
     .catch((err) => {
-      console.error(err);
       res.sendStatus(500);
     });
 
