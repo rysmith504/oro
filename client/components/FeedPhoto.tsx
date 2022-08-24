@@ -86,9 +86,9 @@ const FeedPhoto: React.FC = (props) => {
           sx={{ bgcolor: inverseMode }}
         />
         <CardContent sx={{ bgcolor: inverseMode }}>
-          {/* <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
-            This festival was dope!
-          </Typography> */}
+          <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
+            {photo.caption}
+          </Typography>
         </CardContent>
         <CardActions
           sx={{ bgcolor: inverseMode }}

@@ -9,7 +9,7 @@ const eventFeedRouter = Router();
 
 
 eventFeedRouter.post('/', async (req, res) => {
-  const {imageData, eventId, userId} = req.body;
+  const {imageData, eventId, userId, caption} = req.body;
   try {
     const fileStr = imageData;
     await cloudinary.uploader.upload(fileStr, {
@@ -21,11 +21,12 @@ eventFeedRouter.post('/', async (req, res) => {
             userId,
             photoUrl: uploadedResponse.secure_url,
             eventAPIid: eventId,
+            caption,
           }
 
         })
           .then((data) => {
-            res.sendStatus(200);
+            res.status(200).send(data);
           })
           .catch((err) => {
             res.sendStatus(500);
@@ -55,9 +56,11 @@ eventFeedRouter.get('/', async (req, res) => {
     where: {
       eventAPIid: eventId,
     },
-    orderBy: {
-      created_at: 'asc'
-    }
+    orderBy: [
+      {
+        created_at: 'asc'
+      }
+    ]
   })
     .then((data) => {
       res.status(200).send(data);
