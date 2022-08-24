@@ -92,7 +92,7 @@ const Comments: React.FC = (props) => {
 
       {comments.map((comment, i) => {
         return (
-          <Comment key={i} comment={comment}/>
+          <Comment key={i} comment={comment} getComments={getComments}/>
         );
       })}
 
