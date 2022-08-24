@@ -48,7 +48,7 @@ model UserEvents {
 
 // artistFollowing Model
 model ArtistFollowing {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   user       Users?  @relation(fields: [userId], references: [googleId])
   userId     String?
   artistName String
@@ -82,7 +82,7 @@ model EventPhotos {
   photoUrl    String
   eventAPIid  String
   deleteToken String?
-  caption String?
+  caption     String?
   created_at  DateTime @default(now())
 }
 
@@ -92,7 +92,7 @@ model Comments {
   userId     String
   photoUrl   String
   comment    String
-  edited Boolean @default(false)
+  edited     Boolean  @default(false)
   created_at DateTime @default(now())
 }
 
