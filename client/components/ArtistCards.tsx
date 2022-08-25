@@ -30,6 +30,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
   const inverseMode = theme.palette.secondary.main;
   const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
+  const [favorite, setFavorite] = useState(false);
   const [events, setEvents] = useState(
     [{
       name: 'No events found',
@@ -82,10 +83,14 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
     const userId = currentUserInfo.id;
     console.log('update');
     axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
-      .then((responseObj) => {
-        setEvents(responseObj.data.events);
+      .then(() => {
+        setFavorite(!favorite);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        setFavorite(!favorite);
+        console.error(err);
+      }
+      );
   };
 
   const goBack = () => {
@@ -112,7 +117,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
         </CardContent>
         <CardActions disableSpacing sx={{ bgcolor: inverseMode }}>
           <IconButton aria-label="add to favorites" onClick={()=>{ handleFavorite(id); }}>
-            <FavoriteIcon sx={{ color: iconColors }} />
+            {favorite ? <FavoriteIcon sx={{ color: '#AE66FF' }} /> : <FavoriteIcon sx={{ color: iconColors }} />}
           </IconButton>
           <ExpandMore
             expand={expanded}

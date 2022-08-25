@@ -80,12 +80,13 @@ const SongFinder: React.FC = () => {
   // }, [artist]);
 
   useEffect(() => {
+    console.log('getting artist faves');
     if (artist) {
       axios.get(`/api/favArtists/${currentUserInfo.googleId}`)
         .then((results) => {
           console.log(results);
           results.data.allArtists.forEach((artistObj) => {
-            if (artistObj.userId === currentUserInfo.id) {
+            if (artistObj.userId === currentUserInfo.googleId) {
               setFavorited(true);
             }
           });
@@ -114,6 +115,7 @@ const SongFinder: React.FC = () => {
   }, [previewSource]);
 
   const start = () => {
+    console.log('recording---');
     if (isBlocked) {
       // console.log('Permission Denied');
     } else {
@@ -123,6 +125,7 @@ const SongFinder: React.FC = () => {
   };
 
   const stop = () => {
+    console.log('stop recording');
     Mp3Recorder.stop().getMp3()
       .then(([buffer, blob]) => {
         const reader = new FileReader();

@@ -156,3 +156,4 @@ export const CloseRoundedIcon = closeRoundedIcon;
 export const AppBar = appBar;
 export const Toolbar = toolbar;
 export const Slide = slide;
+export const Avatar = avatar;
