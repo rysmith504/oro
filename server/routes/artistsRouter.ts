@@ -28,7 +28,7 @@ artistsRouter.get('/:id', (req, res) => {
     .then((userInfo) => {
       prisma.artistFollowing.findMany({
         where: {
-          userId: id,
+          users: id,
         }
       })
         .then((data) => {
@@ -56,27 +56,30 @@ artistsRouter.get('/:id', (req, res) => {
 // -----------------------UPDATE
 // update whether a user has followed an artist
 artistsRouter.put('/update', (req, res) => {
-  const { artist, user } = req.params;
-  const { artistId } = artist;
-  const { userId } = user;
+  const { artist, user } = req.body.params;
+  console.log(req.body.params);
   console.log(artist, user);
 
   prisma.artistFollowing.update({
     where: {
-      id: artistId,
+      id: artist,
     },
-    users: {
-      user: {
-        connect: {
-          id: userId
-        },
+    data: {
+      users: {
         create: {
-          title: 'My new post title'
+          user: {
+            connect: {
+              id: user
+            },
+          }
         }
       }
     }
-  });
-
+  })
+    .then((updates) => {
+      console.log(updates);
+    })
+    .catch((err) => console.error(err));
 });
 
 // -----------------------POST
