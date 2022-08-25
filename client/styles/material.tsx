@@ -19,7 +19,7 @@ import cardMedia from '@mui/material/CardMedia';
 import cardContent from '@mui/material/CardContent';
 import cardActions from '@mui/material/CardActions';
 import collapse from '@mui/material/Collapse';
-import iconButton, { IconButtonProps } from '@mui/material/IconButton';
+import iconButton from '@mui/material/IconButton';
 import typography from '@mui/material/Typography';
 import favoriteIcon from '@mui/icons-material/Favorite';
 import expandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -61,19 +61,20 @@ import closeRoundedIcon from '@mui/icons-material/CloseRounded';
 import appBar from '@mui/material/AppBar';
 import toolbar from '@mui/material/Toolbar';
 import slide from '@mui/material/Slide';
-
-
 import { useTheme } from '@mui/material/styles';
+import arrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-export const Item = styled(paper)(({ theme }) => ({
+export const ArrowBackIosNewIcon = arrowBackIosNewIcon;
+export const Styled = styled;
+export const UseTheme = useTheme;
+export const Item = Styled(paper)(({ theme }) => ({
   backgroundColor: 'transparent',
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'center',
 }));
 export const TextField = textField;
-
-export const CssTextField = styled(TextField)({
+export const CssTextField = Styled(TextField)({
   '& label.Mui-focused': {
     color: '#9B27B0',
   },
@@ -134,7 +135,6 @@ export	const	LanguageIcon	=	languageIcon;
 export const MusicOffIcon = musicOffIcon;
 export const ButtonBase = buttonBase;
 export const PushPinIcon = pushPinIcon;
-export const Avatar = avatar;
 export const LocalActivityIcon = localActivityIcon;
 export const CalendarMonthIcon = calendarMonthIcon;
 export const InfoIcon = infoIcon;
@@ -156,3 +156,4 @@ export const CloseRoundedIcon = closeRoundedIcon;
 export const AppBar = appBar;
 export const Toolbar = toolbar;
 export const Slide = slide;
+export const Avatar = avatar;

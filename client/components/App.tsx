@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,20 +18,17 @@ import Navbar from '../components/Navbar';
 import UserChat from '../pages/UserChat';
 import { ArtistContextProvider } from '../context/ArtistContext';
 import { EventContextProvider } from '../context/EventContext';
-import { UserContextProvider } from '../context/UserContext';
-import { ThemeContextProvider, ThemeContext } from '../context/ThemeContext';
+// import { ThemeContext } from '../context/ThemeContext';
 import { Container } from '../components/Container';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import BackPack from '../pages/BackPack';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { UserContext } from '../context/UserContext';
 
 // https://styled-components.com/docs/api#createglobalstyle
 
 const App: React.FC = () => {
   // update React.FC, .FC deprecated?
-  const themeContext = useContext(ThemeContext);
-  const [isDarkMode, setDarkMode] = useState(true);
+  // const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
 
@@ -45,10 +42,10 @@ const App: React.FC = () => {
       }
     })
       .then((notifData) => {
-        setNotifications(notifData.data.filter((notif) => !notif.read).length)
+        setNotifications(notifData.data.filter((notif) => !notif.read).length);
       })
       .catch((err) => console.error(err));
-  }
+  };
 
 
   // useEffect(() => {
@@ -61,7 +58,7 @@ const App: React.FC = () => {
   const navClick = () => {
     getNotifications();
     getAvatar();
-  }
+  };
 
   const getAvatar = async () => {
     await axios.get('/api/eventFeed/avatar', {

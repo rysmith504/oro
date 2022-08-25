@@ -1,29 +1,24 @@
-import React, { useEffect, useContext, useState } from 'react';
-import ArtistInfoCard from './ArtistCards';
-import { ArtistContext } from '../context/ArtistContext';
-import { ThemeContext } from '../context/ThemeContext';
-import {
-  Grid,	Card,	CardHeader,	CardMedia
-} from '../styles/material';
-import { useTheme } from '@mui/material/styles';
-
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-
+import React, { useState, useContext } from 'react';
+import { Card,	CardHeader,	CardMedia, UseTheme, FavoriteIcon, IconButton } from '../styles/material';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+import axios from 'axios';
 const ArtistThumbnail = ({artistProps, updateSingle}) => {
-  const artistContext = useContext(ArtistContext);
-  const themeContext = useContext(ThemeContext);
-  // console.log(artistContext);
+  const [favorite, setFavorite] = useState(false);
 
-  const {artistData, getFaveArtists } = artistContext;
-  const favorites = artistData;
-  const theme = useTheme();
+  const theme = UseTheme();
   const inverseMode = theme.palette.secondary.main;
+  const iconColors = theme.palette.secondary.contrastText;
+
   const navigate = useNavigate();
   const [singleArtist, setSingleArtist] = useState('');
   const {
+    id,
     artistName,
     image,
   } = artistProps;
+
+  const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
 
   const handleClick = (name) => {
     setSingleArtist(name);
@@ -31,20 +26,43 @@ const ArtistThumbnail = ({artistProps, updateSingle}) => {
     updateSingle(name);
   };
 
+  const handleFavorite = (artistId) => {
+    console.log(currentUserInfo.id, artistId);
+    const userId = currentUserInfo.id;
+    console.log('update');
+    axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
+      .then(() => {
+        setFavorite(!favorite);
+      })
+      .catch(err => {
+        setFavorite(!favorite);
+        console.error(err);
+      }
+      );
+  };
 
   return (
-    <Card sx={{ bgcolor: inverseMode }} onClick={() => handleClick(artistName)}>
+    <Card sx={{ bgcolor: inverseMode,
+      ':hover': {
+        boxShadow: 20,
+        opacity: 0.8;
+      } }}>
       <CardHeader
         title={artistName}
         sx={{ bgcolor: inverseMode }}
       />
       <CardMedia
+        style = {{ cursor: 'pointer'}}
         component="img"
         height="194"
         image={image}
         alt={artistName}
         sx={{ bgcolor: inverseMode }}
+        onClick={() => handleClick(artistName)}
       />
+      <IconButton aria-label="add to favorites" onClick={()=>{ handleFavorite(id); }}>
+        {favorite ? <FavoriteIcon sx={{ color: '#AE66FF' }} /> : <FavoriteIcon sx={{ color: iconColors }} />}
+      </IconButton>
     </Card>
   );
 };
