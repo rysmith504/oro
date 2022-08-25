@@ -23,7 +23,7 @@ const ArtistContextProvider = ({ children }) => {
   );
 
   const getFaveArtists = (id) => {
-    console.log('artist context executed', id);
+    // console.log('artist context executed', id);
     if (id) {
       axios.get(`/api/favArtists/${id}`)
         .then((artistData) => {
