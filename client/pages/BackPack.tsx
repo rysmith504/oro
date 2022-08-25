@@ -93,6 +93,7 @@ const BackPack: React.FC = () => {
       .catch(err => console.error(err));
   }
 
+
   const handleBudgetChange = (value, index) => {
     console.log({ value, index });
     let newList = [...budgetList];
@@ -102,10 +103,10 @@ const BackPack: React.FC = () => {
 
   let totalSum = budgetList.reduce((prev, curr) => ( prev + (curr?.value ?? 0) ),0));
 
-  console.log({ userEvents, totalSum });
+
 
   const handleSubmit = async () => {
-    const url = `api/eventa/budgetsubmit`;
+    const url = `api/events/budgetsubmit`;
 
     try {
       axios.post(
