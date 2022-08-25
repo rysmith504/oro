@@ -86,12 +86,12 @@ const EventFeed: React.FC = () => {
       await axios.post('/api/eventFeed', {
         imageData: previewSource,
         eventId,
-        userId: currentUserInfo.googleId,
+        userId: currentUserInfo.id,
         caption,
       })
         .then((data) => {
           updateFeed()
-  
+
         })
         .catch((err) => console.error(err));
 

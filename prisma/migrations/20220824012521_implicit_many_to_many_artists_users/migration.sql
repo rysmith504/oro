@@ -18,4 +18,4 @@ ALTER TABLE "ArtistFollowing" ADD COLUMN     "userId" TEXT NOT NULL;
 DROP TABLE "ArtistUsersJoin";
 
 -- AddForeignKey
-ALTER TABLE "ArtistFollowing" ADD CONSTRAINT "ArtistFollowing_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("googleId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ArtistFollowing" ADD CONSTRAINT "ArtistFollowing_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

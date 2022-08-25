@@ -19,7 +19,7 @@ CREATE TABLE "ArtistUsersJoin" (
 );
 
 -- AddForeignKey
-ALTER TABLE "ArtistUsersJoin" ADD CONSTRAINT "ArtistUsersJoin_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("googleId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ArtistUsersJoin" ADD CONSTRAINT "ArtistUsersJoin_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ArtistUsersJoin" ADD CONSTRAINT "ArtistUsersJoin_artistId_fkey" FOREIGN KEY ("artistId") REFERENCES "ArtistFollowing"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

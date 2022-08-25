@@ -29,7 +29,7 @@ const Artists = () => {
     setSingleArtist(null);
   };
   useEffect(() => {
-    getFaveArtists(currentUserInfo.googleId);
+    getFaveArtists(currentUserInfo.id);
   }, []);
 
 

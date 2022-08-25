@@ -64,7 +64,7 @@ const UserChat: React.FC = () => {
   //   //   setUserImage(currentUser.profileURL)
   //   }
   // }, [currentUserInfo]);
-  const obj = {googleId: '88', profileURL: 'stuff'}
+  const obj = {id: '88', profileURL: 'stuff'}
 
   //WORKING LOGIN REDIRECT
   useEffect(() => {

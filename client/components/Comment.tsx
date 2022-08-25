@@ -85,11 +85,11 @@ const Comment: React.FC = (props) => {
     setDeleterOpen(false);
   };
   const getEditDeleteOptions = () => {
-    if (comment.userId === currentUserInfo.googleId) {
+    if (comment.userId === currentUserInfo.id) {
       return (
         <Typography textAlign='right' sx={{ color: iconColors, mb: '20px' }}>
           <span onClick={openEditor}>
-            edit 
+            edit
           </span>
           <span>
             |

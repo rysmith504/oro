@@ -57,7 +57,7 @@ CREATE TABLE "Trips" (
 -- CreateTable
 CREATE TABLE "Users" (
     "id" SERIAL NOT NULL,
-    "googleId" INTEGER NOT NULL,
+    "id" INTEGER NOT NULL,
     "fullName" TEXT NOT NULL,
     "picture" TEXT,
     "email" TEXT NOT NULL,
@@ -124,7 +124,7 @@ CREATE UNIQUE INDEX "Points_title_key" ON "Points"("title");
 CREATE UNIQUE INDEX "Trips_title_key" ON "Trips"("title");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Users_googleId_key" ON "Users"("googleId");
+CREATE UNIQUE INDEX "Users_id_key" ON "Users"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
