@@ -52,6 +52,12 @@ commentsRouter.get('/comment', async (req, res) => {
 
 commentsRouter.post('/', async (req, res) => {
   const {comment, photoUrl, userId} = req.body;
+  console.log({
+    userId,
+    comment,
+    photoUrl,
+  }
+)
 
   await prisma.comments.create({
     data: {
