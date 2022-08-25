@@ -23,7 +23,7 @@ model Messages {
 model UserEvents {
   id         Int    @id @default(autoincrement())
   user       Users  @relation(fields: [userId], references: [id])
-  userId     Int
+  userId     String
   eventAPIid String
 }
 

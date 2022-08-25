@@ -12,7 +12,7 @@ ALTER COLUMN "receiverId" SET DATA TYPE TEXT;
 ALTER SEQUENCE "messages_id_seq" OWNED BY "Messages"."id";
 
 -- AddForeignKey
-ALTER TABLE "Messages" ADD CONSTRAINT "Messages_senderId_fkey" FOREIGN KEY ("senderId") REFERENCES "Users"("googleId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Messages" ADD CONSTRAINT "Messages_senderId_fkey" FOREIGN KEY ("senderId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Messages" ADD CONSTRAINT "Messages_receiverId_fkey" FOREIGN KEY ("receiverId") REFERENCES "Users"("googleId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Messages" ADD CONSTRAINT "Messages_receiverId_fkey" FOREIGN KEY ("receiverId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

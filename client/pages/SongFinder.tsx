@@ -82,11 +82,11 @@ const SongFinder: React.FC = () => {
   useEffect(() => {
     console.log('getting artist faves');
     if (artist) {
-      axios.get(`/api/favArtists/${currentUserInfo.googleId}`)
+      axios.get(`/api/favArtists/${currentUserInfo.id}`)
         .then((results) => {
           console.log(results);
           results.data.allArtists.forEach((artistObj) => {
-            if (artistObj.userId === currentUserInfo.googleId) {
+            if (artistObj.userId === currentUserInfo.id) {
               setFavorited(true);
             }
           });
@@ -161,7 +161,7 @@ const SongFinder: React.FC = () => {
   const addToFavorites = () => {
     axios.post('/api/favArtists', {
       artistName: artist,
-      userId: currentUserInfo.googleId
+      userId: currentUserInfo.id
     })
       .then((data) => {
         setFavorited(true);
@@ -173,7 +173,7 @@ const SongFinder: React.FC = () => {
     axios.delete('/api/favArtists', {
       data: {
         artistName: artist,
-        userId: currentUserInfo.googleId
+        userId: currentUserInfo.id
       }
     })
       .then(() => {

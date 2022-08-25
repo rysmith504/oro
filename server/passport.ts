@@ -17,7 +17,7 @@
 //     console.log('profile here----', profile);
 //     await prisma.users.create(
 //       { data: {
-//         googleId: profile.id,
+//         id: profile.id,
 //         email: profile.emails[0].value,
 //         fullName: profile.displayName,
 //       }}, (err, user) => cb(err, user));

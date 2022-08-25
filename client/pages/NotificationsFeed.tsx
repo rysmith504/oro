@@ -16,7 +16,7 @@ const NotificationsFeed: React.FC = () => {
   useEffect(() => {
     getNotifications();
     axios.put('/api/notifications', {
-      userId: currentUserInfo.googleId,
+      userId: currentUserInfo.id,
     })
       .then(() => {})
       .catch((err) => console.error(err));
@@ -26,7 +26,7 @@ const NotificationsFeed: React.FC = () => {
   const getNotifications = () => {
     axios.get('/api/notifications', {
       params: {
-        userId: currentUserInfo.googleId
+        userId: currentUserInfo.id
       }
     })
       .then((notificationsObj) => {
@@ -34,20 +34,20 @@ const NotificationsFeed: React.FC = () => {
       })
       .catch((err) => {
         console.error(err);
-      })
-  }
+      });
+  };
 
   const clearNotifications = () => {
     axios.delete('/api/notifications', {
       data: {
-        userId: currentUserInfo.googleId,
+        userId: currentUserInfo.id,
       }
     })
       .then(() => console.log('deleted'))
       .catch((err) => console.error(err));
     setNotifications([]);
-  }
-  
+  };
+
 
 
   return (
@@ -58,7 +58,7 @@ const NotificationsFeed: React.FC = () => {
         {notifications.map((notif, i) => {
           return (
             <div key={i}>
-              
+
               <Notification notif={notif}/>
             </div>
           );
