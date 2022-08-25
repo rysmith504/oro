@@ -17,6 +17,7 @@ import { Box, Grid, Container, Avatar } from '../styles/material';
 import Badge from '@mui/material/Badge';
 import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 
 const Navbar = (props) => {
