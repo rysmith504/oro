@@ -30,9 +30,9 @@ const FeedPhoto: React.FC = (props) => {
   const [owner, setOwner] = useState(false);
 
   useEffect(() => {
-    console.log('GOOGLEID', currentUserInfo.googleId);
+    console.log('id', currentUserInfo.id);
     console.log('PHOTOID', photo.userId);
-    if (currentUserInfo.googleId === photo.userId) {
+    if (currentUserInfo.id === photo.userId) {
       setOwner(true);
     }
     getAvatar();

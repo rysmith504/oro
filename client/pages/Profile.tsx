@@ -48,16 +48,16 @@ const Profile: React.FC = () => {
   const { currentUserInfo } = useContext(UserContext);
   const [userEvents, setUserEvents] = useState([]);
   const [userPhotos, setUserPhotos] = useState([]);
-  const [facebookLink, setFacebookLink] = useState('')
-  const [instagramLink, setInstagramLink] = useState('')
-  const [twitterLink, setTwitterLink] = useState('')
+  const [facebookLink, setFacebookLink] = useState('');
+  const [instagramLink, setInstagramLink] = useState('');
+  const [twitterLink, setTwitterLink] = useState('');
   const [expanded, setExpanded] = useState('panel1');
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-
+  console.log(currentUserInfo);
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref,
@@ -65,10 +65,10 @@ const Profile: React.FC = () => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  
+
   // const startDate = moment(userEvents.sales.public.startDateTime).format('LLLL');
   // const endDate = moment(userEvents.sales.public.endDateTime).format('LLLL');
-  // const eventDate = 
+  // const eventDate =
 
 
   const getUserEvents = () => {
@@ -77,10 +77,10 @@ const Profile: React.FC = () => {
         setUserEvents(data);
       })
       .catch(err => console.error(err));
-  }
+  };
 
   const getUserPhotos = () => {
-    axios.get(`/api/profile/event_photos/${currentUserInfo.googleId}`)
+    axios.get(`/api/profile/event_photos/${currentUserInfo.id}`)
       .then(({ data }) => {
         setUserPhotos(data);
       })
@@ -112,11 +112,11 @@ const Profile: React.FC = () => {
   };
 
   const handleUpdate = async () => {
-    axios.put(`/api/profile/${currentUserInfo.googleId}`, {
-      "socialMedia": {
-        "facebook": `${facebookLink}` || null,
-        "instagram": `${instagramLink}` || null,
-        "twitter": `${twitterLink}` || null
+    axios.put(`/api/profile/${currentUserInfo.id}`, {
+      'socialMedia': {
+        'facebook': `${facebookLink}` || null,
+        'instagram': `${instagramLink}` || null,
+        'twitter': `${twitterLink}` || null
       }
     })
       .then(handleSnackClick())
@@ -126,15 +126,15 @@ const Profile: React.FC = () => {
 
   const handleFacebookChange = e => {
     setFacebookLink(e.target.value);
-  }
+  };
 
   const handleInstagramChange = e => {
     setInstagramLink(e.target.value);
-  }
+  };
 
   const handleTwitterChange = e => {
     setTwitterLink(e.target.value);
-  }
+  };
 
   useEffect(() => {
     getUserPhotos();
@@ -247,7 +247,7 @@ const Profile: React.FC = () => {
                 </AccordionDetails>
               </Accordion>
             </div>
-          )
+          );
         })}
         <UserPhotos photos={userPhotos} />
       </div>

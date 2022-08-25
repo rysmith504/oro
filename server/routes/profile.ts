@@ -15,8 +15,8 @@ profileRouter.get('/events/:_id', (req, res) => {
       const apiUrls: any[] | PromiseLike<any[]> = [];
       events.forEach(event => {
         apiUrls.push(axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&id=${event.eventAPIid}`));
-      })
-      return apiUrls
+      });
+      return apiUrls;
     })
     .then(arr => {
       axios.all(arr)
@@ -24,7 +24,7 @@ profileRouter.get('/events/:_id', (req, res) => {
           const userEventsArr: (string)[] = [];
           responses.forEach(response => {
             userEventsArr.push(response.data._embedded.events[0]);
-          })
+          });
           return userEventsArr;
         }))
         .then(eventsArr => {
@@ -42,7 +42,7 @@ profileRouter.get('/:_id', (req, res) => {
 
   prisma.users.findUnique({
     where: {
-      googleId: _id,
+      id: _id,
     }
   })
     .then((userInfo) => {
@@ -71,12 +71,12 @@ profileRouter.put('/:_id', (req, _res) => {
   const { _id } = req.params;
   const { socialMedia } = req.body;
   const { facebook, instagram, twitter } = socialMedia;
-
+  console.log(_id, socialMedia);
   prisma.users.update({
-    where: { googleId: _id },
+    where: { id: _id },
     data: { fbId: facebook, instaId: instagram, twitterId: twitter },
   })
     .catch(err => console.error(err));
-})
+});
 
 export default profileRouter;
