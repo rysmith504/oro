@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {OutlinedInput, Fab, Box, SpeedDial} from '../styles/material';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-import { styled } from '@mui/material';
-import { EventContext } from '../context/EventContext';
+import {OutlinedInput, Fab, Box, Button, Typography} from '../styles/material';
+
 import { UserContext } from '../context/UserContext';
 import { useSearchParams } from 'react-router-dom';
 import FeedPhoto from '../components/FeedPhoto';
@@ -50,7 +48,6 @@ const EventFeed: React.FC = () => {
       }
     })
       .then((responseObj) => {
-        // console.log(responseObj.data.reverse());
         setFeedPhotos(responseObj.data.reverse());
         setPhoto(null);
         setDialogOpen(false);
@@ -79,6 +76,8 @@ const EventFeed: React.FC = () => {
     setDialogOpen(true);
   };
 
+
+
   const handleFileUpload = async () => {
     if (photo) {
       const formData = new FormData();
@@ -91,7 +90,6 @@ const EventFeed: React.FC = () => {
         caption,
       })
         .then((data) => {
-          console.log(data);
           updateFeed()
   
         })
@@ -100,14 +98,18 @@ const EventFeed: React.FC = () => {
     }
   };
 
+  const closeDialog = () => {
+    setDialogOpen(false);
+    setCaption('');
+  };
+
   const handleCaption = (e) => {
     setCaption(e.target.value);
   };
 
   const uploadPhoto = async () => {
     await document.getElementById('fileUpload')?.click();
-    
-  }
+  };
   return (
     <div>
 
@@ -115,15 +117,18 @@ const EventFeed: React.FC = () => {
         {eventName}
       </h1>
       <Dialog open={dialogOpen}>
-        <OutlinedInput placeholder='enter caption here' value={caption} onChange={handleCaption}/>
-        <Fab variant='extended' size='small' onClick={handleFileUpload}>UPLOAD</Fab>
+        <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
+          <OutlinedInput placeholder='enter caption here' value={caption} onChange={handleCaption}/>
+        </Typography>
+        <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={handleFileUpload}>UPLOAD</Button>
+        <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={closeDialog}>cancel</Button>
       </Dialog>
 
 
       {feedPhotos.map((photo, i) => {
         return (
           <div key={i} margin-top="30px">
-            <FeedPhoto photo={photo}/>
+            <FeedPhoto updateFeed={updateFeed} photo={photo}/>
           </div>
         );
       })}

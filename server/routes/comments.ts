@@ -94,7 +94,17 @@ commentsRouter.delete('/', async (req, res) => {
       id,
     }
   })
-    .then(() => res.sendStatus(200))
+    .then(() => {
+      prisma.notifications.deleteMany({
+        where: {
+          commentId: id,
+        }
+      })
+        .then(() => res.sendStatus(200))
+        .catch((err) => {
+          res.sendStatus(500)
+        });
+    })
     .catch(() => res.sendStatus(500));
 })
 
