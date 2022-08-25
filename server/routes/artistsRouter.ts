@@ -80,7 +80,25 @@ artistsRouter.put('/update', (req, res) => {
     .then((updates) => {
       console.log(updates);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      // prisma.artistFollowing.update({
+      //   where: {
+      //     id: artist,
+      //   },
+      //   data: {
+      //     users: {
+      //       create: {
+      //         user: {
+      //           disconnect: {
+      //             id: user
+      //           },
+      //         }
+      //       }
+      //     }
+      //   }
+      // })
+      console.error(err);
+    });
 });
 
 // -----------------------POST
