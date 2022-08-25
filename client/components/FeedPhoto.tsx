@@ -113,7 +113,15 @@ const FeedPhoto: React.FC = (props) => {
       .then((commentData) => {
         setDeleterOpen(false)
         updateFeed();
-        console.log(commentData);
+        commentData.data.forEach((comment) => {
+          axios.delete('/api/notifications', {
+            data: {
+              commentId: comment.id,
+            }
+          })
+            .then(() => console.log(`${comment.id} DELETED`))
+            .catch((err) => console.error(err));
+        })
       })
       .catch((err) => console.log(err));
   };

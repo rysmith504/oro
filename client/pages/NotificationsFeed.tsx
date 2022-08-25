@@ -38,7 +38,7 @@ const NotificationsFeed: React.FC = () => {
   };
 
   const clearNotifications = () => {
-    axios.delete('/api/notifications', {
+    axios.delete('/api/notifications/all', {
       data: {
         userId: currentUserInfo.id,
       }
