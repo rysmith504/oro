@@ -69,7 +69,7 @@ const App: React.FC = () => {
       .then((userProfile) => {
         setProfilePic(userProfile.data);
       })
-      .catch((err) => console.error(err));
+      .catch(() => console.log('no notifications'));
   };
 
 
