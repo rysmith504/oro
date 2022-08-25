@@ -6,7 +6,7 @@ const generateSeed = async () => {
     data: [{
       fullName: 'Bethany Jones',
       email: 'betpetjones@gmail.com',
-      googleId: '114898924127214905863',
+      id: '114898924127214905863',
       profileURL: 'https://lh3.googleusercontent.com/a-/AFdZucohgbByhushppGcQ9zcE_utFeYBsqVgHuTjCDUg4BQ=s96-c',
       twitterId: '',
       snapchatId: '',

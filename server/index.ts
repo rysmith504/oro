@@ -112,7 +112,7 @@ passport.use(new GoogleStrategy(
     await prisma.users.create(
       {
         data: {
-          googleId: profile.id,
+          id: profile.id,
           email: profile.emails[0].value,
           fullName: profile.displayName,
           profileURL: profile.photos[0].value,

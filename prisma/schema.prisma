@@ -28,10 +28,9 @@ model UserEvents {
 }
 
 model Users {
-  id               Int               @id @default(autoincrement())
+  id               String            @id @unique
   sentMessages     Messages[]        @relation("sentMessages")
   receivedMessages Messages[]        @relation("receivedMessages")
-  googleId         String?           @unique
   fullName         String
   profileURL       String?
   email            String            @unique
