@@ -2,22 +2,39 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {Grid, Modal, Box, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {Button, Fab, OutlinedInput, Card, Paper, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import moment from 'moment';
+import Dialog from '@mui/material/Dialog';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import { UserContext } from '../context/UserContext';
 
 const FeedPhoto: React.FC = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  const userContext = useContext(UserContext);
+  const {currentUserInfo} = userContext;
 
-  const {photo} = props;
+  const {photo, updateFeed} = props;
   const [profilePic, setProfilePic] = useState('');
   const [expanded, setExpanded] = React.useState(false);
-  const [modalStatus, setModalStatus] = useState(false);
+  const [captionText, setCaptionText] = useState('');
+  const [editor, setEditor] = useState(false);
+  const [deleter, setDeleter] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [owner, setOwner] = useState(false);
 
   useEffect(() => {
+    console.log('id', currentUserInfo.id);
+    console.log('PHOTOID', photo.userId);
+    if (currentUserInfo.id === photo.userId) {
+      setOwner(true);
+    }
     getAvatar();
   }, []);
 
@@ -42,19 +59,56 @@ const FeedPhoto: React.FC = (props) => {
       }
     })
       .then((userProfile) => {
-        // console.log(userProfile);
         setProfilePic(userProfile.data);
       })
       .catch((err) => console.error(err));
   };
 
-  const handleOpen = () => {
-    setModalStatus(true);
+  const handleEdit = (e) => {
+    setCaptionText(e.target.value);
+  };
+  const handleSubmitEdit = () => {
+    axios.put('/api/eventFeed', {
+      photoUrl: photo.photoUrl,
+      caption: captionText,
+    })
+      .then(() => {
+        setCaptionText('');
+        setEditor(false);
+        updateFeed();
+      })
+      .catch((err) => console.error(err));
   };
 
-  const handleClose = () => {
-    setModalStatus(false);
+  const openEditor = () => {
+    setMenuOpen(false);
+    setEditor(true);
   };
+
+  const closeEditor = () => {
+    setEditor(false);
+    setCaptionText('');
+  };
+
+  const openDeleter = () => {
+    console.log('deleterOpened');
+    setDeleter(true);
+    setMenuOpen(false);
+  };
+
+  const openMenu = () => {
+    setMenuOpen(true);
+  };
+
+
+  // const getMenuOption = () => {
+  //   console.log('menuuuu');
+  //   if (owner) {
+  //     return (
+
+  //     );
+  //   }
+  // };
 
 
   return (
@@ -69,25 +123,47 @@ const FeedPhoto: React.FC = (props) => {
         </Box>
       </Modal> */}
       <Card sx={{ maxWidth: 400, margin: 'auto', mt: '20px'}}>
+
+        {owner && <Paper>
+          <Typography textAlign='right'>
+            <IconButton onClick={openMenu}>
+              <MoreHorizIcon sx={{color: inverseMode}}/>
+            </IconButton>
+            <Menu sx={{margin: 'auto'}} open={menuOpen}>
+              <MenuItem onClick={openEditor}>edit caption</MenuItem>
+              <MenuItem onClick={openDeleter}>delete photo</MenuItem>
+            </Menu>
+          </Typography>
+        </Paper>
+        }
+        {/* {getMenuOption()} */}
         <CardHeader
           avatar={
             <Link to={`/user/?id=${photo.userId}`}>
               <Avatar src={profilePic} />
             </Link>
           }
-          subheader={<Typography sx={{ bgcolor: inverseMode }}>{moment(photo.created_at).calendar()}</Typography>}
+          subheader={<Typography textAlign='right' sx={{ bgcolor: inverseMode }}>{moment(photo.created_at).calendar()}</Typography>}
           sx={{ bgcolor: inverseMode }}
         />
         <CardMedia
           component="img"
           height="194"
           image={photo.photoUrl}
-          onClick={handleOpen}
           sx={{ bgcolor: inverseMode }}
         />
         <CardContent sx={{ bgcolor: inverseMode }}>
           <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
-            {photo.caption}
+            {/* {photo.caption} */}
+            <span>
+              {!editor && photo.caption}
+            </span>
+            {editor && <OutlinedInput sx={{ bgcolor: inverseMode }} placeholder={photo.caption} value={captionText} onChange={handleEdit}/>}
+            {editor && <Button sx={{ bgcolor: inverseMode }} onClick={handleSubmitEdit}>confirm changes</Button>}
+            {editor && <Button sx={{ bgcolor: inverseMode }} onClick={closeEditor}>cancel</Button>}
+            {/* <span onClick={openEditor}>
+              <Typography textAlign='right' sx={{ color: iconColors, mb: '20px', ml: '5px'}}>edit</Typography>
+            </span> */}
           </Typography>
         </CardContent>
         <CardActions

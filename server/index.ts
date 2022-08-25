@@ -11,18 +11,6 @@ require('dotenv').config();
 
 import api from './routes/index';
 
-// import eventListingsRouter from './routes/eventListingsRouter';
-// import artistsRouter from './routes/artistsRouter';
-// import songFinderRouter from './routes/songFinder';
-// import eventDetailsRouter from './routes/eventDetail';
-// import travelPlannerRouter from './routes/travelPlanner';
-// import profileRouter from './routes/profile';
-
-// import eventFeedRouter from './routes/eventFeed';
-// import profileRouter from './routes/profile';
-// import commentsRouter from './routes/comments';
-// import usersRouter from './routes/usersRouter'
-
 const app = express();
 app.use(cors());
 
@@ -97,18 +85,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 //ROUTERS------------------------------
 app.use('/api', api);
 
-
-// app.use('/events', eventListingsRouter);
-// app.use('/favArtists', artistsRouter);
-// app.use('/songs', songFinderRouter);
-// app.use('/eventDetails', eventDetailsRouter);
-// app.use('/profile', profileRouter);
-// app.use('/comments', commentsRouter);
-// app.use('/eventFeed', eventFeedRouter);
-// app.use('/travelPlanner', travelPlannerRouter);
-// app.use('/users', usersRouter);
-
-// AUTH-----------------
+// GOOGLE AUTH-----------------
 // require('dotenv').config();
 
 import googleStrategy from 'passport-google-oauth20';
@@ -135,7 +112,7 @@ passport.use(new GoogleStrategy(
     await prisma.users.create(
       {
         data: {
-          googleId: profile.id,
+          id: profile.id,
           email: profile.emails[0].value,
           fullName: profile.displayName,
           profileURL: profile.photos[0].value,
@@ -144,7 +121,7 @@ passport.use(new GoogleStrategy(
       .catch(async () => {
         return await prisma.users.findUnique({
           where: {
-            googleId: profile.id,
+            id: profile.id,
           },
         });
       });
@@ -179,7 +156,7 @@ app.get('/hidden', isLoggedIn, (req, res) => {
   // res.send(req.user);
   const userObj = req.user;
 
-  prisma.users.findUnique({ where: { googleId: userObj.id }})
+  prisma.users.findUnique({ where: { id: userObj.id }})
     .then((data) => {
       res.status(200).send(data);
     })

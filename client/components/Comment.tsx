@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Paper, Grid, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import { Paper, Grid, OutlinedInput, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 import moment from 'moment';
 import { UserContext } from '../context/UserContext';
-
+import Dialog from '@mui/material/Dialog';
 const Comment: React.FC = (props) => {
 
   const userContext = useContext(UserContext);
@@ -16,6 +16,7 @@ const Comment: React.FC = (props) => {
   const [commentText, setCommentText] = useState('');
   const [editor, setEditor] = useState('');
   const { comment, getComments } = props;
+  const [deleterOpen, setDeleterOpen] = useState(false);
 
   const [profilePic, setProfilePic] = useState('');
 
@@ -42,7 +43,10 @@ const Comment: React.FC = (props) => {
         id: comment.id,
       }
     })
-      .then(() => getComments())
+      .then(() => {
+        setDeleterOpen(false);
+        getComments();
+      })
       .catch((err) => console.error(err));
   };
 
@@ -73,23 +77,30 @@ const Comment: React.FC = (props) => {
     setCommentText('');
   }
 
+  const openDeleter = () => {
+    setDeleterOpen(true);
+  };
+
+  const closeDeleter = () => {
+    setDeleterOpen(false);
+  };
   const getEditDeleteOptions = () => {
-    if (comment.userId === currentUserInfo.googleId) {
+    if (comment.userId === currentUserInfo.id) {
       return (
         <Typography textAlign='right' sx={{ color: iconColors, mb: '20px' }}>
           <span onClick={openEditor}>
-            edit 
+            edit
           </span>
           <span>
             |
           </span>
-          <span onClick={deleteComment}>
+          <span onClick={openDeleter}>
             delete
           </span>
         </Typography>
-      )
+      );
     }
-  }
+  };
 
 
   return (
@@ -102,11 +113,18 @@ const Comment: React.FC = (props) => {
         </Grid>
         <Grid item xs={8} sm={8} md={8}>
           <Paper>
+            <Dialog open={deleterOpen}>
+              <Typography textAlign='left' sx={{ color: inverseMode, mb: '20px', ml: '5px'}}>are you sure you want to delete your comment?</Typography>
+              <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={deleteComment}>DELETE</Button>
+              <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={closeDeleter}>cancel</Button>
+            </Dialog>
             {!editor && <Typography textAlign='left' sx={{ color: inverseMode, mb: '20px', ml: '5px'}}>{comment.comment} {comment.edited && ' (edited)'}</Typography>}
             {!editor && <Typography textAlign='right' sx={{ color: inverseMode, mb: '20px' }}>{moment(comment.created_at).calendar()}</Typography>}
-            {editor && <input placeholder={comment.comment} value={commentText} onChange={handleEdit}/>}
-            {editor && <button onClick={handleSubmitEdit}>confirm changes</button>}
-            {editor && <button onClick={closeEditor}>cancel</button>}
+            <Typography variant='body2' sx={{ bgcolor: iconColors }}>
+              {editor && <OutlinedInput sx={{color: inverseMode}} placeholder={comment.comment} value={commentText} onChange={handleEdit}/>}
+            </Typography>
+            {editor && <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={handleSubmitEdit}>confirm changes</Button>}
+            {editor && <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={closeEditor}>cancel</Button>}
           </Paper>
           {getEditDeleteOptions()}
         </Grid>

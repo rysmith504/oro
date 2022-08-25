@@ -17,8 +17,6 @@ const Comments: React.FC = (props) => {
   const {currentUserInfo} = userContext;
 
   const {photo} = props;
-  useEffect(() => {
-  }, []);
 
 
   // const [commentsOpen, setCommentsOpen] = useState(false);
@@ -64,7 +62,7 @@ const Comments: React.FC = (props) => {
     await axios.post('/api/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
-      userId: currentUserInfo.googleId,
+      userId: currentUserInfo.id,
       ownerId: photo.userId,
 
 

@@ -5,14 +5,14 @@ import { ThemeContext } from '../context/ThemeContext';
 import { UserContext } from '../context/UserContext';
 import {Box,	Grid} from '../styles/material';
 import ArtistThumbnail from '../components/ArtistThumbnail';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Login from './Login';
 
 const Artists = () => {
   const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
   const artistContext = useContext(ArtistContext);
   const themeContext = useContext(ThemeContext);
-  const {mode, setMode, toggleMode} = themeContext;
+  // const {mode, setMode, toggleMode} = themeContext;
   const {artistData, getFaveArtists } = artistContext;
 
   const {allArtists, artists} = artistData;
@@ -29,7 +29,7 @@ const Artists = () => {
     setSingleArtist(null);
   };
   useEffect(() => {
-    getFaveArtists(currentUserInfo.googleId);
+    getFaveArtists(currentUserInfo.id);
   }, []);
 
 
