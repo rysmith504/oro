@@ -20,36 +20,37 @@ artistsRouter.get('/events', (req, res) => {
 // GETS artists based on users' id, if user has no favorites, returns all
 artistsRouter.get('/:id', (req, res) => {
   const { id } = req.params;
-  prisma.users.findUnique({
+
+  prisma.artistFollowing.findMany({
     where: {
-      id: id,
+      users: {
+        some: {
+          userId: id
+        }
+      }
     }
   })
-    .then((userInfo) => {
-      prisma.artistFollowing.findMany({
-        where: {
-          users: id,
-        }
-      })
+    .then((data) => {
+      console.log(data);
+      if (!data.length) {
+        console.log('no artists');
+        prisma.artistFollowing.findMany()
+          .then((data) => {
+            res.status(200).send({allArtists: data, artists: null});
+          });
+      } else {
+        res.status(200).send({allArtists: data, artists: true});
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      prisma.artistFollowing.findMany()
         .then((data) => {
-          if (!data.length) {
-            prisma.artistFollowing.findMany()
-              .then((data) => {
-                res.status(200).send({allArtists: data, artists: null});
-              });
-          } else {
-            res.status(200).send({allArtists: data, artists: true});
-          }
-        })
-        .catch((err) => {
-          prisma.artistFollowing.findMany()
-            .then((data) => {
-              res.status(200).send({allArtists: data, artists: null});
-            });
-        })
-        .catch((err) => {
-          res.sendStatus(500);
+          res.status(200).send({allArtists: data, artists: null});
         });
+    })
+    .catch((err) => {
+      res.sendStatus(500);
     });
 });
 
