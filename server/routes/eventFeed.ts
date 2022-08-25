@@ -93,23 +93,23 @@ eventFeedRouter.get('/photo', async (req, res) => {
 
 });
 
-// eventFeedRouter.put('/', async (req, res) => {
-//   const {photoUrl, caption} = req.body;
+eventFeedRouter.put('/', async (req, res) => {
+  const {photoUrl, caption} = req.body;
 
-//   console.log(req.body);
-//   await prisma.eventPhotos.update({
-//     where: {
-//       photoUrl: photoUrl,
-//     },
-//     data: {
-//       caption,
-//     }
-//   })
-//     .then(() => res.sendStatus(200))
-//     .catch((err) => {
-//       console.log(err);
-//       res.sendStatus(500)
-//     });
-// })
+  console.log(req.body);
+  await prisma.eventPhotos.updateMany({
+    where: {
+      photoUrl: photoUrl,
+    },
+    data: {
+      caption,
+    }
+  })
+    .then(() => res.sendStatus(200))
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500)
+    });
+})
 
 export default eventFeedRouter;

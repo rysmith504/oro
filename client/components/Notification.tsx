@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import Comments from './Comments';
 import {Avatar} from '../styles/material';
 import moment from 'moment';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 const Notification: React.FC = (props) => {
   const theme = useTheme();
@@ -18,7 +19,7 @@ const Notification: React.FC = (props) => {
   const [modalStatus, setModalStatus] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [userAvatar, setUserAvatar] = useState('');
-  const [read, setRead] = useState('');
+  const [read, setRead] = useState(true);
 
   const getPhoto = () => {
     axios.get('/api/eventFeed/photo', {
@@ -46,8 +47,9 @@ const Notification: React.FC = (props) => {
       .then((commentData) => {
         axios.get(`/api/profile/${commentData.data.userId}`)
           .then((commenterData) => {
+            console.log(commenterData);
             setPerson(commenterData.data.fullName);
-            setUserAvatar(commentData.data.profileURL);
+            setUserAvatar(commenterData.data.profileURL);
             setPhotoUrl(commentData.data.photoUrl);
           })
           .catch((err) => console.error(err));
@@ -62,14 +64,15 @@ const Notification: React.FC = (props) => {
   };
 
   useEffect(() => {
-    if(notif.read === false) {
-      setRead('(new)')
+    if (notif.read === false) {
+      setRead(false)
     }
     getPerson();
     getType();
   }, []);
 
   const handleOpen = () => {
+    setRead(true);
     setModalStatus(true);
   };
 
@@ -106,7 +109,7 @@ const Notification: React.FC = (props) => {
               </Grid>
 
               <Grid item xs={8} sx={{margin: 'auto'}}>
-                <Typography textAlign='left' sx={{ color: iconColors, mb: '20px', ml: '5px'}}>{read} {person}{text} {moment(notif.created_at).fromNow()}</Typography>
+                <Typography textAlign='left' sx={{ color: iconColors, mb: '20px', ml: '5px'}}>{!read && <b>*new*</b>} {person}{text} {moment(notif.created_at).fromNow()}</Typography>
               </Grid>
 
               <Grid item xs={2} sx={{margin: 'auto'}}>

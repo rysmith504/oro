@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {OutlinedInput, Fab, Box} from '../styles/material';
+import {OutlinedInput, Fab, Box, Button, Typography} from '../styles/material';
 
 import { UserContext } from '../context/UserContext';
 import { useSearchParams } from 'react-router-dom';
@@ -98,14 +98,18 @@ const EventFeed: React.FC = () => {
     }
   };
 
+  const closeDialog = () => {
+    setDialogOpen(false);
+    setCaption('');
+  };
+
   const handleCaption = (e) => {
     setCaption(e.target.value);
   };
 
   const uploadPhoto = async () => {
     await document.getElementById('fileUpload')?.click();
-    
-  }
+  };
   return (
     <div>
 
@@ -113,15 +117,18 @@ const EventFeed: React.FC = () => {
         {eventName}
       </h1>
       <Dialog open={dialogOpen}>
-        <OutlinedInput placeholder='enter caption here' value={caption} onChange={handleCaption}/>
-        <Fab variant='extended' size='small' onClick={handleFileUpload}>UPLOAD</Fab>
+        <Typography variant='body2' sx={{ bgcolor: inverseMode }}>
+          <OutlinedInput placeholder='enter caption here' value={caption} onChange={handleCaption}/>
+        </Typography>
+        <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={handleFileUpload}>UPLOAD</Button>
+        <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={closeDialog}>cancel</Button>
       </Dialog>
 
 
       {feedPhotos.map((photo, i) => {
         return (
           <div key={i} margin-top="30px">
-            <FeedPhoto photo={photo}/>
+            <FeedPhoto updateFeed={updateFeed} photo={photo}/>
           </div>
         );
       })}
