@@ -81,22 +81,24 @@ artistsRouter.put('/update', (req, res) => {
       console.log(updates);
     })
     .catch((err) => {
-      // prisma.artistFollowing.update({
-      //   where: {
-      //     id: artist,
-      //   },
-      //   data: {
-      //     users: {
-      //       create: {
-      //         user: {
-      //           disconnect: {
-      //             id: user
-      //           },
-      //         }
-      //       }
-      //     }
-      //   }
-      // })
+      prisma.artistFollowing.update({
+        where: {
+          id: artist,
+        },
+        data: {
+          users: {
+            deleteMany: {
+              userId: user
+            },
+          }
+        }
+      })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
       console.error(err);
     });
 });
