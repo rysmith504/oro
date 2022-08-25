@@ -60,24 +60,23 @@ artistsRouter.put('/update', (req, res) => {
   const { artistId } = artist;
   const { userId } = user;
   console.log(artist, user);
-// prisma.artistFollowing.findUnique({
-//   where: {
-//     id: artistId,
-//   }
-// })
-//   .then((userInfo) => {
-//     prisma.artistFollowing.update({
-//       data: {
-//         users: {
-//           connect: {
-//             user: {
-//               googleId: userId,
-//             }
-//           }
-//         }
-//       }
-//     });
-//   });
+
+  const getUser = await prisma.artistFollowing.update({
+    where: {
+      id: artistId,
+    },
+    users: {
+      user: {
+        connect: {
+          googleId: userId
+        },
+        create: {
+          title: 'My new post title'
+        }
+      }
+    }
+  });
+
 });
 
 // -----------------------POST
