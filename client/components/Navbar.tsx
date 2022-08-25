@@ -17,7 +17,7 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Grid, Container, Avatar } from '../styles/material';
 import Badge from '@mui/material/Badge';
 import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = (props) => {
@@ -31,56 +31,56 @@ const Navbar = (props) => {
   const themeContext = useContext(ThemeContext);
   const { mode, toggleMode } = themeContext;
 
-
+  const navigate = useNavigate();
 
   const pages = [
 
-    <Link
+    ['/home', <Link
       to='/home'
       style={{ textDecoration: 'none' }}
       key={'home'}
     >
-      <Home />
+      <Home onClick={()=> { onNavigate; }}/>
       HOME
-    </Link>,
-    <Link
+    </Link>],
+    ['/eventListings', <Link
       to='/eventListings'
       style={{ textDecoration: 'none' }}
       key={'eventListings'}
     >
       <TravelExplore />
       Find Events
-    </Link>,
-    <Link
+    </Link>],
+    ['/travelPlanner', <Link
       to='/travelPlanner'
       style={{ textDecoration: 'none' }}
       key={'travelPlanner'}
     >
       <Luggage />
       Travel Planner
-    </Link>,
-    <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
+    </Link>],
+    ['/backpack', <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
       <PriceChange />
       Budgets
-    </Link>,
-    <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
+    </Link>],
+    ['/songFinder', <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
       <MusicNote />
       Song Finder
-    </Link>,
-    <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
+    </Link>],
+    ['/artists', <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
       <Grade />
       Favorite Artists
-    </Link>,
-    <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum /> Chat</Link>,
-    <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
+    </Link>],
+    ['/chat', <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum /> Chat</Link>],
+    ['/notifications', <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
       <Badge badgeContent={notif} color="primary" >
         <Mail />
       </Badge>
-      Notifications</Link>,
-    <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
+      Notifications</Link>],
+    ['/profile', <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
       <Avatar src={profile} />
       Account
-    </Link>,
+    </Link>],
   ];
 
 
@@ -98,8 +98,9 @@ const Navbar = (props) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
+    navigate(page);
   };
 
   const handleCloseUserMenu = () => {
@@ -130,7 +131,7 @@ const Navbar = (props) => {
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
-                    {page}
+                    {page[1]}
                   </Button>
                 ))}
               </Box>
@@ -174,8 +175,8 @@ const Navbar = (props) => {
                 }}
               >
                 {pages.map((page, index) => (
-                  <MenuItem key={`nav${index}`} onClick={handleCloseNavMenu}>
-                    <Typography textAlign='center'>{page}</Typography>
+                  <MenuItem key={`nav${index}`} onClick={() => { handleCloseNavMenu(page[0]); }}>
+                    <Typography textAlign='center'>{page[1]}</Typography>
                   </MenuItem>
                 ))}
                 <MenuItem onClick={handleCloseNavMenu}>
