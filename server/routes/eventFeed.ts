@@ -45,7 +45,7 @@ eventFeedRouter.get('/avatar', async (req, res) => {
   const {userId} = req.query;
   await prisma.users.findFirst({
     where: {
-      googleId: userId,
+      id: userId,
     }
   })
     .then((data) => {
@@ -53,7 +53,7 @@ eventFeedRouter.get('/avatar', async (req, res) => {
     })
     .catch((err) => {
       res.sendStatus(500)
-    
+
     });
 });
 

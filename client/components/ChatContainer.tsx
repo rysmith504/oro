@@ -25,7 +25,7 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
       const getMessages = async () => {
         const response = await axios.post('/api/messages/getmsg', {
           senderId: currentUser.id,
-          receiverId: currentChat.googleId
+          receiverId: currentChat.id
         });
         setMessages(response.data);
       };
@@ -36,12 +36,12 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
   const handleSendMsg = async (msg) => {
     socket.current.emit('send-msg', {
       senderId: currentUser.id,
-      receiverId: currentChat.googleId,
+      receiverId: currentChat.id,
       text: msg
     });
     await axios.post('/api/messages/addmsg', {
       senderId: currentUser.id,
-      receiverId: currentChat.googleId,
+      receiverId: currentChat.id,
       text: msg,
     });
     const msgs = [...messages];

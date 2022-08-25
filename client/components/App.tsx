@@ -38,7 +38,7 @@ const App: React.FC = () => {
   const getNotifications = () => {
     axios.get('/api/notifications', {
       params: {
-        userId: currentUserInfo.googleId
+        userId: currentUserInfo.id
       }
     })
       .then((notifData) => {
@@ -63,7 +63,7 @@ const App: React.FC = () => {
   const getAvatar = async () => {
     await axios.get('/api/eventFeed/avatar', {
       params: {
-        userId: currentUserInfo.googleId
+        userId: currentUserInfo.id
       }
     })
       .then((userProfile) => {

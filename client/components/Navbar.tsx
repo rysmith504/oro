@@ -99,6 +99,9 @@ const Navbar = (props) => {
   };
 
   const handleCloseNavMenu = (page) => {
+    if (page === '/home') {
+      logoutUser();
+    }
     setAnchorElNav(null);
     navigate(page);
   };
@@ -179,7 +182,7 @@ const Navbar = (props) => {
                     <Typography textAlign='center'>{page[1]}</Typography>
                   </MenuItem>
                 ))}
-                <MenuItem onClick={handleCloseNavMenu}>
+                <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
                   {
                     isLoggedIn
                       ? <Link to='/home' style={{ textDecoration: 'none' }} key={'logout'} onClick={logoutUser}>

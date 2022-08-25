@@ -13,8 +13,8 @@ datasource db {
 model Messages {
   id         Int      @id @default(autoincrement())
   text       String
-  sender     Users    @relation(name: "sentMessages", fields: [senderId], references: [googleId])
-  receiver   Users    @relation(name: "receivedMessages", fields: [receiverId], references: [googleId])
+  sender     Users    @relation(name: "sentMessages", fields: [senderId], references: [id])
+  receiver   Users    @relation(name: "receivedMessages", fields: [receiverId], references: [id])
   senderId   String
   receiverId String
   createdAt  DateTime @default(now())
@@ -23,15 +23,14 @@ model Messages {
 model UserEvents {
   id         Int    @id @default(autoincrement())
   user       Users  @relation(fields: [userId], references: [id])
-  userId     Int
+  userId     String
   eventAPIid String
 }
 
 model Users {
-  id               Int               @id @default(autoincrement())
+  id               String            @id @unique
   sentMessages     Messages[]        @relation("sentMessages")
   receivedMessages Messages[]        @relation("receivedMessages")
-  googleId         String?           @unique
   fullName         String
   profileURL       String?
   email            String            @unique
@@ -47,7 +46,7 @@ model Users {
 }
 
 model ArtistUsersJoin {
-  user     Users           @relation(fields: [userId], references: [googleId])
+  user     Users           @relation(fields: [userId], references: [id])
   userId   String
   artist   ArtistFollowing @relation(fields: [artistId], references: [id])
   artistId Int
@@ -75,7 +74,7 @@ model ArtistFollowing {
 // Notifications Model
 model Notifications {
   id         Int      @id @default(autoincrement())
-  user       Users    @relation(fields: [userId], references: [googleId])
+  user       Users    @relation(fields: [userId], references: [id])
   userId     String
   commentId  Int
   type       String
@@ -85,7 +84,7 @@ model Notifications {
 
 model EventPhotos {
   id          Int      @id @default(autoincrement())
-  user        Users?    @relation(fields: [userId], references: [googleId])
+  user        Users?   @relation(fields: [userId], references: [id])
   userId      String?
   photoUrl    String
   eventAPIid  String
@@ -96,9 +95,9 @@ model EventPhotos {
 
 model Comments {
   id         Int      @id @default(autoincrement())
-  user       Users    @relation(fields: [userId], references: [googleId])
+  user       Users    @relation(fields: [userId], references: [id])
   userId     String
-  photoUrl   String @unique
+  photoUrl   String   @unique
   comment    String
   edited     Boolean  @default(false)
   created_at DateTime @default(now())
@@ -107,7 +106,7 @@ model Comments {
 // //MODELS
 
 // model ArtistUsersJoin {
-//   user     Users           @relation(fields: [userId], references: [googleId])
+//   user     Users           @relation(fields: [userId], references: [id])
 //   userId   String
 //   artist   ArtistFollowing @relation(fields: [artistId], references: [id])
 //   artistId Int
