@@ -2,10 +2,8 @@ import React from 'react';
 import App from './components/App';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
-import { Box, Grid, Container } from './styles/material';
-import CssBaseline from '@mui/material/CssBaseline';
 import {Theme} from './components/Theme';
-import { ThemeContextProvider, ThemeContext } from './context/ThemeContext';
+import { ThemeContextProvider } from './context/ThemeContext';
 import { UserContextProvider } from './context/UserContext';
 
 const rootElement = document.getElementById('root');

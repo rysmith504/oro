@@ -16,6 +16,7 @@ eventFeedRouter.post('/', async (req, res) => {
       upload_preset: 'vibeSocietyImages',
     })
       .then(async(uploadedResponse) => {
+        console.log(eventId, userId, caption);
         await prisma.eventPhotos.create({
           data: {
             userId,

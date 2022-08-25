@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -9,20 +8,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link, Routes, Route } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
+import { Link } from 'react-router-dom';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { ThemeContext } from '../context/ThemeContext';
 import { useTheme } from '@mui/material/styles';
-import { Box, Grid, Container } from '../styles/material';
+import { Box, Grid, Container, Avatar } from '../styles/material';
 import Badge from '@mui/material/Badge';
-import { UserContext } from '../context/UserContext';
 import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
-import { Avatar } from '../styles/material';
-const iconColors = '';
-const inverseMode = '';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = (props) => {
@@ -34,58 +28,58 @@ const Navbar = (props) => {
   const inverseMode = theme.palette.secondary.main;
 
   const themeContext = useContext(ThemeContext);
-  const { mode, setMode, toggleMode } = themeContext;
+  const { mode, toggleMode } = themeContext;
 
-
+  const navigate = useNavigate();
 
   const pages = [
 
-    <Link
+    ['/home', <Link
       to='/home'
       style={{ textDecoration: 'none' }}
       key={'home'}
     >
-      <Home />
+      <Home onClick={()=> { onNavigate; }}/>
       HOME
-    </Link>,
-    <Link
+    </Link>],
+    ['/eventListings', <Link
       to='/eventListings'
       style={{ textDecoration: 'none' }}
       key={'eventListings'}
     >
       <TravelExplore />
       Find Events
-    </Link>,
-    <Link
+    </Link>],
+    ['/travelPlanner', <Link
       to='/travelPlanner'
       style={{ textDecoration: 'none' }}
       key={'travelPlanner'}
     >
       <Luggage />
       Travel Planner
-    </Link>,
-    <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
+    </Link>],
+    ['/backpack', <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
       <PriceChange />
       Budgets
-    </Link>,
-    <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
+    </Link>],
+    ['/songFinder', <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
       <MusicNote />
       Song Finder
-    </Link>,
-    <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
+    </Link>],
+    ['/artists', <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
       <Grade />
       Favorite Artists
-    </Link>,
-    <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum /> Chat</Link>,
-    <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
+    </Link>],
+    ['/chat', <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum /> Chat</Link>],
+    ['/notifications', <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
       <Badge badgeContent={notif} color="primary" >
         <Mail />
       </Badge>
-      Notifications</Link>,
-    <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-      <Avatar src={currentUserInfo.profileURL} />
+      Notifications</Link>],
+    ['/profile', <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
+      <Avatar src={profile} />
       Account
-    </Link>,
+    </Link>],
   ];
 
 
@@ -103,8 +97,9 @@ const Navbar = (props) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
+    navigate(page);
   };
 
   const handleCloseUserMenu = () => {
@@ -135,7 +130,7 @@ const Navbar = (props) => {
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
-                    {page}
+                    {page[1]}
                   </Button>
                 ))}
               </Box>
@@ -179,21 +174,21 @@ const Navbar = (props) => {
                 }}
               >
                 {pages.map((page, index) => (
-                  <MenuItem key={`nav${index}`} onClick={handleCloseNavMenu}>
-                    <Typography textAlign='center'>{page}</Typography>
+                  <MenuItem key={`nav${index}`} onClick={() => { handleCloseNavMenu(page[0]); }}>
+                    <Typography textAlign='center'>{page[1]}</Typography>
                   </MenuItem>
                 ))}
                 <MenuItem onClick={handleCloseNavMenu}>
                   {
-                    isLoggedIn 
+                    isLoggedIn
                       ? <Link to='/home' style={{ textDecoration: 'none' }} key={'logout'} onClick={logoutUser}>
-                          <Logout/>
+                        <Logout/>
                           Logout
-                        </Link>
+                      </Link>
                       : <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
-                          <Login />
+                        <Login />
                           Login
-                        </Link>
+                      </Link>
                   }
                 </MenuItem>
               </Menu>
