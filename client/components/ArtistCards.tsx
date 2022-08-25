@@ -1,22 +1,18 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import React, { useState, useContext } from 'react';
+import { IconButtonProps } from '@mui/material/IconButton';
 import {
-  Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon
+  Box,	Grid,	Card,	CardHeader,	CardMedia,	CardContent,	CardActions,	Collapse,	Typography,	FavoriteIcon,	ExpandMoreIcon,	YouTubeIcon,	TwitterIcon,	MusicNoteIcon,	FacebookIcon,	QuizIcon,	InstagramIcon,	LanguageIcon, IconButton, UseTheme, Styled, ArrowBackIosNewIcon
 } from '../styles/material';
 import EventCards from './EventCards';
 import axios from 'axios';
-import { ThemeContext } from '../context/ThemeContext';
-import { useTheme } from '@mui/material/styles';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
 
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
+const ExpandMore = Styled((props: ExpandMoreProps) => {
+  const { ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
@@ -28,13 +24,13 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 
 const ArtistInfoCard = ({artistProps, resetSingle}) => {
-  const theme = useTheme();
+  const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
+  const theme = UseTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
   const navigate = useNavigate();
-  const themeContext = useContext(ThemeContext);
-  const {mode, setMode, toggleMode} = themeContext;
   const [expanded, setExpanded] = React.useState(false);
+  const [favorite, setFavorite] = useState(false);
   const [events, setEvents] = useState(
     [{
       name: 'No events found',
@@ -44,6 +40,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
     }]
   );
   const {
+    id,
     artistName,
     bio,
     facebook,
@@ -55,6 +52,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
     wiki,
     youtube,
   } = artistProps;
+
 
   const socials = {
     youtube: [youtube, <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />],
@@ -80,6 +78,21 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
       .catch(err => console.error(err));
   };
 
+  const handleFavorite = (artistId) => {
+    console.log(currentUserInfo.id, artistId);
+    const userId = currentUserInfo.id;
+    console.log('update');
+    axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
+      .then(() => {
+        setFavorite(!favorite);
+      })
+      .catch(err => {
+        setFavorite(!favorite);
+        console.error(err);
+      }
+      );
+  };
+
   const goBack = () => {
     resetSingle();
     navigate('/artists');
@@ -103,8 +116,8 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing sx={{ bgcolor: inverseMode }}>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon sx={{ color: iconColors }} />
+          <IconButton aria-label="add to favorites" onClick={()=>{ handleFavorite(id); }}>
+            {favorite ? <FavoriteIcon sx={{ color: '#AE66FF' }} /> : <FavoriteIcon sx={{ color: iconColors }} />}
           </IconButton>
           <ExpandMore
             expand={expanded}

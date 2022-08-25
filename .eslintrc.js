@@ -61,7 +61,7 @@ module.exports = {
     // Minuta
     'comma-style': [2, 'last'],
     // 'prefer-arrow-functions/prefer-arrow-functions': ['warn'],
-    'no-console': [2, { allow: ['info', 'warn'] }],
+    'no-console': [2, { allow: ['info', 'warn', 'error'] }],
     quotes: [1, 'single']
   },
   settings: {

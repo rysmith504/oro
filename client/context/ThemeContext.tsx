@@ -1,6 +1,12 @@
 import React, { useState, createContext, ReactNode } from 'react';
 
-const ThemeContext = createContext('light');
+interface themeTypeProps {
+  mode: string;
+  toggleMode: () => void;
+  setMode: React.Dispatch<React.SetStateAction<string>>
+}
+
+const ThemeContext = createContext({} as themeTypeProps);
 
 interface Props {
   children?: ReactNode
@@ -11,7 +17,6 @@ const ThemeContextProvider = ({ children, ...props }: Props) => {
   const [mode, setMode] = useState('dark');
 
   // function to toggle the theme
-
   const toggleMode = () => {
     mode === 'dark' ? setMode('light') : setMode('dark');
   };
