@@ -17,8 +17,6 @@ const Comments: React.FC = (props) => {
   const {currentUserInfo} = userContext;
 
   const {photo} = props;
-  useEffect(() => {
-  }, []);
 
 
   // const [commentsOpen, setCommentsOpen] = useState(false);
