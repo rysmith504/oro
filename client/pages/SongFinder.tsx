@@ -64,12 +64,29 @@ const SongFinder: React.FC = () => {
   }, []);
 
 
+  // useEffect(() => {
+  //   if (artist) {
+  //     axios.get(`/api/favArtists/${currentUserInfo.id}`)
+  //       .then((results) => {
+  //         results.data.allArtists.forEach((artistObj) => {
+  //           if (artistObj.artistName === artist) {
+  //             setFavorited(true);
+  //           }
+  //         });
+  //       })
+  //       .catch((err) => console.error(err));
+
+  //   }
+  // }, [artist]);
+
   useEffect(() => {
+    console.log('getting artist faves');
     if (artist) {
-      axios.get(`/api/favArtists/${currentUserInfo.id}`)
+      axios.get(`/api/favArtists/${currentUserInfo.googleId}`)
         .then((results) => {
+          console.log(results);
           results.data.allArtists.forEach((artistObj) => {
-            if (artistObj.artistName === artist) {
+            if (artistObj.userId === currentUserInfo.googleId) {
               setFavorited(true);
             }
           });
@@ -98,6 +115,7 @@ const SongFinder: React.FC = () => {
   }, [previewSource]);
 
   const start = () => {
+    console.log('recording---');
     if (isBlocked) {
       // console.log('Permission Denied');
     } else {
@@ -107,6 +125,7 @@ const SongFinder: React.FC = () => {
   };
 
   const stop = () => {
+    console.log('stop recording');
     Mp3Recorder.stop().getMp3()
       .then(([buffer, blob]) => {
         const reader = new FileReader();
@@ -142,7 +161,7 @@ const SongFinder: React.FC = () => {
   const addToFavorites = () => {
     axios.post('/api/favArtists', {
       artistName: artist,
-      userId: currentUserInfo.id
+      userId: currentUserInfo.googleId
     })
       .then((data) => {
         setFavorited(true);
@@ -154,7 +173,7 @@ const SongFinder: React.FC = () => {
     axios.delete('/api/favArtists', {
       data: {
         artistName: artist,
-        userId: currentUserInfo.id
+        userId: currentUserInfo.googleId
       }
     })
       .then(() => {

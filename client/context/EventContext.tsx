@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import { EventDetailsType } from '../types';
 interface EventContextState {
   eventDetails: EventDetailsType | undefined;
@@ -12,7 +12,11 @@ interface EventContextState {
 }
 const EventContext = React.createContext({} as EventContextState);
 
-const EventContextProvider = ({ children }) => {
+interface Props {
+  children?: ReactNode
+}
+
+const EventContextProvider = ({ children, ...props }: Props) => {
   const [eventDetails, setEventDetails] = useState<EventDetailsType>();
   const [eventId, setEventId] = useState<string>('');
 
@@ -34,7 +38,7 @@ const EventContextProvider = ({ children }) => {
     setEventId,
   };
   return (
-    <EventContext.Provider value={appProps}>{children}</EventContext.Provider>
+    <EventContext.Provider {...props} value={appProps}>{children}</EventContext.Provider>
   );
 };
 export { EventContextProvider, EventContext };

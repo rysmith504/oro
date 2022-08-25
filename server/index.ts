@@ -4,27 +4,12 @@ import cors from 'cors';
 import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
-import prisma from '../database/db';
 // import * as socket from 'socket.io';
 const socket = require('socket.io');
 require('dotenv').config();
 
 
 import api from './routes/index';
-
-// import eventListingsRouter from './routes/eventListingsRouter';
-// import artistsRouter from './routes/artistsRouter';
-// import songFinderRouter from './routes/songFinder';
-// import eventDetailsRouter from './routes/eventDetail';
-// import travelPlannerRouter from './routes/travelPlanner';
-// import profileRouter from './routes/profile';
-
-// import eventFeedRouter from './routes/eventFeed';
-// import profileRouter from './routes/profile';
-// import commentsRouter from './routes/comments';
-// import usersRouter from './routes/usersRouter'
-import prisma from './database/db';
-import passport from 'passport';
 
 const app = express();
 app.use(cors());
@@ -100,18 +85,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 //ROUTERS------------------------------
 app.use('/api', api);
 
-
-// app.use('/events', eventListingsRouter);
-// app.use('/favArtists', artistsRouter);
-// app.use('/songs', songFinderRouter);
-// app.use('/eventDetails', eventDetailsRouter);
-// app.use('/profile', profileRouter);
-// app.use('/comments', commentsRouter);
-// app.use('/eventFeed', eventFeedRouter);
-// app.use('/travelPlanner', travelPlannerRouter);
-// app.use('/users', usersRouter);
-
-// AUTH-----------------
+// GOOGLE AUTH-----------------
 // require('dotenv').config();
 
 import googleStrategy from 'passport-google-oauth20';
@@ -174,7 +148,7 @@ passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
 });
 
 
-const isLoggedIn = (req, res, next) => {
+const isLoggedIn = (req: { user: any; }, res: { sendStatus: (arg0: number) => any; }, next: () => any) => {
   req.user ? next() : res.sendStatus(401);
 };
 
@@ -232,13 +206,13 @@ const io = socket(server, {
 
 global.onlineUsers = new Map();
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: { on: (arg0: string, arg1: { (userId: any): void; (data: any): void; }) => void; id: any; to: (arg0: any) => { (): any; new(): any; emit: { (arg0: string, arg1: any): void; new(): any; }; }; }) => {
   global.chatSocket = socket;
-  socket.on('add-user', (userId) => {
+  socket.on('add-user', (userId: any) => {
     onlineUsers.set(userId, socket.id);
   });
 
-  socket.on('send-msg', (data) => {
+  socket.on('send-msg', (data: { receiverId: any; text: any; }) => {
     const sendUserSocket = onlineUsers.get(data.receiverId);
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit('msg-receive', data.text);

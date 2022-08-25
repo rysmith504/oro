@@ -10,25 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id               Int               @id @default(autoincrement())
-  sentMessages     Messages[]        @relation("sentMessages")
-  receivedMessages Messages[]        @relation("receivedMessages")
-  googleId         String?           @unique
-  fullName         String
-  profileURL       String?
-  email            String            @unique
-  fbId             String?           @unique
-  instaId          String?           @unique
-  twitterId        String?           @unique
-  snapchatId       String?           @unique
-  notifications    Notifications[]
-  eventGallery     EventPhotos[]
-  userEvents       UserEvents[]
-  artistFollowing  ArtistFollowing[]
-  comments         Comments[]
-}
-
 model Messages {
   id         Int      @id @default(autoincrement())
   text       String
@@ -46,12 +27,39 @@ model UserEvents {
   eventAPIid String
 }
 
+model Users {
+  id               Int               @id @default(autoincrement())
+  sentMessages     Messages[]        @relation("sentMessages")
+  receivedMessages Messages[]        @relation("receivedMessages")
+  googleId         String?           @unique
+  fullName         String
+  profileURL       String?
+  email            String            @unique
+  fbId             String?           @unique
+  instaId          String?           @unique
+  twitterId        String?           @unique
+  snapchatId       String?           @unique
+  notifications    Notifications[]
+  eventGallery     EventPhotos[]
+  userEvents       UserEvents[]
+  artistUsersJoin  ArtistUsersJoin[]
+  comments         Comments[]
+}
+
+model ArtistUsersJoin {
+  user     Users           @relation(fields: [userId], references: [googleId])
+  userId   String
+  artist   ArtistFollowing @relation(fields: [artistId], references: [id])
+  artistId Int
+
+  @@id([userId, artistId])
+}
+
 // artistFollowing Model
 model ArtistFollowing {
-  id         Int    @id @default(autoincrement())
-  user       Users  @relation(fields: [userId], references: [googleId])
-  userId     String
-  artistName String
+  id         Int               @id @default(autoincrement())
+  users      ArtistUsersJoin[]
+  artistName String            @unique
   bio        String
   ticketId   String
   youtube    String
@@ -77,12 +85,12 @@ model Notifications {
 
 model EventPhotos {
   id          Int      @id @default(autoincrement())
-  user        Users    @relation(fields: [userId], references: [googleId])
-  userId      String
+  user        Users?    @relation(fields: [userId], references: [googleId])
+  userId      String?
   photoUrl    String
   eventAPIid  String
   deleteToken String?
-  caption String?
+  caption     String?
   created_at  DateTime @default(now())
 }
 
@@ -90,13 +98,39 @@ model Comments {
   id         Int      @id @default(autoincrement())
   user       Users    @relation(fields: [userId], references: [googleId])
   userId     String
-  photoUrl   String
+  photoUrl   String @unique
   comment    String
-  edited Boolean @default(false)
+  edited     Boolean  @default(false)
   created_at DateTime @default(now())
 }
 
 // //MODELS
+
+// model ArtistUsersJoin {
+//   user     Users           @relation(fields: [userId], references: [googleId])
+//   userId   String
+//   artist   ArtistFollowing @relation(fields: [artistId], references: [id])
+//   artistId Int
+
+//   @@id([userId, artistId])
+// }
+
+// artistFollowing Model
+// model ArtistFollowing {
+//   id         Int               @id @default(autoincrement())
+//   users      ArtistUsersJoin[]
+//   artistName String
+//   bio        String
+//   ticketId   String
+//   youtube    String
+//   twitter    String
+//   facebook   String
+//   instagram  String
+//   itunes     String
+//   wiki       String
+//   homepage   String
+//   image      String
+// }
 
 // // POI Model
 // model Points {
