@@ -69,7 +69,7 @@ eventFeedRouter.get('/', async (req, res) => {
     ]
   })
     .then((data) => {
-      res.status(200).send(data);
+      res.status(200).send(data.slice().reverse());
     })
     .catch((err) => {
       res.sendStatus(500);

@@ -28,7 +28,7 @@ const EventFeed: React.FC = () => {
   const [caption, setCaption] = useState('');
 
   const eventId = searchParams.get('id');
-
+  let eventPhotos = [];
 
   useEffect(() => {
     if (photo) {
@@ -48,7 +48,8 @@ const EventFeed: React.FC = () => {
       }
     })
       .then((responseObj) => {
-        setFeedPhotos(responseObj.data.reverse());
+        console.log(responseObj.data);
+        setFeedPhotos(responseObj.data);
         setPhoto(null);
         setDialogOpen(false);
       })
