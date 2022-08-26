@@ -52,7 +52,7 @@ const TravelPlanner: React.FC = () => {
   // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
   // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
 
-  const handleOpen = (content) => {
+  const handleOpen = (content: React.SetStateAction<Location | null>) => {
     setModalContent(content);
     setOpen(true);
     // console.log('data', content);

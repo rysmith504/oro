@@ -10,7 +10,6 @@ import moment from 'moment';
 import Dialog from '@mui/material/Dialog';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 import { UserContext } from '../context/UserContext';
 
 const FeedPhoto: React.FC = (props) => {
@@ -39,9 +38,9 @@ const FeedPhoto: React.FC = (props) => {
   }, []);
 
   const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
+    const { ...other } = props;
     return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
+  })(({ theme }) => ({
     margin: 'auto',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,

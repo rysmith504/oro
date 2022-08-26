@@ -43,15 +43,16 @@ eventFeedRouter.post('/', async (req, res) => {
 
 eventFeedRouter.get('/avatar', async (req, res) => {
   const {userId} = req.query;
+  
   await prisma.users.findFirst({
     where: {
-      id: userId,
+      id: userId as string,
     }
   })
     .then((data) => {
-      res.status(200).send(data.profileURL)
+      res.status(200).send(data?.profileURL)
     })
-    .catch((err) => {
+    .catch(() => {
       res.sendStatus(500)
 
     });
@@ -61,7 +62,7 @@ eventFeedRouter.get('/', async (req, res) => {
   const {eventId} = req.query;
   await prisma.eventPhotos.findMany({
     where: {
-      eventAPIid: eventId,
+      eventAPIid: eventId as string,
     },
     orderBy: [
       {
@@ -72,7 +73,7 @@ eventFeedRouter.get('/', async (req, res) => {
     .then((data) => {
       res.status(200).send(data);
     })
-    .catch((err) => {
+    .catch(() => {
       res.sendStatus(500);
     });
 
@@ -82,13 +83,13 @@ eventFeedRouter.get('/photo', async (req, res) => {
   const {photoUrl} = req.query;
   await prisma.eventPhotos.findFirst({
     where: {
-      photoUrl,
+      photoUrl: photoUrl as string,
     },
   })
     .then((data) => {
       res.status(200).send(data);
     })
-    .catch((err) => {
+    .catch(() => {
       res.sendStatus(500);
     });
 

@@ -48,9 +48,6 @@ const EventCardDetails = ({events, event}) => {
       userId: currentUserInfo.id,
       eventAPIid: event.eventId
     })
-      .then(response => {
-        // console.log('POST SUCCESS', response);
-      })
       .then(getPins)
       .catch(err => console.error('POST ERROR', err));
   };
@@ -107,14 +104,14 @@ const EventCardDetails = ({events, event}) => {
           <Grid item xs>
             <Typography variant="body2" gutterBottom paragraph sx={{ bgcolor: inverseMode }}>
               {event.eventName}
-              {event.artistInfo.map((artist, index) => (
+              {event.artistInfo.map((artist, index: number) => (
                 <span key={`artistName${index}`}>
                   {artist.artistName}
                 </span>
               ))}
               {date}
               <br/>
-              {event.venueInfo.map((venue, index) => (
+              {event.venueInfo.map((venue, index: number) => (
                 <span key={`venue${index}`}>
                   {Object.values(venue.address)}
                   <br/>

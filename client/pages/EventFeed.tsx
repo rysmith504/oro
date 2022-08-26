@@ -89,9 +89,8 @@ const EventFeed: React.FC = () => {
         userId: currentUserInfo.id,
         caption,
       })
-        .then((data) => {
-          updateFeed()
-
+        .then(() => {
+          updateFeed();
         })
         .catch((err) => console.error(err));
 

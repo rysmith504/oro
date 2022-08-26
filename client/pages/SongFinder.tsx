@@ -86,7 +86,7 @@ const SongFinder: React.FC = () => {
       axios.get(`/api/favArtists/${currentUserInfo.id}`)
         .then((results) => {
           console.log(results, artist);
-          results.data.allArtists.forEach((artistObj) => {
+          results.data.allArtists.forEach((artistObj: { artistName: string; }) => {
             if (artistObj.artistName === artist) {
               setFavorited(true);
             }
@@ -128,7 +128,7 @@ const SongFinder: React.FC = () => {
   const stop = () => {
     console.log('stop recording');
     Mp3Recorder.stop().getMp3()
-      .then(([buffer, blob]) => {
+      .then(([blob]) => {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = async () => {
@@ -164,7 +164,7 @@ const SongFinder: React.FC = () => {
       artistName: artist,
       userId: currentUserInfo.id
     })
-      .then((data) => {
+      .then(() => {
         setFavorited(true);
       })
       .catch((err) => console.error(err));
