@@ -1,3 +1,7 @@
-#google-button {
-  
+#profile-photo {
+  opacity: 0.3;
+}
+
+#profile-photo:hover {
+  opacity: 1.0;
 }
