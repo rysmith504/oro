@@ -110,6 +110,7 @@ const EventFeed: React.FC = () => {
   const uploadPhoto = async () => {
     await document.getElementById('fileUpload')?.click();
   };
+
   return (
     <div>
 
@@ -162,3 +163,6 @@ const EventFeed: React.FC = () => {
 };
 
 export default EventFeed;
+
+
+
