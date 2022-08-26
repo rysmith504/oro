@@ -2,16 +2,11 @@ import React, { useState } from 'react';
 import Comments from './Comments';
 import { Grid, Box, ImageListItem, CloseRoundedIcon, Dialog, DialogContent, AppBar, Toolbar, Slide, IconButton } from '../styles/material';
 import { useTheme} from '@mui/material/styles';
-import { TransitionProps } from '@mui/material/transitions';
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement;
-  },
-  ref: React.Ref<unknown>,
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+export interface SimpleDialogProps {
+  open: boolean;
+  onClose: (value: string) => void;
+}
 
 interface UserPictureProps {
   photo: {
@@ -51,8 +46,6 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo }) => {
       <Dialog 
         open={open}
         onClose={handleClose} 
-        TransitionComponent={Transition}
-        sx={{ bgcolor: inverseMode, colors: inverseMode }}
       >
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
@@ -72,7 +65,7 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo }) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <DialogContent>
+        <DialogContent sx={{ bgcolor: inverseMode, colors: inverseMode }}>
           <Box sx={{ margin: 'auto', bgcolor: inverseMode, width: 350, alignItems: 'center', justifyContent: 'center' }}>
             <img width='300px' height='auto' margin='auto' src={photo.photoUrl}/>
             <Grid container>

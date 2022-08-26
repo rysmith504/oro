@@ -50,8 +50,6 @@ const OtherUser: React.FC = () => {
     getUserPhotos();
   }, []);
 
-  console.log(userInfo);
-
   return (
     <div>
       <h1>{userInfo['fullName']}</h1>
