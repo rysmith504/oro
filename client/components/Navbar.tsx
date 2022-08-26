@@ -6,14 +6,12 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { ThemeContext } from '../context/ThemeContext';
-import { useTheme } from '@mui/material/styles';
-import { Box, Grid, Container, Avatar } from '../styles/material';
+import { Box, Grid, Container, Avatar, Tooltip, UseTheme } from '../styles/material';
 import Badge from '@mui/material/Badge';
 import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +22,7 @@ const Navbar = (props) => {
   const { currentUserInfo, getCurrentUser, logoutUser } = useContext(UserContext);
 
   const { notif, profile } = props;
-  const theme = useTheme();
+  const theme = UseTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
 
