@@ -11,12 +11,12 @@ type BudgetItemProps = {
 };
 
 const fontColor = {
-  style: { color: '#9B27B0' }
+  style: { color: '#9B27B0' },
 };
 
 function BudgetItem({ label, value, onChange }: BudgetItemProps): JSX.Element {
   return (
-    <Grid container sx={{mt: '20px'}}>
+    <Grid container sx={{ mt: '20px' }}>
       <Grid item xs={2}>
         <span>{label}</span>
       </Grid>
@@ -24,7 +24,7 @@ function BudgetItem({ label, value, onChange }: BudgetItemProps): JSX.Element {
         <CssTextField
           InputLabelProps={fontColor}
           inputProps={fontColor}
-          color="secondary"
+          color='secondary'
           label={`Enter Your ${label} Budget`}
           variant='outlined'
           value={value}
@@ -39,4 +39,3 @@ function BudgetItem({ label, value, onChange }: BudgetItemProps): JSX.Element {
   );
 }
 export default BudgetItem;
-

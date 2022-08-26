@@ -3,7 +3,32 @@ import axios from 'axios';
 import UserPhotos from '../components/UserPhotos';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
-import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon, Grid, IconButton, Box, Link, Snackbar, CardMedia } from '../styles/material';
+import {
+  ArrowForwardIosSharpIcon,
+  MuiAccordion,
+  MuiAccordionSummary,
+  MuiAccordionDetails,
+  Typography,
+  List,
+  ListItem,
+  Button,
+  Avatar,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FacebookIcon,
+  InstagramIcon,
+  TwitterIcon,
+  Grid,
+  IconButton,
+  Box,
+  Link,
+  Snackbar,
+  CardMedia,
+} from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import moment from 'moment';
@@ -59,34 +84,34 @@ const Profile: React.FC = () => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  
+
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
-    ref,
+    ref
   ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
   });
-
 
   // const startDate = moment(userEvents.sales.public.startDateTime).format('LLLL');
   // const endDate = moment(userEvents.sales.public.endDateTime).format('LLLL');
   // const eventDate =
 
-
   const getUserEvents = () => {
-    axios.get(`/api/profile/events/${currentUserInfo.id}`)
-      .then(({data}) => {
+    axios
+      .get(`/api/profile/events/${currentUserInfo.id}`)
+      .then(({ data }) => {
         setUserEvents(data);
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   };
 
   const getUserPhotos = () => {
-    axios.get(`/api/profile/event_photos/${currentUserInfo.id}`)
+    axios
+      .get(`/api/profile/event_photos/${currentUserInfo.id}`)
       .then(({ data }) => {
         setUserPhotos(data);
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   };
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -105,7 +130,10 @@ const Profile: React.FC = () => {
     setOpenSnack(true);
   };
 
-  const handleSnackClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+  const handleSnackClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -114,27 +142,28 @@ const Profile: React.FC = () => {
   };
 
   const handleUpdate = async () => {
-    axios.put(`/api/profile/${currentUserInfo.id}`, {
-      'socialMedia': {
-        'facebook': `${facebookLink}` || null,
-        'instagram': `${instagramLink}` || null,
-        'twitter': `${twitterLink}` || null
-      }
-    })
+    axios
+      .put(`/api/profile/${currentUserInfo.id}`, {
+        socialMedia: {
+          facebook: `${facebookLink}` || null,
+          instagram: `${instagramLink}` || null,
+          twitter: `${twitterLink}` || null,
+        },
+      })
       .then(handleSnackClick())
       .then(handleClose())
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   };
 
-  const handleFacebookChange = e => {
+  const handleFacebookChange = (e) => {
     setFacebookLink(e.target.value);
   };
 
-  const handleInstagramChange = e => {
+  const handleInstagramChange = (e) => {
     setInstagramLink(e.target.value);
   };
 
-  const handleTwitterChange = e => {
+  const handleTwitterChange = (e) => {
     setTwitterLink(e.target.value);
   };
 
@@ -153,45 +182,58 @@ const Profile: React.FC = () => {
         />
         <h1>Hello {currentUserInfo.fullName}</h1>
         <div>
-          <Button sx={{ bgcolor: inverseMode, colors: inverseMode, mb: '30px', }} variant="outlined" onClick={handleClickOpen}>Update Profile</Button>
-          <Dialog open={open} onClose={handleClose} sx={{ bgcolor: inverseMode, colors: inverseMode }}>
-            <DialogTitle sx={{ bgcolor: inverseMode, colors: inverseMode }}>Update Profile</DialogTitle>
+          <Button
+            sx={{ bgcolor: inverseMode, colors: inverseMode, mb: '30px' }}
+            variant='outlined'
+            onClick={handleClickOpen}
+          >
+            Update Profile
+          </Button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            sx={{ bgcolor: inverseMode, colors: inverseMode }}
+          >
+            <DialogTitle sx={{ bgcolor: inverseMode, colors: inverseMode }}>
+              Update Profile
+            </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Add your social media accounts to stay connected with other concert and festival goers.
+                Add your social media accounts to stay connected with other
+                concert and festival goers.
               </DialogContentText>
               <div>
                 <TextField
                   autoFocus
-                  margin="dense"
-                  id="name"
+                  margin='dense'
+                  id='name'
                   label={<FacebookIcon />}
-                  type="email"
+                  type='email'
                   fullWidth
-                  variant="standard"
+                  variant='standard'
                   placeholder='Facebook Link'
                   onChange={handleFacebookChange}
                 />
               </div>
               <TextField
                 autoFocus
-                margin="dense"
-                id="name"
+                margin='dense'
+                id='name'
                 label={<InstagramIcon />}
-                type="email"
+                type='email'
                 fullWidth
-                variant="standard"
+                variant='standard'
                 placeholder='Instagram Link'
                 onChange={handleInstagramChange}
               />
               <TextField
                 autoFocus
-                margin="dense"
-                id="name"
+                margin='dense'
+                id='name'
                 label={<TwitterIcon />}
-                type="email"
+                type='email'
                 fullWidth
-                variant="standard"
+                variant='standard'
                 placeholder='Twitter Link'
                 onChange={handleTwitterChange}
               />
@@ -201,8 +243,16 @@ const Profile: React.FC = () => {
               <Button onClick={handleUpdate}>Update</Button>
             </DialogActions>
           </Dialog>
-          <Snackbar open={openSnack} autoHideDuration={3000} onClose={handleSnackClose}>
-            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          <Snackbar
+            open={openSnack}
+            autoHideDuration={3000}
+            onClose={handleSnackClose}
+          >
+            <Alert
+              onClose={handleClose}
+              severity='success'
+              sx={{ width: '100%' }}
+            >
               Profile Updated
             </Alert>
           </Snackbar>
@@ -212,17 +262,23 @@ const Profile: React.FC = () => {
             <Grid container spacing={2}>
               <Grid item>
                 <Link href={currentUserInfo.fbId}>
-                  <IconButton><FacebookIcon /></IconButton>
+                  <IconButton>
+                    <FacebookIcon />
+                  </IconButton>
                 </Link>
               </Grid>
               <Grid item>
                 <Link href={currentUserInfo.instaId}>
-                  <IconButton><InstagramIcon /></IconButton>
+                  <IconButton>
+                    <InstagramIcon />
+                  </IconButton>
                 </Link>
               </Grid>
               <Grid item>
                 <Link href={currentUserInfo.twitterId}>
-                  <IconButton><TwitterIcon /></IconButton>
+                  <IconButton>
+                    <TwitterIcon />
+                  </IconButton>
                 </Link>
               </Grid>
             </Grid>
@@ -231,26 +287,52 @@ const Profile: React.FC = () => {
         {userEvents.map((event, index) => {
           return (
             <div key={index}>
-              <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
-                <AccordionSummary sx={{ bgcolor: inverseMode }} aria-controls="panel1d-content" id="panel1d-header">
+              <Accordion
+                sx={{ bgcolor: inverseMode }}
+                expanded={expanded === `panel${index + 1}`}
+                onChange={handleChange(`panel${index + 1}`)}
+              >
+                <AccordionSummary
+                  sx={{ bgcolor: inverseMode }}
+                  aria-controls='panel1d-content'
+                  id='panel1d-header'
+                >
                   <Typography>{event.name}</Typography>
-                  <Typography sx={{ justifyContent: 'flex-end' }}>{event.dates.start.localDate}</Typography>
+                  <Typography sx={{ justifyContent: 'flex-end' }}>
+                    {event.dates.start.localDate}
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{ bgcolor: inverseMode }}>
                   <CardMedia
-                    component="img"
-                    height="194"
+                    component='img'
+                    height='194'
                     image={event.images[0].url}
                     alt={event.name}
                   />
                   <List>
-                    <ListItem><strong>Venue: </strong> {event._embedded.venues[0].name}</ListItem>
                     <ListItem>
-                     <strong>Location: </strong> {event._embedded.venues[0].address.line1}, {event._embedded.venues[0].city.name}, {event._embedded.venues[0].postalCode}
+                      <strong>Venue: </strong> {event._embedded.venues[0].name}
                     </ListItem>
-                    <ListItem><strong>Ticket sale starts: </strong> {moment(event.sales.public.startDateTime).format('llll')}</ListItem>
-                    <ListItem><strong>Ticket sale ends: </strong> {moment(event.sales.public.endDateTime).format('llll')}</ListItem>
-                    <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => navigate(`/details/?id=${event.id}`)}>More Details</Button>
+                    <ListItem>
+                      <strong>Location: </strong>{' '}
+                      {event._embedded.venues[0].address.line1},{' '}
+                      {event._embedded.venues[0].city.name},{' '}
+                      {event._embedded.venues[0].postalCode}
+                    </ListItem>
+                    <ListItem>
+                      <strong>Ticket sale starts: </strong>{' '}
+                      {moment(event.sales.public.startDateTime).format('llll')}
+                    </ListItem>
+                    <ListItem>
+                      <strong>Ticket sale ends: </strong>{' '}
+                      {moment(event.sales.public.endDateTime).format('llll')}
+                    </ListItem>
+                    <Button
+                      sx={{ bgcolor: iconColors, color: inverseMode }}
+                      onClick={() => navigate(`/details/?id=${event.id}`)}
+                    >
+                      More Details
+                    </Button>
                   </List>
                 </AccordionDetails>
               </Accordion>
@@ -261,9 +343,7 @@ const Profile: React.FC = () => {
       </div>
     );
   } else if (!currentUserInfo.length) {
-    return (
-      <h1>Please Sign In To View Profile</h1>
-    );
+    return <h1>Please Sign In To View Profile</h1>;
   }
 };
 
