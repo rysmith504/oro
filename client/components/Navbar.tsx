@@ -10,12 +10,12 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import { UserContext } from '../context/UserContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { Box, Grid, Container, Avatar, Tooltip, UseTheme } from '../styles/material';
 import Badge from '@mui/material/Badge';
 import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 
 const Navbar = (props) => {
@@ -80,7 +80,6 @@ const Navbar = (props) => {
       Account
     </Link>],
   ];
-
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -177,7 +176,7 @@ const Navbar = (props) => {
               >
                 {pages.map((page, index) => (
                   <MenuItem key={`nav${index}`} onClick={() => { handleCloseNavMenu(page[0]); }}>
-                    <Typography textAlign='center'>{page[1]}</Typography>
+                    <Typography variant='h6' textAlign='center'>{page[1]}</Typography>
                   </MenuItem>
                 ))}
                 <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
