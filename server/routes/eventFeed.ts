@@ -16,7 +16,6 @@ eventFeedRouter.post('/', async (req, res) => {
       upload_preset: 'vibeSocietyImages',
     })
       .then(async(uploadedResponse) => {
-        console.log(eventId, userId, caption);
         await prisma.eventPhotos.create({
           data: {
             userId: userId.toString(),
@@ -71,7 +70,7 @@ eventFeedRouter.get('/', async (req, res) => {
     ]
   })
     .then((data) => {
-      res.status(200).send(data);
+      res.status(200).send(data.slice().reverse());
     })
     .catch(() => {
       res.sendStatus(500);
@@ -98,7 +97,6 @@ eventFeedRouter.get('/photo', async (req, res) => {
 eventFeedRouter.put('/', async (req, res) => {
   const {photoUrl, caption} = req.body;
 
-  console.log(req.body);
   await prisma.eventPhotos.updateMany({
     where: {
       photoUrl: photoUrl,
@@ -113,5 +111,32 @@ eventFeedRouter.put('/', async (req, res) => {
       res.sendStatus(500)
     });
 })
+
+eventFeedRouter.delete('/', async (req, res) => {
+  const {photoUrl} = req.body;
+  await prisma.eventPhotos.deleteMany({
+    where: {
+      photoUrl,
+    }
+  })
+    .then(() => {
+      prisma.comments.findMany({
+        where: {
+          photoUrl,
+        }
+      })
+        .then((data) => {
+          res.status(200).send(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(500);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
 
 export default eventFeedRouter;
