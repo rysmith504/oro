@@ -30,7 +30,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
   const inverseMode = theme.palette.secondary.main;
   const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
-  const [favorite, setFavorite] = useState(false);
+  // const [favorite, setFavorite] = useState(false);
   const [events, setEvents] = useState(
     [{
       name: 'No events found',
@@ -78,20 +78,26 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
       .catch(err => console.error(err));
   };
 
-  const handleFavorite = (artistId) => {
-    console.log(currentUserInfo.id, artistId);
-    const userId = currentUserInfo.id;
-    console.log('update');
-    axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
-      .then(() => {
-        setFavorite(!favorite);
-      })
-      .catch(err => {
-        setFavorite(!favorite);
-        console.error(err);
-      }
-      );
-  };
+  // const handleFavorite = (artistId) => {
+  //   console.log(currentUserInfo.id, artistId);
+  //   const userId = currentUserInfo.id;
+  //   console.log('update');
+  //   axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
+  //     .then(() => {
+  //       console.log(!favorite);
+  //       setFavorite(!favorite);
+  //       favUpdated();
+  //       getFaveArtists(currentUserInfo.id);
+  //     })
+  //     .catch(err => {
+  //       console.log(!favorite);
+  //       setFavorite(!favorite);
+  //       favUpdated();
+  //       getFaveArtists(currentUserInfo.id);
+  //       console.error(err);
+  //     }
+  //     );
+  // };
 
   const goBack = () => {
     resetSingle();
@@ -116,9 +122,9 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing sx={{ bgcolor: inverseMode }}>
-          <IconButton aria-label="add to favorites" onClick={()=>{ handleFavorite(id); }}>
+          {/* <IconButton aria-label="add to favorites" onClick={()=>{ handleFavorite(id); }}>
             {favorite ? <FavoriteIcon sx={{ color: '#AE66FF' }} /> : <FavoriteIcon sx={{ color: iconColors }} />}
-          </IconButton>
+          </IconButton> */}
           <ExpandMore
             expand={expanded}
             sx={{ color: iconColors }}
