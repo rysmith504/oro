@@ -1,25 +1,19 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ArtistInfoCard from '../components/ArtistCards';
 import { ArtistContext } from '../context/ArtistContext';
-import { ThemeContext } from '../context/ThemeContext';
 import { UserContext } from '../context/UserContext';
 import {Box,	Grid} from '../styles/material';
 import ArtistThumbnail from '../components/ArtistThumbnail';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import Login from './Login';
 
 const Artists = () => {
-  const { userEvents, getUserEvents, currentUserInfo } = useContext(UserContext);
-  const artistContext = useContext(ArtistContext);
-  const themeContext = useContext(ThemeContext);
-  // const {mode, setMode, toggleMode} = themeContext;
-  const {artistData, getFaveArtists } = artistContext;
+  const { currentUserInfo } = useContext(UserContext);
 
+  const artistContext = useContext(ArtistContext);
+  const {artistData, getFaveArtists } = artistContext;
   const {allArtists, artists} = artistData;
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  // const artistName = searchParams.get(...);
   const [singleArtist, setSingleArtist] = useState(null);
+  const [favs, setFaves] = useState(true);
 
   const updateSingle = (name) => {
     setSingleArtist(name);
@@ -32,6 +26,13 @@ const Artists = () => {
     getFaveArtists(currentUserInfo.id);
   }, []);
 
+  useEffect(() => {
+    console.log('added faves');
+  }, [favs]);
+
+  const favUpdated = ((bool) => {
+    setFaves(bool);
+  });
 
   if (currentUserInfo.id === undefined) {
     return (
@@ -42,7 +43,6 @@ const Artists = () => {
     );
   } else if (singleArtist !== null) {
     const current = allArtists.filter((obj) => obj.artistName == singleArtist);
-
     if (!current[0].image.length) {
       const musicImages = ['music', 'band', 'concert', 'music-festival', 'rock-concert', 'musical', 'guitar', 'singer', 'opera'];
       current.image = `https://source.unsplash.com/random/?${musicImages[Math.floor(Math.random() * musicImages.length + 1)]}`;
@@ -56,7 +56,9 @@ const Artists = () => {
             <Grid item key={`art${current[0].artistName}`} xs={12} sm={12} md={12}>
               <ArtistInfoCard
                 resetSingle={resetSingle}
-                artistProps={current[0]} key={`artistObj${current[0].artistName}`}/>
+                artistProps={current[0]}
+                getFaveArtists={getFaveArtists}
+                key={`artistObj${current[0].artistName}`}/>
             </Grid>
           </Grid>
         </Box>
@@ -79,7 +81,11 @@ const Artists = () => {
                 <Grid item key={`art${index}`} xs={12} sm={4} md={3}>
                   <ArtistThumbnail
                     updateSingle={updateSingle}
-                    artistProps={artObj} key={`artistObj${index}`}/>
+                    artistProps={artObj}
+                    favorite={artists}
+                    favUpdated={favUpdated}
+                    getFaveArtists={getFaveArtists}
+                    key={`artistObj${index}`}/>
                 </Grid>
               );
             })
@@ -91,8 +97,7 @@ const Artists = () => {
   } else {
     return (
       <div>
-        <h1>You do not currently have any favorite artists.</h1>
-        <p>Start following artists:</p>
+        <h1>Start following artists</h1>
         <Box sx={{
           flexGrow: 1,
           height: '100%' }}>

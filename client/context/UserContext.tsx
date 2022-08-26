@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const UserContext = React.createContext({});
+type User = {
+  id: string;
+  fullName: string;
+  profileURL: string;
+  email: string;
+  fbId: string;
+  instaId: string;
+  twitterId: string;
+}
+
+const UserContext = React.createContext<Partial<User>>({});
 
 const UserContextProvider = ({ children }) => {
   const [userEvents, setUserEvents] = useState([]);

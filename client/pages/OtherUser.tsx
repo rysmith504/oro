@@ -5,13 +5,28 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Grid, Link, IconButton, FacebookIcon, InstagramIcon, TwitterIcon, Avatar } from '../styles/material';
 
 const OtherUser: React.FC = () => {
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState
+  <{
+    googleId: string;
+    fullName: string;
+    profileURL: string;
+    fbId?: string;
+    instaId?: string;
+    twitterId?: string;
+  }>({
+    googleId: '',
+    fullName: '',
+    profileURL: '',
+    fbId: '', 
+    instaId: '',
+    twitterId: '',
+  });
   const [userPhotos, setUserPhotos] = useState([]);
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
 
-  const params = (new URL(document.location)).searchParams;
+  const params = (new URLSearchParams(window.location.search));
   const id = params.get('id');
 
   const getUserInfo = () => {
@@ -35,13 +50,15 @@ const OtherUser: React.FC = () => {
     getUserPhotos();
   }, []);
 
+  console.log(userInfo);
+
   return (
     <div>
-      <h1>{userInfo.fullName}</h1>
+      <h1>{userInfo['fullName']}</h1>
       <div id='profile_avatar'>
           <Avatar
-            alt={userInfo.fullName}
-            src={userInfo.profileURL}
+            alt={userInfo['fullName']}
+            src={userInfo['profileURL']}
             sx={{ width: 75, height: 75 }}
           />
         </div>
@@ -68,7 +85,6 @@ const OtherUser: React.FC = () => {
       </div>
       <UserPhotos photos={userPhotos} />
     </div>
-
   );
 };
 

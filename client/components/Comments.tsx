@@ -7,6 +7,17 @@ import Comment from './Comment';
 import { useTheme } from '@mui/material/styles';
 import { CssTextField } from '../styles/material';
 
+interface UserPictureProps {
+  photo: {
+    userId: string;
+    photoUrl: string;
+    eventAPIid: string;
+    create_at: string;
+    caption?: string;
+    deleteToken?: string;
+  };
+};
+
 const Comments: React.FC = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;

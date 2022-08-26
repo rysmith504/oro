@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
-import TextField from '@mui/material/TextField';
-import Picker from 'emoji-picker-react'
-import Grid from '@mui/material/Grid';
+import React, { useState, useContext } from 'react';
+import Picker from 'emoji-picker-react';
 import { BsEmojiSmileFill } from 'react-icons/bs';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import {TextField, Grid, ArrowCircleUpIcon} from '../styles/material';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
@@ -12,84 +10,84 @@ const ChatInput: React.FC<{}> = ({ handleSendMsg }) => {
   const userContext = useContext(UserContext);
   const { currentUserInfo } = userContext;
   const currentUser = currentUserInfo;
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [msg, setMsg] = useState('');
 
   const handleEmojiClick = (e, emoji) => {
     let message = msg;
     message += emoji.emoji;
     setMsg(message);
-  }
+  };
 
   const handleEmojiMenuToggle = () => {
-    setShowEmojiPicker(!showEmojiPicker)
-  }
+    setShowEmojiPicker(!showEmojiPicker);
+  };
 
   const enterClick = (e) => {
     if (e.keyCode === 13) {
-      sendChat(e)
+      sendChat(e);
     }
   };
 
   const sendChat = (e) => {
     e.preventDefault();
-    if(msg.length > 0) {
+    if (msg.length > 0) {
       handleSendMsg(msg);
       setMsg('');
     }
-  }
+  };
 
-//   return (
-//     <Grid container>
-//       <Grid item xs={1} sx={{mt: 1.5}}>
-//         <BsEmojiSmileFill onClick={handleEmojiMenuToggle} />
-//         {
-//         showEmojiPicker &&
-//         <Picker pickerStyle={{ position: 'relative', top: '-350px'}} onEmojiClick={handleEmojiClick} />
-//         }
-//       </Grid>
-//       <Grid item xs={10}>
-//       <TextField
-//         hiddenLabel
-//         id="filled-hidden-label-small"
-//         placeholder="message"
-//         variant="filled"
-//         size="small"
-//         value={msg}
-//         onChange={(e)=>setMsg(e.target.value)}
-//         onKeyDown={(e)=>enterClick(e)}
-//         />
-//       </Grid>
-//       <Grid item xs={1} sx={{mt: 1.2}}>
-//         <ArrowCircleUpIcon />
-//       </Grid>
-//     </Grid>
-//   )
-// }
+  //   return (
+  //     <Grid container>
+  //       <Grid item xs={1} sx={{mt: 1.5}}>
+  //         <BsEmojiSmileFill onClick={handleEmojiMenuToggle} />
+  //         {
+  //         showEmojiPicker &&
+  //         <Picker pickerStyle={{ position: 'relative', top: '-350px'}} onEmojiClick={handleEmojiClick} />
+  //         }
+  //       </Grid>
+  //       <Grid item xs={10}>
+  //       <TextField
+  //         hiddenLabel
+  //         id="filled-hidden-label-small"
+  //         placeholder="message"
+  //         variant="filled"
+  //         size="small"
+  //         value={msg}
+  //         onChange={(e)=>setMsg(e.target.value)}
+  //         onKeyDown={(e)=>enterClick(e)}
+  //         />
+  //       </Grid>
+  //       <Grid item xs={1} sx={{mt: 1.2}}>
+  //         <ArrowCircleUpIcon />
+  //       </Grid>
+  //     </Grid>
+  //   )
+  // }
 
-return (
-  <Container>
-    <div className="button-container">
-      <div className="emoji">
-        <BsEmojiSmileFill onClick={handleEmojiMenuToggle} />
-        {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
+  return (
+    <Container>
+      <div className="button-container">
+        <div className="emoji">
+          <BsEmojiSmileFill onClick={handleEmojiMenuToggle} />
+          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
+        </div>
       </div>
-    </div>
-    <form className="input-container" onSubmit={(e) => sendChat(e)}>
-      <input
-        type="text"
-        onKeyDown={(e)=>enterClick(e)}
-        placeholder="type your message here"
-        onChange={(e) => setMsg(e.target.value)}
-        value={msg}
-      />
-      <button type="submit">
-        <ArrowCircleUpIcon />
-      </button>
-    </form>
-  </Container>
-);
-}
+      <form className="input-container" onSubmit={(e) => sendChat(e)}>
+        <input
+          type="text"
+          onKeyDown={(e)=>enterClick(e)}
+          placeholder="type your message here"
+          onChange={(e) => setMsg(e.target.value)}
+          value={msg}
+        />
+        <button type="submit">
+          <ArrowCircleUpIcon />
+        </button>
+      </form>
+    </Container>
+  );
+};
 
 const Container = styled.div`
 display: grid;
