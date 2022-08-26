@@ -20,6 +20,27 @@ const dark = createTheme({
     },
     mode: 'dark',
   },
+  typography: {
+    h6: {
+      fontSize: '1rem',
+      fontWeight: 400,
+    },
+  },
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          palette: {
+            action: {
+              selected: '#E7A615',
+              hover: '#FFD371',
+              disabled: '#9B9B9B'
+            }
+          }
+        }
+      }
+    }
+  }
 });
 
 const light = createTheme({
@@ -37,6 +58,27 @@ const light = createTheme({
     },
     mode: 'light',
   },
+  typography: {
+    h6: {
+      fontSize: '1rem',
+      fontWeight: 400,
+    },
+  },
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          palette: {
+            action: {
+              selected: '#E7A615',
+              hover: 'blue',
+              disabled: '#9B9B9B'
+            }
+          }
+        }
+      }
+    }
+  }
 });
 
 
@@ -63,6 +105,26 @@ body {
   background: ${(props) => props.theme.palette.primary.main};
   color: ${(props) => props.theme.palette.primary.contrastText};
 }
+}
+
+.nav-icons {
+  margin-right: 10px;
+}
+
+.avatar {
+    text-align: center;
+    object-fit: cover;
+    color: transparent;
+    text-indent: 10000px;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+}
+
+.MenuItem:hover {
+  background-color: #1A76D2;
+  color: #2e8b57;
 }
 
 .css-6hp17o-MuiList-root-MuiMenu-list {
