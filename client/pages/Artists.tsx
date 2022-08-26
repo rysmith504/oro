@@ -27,7 +27,6 @@ const Artists = () => {
   }, []);
 
   useEffect(() => {
-    console.log('added faves');
   }, [favs]);
 
   const favUpdated = ((bool) => {

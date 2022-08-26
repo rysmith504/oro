@@ -5,9 +5,10 @@ const ArtistContext = React.createContext({});
 
 const ArtistContextProvider = ({ children }) => {
 
+  const [userFav, setUserFav] = useState({});
+  const artistFavObj = {};
   const [artistData, setArtistData] = useState(
     [{
-      userId: 1,
       artistName: 'Beyoncé',
       bio: 'Beyoncé Giselle Knowles-Carter is an American singer, songwriter and actress. Beyoncé performed in various singing and dancing competitions as a child. She rose to fame in the late 1990s as the lead singer of Destiny\'s Child, one of the best-selling girl groups of all time. Beyoncé is often cited as an influence by other artists.\n\nBorn and raised in Houston, Texas, Beyoncé began performing in local competitions at age 7, eventually forming the group Girl\'s Tyme in 1990 with help from her parents. <a href="https://www.last.fm/music/+noredirect/Beyonc%C3%A9">Read more on Last.fm</a>',
       ticketId: 'K8vZ9175rX7',
@@ -21,6 +22,11 @@ const ArtistContextProvider = ({ children }) => {
       image: 'https://s1.ticketm.net/dam/a/7ce/49c8082f-fe10-43f3-be6e-a9c8a87807ce_655591_RETINA_LANDSCAPE_16_9.jpg'
     }]
   );
+
+  const updateUserFavorites = (id, bool)=>{
+    artistFavObj[id] = bool;
+    setUserFav(artistFavObj);
+  };
 
   const getFaveArtists = (id: number) => {
     // console.log('artist context executed', id);
@@ -42,6 +48,8 @@ const ArtistContextProvider = ({ children }) => {
     artistData,
     setArtistData,
     getFaveArtists,
+    updateUserFavorites,
+    artistFavObj
   };
 
   return (

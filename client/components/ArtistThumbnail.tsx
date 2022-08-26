@@ -1,10 +1,14 @@
+import axios from 'axios';
 import React, { useState, useContext, useEffect } from 'react';
 import { Card,	CardHeader,	CardMedia, UseTheme, FavoriteIcon, IconButton, Tooltip } from '../styles/material';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-import axios from 'axios';
+import { ArtistContext } from '../context/ArtistContext';
 const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists, favUpdated}) => {
-
+  const favesLocalData = window.localStorage.getItem('userFaves');
+  if (!favesLocalData) {
+    window.localStorage.setItem('userFaves', JSON.stringify({}));
+  }
   const theme = UseTheme();
   const inverseMode = theme.palette.secondary.main;
   const iconColors = theme.palette.secondary.contrastText;
@@ -17,16 +21,20 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists, f
   } = artistProps;
 
   const { currentUserInfo } = useContext(UserContext);
-
+  const { updateUserFavorites } = useContext(ArtistContext);
+  const artistFavObj = {};
   const handleClick = (name) => {
     navigate(`/artists/${name}`);
     updateSingle(name);
   };
 
   const handleFollow = (artistId) => {
-    console.log(currentUserInfo.id, artistId);
+    let favesLocalData = window.localStorage.getItem('userFaves');
+    favesLocalData = JSON.parse(favesLocalData);
+
+    favesLocalData[artistId] = true;
+    window.localStorage.setItem('userFaves', JSON.stringify(favesLocalData));
     const userId = currentUserInfo.id;
-    console.log('update');
     axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
       .then(() => {
         setThumbFav(true);
@@ -40,14 +48,25 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists, f
         console.error(err);
       }
       );
+  };
+
+  const getLocalStorage = ()=>{
+    let favesLocalData = window.localStorage.getItem('userFaves');
+    favesLocalData = JSON.parse(favesLocalData);
+    return favesLocalData;
   };
 
 
 
   const handleUnfollow = (artistId) => {
-    console.log(currentUserInfo.id, artistId);
+
+    let favesLocalData = window.localStorage.getItem('userFaves');
+    favesLocalData = JSON.parse(favesLocalData);
+
+    favesLocalData[artistId] = false;
+    window.localStorage.setItem('userFaves', JSON.stringify(favesLocalData));
+
     const userId = currentUserInfo.id;
-    console.log('update');
     axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
       .then(() => {
         setThumbFav(false);
@@ -64,16 +83,16 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists, f
   };
 
   useEffect(()=>{
-  }, [thumbFav])
+  }, [thumbFav]);
   useEffect(()=>{
     setThumbFav(favorite);
-  }, [])
+  }, []);
 
   return (
     <Card sx={{ bgcolor: inverseMode,
       ':hover': {
         boxShadow: 20,
-        opacity: 0.8;
+        opacity: 0.8,
       } }}>
       <CardHeader
         title={artistName}
@@ -89,7 +108,7 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists, f
         onClick={() => handleClick(artistName)}
       />
       <IconButton aria-label="add to favorites">
-        {thumbFav ? <Tooltip title="unfollow"><FavoriteIcon sx={{ color: '#AE66FF' }} onClick={()=>{ handleUnfollow(id); }} /></Tooltip> : <Tooltip title="follow"><FavoriteIcon sx={{ color: iconColors }} onClick={()=>{ handleFollow(id); }}/></Tooltip>}
+        {getLocalStorage()[id] ? <Tooltip title="unfollow"><FavoriteIcon sx={{ color: '#AE66FF' }} onClick={()=>{ handleUnfollow(id); }} /></Tooltip> : <Tooltip title="follow"><FavoriteIcon sx={{ color: iconColors }} onClick={()=>{ handleFollow(id); }}/></Tooltip>}
       </IconButton>
     </Card>
   );
