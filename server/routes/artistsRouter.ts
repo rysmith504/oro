@@ -59,46 +59,92 @@ artistsRouter.get('/:id', (req, res) => {
 artistsRouter.put('/update', (req, res) => {
   const { artist, user } = req.body.params;
   console.log(req.body.params);
-  console.log(artist, user);
-
-  prisma.artistFollowing.update({
-    where: {
-      id: artist,
-    },
-    data: {
-      users: {
-        create: {
-          user: {
-            connect: {
-              id: user
-            },
+  console.log('UPDATE:', artist, user);
+  if (typeof artist === 'number') {
+    console.log(Number(artist));
+    prisma.artistFollowing.update({
+      where: {
+        id: artist,
+      },
+      data: {
+        users: {
+          create: {
+            user: {
+              connect: {
+                id: user
+              },
+            }
           }
         }
       }
-    }
-  })
-    .then((updates) => {
-      console.log(updates);
     })
-    .catch((err) => {
-      // prisma.artistFollowing.update({
-      //   where: {
-      //     id: artist,
-      //   },
-      //   data: {
-      //     users: {
-      //       create: {
-      //         user: {
-      //           disconnect: {
-      //             id: user
-      //           },
-      //         }
-      //       }
-      //     }
-      //   }
-      // })
-      console.error(err);
-    });
+      .then((updates) => {
+        console.log(updates);
+      })
+      .catch((err) => {
+        prisma.artistFollowing.update({
+          where: {
+            id: artist,
+          },
+          data: {
+            users: {
+              deleteMany: {
+                userId: user
+              },
+            }
+          }
+        })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        console.error(err);
+      });
+  } else {
+    console.log('not number');
+    prisma.artistFollowing.update({
+      where: {
+        artistName: artist,
+      },
+      data: {
+        users: {
+          create: {
+            user: {
+              connect: {
+                id: user
+              },
+            }
+          }
+        }
+      }
+    })
+      .then((updates) => {
+        console.log(updates);
+      })
+      .catch((err) => {
+        prisma.artistFollowing.update({
+          where: {
+            artistName: artist,
+          },
+          data: {
+            users: {
+              deleteMany: {
+                userId: user
+              },
+            }
+          }
+        })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        console.error(err);
+      });
+  }
 });
 
 // -----------------------POST
@@ -139,108 +185,87 @@ artistsRouter.post('/', (req, res) => {
             obj.image = attractionData.data._embedded.attractions[0].images[0].url;
           }
 
-          prisma.artistFollowing.findMany()
+          await prisma.artistFollowing.create({
+            data: {
+              artistName: obj.artistName,
+              bio: obj.bio,
+              ticketId: obj.ticketId,
+              youtube: obj.youtube,
+              twitter: obj.twitter,
+              facebook: obj.facebook,
+              instagram: obj.instagram,
+              itunes: obj.itunes,
+              wiki: obj.wiki,
+              homepage: obj.homepage,
+              image: obj.image,
+            }
+          })
             .then((data) => {
-              if (!data.length) {
-                prisma.artistFollowing.findMany()
-                  .then((data) => {
-                    res.status(200).send({allArtists: data, artists: null});
-                  });
-              } else {
-                res.status(200).send({allArtists: data, artists: true});
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              res.status(500);
-            })
-
-          // await prisma.artistFollowing.update({
-          //   where: {
-          //     artistName
-          //   },
-          //   data: {
-          //     users: {
-          //       create: {
-          //         user: {create: userId}
-          //       }
-          //     }
-          //   }
-          // })
-
-          // await prisma.artistFollowing.create({
-          //   data: {
-          //     obj,
-          //     users: {
-          //       create: {
-          //         user: {
-          //           connect: {
-          //             userId: userId
-          //           }
-          //         }
-          //       }
-          //     }
-          //   }
-          // })
-            .then((artistObj) => {
-              console.log('artist:', artistObj);
-              prisma.artistUsersJoin.create({
+              prisma.artistFollowing.update({
+                where: {
+                  id: data.id,
+                },
                 data: {
-                  user: userId,
-                  artist: artistObj.id,
+                  users: {
+                    create: {
+                      user: {
+                        connect: {
+                          id: userId
+                        },
+                      }
+                    }
+                  }
                 }
-              });
-            })
-            .then((data) => {
-              console.log('success:', data);
-              res.status(200).send(data);
-            })
-            .catch((err) => {
-              console.error('fail', err);
-              prisma.artistFollowing.create({
-                data: obj,
               })
                 .then((data) => {
-                  console.log(data);
-                  // prisma.artistFollowing.update({
-                  //   where: artistName,
-                  //   data: {
-                  //     user: {
-                  //       connect: {
-                  //         id: userId,
-                  //       },
-                  //     }
-                  //   }
-                  // });
                   res.status(200).send(data);
                 })
-                .catch(() => res.status(500));
+                .catch((err) => {
+                  console.error(err);
+                });
+            })
+            .catch((err)=> {
+              console.error(err);
+              prisma.artistFollowing.update({
+                where: {
+                  artistName
+                },
+                data: {
+                  users: {
+                    create: {
+                      user: {
+                        connect: {
+                          id: userId
+                        },
+                      }
+                    }
+                  }
+                }
+              })
+                .then((data) => {
+                  res.status(200).send(data);
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+              res.end();
             });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500);
-          res.end();
         });
-    })
-    .catch((err) => {
-      res.status(500);
-      res.end();
     });
 });
 
 artistsRouter.delete('/', (req, res) => {
   const {artistName, userId} = req.body;
-  prisma.artistFollowing.update({
-    where: artistName,
-    data: {
-      user: {
-        disconnect: true,
-      }
-    }
-  })
-    .then(() => res.sendStatus(200))
-    .catch(() => res.sendStatus(500));
+  // prisma.artistFollowing.update({
+  //   where: artistName,
+  //   data: {
+  //     user: {
+  //       disconnect: true,
+  //     }
+  //   }
+  // })
+  //   .then(() => res.sendStatus(200))
+  //   .catch(() => res.sendStatus(500));
 });
 
 
