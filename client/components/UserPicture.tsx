@@ -13,7 +13,18 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const UserPicture: React.FC = ({ photo }) => {
+interface UserPictureProps {
+  photo: {
+    userId: string;
+    photoUrl: string;
+    eventAPIid: string;
+    create_at: string;
+    caption?: string;
+    deleteToken?: string;
+  };
+};
+
+const UserPicture: React.FC<UserPictureProps> = ({ photo }) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
