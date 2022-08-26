@@ -21,6 +21,7 @@ const dark = createTheme({
     mode: 'dark',
   },
   typography: {
+    fontFamily: 'Roboto',
     h6: {
       fontSize: '1rem',
       fontWeight: 400,
@@ -59,6 +60,7 @@ const light = createTheme({
     mode: 'light',
   },
   typography: {
+    fontFamily: 'Roboto',
     h6: {
       fontSize: '1rem',
       fontWeight: 400,

@@ -23,8 +23,8 @@ const Navbar = (props) => {
 
   const pages = [
 
-    ['/home', <Link
-      to='/home'
+    ['/', <Link
+      to='/'
       style={{ textDecoration: 'none' }}
       key={'home'}
     >
