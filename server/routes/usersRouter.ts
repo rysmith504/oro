@@ -7,7 +7,7 @@ const usersRouter = Router();
 
 usersRouter.get('/allusers', async (req, res, next) => {
   const id = req.params.id;
-  try{
+  try {
     const users = await prisma.users.findMany({
       where: {
         id: {
@@ -19,6 +19,6 @@ usersRouter.get('/allusers', async (req, res, next) => {
   } catch (ex) {
     next(ex);
   }
-})
+});
  
 export default usersRouter;

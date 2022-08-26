@@ -25,13 +25,12 @@ const FeedPhoto: React.FC = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [captionText, setCaptionText] = useState('');
   const [editor, setEditor] = useState(false);
-  const [deleter, setDeleter] = useState(false);
+  const [deleterOpen, setDeleterOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [owner, setOwner] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
-    console.log('id', currentUserInfo.id);
-    console.log('PHOTOID', photo.userId);
     if (currentUserInfo.id === photo.userId) {
       setOwner(true);
     }
@@ -91,15 +90,45 @@ const FeedPhoto: React.FC = (props) => {
   };
 
   const openDeleter = () => {
-    console.log('deleterOpened');
-    setDeleter(true);
+    setDeleterOpen(true);
     setMenuOpen(false);
   };
 
-  const openMenu = () => {
+  const openMenu = (event) => {
     setMenuOpen(true);
+    setAnchorEl(event.currentTarget);
   };
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setAnchorEl(null);
+  };
+
+  const deletePhoto = () => {
+    axios.delete('/api/eventFeed', {
+      data: {
+        photoUrl: photo.photoUrl,
+      }
+    })
+      .then((commentData) => {
+        setDeleterOpen(false)
+        updateFeed();
+        commentData.data.forEach((comment) => {
+          axios.delete('/api/notifications', {
+            data: {
+              commentId: comment.id,
+            }
+          })
+            .then(() => console.log(`${comment.id} DELETED`))
+            .catch((err) => console.error(err));
+        })
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const closeDeleter = () => {
+    setDeleterOpen(false)
+  };
 
   // const getMenuOption = () => {
   //   console.log('menuuuu');
@@ -123,16 +152,29 @@ const FeedPhoto: React.FC = (props) => {
         </Box>
       </Modal> */}
       <Card sx={{ maxWidth: 400, margin: 'auto', mt: '20px'}}>
+        <Dialog open={deleterOpen}>
+          <Typography textAlign='left' sx={{ color: inverseMode, mb: '20px', ml: '5px'}}>are you sure you want to delete your photo?</Typography>
+          <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={deletePhoto}>DELETE</Button>
+          <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={closeDeleter}>cancel</Button>
+        </Dialog>
 
-        {owner && <Paper>
+        {owner && <Paper sx={{justifyContent: 'space-between', alignItems: 'center'}}>
           <Typography textAlign='right'>
-            <IconButton onClick={openMenu}>
-              <MoreHorizIcon sx={{color: inverseMode}}/>
-            </IconButton>
-            <Menu sx={{margin: 'auto'}} open={menuOpen}>
+            <Menu
+              anchorEl={anchorEl}
+              keepMounted
+              sx={{margin: 'auto', alignItems: 'center'}}
+              open={menuOpen}
+              onClose={closeMenu}
+              anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+              transformOrigin={{vertical: 'top', horizontal: 'center'}}
+            >
               <MenuItem onClick={openEditor}>edit caption</MenuItem>
               <MenuItem onClick={openDeleter}>delete photo</MenuItem>
             </Menu>
+            <IconButton onClick={openMenu}>
+              <MoreHorizIcon sx={{color: inverseMode}}/>
+            </IconButton>
           </Typography>
         </Paper>
         }
@@ -158,9 +200,22 @@ const FeedPhoto: React.FC = (props) => {
             <span>
               {!editor && photo.caption}
             </span>
-            {editor && <OutlinedInput sx={{ bgcolor: inverseMode }} placeholder={photo.caption} value={captionText} onChange={handleEdit}/>}
-            {editor && <Button sx={{ bgcolor: inverseMode }} onClick={handleSubmitEdit}>confirm changes</Button>}
-            {editor && <Button sx={{ bgcolor: inverseMode }} onClick={closeEditor}>cancel</Button>}
+
+            {editor && <OutlinedInput onKeyPress={(e) => e.key === 'Enter' && handleSubmitEdit()} sx={{ bgcolor: inverseMode }} placeholder={photo.caption} value={captionText} onChange={handleEdit}/>}
+
+            {editor &&
+            <Button sx={{ bgcolor: iconColors }} onClick={handleSubmitEdit}>
+              <Typography variant='body2' sx={{ color: inverseMode }}>
+                confirm changes
+              </Typography>
+            </Button>}
+
+            {editor &&
+            <Button sx={{ bgcolor: iconColors }} onClick={closeEditor}>
+              <Typography variant='body2' sx={{ color: inverseMode }}>
+                cancel
+              </Typography>
+            </Button>}
             {/* <span onClick={openEditor}>
               <Typography textAlign='right' sx={{ color: iconColors, mb: '20px', ml: '5px'}}>edit</Typography>
             </span> */}
