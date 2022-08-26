@@ -79,7 +79,7 @@ artistsRouter.put('/update', (req, res) => {
       }
     })
       .then((updates) => {
-        console.log(updates);
+        res.status(200).send(updates);
       })
       .catch((err) => {
         prisma.artistFollowing.update({
@@ -95,12 +95,14 @@ artistsRouter.put('/update', (req, res) => {
           }
         })
           .then((data) => {
-            console.log(data);
+            res.status(200).send(data);
           })
           .catch((err) => {
             console.error(err);
+            res.status(500);
           });
         console.error(err);
+        res.status(500);
       });
   } else {
     console.log('not number');
@@ -121,7 +123,7 @@ artistsRouter.put('/update', (req, res) => {
       }
     })
       .then((updates) => {
-        console.log(updates);
+        res.status(200).send(updates);
       })
       .catch((err) => {
         prisma.artistFollowing.update({
@@ -137,12 +139,14 @@ artistsRouter.put('/update', (req, res) => {
           }
         })
           .then((data) => {
-            console.log(data);
+            res.status(200).send(data);
           })
           .catch((err) => {
             console.error(err);
+            res.status(500);
           });
         console.error(err);
+        res.status(500);
       });
   }
 });
