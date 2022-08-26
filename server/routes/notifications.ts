@@ -58,7 +58,7 @@ notificationsRouter.put('/', async (req, res) => {
     })
 })
 
-notificationsRouter.delete('/', async (req, res) => {
+notificationsRouter.delete('/all', async (req, res) => {
   const {userId} = req.body;
 
   await prisma.notifications.deleteMany({
@@ -72,6 +72,33 @@ notificationsRouter.delete('/', async (req, res) => {
     .catch((err) => {
       console.log(err);
       res.sendStatus(500);
+    })
+})
+
+notificationsRouter.delete('/', async (req, res) => {
+  const {commentId} = req.body;
+  await prisma.comments.deleteMany({
+    where: {
+      id: commentId,
+    }
+  })
+    .then(() => {
+      prisma.notifications.deleteMany({
+        where: {
+          commentId,
+        }
+      })
+        .then((data) => {
+          res.sendStatus(200);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(500);
+        })
+
+    })
+    .catch((err) => {
+      console.log(err);
     })
 })
 

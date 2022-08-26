@@ -37,15 +37,19 @@ const App: React.FC = () => {
   const [profilePic, setProfilePic] = useState('');
 
   const getNotifications = () => {
-    axios.get('/api/notifications', {
-      params: {
-        userId: currentUserInfo.id
-      }
-    })
-      .then((notifData) => {
-        setNotifications(notifData.data.filter((notif) => !notif.read).length);
+    if (currentUserInfo.id === undefined) {
+      setNotifications(0);
+    } else {
+      axios.get('/api/notifications', {
+        params: {
+          userId: currentUserInfo.id
+        }
       })
-      .catch((err) => console.error(err));
+        .then((notifData) => {
+          setNotifications(notifData.data.filter((notif) => !notif.read).length);
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
   const navClick = () => {
@@ -54,13 +58,13 @@ const App: React.FC = () => {
   };
 
   const getAvatar = async () => {
-    await axios.get('/api/eventFeed/avatar', {
-      params: {
-        userId: currentUserInfo.id
-      }
-    })
-      .then((userProfile) => {
-        setProfilePic(userProfile.data);
+    if (currentUserInfo.id === undefined) {
+      setProfilePic(null);
+    } else {
+      await axios.get('/api/eventFeed/avatar', {
+        params: {
+          userId: currentUserInfo.id
+        }
       })
       .catch(() => console.info('no notifications'));
   };
