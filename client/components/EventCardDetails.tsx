@@ -108,18 +108,18 @@ const EventCardDetails = ({events, event}) => {
             <Typography variant="body2" gutterBottom paragraph sx={{ bgcolor: inverseMode }}>
               {event.eventName}
               {event.artistInfo.map((artist, index) => (
-                <div key={`artistName${index}`}>
+                <span key={`artistName${index}`}>
                   {artist.artistName}
-                </div>
+                </span>
               ))}
               {date}
               <br/>
               {event.venueInfo.map((venue, index) => (
-                <div key={`venue${index}`}>
+                <span key={`venue${index}`}>
                   {Object.values(venue.address)}
                   <br/>
                   {venue.city}, {venue.state} {venue.postalCode}
-                </div>
+                </span>
               ))
               }
             </Typography>

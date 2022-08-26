@@ -83,7 +83,6 @@ const Navbar = (props) => {
     </Link>],
   ];
 
-
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -179,7 +178,7 @@ const Navbar = (props) => {
               >
                 {pages.map((page, index) => (
                   <MenuItem key={`nav${index}`} onClick={() => { handleCloseNavMenu(page[0]); }}>
-                    <Typography textAlign='center'>{page[1]}</Typography>
+                    <Typography variant='h6' textAlign='center'>{page[1]}</Typography>
                   </MenuItem>
                 ))}
                 <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
