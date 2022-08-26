@@ -93,7 +93,6 @@ const BackPack: React.FC = () => {
         return (
           <EventItem
             event={event}
-            // SAMPLE_BUDGET_LIST={SAMPLE_BUDGET_LIST}
             index={index}
             inverseMode={inverseMode}
             expanded={expanded}
@@ -159,9 +158,6 @@ const EventItem = function ({
           id='panel1d-header'
         >
           <Typography>{event.name}</Typography>
-          <Typography sx={{ justifyContent: 'flex-end' }}>
-            {event.dates.start.localDate}
-          </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: inverseMode }}>
           {budgetList?.map((item, index) => {
