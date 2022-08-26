@@ -30,8 +30,6 @@ const FeedPhoto: React.FC = (props) => {
   const [owner, setOwner] = useState(false);
 
   useEffect(() => {
-    console.log('id', currentUserInfo.id);
-    console.log('PHOTOID', photo.userId);
     if (currentUserInfo.id === photo.userId) {
       setOwner(true);
     }
@@ -91,7 +89,6 @@ const FeedPhoto: React.FC = (props) => {
   };
 
   const openDeleter = () => {
-    console.log('deleterOpened');
     setDeleter(true);
     setMenuOpen(false);
   };
@@ -102,7 +99,6 @@ const FeedPhoto: React.FC = (props) => {
 
 
   // const getMenuOption = () => {
-  //   console.log('menuuuu');
   //   if (owner) {
   //     return (
 

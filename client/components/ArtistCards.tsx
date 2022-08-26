@@ -77,28 +77,7 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
       })
       .catch(err => console.error(err));
   };
-
-  // const handleFavorite = (artistId) => {
-  //   console.log(currentUserInfo.id, artistId);
-  //   const userId = currentUserInfo.id;
-  //   console.log('update');
-  //   axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
-  //     .then(() => {
-  //       console.log(!favorite);
-  //       setFavorite(!favorite);
-  //       favUpdated();
-  //       getFaveArtists(currentUserInfo.id);
-  //     })
-  //     .catch(err => {
-  //       console.log(!favorite);
-  //       setFavorite(!favorite);
-  //       favUpdated();
-  //       getFaveArtists(currentUserInfo.id);
-  //       console.error(err);
-  //     }
-  //     );
-  // };
-
+  
   const goBack = () => {
     resetSingle();
     navigate('/artists');

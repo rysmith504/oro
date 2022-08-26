@@ -29,16 +29,13 @@ const ArtistContextProvider = ({ children }) => {
   };
 
   const getFaveArtists = (id: number) => {
-    // console.log('artist context executed', id);
     if (id) {
       axios.get(`/api/favArtists/${id}`)
         .then((artistData) => {
           const artistsArr = artistData.data;
-          // console.log(artistsArr);
           setArtistData(artistsArr);
         })
         .catch((err) => {
-          // console.log('artistEvents');
           console.error(err);
         });
     }

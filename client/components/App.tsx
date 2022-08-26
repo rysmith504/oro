@@ -48,14 +48,6 @@ const App: React.FC = () => {
       .catch((err) => console.error(err));
   };
 
-
-  // useEffect(() => {
-  //   console.log(currentUserInfo.id);
-  // }, []);
-
-  // useEffect(() => {
-  //   // setSocket(io('http://localhost:3000'));
-  // }, [currentUser]);
   const navClick = () => {
     getNotifications();
     getAvatar();
@@ -70,7 +62,7 @@ const App: React.FC = () => {
       .then((userProfile) => {
         setProfilePic(userProfile.data);
       })
-      .catch(() => console.log('no notifications'));
+      .catch(() => console.info('no notifications'));
   };
 
   return (
