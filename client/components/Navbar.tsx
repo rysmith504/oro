@@ -1,19 +1,9 @@
 import React, { useEffect, useContext } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-import NightlightIcon from '@mui/icons-material/Nightlight';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { ThemeContext } from '../context/ThemeContext';
-import { Box, Grid, Container, Avatar, Tooltip, UseTheme } from '../styles/material';
-import Badge from '@mui/material/Badge';
-import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
+
+import { Box, Grid, Container, AppBar, Tooltip, UseTheme, Divider, Typography, Toolbar, IconButton, Menu, MenuIcon, Button, MenuItem, NightlightIcon, WbSunnyIcon, Badge, HomeIcon, TravelExploreIcon, MusicNoteIcon, LuggageIcon, GradeIcon, PriceChangeIcon, ForumIcon, LoginIcon, EmailIcon, LogoutIcon } from '../styles/material';
+
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 
@@ -33,20 +23,20 @@ const Navbar = (props) => {
 
   const pages = [
 
-    ['/home', <Link
-      to='/home'
+    ['/', <Link
+      to='/'
       style={{ textDecoration: 'none' }}
       key={'home'}
     >
-      <Home onClick={()=> { onNavigate; }}/>
-      HOME
+      <HomeIcon className='nav-icons'/>
+      Home
     </Link>],
     ['/eventListings', <Link
       to='/eventListings'
       style={{ textDecoration: 'none' }}
       key={'eventListings'}
     >
-      <TravelExplore />
+      <TravelExploreIcon className='nav-icons'/>
       Find Events
     </Link>],
     ['/travelPlanner', <Link
@@ -54,31 +44,21 @@ const Navbar = (props) => {
       style={{ textDecoration: 'none' }}
       key={'travelPlanner'}
     >
-      <Luggage />
+      <LuggageIcon className='nav-icons'/>
       Travel Planner
     </Link>],
     ['/backpack', <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
-      <PriceChange />
+      <PriceChangeIcon className='nav-icons'/>
       Budgets
     </Link>],
     ['/songFinder', <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
-      <MusicNote />
+      <MusicNoteIcon className='nav-icons'/>
       Song Finder
     </Link>],
     ['/artists', <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
-      <Grade />
+      <GradeIcon className='nav-icons'/>
       Favorite Artists
-    </Link>],
-    ['/chat', <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum /> Chat</Link>],
-    ['/notifications', <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
-      <Badge badgeContent={notif} color="primary" >
-        <Mail />
-      </Badge>
-      Notifications</Link>],
-    ['/profile', <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-      <Avatar src={profile} />
-      Account
-    </Link>],
+    </Link>]
   ];
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -116,6 +96,24 @@ const Navbar = (props) => {
   useEffect(() => {
     getCurrentUser();
   }, []);
+
+  const AccountBlock = () => {
+    const account = [
+      ['/profile', <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
+        <img src={profile} className='nav-icons avatar'/>Account</Link>],
+      ['/chat', <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <ForumIcon className='nav-icons'/>Chat</Link>],
+      ['/notifications', <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
+        <Badge badgeContent={notif} color="primary" >
+          <EmailIcon className='nav-icons'/>
+        </Badge>
+        Notifications</Link>]
+    ];
+    return (account.map((page, index) => (
+      <MenuItem key={`nav${index}`} onClick={() => { handleCloseNavMenu(page[0]); }}>
+        <Typography variant='h6' textAlign='center'>{page[1]}</Typography>
+      </MenuItem>
+    )));
+  };
 
   return (
     <AppBar position='sticky' sx={{ bgcolor: inverseMode, paddingRight: '20px' }}>
@@ -179,19 +177,25 @@ const Navbar = (props) => {
                     <Typography variant='h6' textAlign='center'>{page[1]}</Typography>
                   </MenuItem>
                 ))}
-                <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
-                  {
-                    isLoggedIn
-                      ? <Link to='/home' style={{ textDecoration: 'none' }} key={'logout'} onClick={logoutUser}>
-                        <Logout/>
+                <Divider style={{width: '100%', height: '1%'}} sx={{ borderColor: iconColors, opacity: 0.2 }}/>
+                {
+                  isLoggedIn
+                    ? <>{AccountBlock()}
+                      <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
+                        <Link to='/home' style={{ textDecoration: 'none' }} key={'logout'} onClick={logoutUser}>
+                          <LogoutIcon className='nav-icons'/>
                           Logout
-                      </Link>
-                      : <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
-                        <Login />
+                        </Link>
+                      </MenuItem>
+                    </>
+                    :
+                    <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
+                      <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
+                        <LoginIcon className='nav-icons'/>
                           Login
                       </Link>
-                  }
-                </MenuItem>
+                    </MenuItem>
+                }
               </Menu>
             </Grid>
           </Grid>
