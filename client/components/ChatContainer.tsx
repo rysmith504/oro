@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
-import Box from '@mui/material/Box';
-// import Container from '@mui/material/Container';
 import ChatInput from './ChatInput';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import axios from 'axios';
-import { useTheme } from '@mui/material/styles';
-import { CssTextField } from '../styles/material';
+import { CssTextField, Box, Grid, Button, UseTheme } from '../styles/material';
 import { v4 as uuidv4 } from 'uuid';
 
 const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
-  const theme = useTheme();
+  const theme = UseTheme();
   // const iconColors = theme.palette.secondary.contrastText;
   // const inverseMode = theme.palette.secondary.main;
   const [messages, setMessages] = useState([]);

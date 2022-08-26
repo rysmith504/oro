@@ -30,6 +30,7 @@ import cardContent from '@mui/material/CardContent';
 import cardActions from '@mui/material/CardActions';
 import collapse from '@mui/material/Collapse';
 import iconButton from '@mui/material/IconButton';
+
 import typography from '@mui/material/Typography';
 import favoriteIcon from '@mui/icons-material/Favorite';
 import expandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -78,11 +79,12 @@ import priceChangeIcon from '@mui/icons-material/PriceChange';
 import forumIcon from '@mui/icons-material/Forum';
 
 import loginIcon from '@mui/icons-material/Login';
-
+import arrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import emailIcon from '@mui/icons-material/Email';
 import logoutIcon from '@mui/icons-material/Logout';
 
 
+export const ArrowCircleUpIcon = arrowCircleUpIcon;
 export const LogoutIcon = logoutIcon;
 export const EmailIcon = emailIcon;
 export const LoginIcon = loginIcon;
