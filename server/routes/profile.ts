@@ -8,9 +8,8 @@ const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 
 profileRouter.get('/events/:_id', (req, res) => {
   const { _id } = req.params;
-  const id = Number(_id);
 
-  prisma.userEvents.findMany({ where: { userId: id } })
+  prisma.userEvents.findMany({ where: { userId: _id } })
     .then((events) => {
       const apiUrls: any[] | PromiseLike<any[]> = [];
       events.forEach(event => {

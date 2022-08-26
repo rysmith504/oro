@@ -26,5 +26,4 @@ root.render(
       </Routes>
     </BrowserRouter>
   </UserContextProvider>
-
 );
