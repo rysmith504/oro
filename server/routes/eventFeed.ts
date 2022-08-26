@@ -29,7 +29,7 @@ eventFeedRouter.post('/', async (req, res) => {
             res.status(200).send(data);
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
             res.sendStatus(500);
           });
       })
@@ -48,10 +48,10 @@ eventFeedRouter.get('/avatar', async (req, res) => {
     }
   })
     .then((data) => {
-      res.status(200).send(data.profileURL)
+      res.status(200).send(data.profileURL);
     })
     .catch((err) => {
-      res.sendStatus(500)
+      res.sendStatus(500);
 
     });
 });
@@ -106,10 +106,10 @@ eventFeedRouter.put('/', async (req, res) => {
   })
     .then(() => res.sendStatus(200))
     .catch((err) => {
-      console.log(err);
-      res.sendStatus(500)
+      console.error(err);
+      res.sendStatus(500);
     });
-})
+});
 
 eventFeedRouter.delete('/', async (req, res) => {
   const {photoUrl} = req.body;
@@ -128,12 +128,12 @@ eventFeedRouter.delete('/', async (req, res) => {
           res.status(200).send(data);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
           res.sendStatus(500);
         });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 });

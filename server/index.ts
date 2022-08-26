@@ -44,7 +44,6 @@ passport.use(new GoogleStrategy(
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
   },
   (async (req: any, accessToken: any, refreshToken: any, profile: { id: any; emails: { value: any; }[]; displayName: any; photos: { value: any; }[]; }, cb: (arg0: undefined, arg1: undefined) => any) => {
-    // console.log('profile here----', profile);
     await prisma.users.create(
       {
         data: {
@@ -67,16 +66,12 @@ passport.use(new GoogleStrategy(
 ));
 
 passport.serializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-  // console.log(`\n--------> Serialize User:`)
-  // console.log(user)
   // The USER object is the "authenticated user" from the done() in authUser function.
   // serializeUser() will attach this user to "req.session.passport.user.{user}", so that it is tied to the session object for each session.
   done(null, user);
 });
 
 passport.deserializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-  // console.log("\n--------- Deserialized User:")
-  // console.log(user)
   // This is the {user} that was saved in req.session.passport.user.{user} in the serializationUser()
   // deserializeUser will attach this {user} to the "req.user.{user}", so that it can be used anywhere in the App.
 
@@ -128,7 +123,7 @@ app.get('/*', (req, res) => {
 const PORT = 5000;
 
 const server = app.listen(PORT, () => {
-  console.log(`App listening on port http://localhost:${PORT}`);
+  console.info(`App listening on port http://localhost:${PORT}`);
 });
 
 

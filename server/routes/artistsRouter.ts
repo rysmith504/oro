@@ -31,9 +31,7 @@ artistsRouter.get('/:id', (req, res) => {
     }
   })
     .then((data) => {
-      console.log(data);
       if (!data.length) {
-        console.log('no artists');
         prisma.artistFollowing.findMany()
           .then((data) => {
             res.status(200).send({allArtists: data, artists: null});
@@ -58,10 +56,7 @@ artistsRouter.get('/:id', (req, res) => {
 // update whether a user has followed an artist
 artistsRouter.put('/update', (req, res) => {
   const { artist, user } = req.body.params;
-  console.log(req.body.params);
-  console.log('UPDATE:', artist, user);
   if (typeof artist === 'number') {
-    console.log(Number(artist));
     prisma.artistFollowing.update({
       where: {
         id: artist,
@@ -105,7 +100,6 @@ artistsRouter.put('/update', (req, res) => {
         res.status(500);
       });
   } else {
-    console.log('not number');
     prisma.artistFollowing.update({
       where: {
         artistName: artist,
@@ -154,7 +148,6 @@ artistsRouter.put('/update', (req, res) => {
 // -----------------------POST
 artistsRouter.post('/', (req, res) => {
   const {artistName, userId} = req.body;
-  console.log('req;', artistName, userId);
 
   const obj = {
     artistName,

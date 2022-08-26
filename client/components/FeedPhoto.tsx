@@ -119,11 +119,11 @@ const FeedPhoto: React.FC = (props) => {
               commentId: comment.id,
             }
           })
-            .then(() => console.log(`${comment.id} DELETED`))
+            .then(() => console.info(`${comment.id} DELETED`))
             .catch((err) => console.error(err));
         })
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   const closeDeleter = () => {
