@@ -89,7 +89,6 @@ const isLoggedIn = (req: { user: any; }, res: { sendStatus: (arg0: number) => an
 };
 
 app.get('/hidden', isLoggedIn, (req, res) => {
-  // res.send(req.user);
   const userObj = req.user;
 
   prisma.users.findUnique({ where: { id: userObj.id }})

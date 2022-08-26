@@ -3,10 +3,11 @@ import axios from 'axios';
 import UserPhotos from '../components/UserPhotos';
 import { UserContext } from '../context/UserContext';
 import { styled } from '@mui/material/styles';
-import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon, Grid, IconButton, Box, Link, Snackbar } from '../styles/material';
+import { ArrowForwardIosSharpIcon, MuiAccordion, MuiAccordionSummary, MuiAccordionDetails, Typography, List, ListItem, Button, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FacebookIcon, InstagramIcon, TwitterIcon, Grid, IconButton, Box, Link, Snackbar, CardMedia } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const Accordion = styled((props) => (
   <MuiAccordion children={''} disableGutters elevation={0} square {...props} />
@@ -51,13 +52,14 @@ const Profile: React.FC = () => {
   const [facebookLink, setFacebookLink] = useState('');
   const [instagramLink, setInstagramLink] = useState('');
   const [twitterLink, setTwitterLink] = useState('');
-  const [expanded, setExpanded] = useState('panel1');
+  const [expanded, setExpanded] = useState<string | false>(false);
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
+  const navigate = useNavigate();
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  console.log(currentUserInfo);
+  
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref,
@@ -199,7 +201,7 @@ const Profile: React.FC = () => {
               <Button onClick={handleUpdate}>Update</Button>
             </DialogActions>
           </Dialog>
-          <Snackbar open={openSnack} autoHideDuration={2500} onClose={handleSnackClose}>
+          <Snackbar open={openSnack} autoHideDuration={3000} onClose={handleSnackClose}>
             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
               Profile Updated
             </Alert>
@@ -229,20 +231,26 @@ const Profile: React.FC = () => {
         {userEvents.map((event, index) => {
           return (
             <div key={index}>
-              <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+              <Accordion sx={{ bgcolor: inverseMode }} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
                 <AccordionSummary sx={{ bgcolor: inverseMode }} aria-controls="panel1d-content" id="panel1d-header">
                   <Typography>{event.name}</Typography>
-                  <Typography>{event.dates.start.localDate}</Typography>
+                  <Typography sx={{ justifyContent: 'flex-end' }}>{event.dates.start.localDate}</Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{ bgcolor: inverseMode }}>
+                  <CardMedia
+                    component="img"
+                    height="194"
+                    image={event.images[0].url}
+                    alt={event.name}
+                  />
                   <List>
-                    <ListItem>Venue: {event._embedded.venues[0].name}</ListItem>
+                    <ListItem><strong>Venue: </strong> {event._embedded.venues[0].name}</ListItem>
                     <ListItem>
-                      Location: {event._embedded.venues[0].address.line1}, {event._embedded.venues[0].city.name}, {event._embedded.venues[0].postalCode}
+                     <strong>Location: </strong> {event._embedded.venues[0].address.line1}, {event._embedded.venues[0].city.name}, {event._embedded.venues[0].postalCode}
                     </ListItem>
-                    <ListItem>Ticket sale starts: {moment(event.sales.public.startDateTime).format('llll')}</ListItem>
-                    <ListItem>Ticket sale ends: {moment(event.sales.public.startDateTime).format('llll')}</ListItem>
-                    <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => { location.href = event.url; }}>Purchase Tickets</Button>
+                    <ListItem><strong>Ticket sale starts: </strong> {moment(event.sales.public.startDateTime).format('llll')}</ListItem>
+                    <ListItem><strong>Ticket sale ends: </strong> {moment(event.sales.public.endDateTime).format('llll')}</ListItem>
+                    <Button sx={{ bgcolor: iconColors, color: inverseMode }} onClick={() => navigate(`/details/?id=${event.id}`)}>More Details</Button>
                   </List>
                 </AccordionDetails>
               </Accordion>
