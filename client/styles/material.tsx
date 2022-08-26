@@ -1,8 +1,7 @@
-
-
-
-
-
+import gradeIcon from '@mui/icons-material/Grade';
+import luggageIcon from '@mui/icons-material/Luggage';
+import travelExploreIcon from '@mui/icons-material/TravelExplore';
+import homeIcon from '@mui/icons-material/Home';
 import badge from '@mui/material/Badge';
 import menuItem from '@mui/material/MenuItem';
 import wbSunnyIcon from '@mui/icons-material/WbSunny';
@@ -75,6 +74,21 @@ import slide from '@mui/material/Slide';
 import { useTheme } from '@mui/material/styles';
 import arrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import nightlightIcon from '@mui/icons-material/Nightlight';
+import priceChangeIcon from '@mui/icons-material/PriceChange';
+import forumIcon from '@mui/icons-material/Forum';
+
+import loginIcon from '@mui/icons-material/Login';
+
+import emailIcon from '@mui/icons-material/Email';
+import logoutIcon from '@mui/icons-material/Logout';
+
+
+export const LogoutIcon = logoutIcon;
+export const EmailIcon = emailIcon;
+export const LoginIcon = loginIcon;
+export const ForumIcon = forumIcon;
+
+export const PriceChangeIcon = priceChangeIcon;
 export const ArrowBackIosNewIcon = arrowBackIosNewIcon;
 export const Styled = styled;
 export const UseTheme = useTheme;
@@ -107,6 +121,10 @@ export const CssTextField = Styled(TextField)({
 
 
 // export styled;
+export const GradeIcon = gradeIcon;
+export const LuggageIcon = luggageIcon;
+export const TravelExploreIcon = travelExploreIcon;
+export const HomeIcon = homeIcon;
 export const Badge = badge;
 export const WbSunnyIcon = wbSunnyIcon;
 export const NightlightIcon = nightlightIcon;

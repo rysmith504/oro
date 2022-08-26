@@ -1,9 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../context/ThemeContext';
-import { Box, Grid, Container, AppBar, Tooltip, UseTheme, Divider, Typography, Toolbar, IconButton, Menu, MenuIcon, Button, MenuItem, NightlightIcon, WbSunnyIcon, Badge } from '../styles/material';
 
-import { Home, TravelExplore, MusicNote, Grade, Luggage, PriceChange, Forum, Login, Mail, Logout } from '@mui/icons-material';
+import { Box, Grid, Container, AppBar, Tooltip, UseTheme, Divider, Typography, Toolbar, IconButton, Menu, MenuIcon, Button, MenuItem, NightlightIcon, WbSunnyIcon, Badge, HomeIcon, TravelExploreIcon, MusicNoteIcon, LuggageIcon, GradeIcon, PriceChangeIcon, ForumIcon, LoginIcon, EmailIcon, LogoutIcon } from '../styles/material';
 
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
@@ -29,7 +28,7 @@ const Navbar = (props) => {
       style={{ textDecoration: 'none' }}
       key={'home'}
     >
-      <Home className='nav-icons'/>
+      <HomeIcon className='nav-icons'/>
       Home
     </Link>],
     ['/eventListings', <Link
@@ -37,7 +36,7 @@ const Navbar = (props) => {
       style={{ textDecoration: 'none' }}
       key={'eventListings'}
     >
-      <TravelExplore className='nav-icons'/>
+      <TravelExploreIcon className='nav-icons'/>
       Find Events
     </Link>],
     ['/travelPlanner', <Link
@@ -45,19 +44,19 @@ const Navbar = (props) => {
       style={{ textDecoration: 'none' }}
       key={'travelPlanner'}
     >
-      <Luggage className='nav-icons'/>
+      <LuggageIcon className='nav-icons'/>
       Travel Planner
     </Link>],
     ['/backpack', <Link to='/backpack' style={{ textDecoration: 'none' }} key={'backpack'}>
-      <PriceChange className='nav-icons'/>
+      <PriceChangeIcon className='nav-icons'/>
       Budgets
     </Link>],
     ['/songFinder', <Link to='/songFinder' style={{ textDecoration: 'none' }} key={'songFinder'}>
-      <MusicNote className='nav-icons'/>
+      <MusicNoteIcon className='nav-icons'/>
       Song Finder
     </Link>],
     ['/artists', <Link to='/artists' style={{ textDecoration: 'none' }} key={'artists'}>
-      <Grade className='nav-icons'/>
+      <GradeIcon className='nav-icons'/>
       Favorite Artists
     </Link>]
   ];
@@ -102,10 +101,10 @@ const Navbar = (props) => {
     const account = [
       ['/profile', <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
         <img src={profile} className='nav-icons avatar'/>Account</Link>],
-      ['/chat', <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <Forum className='nav-icons'/>Chat</Link>],
+      ['/chat', <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <ForumIcon className='nav-icons'/>Chat</Link>],
       ['/notifications', <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
         <Badge badgeContent={notif} color="primary" >
-          <Mail className='nav-icons'/>
+          <EmailIcon className='nav-icons'/>
         </Badge>
         Notifications</Link>]
     ];
@@ -184,7 +183,7 @@ const Navbar = (props) => {
                     ? <>{AccountBlock()}
                       <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
                         <Link to='/home' style={{ textDecoration: 'none' }} key={'logout'} onClick={logoutUser}>
-                          <Logout className='nav-icons'/>
+                          <LogoutIcon className='nav-icons'/>
                           Logout
                         </Link>
                       </MenuItem>
@@ -192,7 +191,7 @@ const Navbar = (props) => {
                     :
                     <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
                       <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
-                        <Login className='nav-icons'/>
+                        <LoginIcon className='nav-icons'/>
                           Login
                       </Link>
                     </MenuItem>
