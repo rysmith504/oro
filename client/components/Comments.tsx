@@ -12,7 +12,7 @@ interface UserPictureProps {
     userId: string;
     photoUrl: string;
     eventAPIid: string;
-    create_at: string;
+    created_at: string;
     caption?: string;
     deleteToken?: string;
   };

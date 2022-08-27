@@ -12,33 +12,34 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { UserContext } from '../context/UserContext';
 
-// interface feedPhotoProps {
-//   feedPhoto: {
-//     userId?: string;
-//     photoUrl: string;
-//     eventAPIid: string;
-//     id: number;
-//     create_at: string;
-//     caption?: string;
-//     deleteToken?: string | null;
-//   }
-// };
+interface FeedPhotoProps {
+  photo: {
+    userId?: string;
+    photoUrl: string;
+    eventAPIid: string;
+    id: number;
+    created_at?: string;
+    caption?: string;
+    deleteToken?: string | null;
+  },
+  updateFeed: () => void;
+}
 
-const FeedPhoto: React.FC = (props) => {
+
+const FeedPhoto: React.FC<FeedPhotoProps> = ({photo, updateFeed}) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
 
-  const {photo, updateFeed} = props;
-  const [profilePic, setProfilePic] = useState('');
-  const [expanded, setExpanded] = React.useState(false);
-  const [captionText, setCaptionText] = useState('');
-  const [editor, setEditor] = useState(false);
-  const [deleterOpen, setDeleterOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [owner, setOwner] = useState(false);
+  const [profilePic, setProfilePic] = useState<string>('');
+  const [expanded, setExpanded] = React.useState<boolean>(false);
+  const [captionText, setCaptionText] = useState<string>('');
+  const [editor, setEditor] = useState<boolean>(false);
+  const [deleterOpen, setDeleterOpen] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [owner, setOwner] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   // const [feedPhoto, setFeedPhoto] = useState({});
   const [feedPhoto, setFeedPhoto] = useState<{userId?: string; photoUrl: string; eventAPIid: string; id: number; created_at: string; caption?: string; deleteToken?: string | null}>({
@@ -162,26 +163,9 @@ const FeedPhoto: React.FC = (props) => {
     setDeleterOpen(false);
   };
 
-  // const getMenuOption = () => {
-  //   if (owner) {
-  //     return (
-
-  //     );
-  //   }
-  // };
-
 
   return (
     <div>
-      {/* <Modal style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} sx={{overflow: 'scroll'}} open={modalStatus} onClose={handleClose}>
-        <Box sx={{margin: 'auto', bgcolor: inverseMode, width: 400, alignItems: 'left', justifyContent: 'left', pt: '20px', outline: 'none'}}>
-
-          <img width='350px' height='auto' src={photo.photoUrl}/>
-          <Grid container sx={{mt: '20px'}}>
-            <Comments photo={photo}/>
-          </Grid>
-        </Box>
-      </Modal> */}
       <Card sx={{ maxWidth: 400, margin: 'auto', mt: '20px'}}>
         <Dialog open={deleterOpen}>
           <Typography textAlign='left' sx={{ color: inverseMode, mb: '20px', ml: '5px'}}>are you sure you want to delete your photo?</Typography>
