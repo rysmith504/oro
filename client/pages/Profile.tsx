@@ -127,10 +127,6 @@ const Profile: React.FC = () => {
     setOpen(false);
   };
 
-  const handleSnackClick = () => {
-    setOpenSnack(true);
-  };
-
   const handleSnackClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -173,8 +169,6 @@ const Profile: React.FC = () => {
     getUserEvents();
   }, []);
 
-
-
   if (currentUserInfo.id) {
     return (
       <div>
@@ -195,7 +189,6 @@ const Profile: React.FC = () => {
           <Dialog
             open={open}
             onClose={handleClose}
-            sx={{ bgcolor: inverseMode, colors: inverseMode }}
           >
             <DialogTitle sx={{ bgcolor: inverseMode, colors: inverseMode }}>
               Update Profile
@@ -342,7 +335,7 @@ const Profile: React.FC = () => {
             </div>
           );
         })}
-        <UserPhotos photos={userPhotos} getUserEvents={getUserEvents} />
+        <UserPhotos photos={userPhotos} getUserPhotos={getUserPhotos} />
       </div>
     );
   } else if (!currentUserInfo.length) {
