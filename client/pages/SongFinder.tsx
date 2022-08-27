@@ -38,14 +38,14 @@ const SongFinder: React.FC = () => {
   const {currentUserInfo} = userContext;
 
   // const [isRecording, setIsRecording] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [previewSource, setPreviewSource] = useState();
-  const [song, setSong] = useState('');
-  const [artist, setArtist] = useState('');
+  const [isBlocked, setIsBlocked] = useState<boolean>(false);
+  const [previewSource, setPreviewSource] = useState<string | ArrayBuffer | null>('');
+  const [song, setSong] = useState<string>('');
+  const [artist, setArtist] = useState<string>('');
   // const [artistImage, setArtistImage] = useState('');
-  const [albumTitle, setAlbumTitle] = useState('');
-  const [albumImage, setAlbumImage] = useState('');
-  const [favorited, setFavorited] = useState(false);
+  const [albumTitle, setAlbumTitle] = useState<string>('');
+  const [albumImage, setAlbumImage] = useState<string>('');
+  const [favorited, setFavorited] = useState<boolean>(false);
   const [lyrics, setLyrics] = useState([]);
   // const [deleteToken, setDeleteToken] = useState('');
 
@@ -110,6 +110,7 @@ const SongFinder: React.FC = () => {
 
   const start = () => {
     if (isBlocked) {
+      console.log('permission denied');
     } else {
       Mp3Recorder.start()
         .catch((e) => console.error(e));
