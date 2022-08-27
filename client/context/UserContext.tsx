@@ -10,6 +10,7 @@ type User = {
     fbId?: string;
     instaId?: string;
     twitterId?: string;
+    length: number
   }
 }
 
@@ -39,9 +40,15 @@ const UserContextProvider = ({ children }) => {
   const logoutUser = () => {
     axios
       .post('/logout')
-      .then(() => {
-        setCurrentUserInfo([]);
-      })
+      .then(() => setCurrentUserInfo({
+        id: '',
+        fullName: '',
+        profileURL: '',
+        email: '',
+        fbId: '',
+        instaId: '',
+        twitterId: '',
+      }))
       .catch((err) => {
         console.error(err);
       });

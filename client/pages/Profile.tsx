@@ -34,6 +34,16 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
+interface event {
+  name: string;
+  dates: {
+    start: {
+      localDate: string;
+    }
+  };
+  images: {  }[]
+}
+
 const Accordion = styled((props) => (
   <MuiAccordion children={''} disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -84,7 +94,7 @@ const Profile: React.FC = () => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  const firstName = currentUserInfo.fullName.split(' ')[0];
+  const firstName = currentUserInfo?.fullName.split(' ')[0];
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -99,7 +109,7 @@ const Profile: React.FC = () => {
 
   const getUserEvents = () => {
     axios
-      .get(`/api/profile/events/${currentUserInfo.id}`)
+      .get(`/api/profile/events/${currentUserInfo?.id}`)
       .then(({ data }) => {
         setUserEvents(data);
       })
@@ -108,7 +118,7 @@ const Profile: React.FC = () => {
 
   const getUserPhotos = () => {
     axios
-      .get(`/api/profile/event_photos/${currentUserInfo.id}`)
+      .get(`/api/profile/event_photos/${currentUserInfo?.id}`)
       .then(({ data }) => {
         setUserPhotos(data);
       })
@@ -140,7 +150,7 @@ const Profile: React.FC = () => {
 
   const handleUpdate = async () => {
     axios
-      .put(`/api/profile/${currentUserInfo.id}`, {
+      .put(`/api/profile/${currentUserInfo?.id}`, {
         socialMedia: {
           facebook: `${facebookLink}` || null,
           instagram: `${instagramLink}` || null,
@@ -148,7 +158,7 @@ const Profile: React.FC = () => {
         },
       })
       .then(() => setOpenSnack(true))
-      .then(handleClose())
+      .then(() => handleClose())
       .catch((err) => console.error(err));
   };
 
@@ -169,7 +179,7 @@ const Profile: React.FC = () => {
     getUserEvents();
   }, []);
 
-  if (currentUserInfo.id) {
+  if (currentUserInfo?.id) {
     return (
       <div>
         <Avatar
@@ -280,7 +290,7 @@ const Profile: React.FC = () => {
             </Grid>
           </Box>
         </div>
-        {userEvents.map((event, index) => {
+        {userEvents.map((event, index: number) => {
           return (
             <div key={index}>
               <Accordion
@@ -338,7 +348,7 @@ const Profile: React.FC = () => {
         <UserPhotos photos={userPhotos} getUserPhotos={getUserPhotos} />
       </div>
     );
-  } else if (!currentUserInfo.length) {
+  } else if (!currentUserInfo?.length) {
     return <h1>Please Sign In To View Profile</h1>;
   }
 };

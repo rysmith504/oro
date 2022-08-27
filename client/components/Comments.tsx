@@ -18,7 +18,7 @@ interface UserPictureProps {
   };
 };
 
-const Comments: React.FC = (props) => {
+const Comments: React.FC<UserPictureProps> = (props) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -70,7 +70,7 @@ const Comments: React.FC = (props) => {
     await axios.post('/api/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
-      userId: currentUserInfo.id,
+      userId: currentUserInfo?.id,
       ownerId: photo.userId,
 
 
@@ -91,6 +91,7 @@ const Comments: React.FC = (props) => {
       .catch((err) => console.error(err));
   };
 
+  console.log(comments)
 
   return (
     <div id='comments-container'>
