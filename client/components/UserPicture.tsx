@@ -162,7 +162,11 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
             {
+<<<<<<< HEAD
               currentUserInfo?.id === photo.userId
+=======
+              currentUserInfo.id === photo.userId
+>>>>>>> d0fdeffe9cb8e1d6c01af491cce7d5c7a73b05d9
                 ? <><IconButton onClick={openDeleter}>
                   <Tooltip title="Delete Photo" placement="top-start">
                     <DeleteOutlinedIcon sx={{ color: inverseMode }} />
