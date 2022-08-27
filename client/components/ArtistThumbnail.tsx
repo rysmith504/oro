@@ -91,10 +91,10 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists}) 
 
   useEffect(()=>{
     setThumbFav(favorite);
-  }, [thumbFav]);
+  }, [favorite, thumbFav]);
   useEffect(()=>{
     setThumbFav(favorite);
-  }, []);
+  }, [favorite]);
 
   return (
     <Card sx={{ bgcolor: inverseMode,

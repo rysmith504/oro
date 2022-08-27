@@ -28,7 +28,6 @@ const ArtistInfoCard = ({artistProps, resetSingle}) => {
   const inverseMode = theme.palette.secondary.main;
   const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
-  // const [favorite, setFavorite] = useState(false);
   const [events, setEvents] = useState(
     [{
       name: 'No events found',

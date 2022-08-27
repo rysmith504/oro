@@ -22,7 +22,7 @@ interface UserPictureProps {
     caption?: string;
     deleteToken?: string;
   };
-};
+}
 
 const UserPicture: React.FC<UserPictureProps> = ({ photo }) => {
   const theme = useTheme();
@@ -48,9 +48,9 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo }) => {
           onClick={handleOpen}
         />
       </ImageListItem>
-      <Dialog 
+      <Dialog
         open={open}
-        onClose={handleClose} 
+        onClose={handleClose}
         TransitionComponent={Transition}
         sx={{ bgcolor: inverseMode, colors: inverseMode }}
       >
