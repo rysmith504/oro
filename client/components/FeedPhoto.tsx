@@ -163,7 +163,6 @@ const FeedPhoto: React.FC = (props) => {
   };
 
   // const getMenuOption = () => {
-  //   console.log('menuuuu');
   //   if (owner) {
   //     return (
 

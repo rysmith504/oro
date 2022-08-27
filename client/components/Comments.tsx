@@ -36,10 +36,8 @@ const Comments: React.FC<UserPictureProps> = ({photo}) => {
   // const showComments = () => {
   //   if (commentsOpen) {
   //     setCommentsOpen(false);
-  //     // console.log('hidden');
   //   } else {
   //     setCommentsOpen(true);
-  //     // console.log('shown');
   //   }
   // };
 
@@ -64,7 +62,6 @@ const Comments: React.FC<UserPictureProps> = ({photo}) => {
   };
 
   const handleComment = (e) => {
-    // console.log(e.target.value);
     setMessage(e.target.value);
   };
 
@@ -78,7 +75,6 @@ const Comments: React.FC<UserPictureProps> = ({photo}) => {
 
     })
       .then((commentData) => {
-        // console.log(commentData);
         setMessage('');
         getComments();
         axios.post('/api/notifications', {
@@ -86,7 +82,7 @@ const Comments: React.FC<UserPictureProps> = ({photo}) => {
           commentId: commentData.data.id,
         })
           .then((notificationData) => {
-            console.log('notif', notificationData);
+            console.info('notif', notificationData);
           })
           .catch((err) => console.error(err));
 

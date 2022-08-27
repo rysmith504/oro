@@ -1,19 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Post` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "Post" DROP CONSTRAINT "Post_authorId_fkey";
-
--- DropTable
-DROP TABLE "Post";
-
--- DropTable
-DROP TABLE "User";
-
 -- CreateTable
 CREATE TABLE "Messages" (
     "id" SERIAL NOT NULL,
@@ -111,6 +95,27 @@ CREATE TABLE "Comments" (
     CONSTRAINT "Comments_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Budget" (
+    "id" SERIAL NOT NULL,
+    "Tickets" INTEGER NOT NULL,
+    "Food" INTEGER NOT NULL,
+    "Drinks" INTEGER NOT NULL,
+    "Parking" INTEGER NOT NULL,
+    "Merch" INTEGER NOT NULL,
+    "Travel" INTEGER NOT NULL,
+
+    CONSTRAINT "Budget_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EventBudgets" (
+    "eventId" INTEGER NOT NULL,
+    "budgetId" INTEGER NOT NULL,
+
+    CONSTRAINT "EventBudgets_pkey" PRIMARY KEY ("eventId","budgetId")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Users_id_key" ON "Users"("id");
 
@@ -155,3 +160,9 @@ ALTER TABLE "EventPhotos" ADD CONSTRAINT "EventPhotos_userId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "Comments" ADD CONSTRAINT "Comments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventBudgets" ADD CONSTRAINT "EventBudgets_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "UserEvents"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventBudgets" ADD CONSTRAINT "EventBudgets_budgetId_fkey" FOREIGN KEY ("budgetId") REFERENCES "Budget"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

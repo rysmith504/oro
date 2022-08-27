@@ -49,7 +49,6 @@ const EventCardDetails = ({events, event}) => {
       eventAPIid: event.eventId
     })
       .then(response => {
-        // console.log('POST SUCCESS', response);
       })
       .then(getPins)
       .catch(err => console.error('POST ERROR', err));
@@ -58,7 +57,6 @@ const EventCardDetails = ({events, event}) => {
   const deleteEvent = () => {
     axios.delete('/api/events/list/pins', { data: { eventAPIid: event.eventId } })
       .then(() => {
-        // console.log('DELETE SUCCESS');
         getPins();
       })
       .catch(err => console.error('axios delete error', err));
@@ -81,7 +79,6 @@ const EventCardDetails = ({events, event}) => {
   const image = event.artistInfo[0].artistImages[0].url;
 
   const getDetails = () => {
-    // console.log('navigate', event.eventId);
     navigate(`/details/?id=${event.eventId}`);
   };
 

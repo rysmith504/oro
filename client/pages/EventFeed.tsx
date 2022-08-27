@@ -27,7 +27,6 @@ const EventFeed: React.FC = () => {
   const [caption, setCaption] = useState('');
   const eventId = searchParams.get('id');
 
-
   useEffect(() => {
     if (photo) {
       const reader = new FileReader();
