@@ -201,8 +201,8 @@ const FeedPhoto: React.FC<FeedPhotoProps> = ({photo, updateFeed}) => {
                 <Avatar src={profilePic} />
               </Link>
               : <Link to={`/user/?id=${photo.userId}`}>
-                  <Avatar src={profilePic} />
-                </Link>
+                <Avatar src={profilePic} />
+              </Link>
           }
           subheader={<Typography textAlign='right' sx={{ bgcolor: inverseMode }}>{moment(photo.created_at).calendar()}</Typography>}
           sx={{ bgcolor: inverseMode }}

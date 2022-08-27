@@ -110,6 +110,7 @@ const SongFinder: React.FC = () => {
 
   const start = () => {
     if (isBlocked) {
+      console.log('permission denied');
     } else {
       Mp3Recorder.start()
         .catch((e) => console.error(e));

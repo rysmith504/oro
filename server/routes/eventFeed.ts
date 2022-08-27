@@ -51,7 +51,7 @@ eventFeedRouter.get('/avatar', async (req, res) => {
     .then((data) => {
       res.status(200).send(data?.profileURL);
     })
-    .catch((err) => {
+    .catch(() => {
       res.sendStatus(500);
 
     });

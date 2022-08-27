@@ -9,12 +9,13 @@ import { CssTextField } from '../styles/material';
 
 interface UserPictureProps {
   photo: {
-    userId: string;
+    id: number;
+    userId?: string;
     photoUrl: string;
     eventAPIid: string;
-    created_at: string;
+    created_at?: string;
     caption?: string;
-    deleteToken?: string;
+    deleteToken?: string | null;
   };
 }
 
