@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
-import {Fab, OutlinedInput } from '../styles/material';
+import {Fab} from '../styles/material';
 import SendIcon from '@mui/icons-material/Send';
 import Comment from './Comment';
 import { useTheme } from '@mui/material/styles';
@@ -16,9 +16,9 @@ interface UserPictureProps {
     caption?: string;
     deleteToken?: string;
   };
-};
+}
 
-const Comments: React.FC = (props) => {
+const Comments: React.FC<UserPictureProps> = ({photo}) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -27,7 +27,6 @@ const Comments: React.FC = (props) => {
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
 
-  const {photo} = props;
 
 
   // const [commentsOpen, setCommentsOpen] = useState(false);

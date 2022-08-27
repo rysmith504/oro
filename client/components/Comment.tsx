@@ -6,22 +6,33 @@ import { useTheme } from '@mui/material/styles';
 import moment from 'moment';
 import { UserContext } from '../context/UserContext';
 import Dialog from '@mui/material/Dialog';
-const Comment: React.FC = (props) => {
+
+interface CommentProps {
+  comment: {
+    comment: string;
+    created_at: string;
+    edited: boolean;
+    id: number;
+    photoUrl: string;
+    userId: string;
+  },
+  getComments: () => void
+}
+
+const Comment: React.FC<CommentProps> = ({comment, getComments}) => {
 
   const userContext = useContext(UserContext);
   const {currentUserInfo} = userContext;
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  const [commentText, setCommentText] = useState('');
-  const [editor, setEditor] = useState('');
-  const { comment, getComments } = props;
-  const [deleterOpen, setDeleterOpen] = useState(false);
+  const [commentText, setCommentText] = useState<string>('');
+  const [editor, setEditor] = useState<boolean>(false);
+  const [deleterOpen, setDeleterOpen] = useState<boolean>(false);
 
-  const [profilePic, setProfilePic] = useState('');
+  const [profilePic, setProfilePic] = useState<string>('');
 
   useEffect(() => {
-    console.log(comment)
     getAvatar();
   }, []);
 
@@ -51,9 +62,8 @@ const Comment: React.FC = (props) => {
   };
 
   const handleEdit = (e) => {
-    console.log(e.target.value);
     setCommentText(e.target.value);
-  }
+  };
 
   const handleSubmitEdit = () => {
     axios.put('/api/comments', {
@@ -66,16 +76,16 @@ const Comment: React.FC = (props) => {
         getComments();
       })
       .catch((err) => console.error(err));
-  }
+  };
 
   const openEditor = () => {
     setEditor(true);
-  }
+  };
 
   const closeEditor = () => {
     setEditor(false);
     setCommentText('');
-  }
+  };
 
   const openDeleter = () => {
     setDeleterOpen(true);

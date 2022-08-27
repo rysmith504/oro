@@ -40,14 +40,14 @@ const SongFinder: React.FC = () => {
   const {currentUserInfo} = userContext;
 
   // const [isRecording, setIsRecording] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [previewSource, setPreviewSource] = useState();
-  const [song, setSong] = useState('');
-  const [artist, setArtist] = useState('');
+  const [isBlocked, setIsBlocked] = useState<boolean>(false);
+  const [previewSource, setPreviewSource] = useState<string | ArrayBuffer | null>('');
+  const [song, setSong] = useState<string>('');
+  const [artist, setArtist] = useState<string>('');
   // const [artistImage, setArtistImage] = useState('');
-  const [albumTitle, setAlbumTitle] = useState('');
-  const [albumImage, setAlbumImage] = useState('');
-  const [favorited, setFavorited] = useState(false);
+  const [albumTitle, setAlbumTitle] = useState<string>('');
+  const [albumImage, setAlbumImage] = useState<string>('');
+  const [favorited, setFavorited] = useState<boolean>(false);
   const [lyrics, setLyrics] = useState([]);
   // const [deleteToken, setDeleteToken] = useState('');
 
@@ -116,7 +116,6 @@ const SongFinder: React.FC = () => {
   }, [previewSource]);
 
   const start = () => {
-    console.log('recording---');
     if (isBlocked) {
       // console.log('Permission Denied');
     } else {
@@ -126,7 +125,6 @@ const SongFinder: React.FC = () => {
   };
 
   const stop = () => {
-    console.log('stop recording');
     Mp3Recorder.stop().getMp3()
       .then(([buffer, blob]) => {
         const reader = new FileReader();
@@ -164,7 +162,7 @@ const SongFinder: React.FC = () => {
       artistName: artist,
       userId: currentUserInfo.id
     })
-      .then((data) => {
+      .then(() => {
         setFavorited(true);
       })
       .catch((err) => console.error(err));

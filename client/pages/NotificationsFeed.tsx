@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import Notification from '../components/Notification';
-import {OutlinedInput, Fab, Button, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {Button} from '../styles/material';
 import { useTheme } from '@mui/material/styles';
 
 const NotificationsFeed: React.FC = () => {
@@ -15,12 +15,14 @@ const NotificationsFeed: React.FC = () => {
 
   useEffect(() => {
     getNotifications();
+  }, []);
+
+  useEffect(() => {
     axios.put('/api/notifications', {
       userId: currentUserInfo.id,
-    })
-      .then(() => {})
-      .catch((err) => console.error(err));
-  }, []);
+    });
+
+  }, [notifications]);
 
 
   const getNotifications = () => {
@@ -42,9 +44,7 @@ const NotificationsFeed: React.FC = () => {
       data: {
         userId: currentUserInfo.id,
       }
-    })
-      .then(() => console.log('deleted'))
-      .catch((err) => console.error(err));
+    });
     setNotifications([]);
   };
 

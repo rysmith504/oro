@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Comments from '../components/Comments';
-import {Button, Fab, OutlinedInput, Card, Paper, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
+import {Button, OutlinedInput, Card, Paper, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '../styles/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -10,8 +10,19 @@ import moment from 'moment';
 import Dialog from '@mui/material/Dialog';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 import { UserContext } from '../context/UserContext';
+
+// interface feedPhotoProps {
+//   feedPhoto: {
+//     userId?: string;
+//     photoUrl: string;
+//     eventAPIid: string;
+//     id: number;
+//     create_at: string;
+//     caption?: string;
+//     deleteToken?: string | null;
+//   }
+// };
 
 const FeedPhoto: React.FC = (props) => {
   const theme = useTheme();
@@ -29,13 +40,47 @@ const FeedPhoto: React.FC = (props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [owner, setOwner] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  // const [feedPhoto, setFeedPhoto] = useState({});
+  const [feedPhoto, setFeedPhoto] = useState<{userId?: string; photoUrl: string; eventAPIid: string; id: number; created_at: string; caption?: string; deleteToken?: string | null}>({
+    userId: '',
+    photoUrl: '',
+    eventAPIid: '',
+    id: 0,
+    created_at: '',
+    caption: '',
+    deleteToken: null,
+  });
+  const getAvatar = (id) => {
+    axios.get('/api/eventFeed/avatar', {
+      params: {
+        userId: id,
+      }
+    })
+      .then((userProfile) => {
+        setProfilePic(userProfile.data);
+      })
+      .catch((err) => console.error(err));
+  };
 
   useEffect(() => {
-    if (currentUserInfo.id === photo.userId) {
+
+    updateFeed();
+  }, [profilePic]);
+  useEffect(() => {
+    if (currentUserInfo.id === feedPhoto.userId) {
       setOwner(true);
     }
-    getAvatar();
+    getAvatar(feedPhoto.userId);
+  }, [feedPhoto]);
+  
+  useEffect(() => {
+    console.log(photo);
+    setFeedPhoto(photo);
   }, []);
+
+  useEffect(() => {
+    updateFeed();
+  }, [profilePic]);
 
   const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -51,17 +96,7 @@ const FeedPhoto: React.FC = (props) => {
     setExpanded(!expanded);
   };
 
-  const getAvatar = async () => {
-    await axios.get('/api/eventFeed/avatar', {
-      params: {
-        userId: photo.userId
-      }
-    })
-      .then((userProfile) => {
-        setProfilePic(userProfile.data);
-      })
-      .catch((err) => console.error(err));
-  };
+
 
   const handleEdit = (e) => {
     setCaptionText(e.target.value);
@@ -111,23 +146,20 @@ const FeedPhoto: React.FC = (props) => {
       }
     })
       .then((commentData) => {
-        setDeleterOpen(false)
+        setDeleterOpen(false);
         updateFeed();
         commentData.data.forEach((comment) => {
           axios.delete('/api/notifications', {
             data: {
               commentId: comment.id,
             }
-          })
-            .then(() => console.log(`${comment.id} DELETED`))
-            .catch((err) => console.error(err));
-        })
-      })
-      .catch((err) => console.log(err));
+          });
+        });
+      });
   };
 
   const closeDeleter = () => {
-    setDeleterOpen(false)
+    setDeleterOpen(false);
   };
 
   // const getMenuOption = () => {
@@ -201,7 +233,9 @@ const FeedPhoto: React.FC = (props) => {
               {!editor && photo.caption}
             </span>
 
-            {editor && <OutlinedInput onKeyPress={(e) => e.key === 'Enter' && handleSubmitEdit()} sx={{ bgcolor: inverseMode }} placeholder={photo.caption} value={captionText} onChange={handleEdit}/>}
+            <div>
+              {editor && <OutlinedInput onKeyPress={(e) => e.key === 'Enter' && handleSubmitEdit()} sx={{ bgcolor: inverseMode }} placeholder={photo.caption} value={captionText} onChange={handleEdit}/>}
+            </div>
 
             {editor &&
             <Button sx={{ bgcolor: iconColors }} onClick={handleSubmitEdit}>

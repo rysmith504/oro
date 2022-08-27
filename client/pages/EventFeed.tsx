@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import Comments from '../components/Comments';
 import {OutlinedInput, Fab, Box, Button, Typography} from '../styles/material';
 
 import { UserContext } from '../context/UserContext';
-import { useSearchParams } from 'react-router-dom';
 import FeedPhoto from '../components/FeedPhoto';
 import Dialog from '@mui/material/Dialog';
 import { useTheme } from '@mui/material/styles';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import {useSearchParams } from 'react-router-dom';
 
 
 
@@ -22,13 +21,12 @@ const EventFeed: React.FC = () => {
   const [previewSource, setPreviewSource] = useState();
   const [photo, setPhoto] = useState(null);
   const [feedPhotos, setFeedPhotos] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [eventName, setEventName] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [caption, setCaption] = useState('');
-
   const eventId = searchParams.get('id');
-  let eventPhotos = [];
+
 
   useEffect(() => {
     if (photo) {
@@ -41,17 +39,15 @@ const EventFeed: React.FC = () => {
     }
   }, [photo]);
 
-  const updateFeed = async () => {
-    await axios.get('/api/eventFeed', {
+  const updateFeed = () => {
+    axios.get('/api/eventFeed', {
       params: {
         eventId,
       }
     })
       .then((responseObj) => {
-        console.log(responseObj.data);
-        setFeedPhotos(responseObj.data);
         setPhoto(null);
-        setDialogOpen(false);
+        setFeedPhotos([...responseObj.data]);
       })
       .catch((err) => console.error(err));
   };
@@ -65,7 +61,7 @@ const EventFeed: React.FC = () => {
         setEventName(eventData.data.name);
       })
       .catch((err) => console.error(err));
-  }
+  };
 
   useEffect(() => {
     getEvent();
@@ -79,20 +75,20 @@ const EventFeed: React.FC = () => {
 
 
 
-  const handleFileUpload = async () => {
+  const handleFileUpload = () => {
     if (photo) {
       const formData = new FormData();
       formData.append('myFile', photo, photo.name);
 
-      await axios.post('/api/eventFeed', {
+      axios.post('/api/eventFeed', {
         imageData: previewSource,
         eventId,
         userId: currentUserInfo.id,
         caption,
       })
         .then((data) => {
-          updateFeed()
-
+          setDialogOpen(false);
+          setFeedPhotos(feedPhotos => [data.data, ...feedPhotos]);
         })
         .catch((err) => console.error(err));
 
@@ -112,6 +108,20 @@ const EventFeed: React.FC = () => {
     await document.getElementById('fileUpload')?.click();
   };
 
+  const renderFeed = () => {
+    return (
+      <div>
+        {feedPhotos.map((photo, i) => {
+          return (
+            <div key={i} margin-top="30px">
+              <FeedPhoto updateFeed={updateFeed} photo={photo}/>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div>
 
@@ -126,14 +136,9 @@ const EventFeed: React.FC = () => {
         <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={closeDialog}>cancel</Button>
       </Dialog>
 
-
-      {feedPhotos.map((photo, i) => {
-        return (
-          <div key={i} margin-top="30px">
-            <FeedPhoto updateFeed={updateFeed} photo={photo}/>
-          </div>
-        );
-      })}
+      <div>
+        {renderFeed()}
+      </div>
       <Box sx={{position: 'sticky'}}>
         <OutlinedInput sx={{mt: '20px', display: 'none'}} accept="image/*" type='file' id='fileUpload' name='image' onChange={handleFileChange}/>
         <Fab

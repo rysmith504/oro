@@ -64,12 +64,12 @@ eventFeedRouter.get('/', async (req, res) => {
     },
     orderBy: [
       {
-        created_at: 'asc'
+        created_at: 'desc'
       }
     ]
   })
     .then((data) => {
-      res.status(200).send(data.slice().reverse());
+      res.status(200).send(data);
     })
     .catch((err) => {
       res.sendStatus(500);
