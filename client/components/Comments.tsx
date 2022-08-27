@@ -31,16 +31,8 @@ const Comments: React.FC<UserPictureProps> = ({photo}) => {
 
 
   // const [commentsOpen, setCommentsOpen] = useState(false);
-  const [message, setMessage] = useState('');
-  const [comments, setComments] = useState([]);
-
-  // const showComments = () => {
-  //   if (commentsOpen) {
-  //     setCommentsOpen(false);
-  //   } else {
-  //     setCommentsOpen(true);
-  //   }
-  // };
+  const [message, setMessage] = useState<string>('');
+  const [comments, setComments] = useState<Array<{id: number; userId: string; photoUrl: string; comment: string; edited: boolean; crated_at: string;}>>([]);
 
   const fontColor = {
     style: { color: '#9B27B0' }
@@ -70,7 +62,7 @@ const Comments: React.FC<UserPictureProps> = ({photo}) => {
     await axios.post('/api/comments', {
       comment: message,
       photoUrl: photo.photoUrl,
-      userId: currentUserInfo.id,
+      userId: currentUserInfo?.id,
       ownerId: photo.userId,
 
 

@@ -68,14 +68,13 @@ const FeedPhoto: React.FC<FeedPhotoProps> = ({photo, updateFeed}) => {
     updateFeed();
   }, [profilePic]);
   useEffect(() => {
-    if (currentUserInfo.id === feedPhoto.userId) {
+    if (currentUserInfo?.id === feedPhoto.userId) {
       setOwner(true);
     }
     getAvatar(feedPhoto.userId);
   }, [feedPhoto]);
   
   useEffect(() => {
-    console.log(photo);
     setFeedPhoto(photo);
   }, []);
 
@@ -196,7 +195,7 @@ const FeedPhoto: React.FC<FeedPhotoProps> = ({photo, updateFeed}) => {
         {/* {getMenuOption()} */}
         <CardHeader
           avatar={
-            currentUserInfo.id === photo.userId
+            currentUserInfo?.id === photo.userId
               ? <Link to='/profile'>
                 <Avatar src={profilePic} />
               </Link>

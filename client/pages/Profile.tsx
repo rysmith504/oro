@@ -99,7 +99,7 @@ const Profile: React.FC = () => {
 
   const getUserEvents = () => {
     axios
-      .get(`/api/profile/events/${currentUserInfo.id}`)
+      .get(`/api/profile/events/${currentUserInfo?.id}`)
       .then(({ data }) => {
         setUserEvents(data);
       })
@@ -108,7 +108,7 @@ const Profile: React.FC = () => {
 
   const getUserPhotos = () => {
     axios
-      .get(`/api/profile/event_photos/${currentUserInfo.id}`)
+      .get(`/api/profile/event_photos/${currentUserInfo?.id}`)
       .then(({ data }) => {
         setUserPhotos(data);
       })
@@ -140,7 +140,7 @@ const Profile: React.FC = () => {
 
   const handleUpdate = async () => {
     axios
-      .put(`/api/profile/${currentUserInfo.id}`, {
+      .put(`/api/profile/${currentUserInfo?.id}`, {
         socialMedia: {
           facebook: `${facebookLink}` || null,
           instagram: `${instagramLink}` || null,
@@ -169,7 +169,7 @@ const Profile: React.FC = () => {
     getUserEvents();
   }, []);
 
-  if (currentUserInfo.id) {
+  if (currentUserInfo?.id) {
     return (
       <div>
         <Avatar

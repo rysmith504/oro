@@ -95,7 +95,7 @@ const Comment: React.FC<CommentProps> = ({comment, getComments}) => {
     setDeleterOpen(false);
   };
   const getEditDeleteOptions = () => {
-    if (comment.userId === currentUserInfo.id) {
+    if (comment.userId === currentUserInfo?.id) {
       return (
         <Typography textAlign='right' sx={{ color: iconColors, mb: '20px' }}>
           <span onClick={openEditor}>
@@ -117,18 +117,9 @@ const Comment: React.FC<CommentProps> = ({comment, getComments}) => {
     <div>
       <Grid container spacing={4}>
         <Grid item xs={2} sm={2} md={2}>
-          {
-            currentUserInfo.id === comment.userId
-            ? <Link to='/profile'>
-              <Avatar src={profilePic} />
-            </Link>
-            : <Link to={`/user/?id=${comment.userId}`}>
-                <Avatar sx={{ height: '30px', width: '30px', ml: '15px', mb: '20px'}} src={profilePic} />
-              </Link>
-          }
-          {/* <Link to={`/user/?id=${comment.userId}`}>
+          <Link to={`/user/?id=${comment.userId}`}>
             <Avatar sx={{ height: '30px', width: '30px', ml: '15px', mb: '20px'}} src={profilePic}/>
-          </Link> */}
+          </Link>
         </Grid>
         <Grid item xs={8} sm={8} md={8}>
           <Paper>
@@ -148,10 +139,6 @@ const Comment: React.FC<CommentProps> = ({comment, getComments}) => {
           {getEditDeleteOptions()}
         </Grid>
       </Grid>
-      <div>
-        {/* <Fab href='edit' variant='extended' size='small'>edit</Fab>
-        <Fab href='delete' variant='extended' size='small'>delete</Fab> */}
-      </div>
     </div>
   );
 };
