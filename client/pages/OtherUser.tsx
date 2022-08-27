@@ -57,7 +57,7 @@ const OtherUser: React.FC = () => {
           <Avatar
             alt={userInfo['fullName']}
             src={userInfo['profileURL']}
-            sx={{ width: 75, height: 75 }}
+            sx={{ width: 150, height: 150, mt: '30px', ml: 'auto', mr: 'auto' }}
           />
         </div>
       <div>

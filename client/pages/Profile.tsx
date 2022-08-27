@@ -30,7 +30,6 @@ import {
   CardMedia,
 } from '../styles/material';
 import { useTheme } from '@mui/material/styles';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
@@ -85,6 +84,7 @@ const Profile: React.FC = () => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  const firstName = currentUserInfo.fullName.split(' ')[0];
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -151,7 +151,7 @@ const Profile: React.FC = () => {
           twitter: `${twitterLink}` || null,
         },
       })
-      .then(handleSnackClick())
+      .then(() => setOpenSnack(true))
       .then(handleClose())
       .catch((err) => console.error(err));
   };
@@ -173,6 +173,8 @@ const Profile: React.FC = () => {
     getUserEvents();
   }, []);
 
+
+
   if (currentUserInfo.id) {
     return (
       <div>
@@ -181,7 +183,7 @@ const Profile: React.FC = () => {
           src={currentUserInfo.profileURL}
           sx={{ width: 150, height: 150, mt: '30px', ml: 'auto', mr: 'auto' }}
         />
-        <h1>Hello {currentUserInfo.fullName}</h1>
+        <h1>Hello {firstName}</h1>
         <div>
           <Button
             sx={{ bgcolor: inverseMode, colors: inverseMode, mb: '30px' }}
@@ -340,7 +342,7 @@ const Profile: React.FC = () => {
             </div>
           );
         })}
-        <UserPhotos photos={userPhotos} />
+        <UserPhotos photos={userPhotos} getUserEvents={getUserEvents} />
       </div>
     );
   } else if (!currentUserInfo.length) {

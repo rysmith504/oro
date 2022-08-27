@@ -14,7 +14,7 @@ interface UserPhotosProps {
   }[];
 };
 
-const UserPhotos: React.FC<UserPhotosProps> = ({ photos }) => {
+const UserPhotos: React.FC<UserPhotosProps> = ({ photos, getUserEvents }) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -24,7 +24,7 @@ const UserPhotos: React.FC<UserPhotosProps> = ({ photos }) => {
       <ImageList sx={{ width: 375, height: 500 }} cols={3} rowHeight={164}>
         {photos.map((photo, index) => (
           <div key={index}>
-            <UserPicture photo={photo} />
+            <UserPicture photo={photo} getUserEvents={getUserEvents} />
           </div>
         ))}
       </ImageList>
