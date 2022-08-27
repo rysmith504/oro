@@ -92,7 +92,7 @@ const Comments: React.FC<UserPictureProps> = ({photo}) => {
 
 
   return (
-    <div>
+    <div id='comments-container'>
 
       {comments.map((comment, i) => {
         return (

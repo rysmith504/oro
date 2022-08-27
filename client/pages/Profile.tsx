@@ -84,6 +84,7 @@ const Profile: React.FC = () => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
+  const firstName = currentUserInfo.fullName.split(' ')[0];
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -126,10 +127,6 @@ const Profile: React.FC = () => {
     setOpen(false);
   };
 
-  const handleSnackClick = () => {
-    setOpenSnack(true);
-  };
-
   const handleSnackClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -150,7 +147,7 @@ const Profile: React.FC = () => {
           twitter: `${twitterLink}` || null,
         },
       })
-      .then(handleSnackClick())
+      .then(() => setOpenSnack(true))
       .then(handleClose())
       .catch((err) => console.error(err));
   };
@@ -180,7 +177,7 @@ const Profile: React.FC = () => {
           src={currentUserInfo.profileURL}
           sx={{ width: 150, height: 150, mt: '30px', ml: 'auto', mr: 'auto' }}
         />
-        <h1>Hello {currentUserInfo.fullName}</h1>
+        <h1>Hello {firstName}</h1>
         <div>
           <Button
             sx={{ bgcolor: inverseMode, colors: inverseMode, mb: '30px' }}
@@ -192,7 +189,6 @@ const Profile: React.FC = () => {
           <Dialog
             open={open}
             onClose={handleClose}
-            sx={{ bgcolor: inverseMode, colors: inverseMode }}
           >
             <DialogTitle sx={{ bgcolor: inverseMode, colors: inverseMode }}>
               Update Profile
@@ -339,7 +335,7 @@ const Profile: React.FC = () => {
             </div>
           );
         })}
-        <UserPhotos photos={userPhotos} />
+        <UserPhotos photos={userPhotos} getUserPhotos={getUserPhotos} />
       </div>
     );
   } else if (!currentUserInfo.length) {
