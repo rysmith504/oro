@@ -89,7 +89,7 @@ const Navbar = (props) => {
 
   let isLoggedIn = false;
 
-  if (currentUserInfo.id) {
+  if (currentUserInfo?.id) {
     isLoggedIn = true;
   }
 
