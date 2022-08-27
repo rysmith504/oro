@@ -3,7 +3,28 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Card,	CardHeader,	CardMedia, UseTheme, FavoriteIcon, IconButton, Tooltip } from '../styles/material';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists}) => {
+
+interface artistPropsType {
+  artistProps: {
+  id: number,
+  artistName: string,
+  bio: string,
+  ticketId: string,
+  youtube: string,
+  twitter: string,
+  facebook: string,
+  instagram: string,
+  itunes: string,
+  wiki: string,
+  homepage: string,
+  image: string,
+  },
+  updateSingle: (name:string)=>void;
+  favorite: boolean;
+  getFaveArtists: (id:string | undefined)=>void;
+}
+
+const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists}:artistPropsType) => {
   const favesLocalData = window.localStorage.getItem('userFaves');
   if (!favesLocalData) {
     window.localStorage.setItem('userFaves', JSON.stringify({}));
@@ -20,7 +41,7 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists}) 
   } = artistProps;
 
   const { currentUserInfo } = useContext(UserContext);
-  const handleClick = (name) => {
+  const handleClick = (name:string) => {
     navigate(`/artists/${name}`);
     updateSingle(name);
   };
@@ -36,7 +57,7 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists}) 
 
     favesObj[artistId] = true;
     window.localStorage.setItem('userFaves', JSON.stringify(favesObj));
-    const userId = currentUserInfo.id;
+    const userId = currentUserInfo?.id;
     axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
       .then(() => {
         setThumbFav(true);
@@ -75,14 +96,14 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists}) 
 
     window.localStorage.setItem('userFaves', JSON.stringify(favesObj));
 
-    const userId = currentUserInfo.id;
+    const userId = currentUserInfo?.id;
     axios.put('/api/favArtists/update', { params: { artist: artistId, user: userId } })
       .then(() => {
         setThumbFav(false);
-        getFaveArtists(currentUserInfo.id);
+        getFaveArtists(currentUserInfo?.id);
       })
       .catch(err => {
-        getFaveArtists(currentUserInfo.id);
+        getFaveArtists(currentUserInfo?.id);
         setThumbFav(false);
         console.error(err);
       }

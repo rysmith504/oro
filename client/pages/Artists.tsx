@@ -22,10 +22,10 @@ const Artists = () => {
     setSingleArtist('none');
   };
   useEffect(() => {
-    getFaveArtists(currentUserInfo.id);
-  }, [currentUserInfo.id, getFaveArtists]);
+    getFaveArtists(currentUserInfo?.id);
+  }, [currentUserInfo?.id, getFaveArtists]);
 
-  if (currentUserInfo.id === undefined) {
+  if (currentUserInfo?.id === undefined) {
     return (
       <div>
         <h1>Please login to view artists</h1>

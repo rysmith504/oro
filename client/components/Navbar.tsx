@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, To } from 'react-router-dom';
 import { ThemeContext } from '../context/ThemeContext';
 
 import { Box, Grid, Container, AppBar, Tooltip, UseTheme, Divider, Typography, Toolbar, IconButton, Menu, MenuIcon, Button, MenuItem, NightlightIcon, WbSunnyIcon, Badge, HomeIcon, TravelExploreIcon, MusicNoteIcon, LuggageIcon, GradeIcon, PriceChangeIcon, ForumIcon, LoginIcon, EmailIcon, LogoutIcon } from '../styles/material';
@@ -7,11 +7,14 @@ import { Box, Grid, Container, AppBar, Tooltip, UseTheme, Divider, Typography, T
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 
+interface navPropsType {
+  notif: number
+}
 
-const Navbar = (props) => {
+const Navbar = (props: navPropsType) => {
   const { currentUserInfo, getCurrentUser, logoutUser } = useContext(UserContext);
 
-  const { notif, profile } = props;
+  const { notif } = props;
   const theme = UseTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
@@ -64,43 +67,37 @@ const Navbar = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
-  const handleCloseNavMenu = (page) => {
+  const handleCloseNavMenu = (page?: string | JSX.Element | undefined) => {
     if (page === '/home') {
-      logoutUser();
+      if (logoutUser) {
+        logoutUser();
+      }
     }
     setAnchorElNav(null);
-    navigate(page);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    navigate(page, { replace: true });
   };
 
   let isLoggedIn = false;
 
-  if (currentUserInfo.id) {
+  if (currentUserInfo?.id) {
     isLoggedIn = true;
   }
 
   useEffect(() => {
-    getCurrentUser();
+    if (getCurrentUser) {
+      getCurrentUser();
+    }
   }, []);
 
   const AccountBlock = () => {
     const account = [
       ['/profile', <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-        <img src={currentUserInfo.profileURL} className='nav-icons avatar'/>Account</Link>],
+        <img src={currentUserInfo?.profileURL} className='nav-icons avatar'/>Account</Link>],
       ['/chat', <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <ForumIcon className='nav-icons'/>Chat</Link>],
       ['/notifications', <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
         <Badge badgeContent={notif} color="primary" >
@@ -126,7 +123,7 @@ const Navbar = (props) => {
                 {pages.map((page, index) => (
                   <Button
                     key={`page${index}`}
-                    onClick={handleCloseNavMenu}
+                    onClick={()=>{ handleCloseNavMenu(); }}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     {page[1]}
@@ -167,7 +164,7 @@ const Navbar = (props) => {
                   horizontal: 'left',
                 }}
                 open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+                onClose={()=>{ handleCloseNavMenu(); }}
                 sx={{
                   display: { xs: 'block', md: 'block', lg: 'block' },
                 }}

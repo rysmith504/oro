@@ -54,12 +54,12 @@ const OtherUser: React.FC = () => {
     <div>
       <h1>{userInfo['fullName']}</h1>
       <div id='profile_avatar'>
-        <Avatar
-          alt={userInfo['fullName']}
-          src={userInfo['profileURL']}
-          sx={{ width: 75, height: 75 }}
-        />
-      </div>
+          <Avatar
+            alt={userInfo['fullName']}
+            src={userInfo['profileURL']}
+            sx={{ width: 150, height: 150, mt: '30px', ml: 'auto', mr: 'auto' }}
+          />
+        </div>
       <div>
         <Box>
           <Grid container spacing={2}>

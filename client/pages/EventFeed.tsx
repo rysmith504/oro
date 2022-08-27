@@ -87,7 +87,7 @@ const EventFeed: React.FC = () => {
       await axios.post('/api/eventFeed', {
         imageData: previewSource,
         eventId,
-        userId: currentUserInfo.id,
+        userId: currentUserInfo?.id,
         caption,
       })
         .then((data) => {

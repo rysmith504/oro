@@ -83,7 +83,7 @@ const Comment: React.FC = (props) => {
     setDeleterOpen(false);
   };
   const getEditDeleteOptions = () => {
-    if (comment.userId === currentUserInfo.id) {
+    if (comment.userId === currentUserInfo?.id) {
       return (
         <Typography textAlign='right' sx={{ color: iconColors, mb: '20px' }}>
           <span onClick={openEditor}>
@@ -105,9 +105,18 @@ const Comment: React.FC = (props) => {
     <div>
       <Grid container spacing={4}>
         <Grid item xs={2} sm={2} md={2}>
-          <Link to={`/user/?id=${comment.userId}`}>
+          {
+            currentUserInfo?.id === comment.userId
+            ? <Link to='/profile'>
+              <Avatar src={profilePic} />
+            </Link>
+            : <Link to={`/user/?id=${comment.userId}`}>
+                <Avatar sx={{ height: '30px', width: '30px', ml: '15px', mb: '20px'}} src={profilePic} />
+              </Link>
+          }
+          {/* <Link to={`/user/?id=${comment.userId}`}>
             <Avatar sx={{ height: '30px', width: '30px', ml: '15px', mb: '20px'}} src={profilePic}/>
-          </Link>
+          </Link> */}
         </Grid>
         <Grid item xs={8} sm={8} md={8}>
           <Paper>
