@@ -37,9 +37,9 @@ const FeedPhoto: React.FC = (props) => {
   }, []);
 
   const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
+    const { ...other } = props;
     return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
+  })(({ theme }) => ({
     margin: 'auto',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
@@ -179,9 +179,13 @@ const FeedPhoto: React.FC = (props) => {
         {/* {getMenuOption()} */}
         <CardHeader
           avatar={
-            <Link to={`/user/?id=${photo.userId}`}>
-              <Avatar src={profilePic} />
-            </Link>
+            currentUserInfo.id === photo.userId
+              ? <Link to='/profile'>
+                <Avatar src={profilePic} />
+              </Link>
+              : <Link to={`/user/?id=${photo.userId}`}>
+                  <Avatar src={profilePic} />
+                </Link>
           }
           subheader={<Typography textAlign='right' sx={{ bgcolor: inverseMode }}>{moment(photo.created_at).calendar()}</Typography>}
           sx={{ bgcolor: inverseMode }}

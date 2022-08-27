@@ -14,20 +14,17 @@ interface UserPhotosProps {
   }[];
 };
 
-const UserPhotos: React.FC<UserPhotosProps> = ({ photos }) => {
+const UserPhotos: React.FC<UserPhotosProps> = ({ photos, getUserPhotos }) => {
   const theme = useTheme();
   const iconColors = theme.palette.secondary.contrastText;
   const inverseMode = theme.palette.secondary.main;
-  // <YouTubeIcon key={'youtube'} sx={{ color: iconColors }} />
-  // <CardContent sx={{ bgcolor: inverseMode }}></CardContent>
-  // <Typography paragraph sx={{ bgcolor: inverseMode }}></Typography>
 
   return (
     <div>
-      <ImageList sx={{ width: 375, height: 500 }} cols={3} rowHeight={164}>
+      <ImageList sx={{ margin: '8px' }} cols={3} rowHeight={128.67}>
         {photos.map((photo, index) => (
           <div key={index}>
-            <UserPicture photo={photo} />
+            <UserPicture photo={photo} getUserPhotos={getUserPhotos} />
           </div>
         ))}
       </ImageList>

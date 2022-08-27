@@ -154,7 +154,7 @@ const SongFinder: React.FC = () => {
       artistName: artist,
       userId: currentUserInfo.id
     })
-      .then((data) => {
+      .then(() => {
         setFavorited(true);
       })
       .catch((err) => console.error(err));
