@@ -118,7 +118,7 @@ const SongFinder: React.FC = () => {
 
   const stop = () => {
     Mp3Recorder.stop().getMp3()
-      .then(([blob]) => {
+      .then(([buffer, blob]) => {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = async () => {
