@@ -100,7 +100,7 @@ const Navbar = (props) => {
   const AccountBlock = () => {
     const account = [
       ['/profile', <Link to='/profile' style={{ textDecoration: 'none' }} key={'profile'}>
-        <img src={profile} className='nav-icons avatar'/>Account</Link>],
+        <img src={currentUserInfo?.profileURL} className='nav-icons avatar'/>Account</Link>],
       ['/chat', <Link to='/chat' style={{ textDecoration: 'none' }} key={'chat'}> <ForumIcon className='nav-icons'/>Chat</Link>],
       ['/notifications', <Link to='/notifications' style={{ textDecoration: 'none' }} key={'notifications'}>
         <Badge badgeContent={notif} color="primary" >
@@ -180,13 +180,13 @@ const Navbar = (props) => {
                 <Divider style={{width: '100%', height: '1%'}} sx={{ borderColor: iconColors, opacity: 0.2 }}/>
                 {
                   isLoggedIn
-                    ? <div>{AccountBlock()}
+                    ? <>{AccountBlock()}
                       <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
                         <Link to='/home' style={{ textDecoration: 'none' }} key={'logout'} onClick={logoutUser}>
                           <LogoutIcon className='nav-icons'/>
                           Logout
                         </Link>
-                      </MenuItem> </div>
+                      </MenuItem> </>
                     :
                     <MenuItem onClick={() => { isLoggedIn ? handleCloseNavMenu('/home') : handleCloseNavMenu('/login'); }}>
                       <Link to='/login' style={{ textDecoration: 'none' }} key={'login'}>
