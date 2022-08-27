@@ -10,7 +10,6 @@ import moment from 'moment';
 import Dialog from '@mui/material/Dialog';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 import { UserContext } from '../context/UserContext';
 
 const FeedPhoto: React.FC = (props) => {
@@ -111,7 +110,7 @@ const FeedPhoto: React.FC = (props) => {
       }
     })
       .then((commentData) => {
-        setDeleterOpen(false)
+        setDeleterOpen(false);
         updateFeed();
         commentData.data.forEach((comment) => {
           axios.delete('/api/notifications', {
@@ -121,13 +120,13 @@ const FeedPhoto: React.FC = (props) => {
           })
             .then(() => console.info(`${comment.id} DELETED`))
             .catch((err) => console.error(err));
-        })
+        });
       })
       .catch((err) => console.error(err));
   };
 
   const closeDeleter = () => {
-    setDeleterOpen(false)
+    setDeleterOpen(false);
   };
 
   // const getMenuOption = () => {

@@ -39,10 +39,10 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists, f
       .then(() => {
         setThumbFav(true);
         favUpdated(true);
-        getFaveArtists(currentUserInfo.id);
+        // getFaveArtists(currentUserInfo.id);
       })
       .catch(err => {
-        getFaveArtists(currentUserInfo.id);
+        // getFaveArtists(currentUserInfo.id);
         setThumbFav(true);
         favUpdated(true);
         console.error(err);

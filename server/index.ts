@@ -4,7 +4,6 @@ import cors from 'cors';
 import prisma from './database/db';
 import passport from 'passport';
 import session from 'express-session';
-// import * as socket from 'socket.io';
 const socket = require('socket.io');
 require('dotenv').config();
 
@@ -22,7 +21,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/api', api);
 
 // GOOGLE AUTH-----------------
-// require('dotenv').config();
 
 import googleStrategy from 'passport-google-oauth20';
 const GoogleStrategy = googleStrategy.Strategy;
@@ -35,7 +33,7 @@ app.use(
   }),
 );
 app.use(passport.initialize());
-app.use(passport.session()); // Why did you remove me Vincent?!
+app.use(passport.session());
 
 passport.use(new GoogleStrategy(
   {
@@ -129,7 +127,7 @@ const server = app.listen(PORT, () => {
 
 const io = socket(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: '/',
     credentials: true
   }
 });

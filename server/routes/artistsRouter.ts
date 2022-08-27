@@ -171,15 +171,17 @@ artistsRouter.post('/', (req, res) => {
       axios.get(`https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=${process.env.TICKETMASTER_API_KEY}&keyword=${artistName}`)
         .then(async (attractionData) => {
           if (attractionData.data._embedded.attractions) {
-            obj.ticketId = attractionData.data._embedded.attractions[0].id;
-            obj.youtube = attractionData.data._embedded.attractions[0].externalLinks.youtube[0].url;
-            obj.twitter = attractionData.data._embedded.attractions[0].externalLinks.twitter[0].url;
-            obj.facebook = attractionData.data._embedded.attractions[0].externalLinks.facebook[0].url;
-            obj.instagram = attractionData.data._embedded.attractions[0].externalLinks.instagram[0].url;
-            obj.itunes = attractionData.data._embedded.attractions[0].externalLinks.itunes[0].url;
-            obj.wiki = attractionData.data._embedded.attractions[0].externalLinks.wiki[0].url;
-            obj.homepage = attractionData.data._embedded.attractions[0].externalLinks.homepage[0].url;
-            obj.image = attractionData.data._embedded.attractions[0].images[0].url;
+            const attraction = attractionData.data._embedded.attractions;
+            const links = attraction[0].externalLinks;
+            obj.ticketId = attraction[0].id;
+            obj.youtube = links.youtube ? links.youtube[0].url : `https://www.youtube.com/results?search_query=${artistName}`;
+            obj.twitter = links.twitter ? links.twitter[0].url : `https://twitter.com/search?q=${artistName}`;
+            obj.facebook = links.facebook ? links.facebook[0].url : `https://www.facebook.com/search/top/?q=${artistName}`;
+            obj.instagram = links.instagram ? links.instagram[0].url : `https://www.google.com/search?q=instagram+${artistName}`;
+            obj.itunes = links.itunes ? links.itunes[0].url : `https://www.google.com/search?q=spotify+${artistName}`;
+            obj.wiki = links.wiki ? links.wiki[0].url : `https://www.google.com/search?q=wikipedia+${artistName}`;
+            obj.homepage = links.homepage ? links.homepage[0].url : `https://www.google.com/search?q=${artistName}`;
+            obj.image = attraction[0].images[0].url;
           }
 
           await prisma.artistFollowing.create({

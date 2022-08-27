@@ -64,6 +64,14 @@ const Artists = () => {
       </div>
     );
   } else if (artists === true && Array.isArray(allArtists)) {
+    let favesLocalData = window.localStorage.getItem('userFaves');
+    console.log(allArtists);
+    favesLocalData = {};
+    allArtists.forEach((child) => {
+      favesLocalData[child.id] = true;
+      window.localStorage.setItem('userFaves', JSON.stringify(favesLocalData));
+    });
+    console.log(window.localStorage.getItem('userFaves'));
     return (
       <div>
         <h1>Artists</h1>

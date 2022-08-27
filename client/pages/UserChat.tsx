@@ -46,7 +46,7 @@ const UserChat: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if(currentUser){
-        socket.current = io('http://localhost:5000');
+        socket.current = io('/');
         socket.current.emit('add-user', currentUser.id)
     }
   }, [currentUser]);

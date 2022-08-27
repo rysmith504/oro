@@ -22,7 +22,6 @@ import { EventContextProvider } from '../context/EventContext';
 // import { ThemeContext } from '../context/ThemeContext';
 import { Container } from '../components/Container';
 import BackPack from '../pages/BackPack';
-// import { io } from 'socket.io-client';
 import { UserContext } from '../context/UserContext';
 
 // https://styled-components.com/docs/api#createglobalstyle
@@ -66,7 +65,8 @@ const App: React.FC = () => {
           userId: currentUserInfo.id
         }
       })
-      .catch(() => console.info('no notifications'));
+        .catch(() => console.info('no notifications'));
+    }
   };
 
   return (
