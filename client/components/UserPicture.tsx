@@ -39,7 +39,7 @@ interface UserPictureProps {
     deleteToken?: string;
   },
   getUserPhotos: any
-};
+}
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -117,7 +117,7 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
       }
     })
       .then((commentData) => {
-        setDeleterOpen(false)
+        setDeleterOpen(false);
         setOpen(false);
         commentData.data.forEach((comment) => {
           axios.delete('/api/notifications', {
@@ -127,14 +127,14 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
           })
             .then(() => console.log(`${comment.id} DELETED`))
             .catch((err) => console.error(err));
-        })
+        });
       })
       .then(getUserPhotos())
       .catch((err) => console.log(err));
   };
 
   const closeDeleter = () => {
-    setDeleterOpen(false)
+    setDeleterOpen(false);
   };
 
   // useEffect(() => {
@@ -162,30 +162,30 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
             {
-              currentUserInfo.id === photo.userId
+              currentUserInfo?.id === photo.userId
                 ? <><IconButton onClick={openDeleter}>
                   <Tooltip title="Delete Photo" placement="top-start">
                     <DeleteOutlinedIcon sx={{ color: inverseMode }} />
                   </Tooltip>
                 </IconButton><IconButton onClick={openEditor}>
-                    <Tooltip title="Edit Caption" placement="top-start">
-                      <EditOutlinedIcon sx={{ color: inverseMode }} />
-                    </Tooltip>
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    color="secondary"
-                    onClick={handleClose}
-                    aria-label="close"
-                    sx={{
-                      position: 'absolute',
-                      right: 8,
-                      top: 8,
-                      color: "secondary",
-                    }}
-                  >
-                    <CloseRoundedIcon />
-                  </IconButton></>
+                  <Tooltip title="Edit Caption" placement="top-start">
+                    <EditOutlinedIcon sx={{ color: inverseMode }} />
+                  </Tooltip>
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  color="secondary"
+                  onClick={handleClose}
+                  aria-label="close"
+                  sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: 'secondary',
+                  }}
+                >
+                  <CloseRoundedIcon />
+                </IconButton></>
                 :
                 <IconButton
                   edge="end"
@@ -196,7 +196,7 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
                     position: 'absolute',
                     right: 8,
                     top: 8,
-                    color: "secondary",
+                    color: 'secondary',
                   }}
                 >
                   <CloseRoundedIcon />
@@ -257,7 +257,7 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
         </Alert>
       </Snackbar>
     </div>
-  )
-}
+  );
+};
 
 export default UserPicture;
