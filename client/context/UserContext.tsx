@@ -13,6 +13,10 @@ type User = {
   },
   getCurrentUser: ()=>void,
   logoutUser: ()=>void,
+  userContacts: {
+    profileURL: string
+    fullName: string
+  }[]
 }
 
 const UserContext = React.createContext<Partial<User>>({});
