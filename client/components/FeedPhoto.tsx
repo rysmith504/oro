@@ -73,7 +73,7 @@ const FeedPhoto: React.FC<FeedPhotoProps> = ({photo, updateFeed}) => {
     }
     getAvatar(feedPhoto.userId);
   }, [feedPhoto]);
-  
+
   useEffect(() => {
     setFeedPhoto(photo);
   }, []);
