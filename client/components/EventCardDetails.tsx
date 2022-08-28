@@ -115,7 +115,7 @@ const EventCardDetails = ({event}) => {
   return (
     <div>
     
-    <Card sx={{ maxWidth: 390 }}>
+    <Card sx={{ maxWidth: 'flex' }}>
     <CardHeader color='secondary' sx={{color:'secondary', fontColor: 'secondary'}}
       avatar={
         <Avatar sx={{ bgcolor: red[500] }} aria-label="event">
@@ -135,7 +135,7 @@ const EventCardDetails = ({event}) => {
     />
     <CardMedia
       component="img"
-      height="194"
+      height="flex"
       image={image}
     />
     <CardContent>
