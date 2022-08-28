@@ -4,6 +4,46 @@ import { StyledProvider } from '../styles/material';
 import { ThemeContext } from '../context/ThemeContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+interface themeType {
+  theme: {
+  palette: {
+    primary: {
+      main: string,
+      contrastText: string
+    },
+    secondary: {
+      main: string,
+      contrastText: string
+    },
+    text: {
+      primary: string
+    },
+    mode: string
+  },
+  typography: {
+    fontFamily: string,
+    h6: {
+      fontSize: string,
+      fontWeight: number,
+    },
+  },
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          palette: {
+            action: {
+              selected: string,
+              hover: string,
+              disabled: string
+            }
+          }
+        }
+      }
+    }
+  }
+}
+}
 
 const dark = createTheme({
   palette: {
@@ -92,7 +132,7 @@ const GlobalTheme = createGlobalStyle`
     text-align: center;
     margin: 0;
     height: 100vh;
-    background: ${(props) => props.theme.palette.primary.main};
+    background: ${(props: themeType) => props.theme.palette.primary.main};
     color: ${(props) => props.theme.palette.primary.contrastText};
   }
 

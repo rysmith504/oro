@@ -10,7 +10,13 @@ type User = {
     fbId?: string;
     instaId?: string;
     twitterId?: string;
-  }
+  },
+  getCurrentUser: ()=>void,
+  logoutUser: ()=>void,
+  userContacts: {
+    profileURL: string
+    fullName: string
+  }[]
 }
 
 const UserContext = React.createContext<Partial<User>>({});

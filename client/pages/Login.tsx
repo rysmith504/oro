@@ -1,6 +1,5 @@
 import React, { DOMAttributes } from 'react';
 import GoogleButton from 'react-google-button';
-import { useTheme } from '@mui/material/styles';
 
 
 interface HTMLAttributes<T> extends DOMAttributes<T> {
@@ -9,9 +8,6 @@ interface HTMLAttributes<T> extends DOMAttributes<T> {
 
 
 const Login = () => {
-  const theme = useTheme();
-  const iconColors = theme.palette.secondary.contrastText;
-  const inverseMode = theme.palette.secondary.main;
 
   const redirectToGoogle = () => {
     window.open('/auth/google', '_self');
