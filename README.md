@@ -1,4 +1,3 @@
-
 # Vibe Society
 
 Vibe Society is an app for music lovers around the world and is designed to enhance their concert/festival experiences while providing helpful resources and  utilities to plan their trips.
@@ -144,7 +143,6 @@ We used several external apis for this project:
 ## Google OAuth
 
 Google Oauth requires a google cloud account. First create your account and then navigate to the developer console. Go to google API and create a clientID and clientSecret. Your redirect URI should match what's in the server/middleware/auth file. These api keys go inside the .env file.
-
 
 ## AWS RDS DATABASE SETUP
 - To create an online database to be accessible anywhere, you will need to have an AWS account and have IAM users set up.
