@@ -34,14 +34,33 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
-interface event {
+interface eventType {
   name: string;
+  id: string;
   dates: {
     start: {
       localDate: string;
     }
   };
-  images: {  }[]
+  images: { url: string; }[];
+  _embedded: {
+    venues: {
+      name: string;
+      address: {
+        line1: string;
+      };
+      city: {
+        name: string;
+      };
+      postalCode: string;
+    }[]
+  };
+  sales: {
+    public: {
+      startDateTime: string;
+      endDateTime: string;
+    }
+  }
 }
 
 const Accordion = styled((props) => (
@@ -80,7 +99,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const { currentUserInfo } = useContext(UserContext);
   const [userEvents, setUserEvents] = useState([]);
   const [userPhotos, setUserPhotos] = useState([]);
@@ -125,7 +144,7 @@ const Profile: React.FC = () => {
       .catch((err) => console.error(err));
   };
 
-  const handleChange = (panel) => (event, newExpanded) => {
+  const handleChange = (panel: string | boolean | ((prevState: string | false) => string | false)) => (_event: any, newExpanded: any) => {
     setExpanded(newExpanded ? panel : false);
   };
 
@@ -138,7 +157,7 @@ const Profile: React.FC = () => {
   };
 
   const handleSnackClose = (
-    event?: React.SyntheticEvent | Event,
+    _event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {
@@ -290,65 +309,67 @@ const Profile: React.FC = () => {
             </Grid>
           </Box>
         </div>
-        {userEvents.map((event, index: number) => {
-          return (
-            <div key={index}>
-              <Accordion
-                sx={{ bgcolor: inverseMode }}
-                expanded={expanded === `panel${index + 1}`}
-                onChange={handleChange(`panel${index + 1}`)}
-              >
-                <AccordionSummary
+        <>
+          {userEvents.map((event: eventType, index: number) => {
+            return (
+              <div key={index}>
+                <Accordion
                   sx={{ bgcolor: inverseMode }}
-                  aria-controls='panel1d-content'
-                  id='panel1d-header'
+                  expanded={expanded === `panel${index + 1}`}
+                  onChange={handleChange(`panel${index + 1}`)}
                 >
-                  <Typography>{event.name}</Typography>
-                  <Typography sx={{ justifyContent: 'flex-end' }}>
-                    {event.dates.start.localDate}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails sx={{ bgcolor: inverseMode }}>
-                  <CardMedia
-                    component='img'
-                    height='194'
-                    image={event.images[0].url}
-                    alt={event.name}
-                  />
-                  <List>
-                    <ListItem>
-                      <strong>Venue: </strong> {event._embedded.venues[0].name}
-                    </ListItem>
-                    <ListItem>
-                      <strong>Location: </strong>{' '}
-                      {event._embedded.venues[0].address.line1},{' '}
-                      {event._embedded.venues[0].city.name},{' '}
-                      {event._embedded.venues[0].postalCode}
-                    </ListItem>
-                    <ListItem>
-                      <strong>Ticket sale starts: </strong>{' '}
-                      {moment(event.sales.public.startDateTime).format('llll')}
-                    </ListItem>
-                    <ListItem>
-                      <strong>Ticket sale ends: </strong>{' '}
-                      {moment(event.sales.public.endDateTime).format('llll')}
-                    </ListItem>
-                    <Button
-                      sx={{ bgcolor: iconColors, color: inverseMode }}
-                      onClick={() => navigate(`/details/?id=${event.id}`)}
-                    >
-                      More Details
-                    </Button>
-                  </List>
-                </AccordionDetails>
-              </Accordion>
-            </div>
-          );
-        })}
+                  <AccordionSummary
+                    sx={{ bgcolor: inverseMode }}
+                    aria-controls='panel1d-content'
+                    id='panel1d-header'
+                  >
+                    <Typography>{event.name}</Typography>
+                    <Typography sx={{ justifyContent: 'flex-end' }}>
+                      {event.dates.start.localDate}
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ bgcolor: inverseMode }}>
+                    <CardMedia
+                      component='img'
+                      height='194'
+                      image={event.images[0].url}
+                      alt={event.name}
+                    />
+                    <List>
+                      <ListItem>
+                        <strong>Venue: </strong> {event._embedded.venues[0].name}
+                      </ListItem>
+                      <ListItem>
+                        <strong>Location: </strong>{' '}
+                        {event._embedded.venues[0].address.line1},{' '}
+                        {event._embedded.venues[0].city.name},{' '}
+                        {event._embedded.venues[0].postalCode}
+                      </ListItem>
+                      <ListItem>
+                        <strong>Ticket sale starts: </strong>{' '}
+                        {moment(event.sales.public.startDateTime).format('llll')}
+                      </ListItem>
+                      <ListItem>
+                        <strong>Ticket sale ends: </strong>{' '}
+                        {moment(event.sales.public.endDateTime).format('llll')}
+                      </ListItem>
+                      <Button
+                        sx={{ bgcolor: iconColors, color: inverseMode }}
+                        onClick={() => navigate(`/details/?id=${event.id}`)}
+                      >
+                        More Details
+                      </Button>
+                    </List>
+                  </AccordionDetails>
+                </Accordion>
+              </div>
+            );
+          })}
+        </>
         <UserPhotos photos={userPhotos} getUserPhotos={getUserPhotos} />
       </div>
     );
-  } else if (!currentUserInfo?.length) {
+  } else if (!currentUserInfo?.id) {
     return <h1>Please Sign In To View Profile</h1>;
   }
 };

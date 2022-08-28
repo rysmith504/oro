@@ -10,7 +10,6 @@ type User = {
     fbId?: string;
     instaId?: string;
     twitterId?: string;
-    length: number
   }
 }
 

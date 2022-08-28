@@ -31,6 +31,7 @@ export interface SimpleDialogProps {
 
 interface UserPictureProps {
   photo: {
+    id: number;
     userId: string;
     photoUrl: string;
     eventAPIid: string;
@@ -125,7 +126,6 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
               commentId: comment.id,
             }
           })
-            .then(() => console.log(`${comment.id} DELETED`))
             .catch((err) => console.error(err));
         })
       })
@@ -140,8 +140,6 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
   // useEffect(() => {
   //   getUserPhotos();
   // }, []);
-
-  console.log(photo);
 
   return (
     <div>
@@ -162,11 +160,7 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
             {
-<<<<<<< HEAD
               currentUserInfo?.id === photo.userId
-=======
-              currentUserInfo.id === photo.userId
->>>>>>> d0fdeffe9cb8e1d6c01af491cce7d5c7a73b05d9
                 ? <><IconButton onClick={openDeleter}>
                   <Tooltip title="Delete Photo" placement="top-start">
                     <DeleteOutlinedIcon sx={{ color: inverseMode }} />
@@ -210,7 +204,7 @@ const UserPicture: React.FC<UserPictureProps> = ({ photo, getUserPhotos }) => {
         </AppBar>
         <DialogContent sx={{ bgcolor: inverseMode, colors: inverseMode, padding: '0px' }}>
           <Box sx={{ margin: 'auto', bgcolor: inverseMode, width: 'auto', alignItems: 'center', justifyContent: 'center' }}>
-            <img className='user-img' max-width='400px' height='auto' src={photo.photoUrl} />
+            <img width='370px' height='auto' src={photo.photoUrl} />
             <Dialog open={deleterOpen} onClose={closeDeleter}>
               <Typography textAlign='center' sx={{ color: inverseMode, m: '7px' }}>Are you sure you want to delete your photo?</Typography>
               <Button variant='contained' size='small' sx={{ bgcolor: iconColors }} onClick={deletePhoto}>DELETE</Button>
