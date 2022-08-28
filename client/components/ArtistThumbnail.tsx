@@ -71,11 +71,11 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists}:a
 
   const getLocalStorage = ()=>{
     const favesLocalData = window.localStorage.getItem('userFaves');
-    let favesObj: object;
+    let favesObj: {0: boolean};
     if (favesLocalData) {
       favesObj = JSON.parse(favesLocalData);
     } else {
-      favesObj = {};
+      favesObj = {0: false};
     }
 
     return favesObj;
@@ -85,12 +85,12 @@ const ArtistThumbnail = ({artistProps, updateSingle, favorite, getFaveArtists}:a
 
   const handleUnfollow = (artistId: number) => {
     const favesLocalData = window.localStorage.getItem('userFaves');
-    let favesObj: object;
+    let favesObj: {0: boolean};
     if (favesLocalData) {
       favesObj = JSON.parse(favesLocalData);
       favesObj[artistId] = false;
     } else {
-      favesObj = {};
+      favesObj = {0: false};
       favesObj[artistId] = false;
     }
 

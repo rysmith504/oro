@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Link, To } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ThemeContext } from '../context/ThemeContext';
 
 import { Box, Grid, Container, AppBar, Tooltip, UseTheme, Divider, Typography, Toolbar, IconButton, Menu, MenuIcon, Button, MenuItem, NightlightIcon, WbSunnyIcon, Badge, HomeIcon, TravelExploreIcon, MusicNoteIcon, LuggageIcon, GradeIcon, PriceChangeIcon, ForumIcon, LoginIcon, EmailIcon, LogoutIcon } from '../styles/material';
@@ -72,7 +72,7 @@ const Navbar = (props: navPropsType) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (page?: string | JSX.Element | undefined) => {
+  const handleCloseNavMenu = (page?: any) => {
     if (page === '/home') {
       if (logoutUser) {
         logoutUser();
@@ -92,7 +92,7 @@ const Navbar = (props: navPropsType) => {
     if (getCurrentUser) {
       getCurrentUser();
     }
-  }, []);
+  }, [getCurrentUser]);
 
   const AccountBlock = () => {
     const account = [
