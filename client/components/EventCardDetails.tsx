@@ -174,11 +174,11 @@ const EventCardDetails = ({event}) => {
       <CardContent>
         <Typography color='secondary' paragraph>Artists:</Typography>
         <Typography color='secondary' paragraph>
-        {event.artistInfo.map((artist, index: number) => (
+        {event.artistInfo[1] ? event.artistInfo.map((artist, index: number) => (
                 <span key={`artistName${index}`}>
-                  {artist.artistName+', '}
+                  {index === event.artistInfo.length - 1 ? artist.artistName : artist.artistName+', '}
                 </span>
-              ))}
+              )) : event.artistInfo[0].artistName}
         </Typography>
       </CardContent>
     </Collapse>
