@@ -45,9 +45,15 @@ const UserContextProvider = ({ children }) => {
   const logoutUser = () => {
     axios
       .post('/logout')
-      .then(() => {
-        setCurrentUserInfo([]);
-      })
+      .then(() => setCurrentUserInfo({
+        id: '',
+        fullName: '',
+        profileURL: '',
+        email: '',
+        fbId: '',
+        instaId: '',
+        twitterId: '',
+      }))
       .catch((err) => {
         console.error(err);
       });
