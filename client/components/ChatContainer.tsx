@@ -82,8 +82,7 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
             </div>
           </div>
           {/* <Logout /> */}
-        </div> *
-        <div className="chat-messages">
+        </div> <div className="chat-messages">
           {messages.map((message) => {
             return (
               <div ref={scrollRef} key={uuidv4()}>
