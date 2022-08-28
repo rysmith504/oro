@@ -27,7 +27,11 @@ Located at the top right of every page is a navigation burger menu which contain
       This is a more expanded page for specific events that the user is interested in. In it, users will find more information regarding the location, dates, and ticket purchasing information. The user also still has the ability to pin the event from this page.
 
       From here, the user can then navigate to either the Travel Information's page or the Event Feed.
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 5bed72def098909a04f91bac6f7542fefd8db991
       - ### Travel Information
         If a user wishes to see what local travel accommodations are available for the location of their events, they will have access to all hotels in the area of the event with their ratings along with features and amenities.
       - ### Event Feed
@@ -46,7 +50,11 @@ Located at the top right of every page is a navigation burger menu which contain
 
   If users do not have any artists currently liked, they will be provided a list of recommended artists to follow to get started.
 
+<<<<<<< HEAD
 - ### Account
+=======
+- ### Account 
+>>>>>>> 5bed72def098909a04f91bac6f7542fefd8db991
   On this page, a user can see their current profile. Here, they can update their social media links for public viewing. It will also contain their upcoming events that they've pinned along with any photos they have posted on Event Feeds. Clicking a photo from the feed will allow them to directly see the comments on their photo.
 
 - ### Chat
@@ -77,7 +85,11 @@ Located at the top right of every page is a navigation burger menu which contain
 
 ### database:
 
+<<<<<<< HEAD
 We have a PostgreSQL database. We have all of our models located in prisma/schema.prisma.
+=======
+We have a PostgreSQL database. We have all of our models located in prisma/schema.prisma. 
+>>>>>>> 5bed72def098909a04f91bac6f7542fefd8db991
 
 ### server:
 
@@ -107,6 +119,7 @@ We used several external apis for this project:
 - TripAdvisor - API with hotel/travel information used to display hotel information based on location on our travel planning page.
 
 
+<<<<<<< HEAD
 ### front-end
 
 The front-end was built using React and React Router. In App.jsx we initialize our trail data so that upon refresh of trail profile, the most recent trail data is rendered. In that same file we route our links and routes for the app.
@@ -143,11 +156,46 @@ The styling is found in main.css and mapStyles.js.
 - WEATHER=
 #### Google Maps API
 - REACT_APP_GOOGLE_MAPS_API_KEY=
+=======
+# Dev Setup:
+
+## Environment Variables Needed
+
+- #### Google Auth
+  - GOOGLE_CLIENT_ID=
+  - GOOGLE_CLIENT_SECRET=
+  - GOOGLE_CALLBACK_URL=
+
+- #### Cloudinary & Image Hosting
+  - CLOUDINARY_NAME=
+  - CLOUDINARY_API_KEY=
+  - CLOUDINARY_API_SECRET=
+  - CLOUDINARY_URL=
+
+
+- #### AWS RDS Database (online DB)
+  - DATABASE_URL=
+  - DATABASE_USERNAME=
+  - DATABASE_PASSWORD=
+  - DATABASE_PORT=
+
+- #### AUDD.io
+  - AUDD_TOKEN=
+
+- #### LASTFM (artist bio)
+  - LASTFM_API_KEY=
+  - LASTFM_SECRET=
+
+- ### Trip Advisor (hotel/travel)
+  - TRIP_ADVISOR_API_KEY=
+
+>>>>>>> 5bed72def098909a04f91bac6f7542fefd8db991
 
 ## Google OAuth
 
 Google Oauth requires a google cloud account. First create your account and then navigate to the developer console. Go to google API and create a clientID and clientSecret. Your redirect URI should match what's in the server/middleware/auth file. These api keys go inside the .env file.
 
+<<<<<<< HEAD
 # Setting up Google Client Id and Secret
 1. Navigate to Google cloud console and sign in
 2. Create a new project within Google console
@@ -176,6 +224,8 @@ Google Oauth requires a google cloud account. First create your account and then
     iii. Authorized redirect URIs: your local URI with the endpoint '/auth/google/callback' (example: http://localhost:5000/auth/google/callback)
 
 
+=======
+>>>>>>> 5bed72def098909a04f91bac6f7542fefd8db991
 ## AWS RDS DATABASE SETUP
 - To create an online database to be accessible anywhere, you will need to have an AWS account and have IAM users set up.
 - Then you will need to create a database through RDS. Save your username and password for the database. You will need them for the next step. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html
@@ -193,6 +243,7 @@ Google Oauth requires a google cloud account. First create your account and then
 - First fork the repo and clone it to your local machine.
 - Collect all env keys
 - Run 'npm install' to install all dependencies
+<<<<<<< HEAD
 - (if using local mysql) Open mysql, create and use a database called 'TakeAHike'
 - (if using RDS) Update .env to match your RDS specs
 - Run 'npm run dev' to start Webpack
@@ -214,3 +265,18 @@ Google Oauth requires a google cloud account. First create your account and then
 ![Weather](mockups/takeahike-weather.png)
 ![Map](mockups/takeahike-map.png)
 ![Gallery](mockups/takeahike-gallery.png)
+=======
+- (if using RDS) Update .env to match your RDS specs
+- Run 'npm run type' to start TypeScript transpiler
+- Run 'npm run build' to run Webpack bundler
+- Run 'npm start' to run the server
+- (optional) run npx prisma studio to see the database in browser.
+
+### Known Bugs
+  - Event Feed
+    - When users post photos, their avatars are rendered incorrectly. The app will display the incorrect user. Also this allows for users to edit/delete photos that are not theirs.
+
+
+
+## App Mockups
+>>>>>>> 5bed72def098909a04f91bac6f7542fefd8db991
