@@ -124,7 +124,7 @@ const EventCardDetails = ({event}) => {
       }
       action={
         <IconButton aria-label="settings">
-          <MoreVertIcon />
+          <InfoIcon onClick={getDetails} />
         </IconButton>
       }
       title={<Typography color='secondary'>
