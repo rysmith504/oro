@@ -114,13 +114,9 @@ const EventCardDetails = ({event}) => {
 
   return (
     <div>
-    
+
     <Card variant='outlined' sx={{ maxWidth: 'flex' }}>
     <CardHeader color='secondary' sx={{color:'secondary', fontColor: 'secondary'}}
-      avatar={
-        <Avatar sx={{ bgcolor: red[500] }} aria-label="event">
-          E
-        </Avatar>
       }
       action={
         <IconButton aria-label="settings">
