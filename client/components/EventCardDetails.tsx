@@ -117,7 +117,6 @@ const EventCardDetails = ({event}) => {
 
     <Card variant='outlined' sx={{ maxWidth: 'flex' }}>
     <CardHeader color='secondary' sx={{color:'secondary', fontColor: 'secondary'}}
-      }
       action={
         <IconButton aria-label="settings">
           <InfoIcon onClick={getDetails} />
