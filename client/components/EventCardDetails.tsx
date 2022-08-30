@@ -115,16 +115,16 @@ const EventCardDetails = ({event}) => {
   return (
     <div>
     
-    <Card variant='outlined' sx={{ backgroundColor: 'secondary', maxWidth: 'flex' }}>
+    <Card sx={{ maxWidth: 'flex' }}>
     <CardHeader color='secondary' sx={{color:'secondary', fontColor: 'secondary'}}
-      // avatar={
-      //   <Avatar sx={{ bgcolor: red[500] }} aria-label="event">
-      //     E
-      //   </Avatar>
-      // }
+      avatar={
+        <Avatar sx={{ bgcolor: red[500] }} aria-label="event">
+          E
+        </Avatar>
+      }
       action={
-        <IconButton aria-label="settings" onClick={getDetails}>
-          <MoreVertIcon onClick={getDetails}/>
+        <IconButton aria-label="settings">
+          <InfoIcon onClick={getDetails} />
         </IconButton>
       }
       title={<Typography color='secondary'>
