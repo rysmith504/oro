@@ -114,7 +114,6 @@ const EventCardDetails = ({event}) => {
 
   return (
     <div>
-
     <Card variant='outlined' sx={{ maxWidth: 'flex' }}>
     <CardHeader color='secondary' sx={{color:'secondary', fontColor: 'secondary'}}
       action={
@@ -180,7 +179,6 @@ const EventCardDetails = ({event}) => {
   </Card>
   <br/>
   </div>
-
     // <Grid container spacing={4} alignItems='center'
     //   sx={{ bgcolor: inverseMode,
     //     color: iconColors,
