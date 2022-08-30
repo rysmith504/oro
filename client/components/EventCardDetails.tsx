@@ -115,7 +115,7 @@ const EventCardDetails = ({event}) => {
   return (
     <div>
     
-    <Card sx={{ maxWidth: 'flex' }}>
+    <Card variant='outlined' sx={{ maxWidth: 'flex' }}>
     <CardHeader color='secondary' sx={{color:'secondary', fontColor: 'secondary'}}
       avatar={
         <Avatar sx={{ bgcolor: red[500] }} aria-label="event">
