@@ -114,18 +114,18 @@ const EventCardDetails = ({event}) => {
 
   return (
     <div>
-    <Card variant='outlined' sx={{ maxWidth: 'flex' }}>
-    <CardHeader color='secondary' sx={{color:'secondary', fontColor: 'secondary'}}
+    <Card variant='outlined' sx={{ bgcolor: inverseMode, maxWidth: 'flex' }}>
+    <CardHeader
       action={
         <IconButton aria-label="settings">
-          <InfoIcon onClick={getDetails} />
+          <InfoIcon onClick={getDetails} color='primary'/>
         </IconButton>
       }
-      title={<Typography color='secondary'>
-      {event.eventName+'\n'}
+      title={<Typography>
+      <h1>{event.eventName}</h1>
       </Typography>
       }
-      subheader={date}
+      subheader={<Typography><h3>{date}</h3></Typography>}
     />
     <CardMedia
       component="img"
@@ -133,7 +133,7 @@ const EventCardDetails = ({event}) => {
       image={image}
     />
     <CardContent>
-      <Typography variant="body2" color="text.secondary">
+      <Typography variant="body2">
       {event.venueInfo.map((venue, index: number) => (
               <span key={`venue${index}`}>
                 {venue.venueName}
@@ -161,13 +161,13 @@ const EventCardDetails = ({event}) => {
         aria-expanded={expanded}
         aria-label="show more"
       >
-        <ExpandMoreIcon />
+        <ExpandMoreIcon color='primary' />
       </ExpandMore>
     </CardActions>
     <Collapse in={expanded} timeout="auto" unmountOnExit>
       <CardContent>
-        <Typography color='secondary' paragraph>Artists:</Typography>
-        <Typography color='secondary' paragraph>
+        <Typography paragraph>Artists:</Typography>
+        <Typography paragraph>
         {event.artistInfo[1] ? event.artistInfo.map((artist, index: number) => (
                 <span key={`artistName${index}`}>
                   {index === event.artistInfo.length - 1 ? artist.artistName : artist.artistName+', '}
