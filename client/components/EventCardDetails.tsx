@@ -178,60 +178,6 @@ const EventCardDetails = ({event}) => {
     </Collapse>
   </Card>
   <br/>
-  </div>
-    // <Grid container spacing={4} alignItems='center'
-    //   sx={{ bgcolor: inverseMode,
-    //     color: iconColors,
-    //     p: 2,
-    //     margin: 'auto auto 10px auto',
-    //     maxWidth: 500,
-    //     flexGrow: 1, }}>
-    //   <Grid item>
-    //     <ButtonBase
-    //       sx={ { width: 128, height: 128 } }
-    //       onClick={()=> getDetails()}>
-    //       <InfoIcon sx={{ mr: '20px' }}/>
-    //       <Img alt="alt tag" src={image} />
-    //     </ButtonBase>
-    //   </Grid>
-    //   <Grid item xs={12} sm container>
-    //     <Grid item xs container direction="column" spacing={2}>
-    //       <Grid item xs>
-    //         <Typography variant="body2" gutterBottom paragraph sx={{ bgcolor: inverseMode }}>
-    //         <Box fontWeight='fontWeightBold' display='inline'>
-    //           {event.eventName+'\n'}<br/><br/>
-    //         </Box>
-    //         <Box fontWeight='fontWeightMedium' display='inline'>
-    //         {date}
-    //         <br/>
-    //         {event.venueInfo.map((venue, index: number) => (
-    //           <span key={`venue${index}`}>
-    //             {Object.values(venue.address)}
-    //             <br/>
-    //             {venue.city}, {venue.state} {venue.postalCode}
-    //           </span>
-    //         ))
-    //         }<br/><br/>
-    //         </Box>
-    //           {event.artistInfo.map((artist, index: number) => (
-    //             <span key={`artistName${index}`}>
-    //               {artist.artistName+', '}
-    //             </span>
-    //           ))}
-    //         </Typography>
-    //       </Grid>
-    //     </Grid>
-    //     <Grid item>
-    //       <PushPinIcon
-    //         id={event.eventId}
-    //         htmlColor={pins.includes(event.eventId) ? '#1A76D2' : iconColors}
-    //         onClick={ handleClick }
-    //         sx={{ mr: '20px' }}
-    //       />
-    //     </Grid>
-    //   </Grid>
-    // </Grid>
-  );
 };
 
 export default EventCardDetails;
