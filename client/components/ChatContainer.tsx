@@ -48,16 +48,12 @@ const ChatContainer: React.FC<{}> = ({ currentUser, currentChat, socket }) => {
   useEffect(() => {
     if (socket.current) {
       socket.current.on('msg-receive', async (data) => {
-        console.log('SOCKET', socket)
-        console.log('data', data, 'currentchat', currentChat)
         const {senderId} = data;
         if(sender !== currentChat.id){
           setArrivalMessage(() => {
             if(currentChat.id === senderId){
-              console.log('line 57 SENDER ID', senderId, 'currentchat', currentChat)
               return {fromSelf: false, text: data.text}
             } else{
-              console.log('line 60 SENDER ID', senderId, 'currentchat', currentChat);
               return null;
             }
           })
